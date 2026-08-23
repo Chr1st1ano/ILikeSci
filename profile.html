@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Profile</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar (Duolingo-style) -->
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content-area">
+      <section id="view-profile" class="view-section active">
+        <h1>User Profile</h1>
+        <p class="subtitle">Customize your account, bio, and avatar.</p>
+        <div class="profile-layout" style="display:flex; gap:20px; flex-wrap:wrap;">
+          <div class="glass-card" style="flex: 1; min-width: 300px; text-align:center;">
+            <h3>Avatar Settings</h3>
+            <div id="profile-avatar-preview" class="avatar-large mt-20 mb-20">MC</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <button class="btn btn-secondary w-100" onclick="document.getElementById('file-upload').click()"><i class="fa-solid fa-upload"></i> Upload Image</button>
+              <input type="file" id="file-upload" class="hidden" accept="image/*" onchange="app.handleImageUpload(event)">
+              <button class="btn btn-primary w-100" onclick="app.openCamera()"><i class="fa-solid fa-camera"></i> Use Camera</button>
+            </div>
+            <div id="camera-container" class="hidden mt-20">
+              <video id="camera-video" width="100%" autoplay playsinline style="border-radius:12px; border:2px solid var(--primary);"></video>
+              <button class="btn btn-success mt-10 w-100" onclick="app.capturePhoto()"><i class="fa-solid fa-camera"></i> Snap!</button>
+              <button class="btn btn-danger mt-10 w-100" onclick="app.closeCamera()"><i class="fa-solid fa-xmark"></i> Cancel</button>
+              <canvas id="camera-canvas" class="hidden"></canvas>
+            </div>
+          </div>
+          <div class="glass-card" style="flex: 2; min-width: 300px;">
+            <h3>Profile Info & Styles</h3>
+            <div class="form-group mt-20"><label>Teacher Name</label><input type="text" id="prof-name" class="form-control" value="Ma'am Coney" onchange="app.updateProfile()"></div>
+            <div class="form-group mt-20"><label>Short Bio / Catchphrase</label><textarea id="prof-bio" class="form-control" rows="3" onchange="app.updateProfile()">Inspiring the next generation of scientists!</textarea></div>
+            <div class="form-group mt-20"><label>Avatar Border Design</label><div class="border-options mt-10" style="display:flex; gap:10px;"><div class="border-option active" data-border="none" onclick="app.setBorder('none')">None</div><div class="border-option" data-border="solid" onclick="app.setBorder('solid')">Solid</div><div class="border-option" data-border="dashed" onclick="app.setBorder('dashed')">Dashed</div><div class="border-option" data-border="neon" onclick="app.setBorder('neon')">Neon Glow</div><div class="border-option" data-border="gold" onclick="app.setBorder('gold')">Gold Frame</div></div></div>
+            <button class="btn btn-success mt-20 w-100" onclick="app.saveProfile()">Save Changes</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+</body>
+</html>

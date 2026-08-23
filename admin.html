@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Admin Panel</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .admin-tabs { display:flex; gap:4px; background:rgba(0,0,0,0.3); border-radius:14px; padding:4px; margin-bottom:24px; overflow-x:auto; }
+    .admin-tab { padding:10px 18px; border:none; background:transparent; color:var(--text-muted); border-radius:10px; cursor:pointer; font-family:inherit; font-size:14px; font-weight:600; white-space:nowrap; transition:all 0.2s; }
+    .admin-tab:hover { background:rgba(255,255,255,0.05); color:var(--text-main); }
+    .admin-tab.active { background:var(--primary); color:#fff; }
+    .admin-panel { display:none; }
+    .admin-panel.active { display:block; }
+    .stat-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:14px; margin-bottom:20px; }
+    .stat-card { background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); border-radius:14px; padding:18px; text-align:center; }
+    .stat-card .stat-num { font-size:32px; font-weight:800; color:var(--primary); }
+    .stat-card .stat-label { font-size:13px; color:var(--text-muted); margin-top:4px; }
+    .user-table { width:100%; border-collapse:collapse; }
+    .user-table th, .user-table td { padding:10px 12px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14px; }
+    .user-table th { color:var(--text-muted); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.5px; }
+    .user-table tr:hover { background:rgba(255,255,255,0.03); }
+    .badge-role { padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; text-transform:uppercase; }
+    .badge-admin { background:rgba(168,85,247,0.2); color:#c084fc; }
+    .badge-teacher { background:rgba(59,130,246,0.2); color:#93c5fd; }
+    .btn-xs { padding:5px 10px; font-size:12px; border-radius:8px; border:none; cursor:pointer; font-family:inherit; font-weight:600; transition:all 0.15s; }
+    .btn-edit { background:rgba(59,130,246,0.15); color:#93c5fd; }
+    .btn-edit:hover { background:rgba(59,130,246,0.3); }
+    .btn-del { background:rgba(239,68,68,0.15); color:#fca5a5; }
+    .btn-del:hover { background:rgba(239,68,68,0.3); }
+    .add-user-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; align-items:flex-end; }
+    .add-user-row input, .add-user-row select { flex:1; min-width:120px; }
+    .add-user-row button { white-space:nowrap; }
+    .recent-list { list-style:none; padding:0; margin:0; }
+    .recent-list li { padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.05); display:flex; justify-content:space-between; font-size:13px; }
+    .eclass-controls { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:16px; }
+    .eclass-controls select, .eclass-controls input { min-width:120px; }
+    #admin-stats-loading, #admin-users-loading { text-align:center; padding:30px; color:var(--text-muted); }
+    .edit-modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:99999; }
+    .edit-modal-box { background:var(--bg-card,#1e293b); border:1px solid var(--glass-border); border-radius:16px; padding:28px; width:90%; max-width:420px; }
+    .edit-modal-box h3 { margin-bottom:16px; }
+    .edit-modal-box .form-group { margin-bottom:12px; }
+    .edit-modal-box .form-group label { font-size:13px; color:var(--text-muted); margin-bottom:4px; display:block; }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content-area">
+      <section id="view-admin" class="view-section active">
+        <h1><i class="fa-solid fa-shield-halved text-primary"></i> Administrator Panel</h1>
+        <p class="subtitle" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">Manage users, monitor system, export DepEd records
+          <button class="btn btn-secondary btn-sm" onclick="app.openTVDisplay()" title="TV Display"><i class="fa-solid fa-display"></i> TV Mode</button>
+        </p>
+
+        <!-- Admin Tabs -->
+        <div class="admin-tabs">
+          <button class="admin-tab active" onclick="switchAdminTab('dashboard')"><i class="fa-solid fa-chart-line"></i> Dashboard</button>
+          <button class="admin-tab" onclick="switchAdminTab('users')"><i class="fa-solid fa-users-gear"></i> Users</button>
+          <button class="admin-tab" onclick="switchAdminTab('questions')"><i class="fa-solid fa-clipboard-question"></i> Questions</button>
+          <button class="admin-tab" onclick="switchAdminTab('files')"><i class="fa-solid fa-folder-open"></i> Files</button>
+          <button class="admin-tab" onclick="switchAdminTab('eclass')"><i class="fa-solid fa-file-csv"></i> E-Class</button>
+          <button class="admin-tab" onclick="switchAdminTab('settings')"><i class="fa-solid fa-gear"></i> Settings</button>
+        </div>
+
+        <!-- TAB: Dashboard -->
+        <div id="admin-panel-dashboard" class="admin-panel active">
+          <div id="admin-stats-loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading stats...</div>
+          <div id="admin-stats-content" style="display:none;">
+            <div class="stat-grid" id="admin-stat-grid"></div>
+            <div class="glass-card mt-20">
+              <h3><i class="fa-solid fa-clock-rotate-left text-primary"></i> Recent Recitations</h3>
+              <ul id="admin-recent-recitations" class="recent-list mt-10"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: User Management -->
+        <div id="admin-panel-users" class="admin-panel">
+          <div class="glass-card">
+            <h3><i class="fa-solid fa-user-plus text-primary"></i> Add New User</h3>
+            <div class="add-user-row mt-10">
+              <input type="text" id="admin-new-username" placeholder="Username" class="form-control">
+              <input type="text" id="admin-new-displayname" placeholder="Display Name" class="form-control">
+              <input type="email" id="admin-new-email" placeholder="Email (optional)" class="form-control">
+              <input type="password" id="admin-new-password" placeholder="Password" class="form-control">
+              <select id="admin-new-role" class="form-control" style="max-width:130px;">
+                <option value="teacher">Teacher</option>
+                <option value="admin">Admin</option>
+              </select>
+              <button class="btn btn-success" onclick="app.adminCreateUser()"><i class="fa-solid fa-plus"></i> Add</button>
+            </div>
+          </div>
+          <div class="glass-card mt-20">
+            <h3><i class="fa-solid fa-users"></i> All Users</h3>
+            <div id="admin-users-loading" class="mt-10"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>
+            <div style="overflow-x:auto;">
+              <table class="user-table mt-10" id="admin-users-table" style="display:none;">
+                <thead>
+                  <tr><th>#</th><th>Username</th><th>Display Name</th><th>Email</th><th>Role</th><th>Created</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="admin-users-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="glass-card mt-20">
+            <h3><i class="fa-solid fa-user-graduate text-primary"></i> Create Student Record</h3>
+            <p class="text-muted" style="font-size:13px; margin-bottom:12px;">Add a student record with grade level, section, and quarter score options.</p>
+            <div class="add-user-row mt-10">
+              <input type="text" id="admin-student-name" placeholder="Student Full Name (e.g. abc def ghi)" class="form-control" style="flex:2;">
+              <select id="admin-student-grade" class="form-control" style="max-width:120px;">
+                <option value="3">Grade 3</option>
+                <option value="4">Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+                <option value="7" selected>Grade 7</option>
+              </select>
+              <select id="admin-student-section" class="form-control" style="max-width:110px;">
+                <option value="A">Sec A</option>
+                <option value="B">Sec B</option>
+                <option value="C">Sec C</option>
+              </select>
+              <select id="admin-student-quarter" class="form-control" style="max-width:130px;">
+                <option value="1">1st Qtr Only</option>
+                <option value="2">2nd Qtr Only</option>
+                <option value="3">3rd Qtr Only</option>
+                <option value="4">4th Qtr Only</option>
+                <option value="all">All Quarters</option>
+              </select>
+              <button class="btn btn-success" onclick="app.adminCreateStudent()"><i class="fa-solid fa-plus"></i> Create Student</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: Questions -->
+        <div id="admin-panel-questions" class="admin-panel">
+          <div class="glass-card">
+            <h3><i class="fa-solid fa-clipboard-question text-primary"></i> Question Bank Manager</h3>
+            <p class="text-muted" style="font-size:14px; margin-bottom:12px;">Edit, update, and manage imported questions.</p>
+            <div style="display:flex; gap:12px; margin-bottom:15px; flex-wrap:wrap;">
+              <select id="qb-filter-grade" class="form-control" style="max-width:150px;" onchange="app.renderQuestionBank()">
+                <option value="all">All Grades</option>
+                <option value="3">Grade 3</option>
+                <option value="4">Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+                <option value="7">Grade 7</option>
+              </select>
+              <input type="text" id="qb-search" class="form-control" placeholder="Search topic or keyword..." oninput="app.renderQuestionBank()">
+              <button class="btn btn-primary" onclick="app.autoGenerateDemoQuestions()"><i class="fa-solid fa-wand-magic-sparkles"></i> Auto Generate Demo Data</button>
+              <button class="btn btn-secondary" onclick="app.exportQuestionsCSV()"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+            </div>
+            <div style="max-height:500px; overflow-y:auto; background:rgba(0,0,0,0.2); border-radius:12px; padding:10px;">
+              <ul id="admin-question-list" style="list-style:none; padding:0;"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: File Manager -->
+        <div id="admin-panel-files" class="admin-panel">
+          <div class="glass-card">
+            <h3><i class="fa-solid fa-folder-open text-primary"></i> File Manager — Export & Import</h3>
+            <p class="text-muted" style="font-size:14px; margin-bottom:16px;">
+              Export/import data filtered by grade and format. Files saved to <code>savestates/</code>.
+            </p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="app.showExportModal()">
+                <i class="fa-solid fa-download"></i> Export Data
+              </button>
+              <button class="btn btn-success" onclick="app.showImportModal()">
+                <i class="fa-solid fa-upload"></i> Import File
+              </button>
+              <button class="btn btn-secondary" onclick="app.exportData()">
+                <i class="fa-solid fa-floppy-disk"></i> Quick Backup (JSON)
+              </button>
+              <button class="btn btn-secondary" onclick="document.getElementById('import-file-legacy').click()">
+                <i class="fa-solid fa-file-arrow-up"></i> Quick Restore (JSON)
+              </button>
+              <input type="file" id="import-file-legacy" class="hidden" accept=".json" onchange="app.importData(event)">
+            </div>
+          </div>
+          <div class="glass-card mt-20">
+            <h3><i class="fa-solid fa-database text-primary"></i> Database Sync</h3>
+            <p class="text-muted" style="font-size:14px; margin-bottom:12px;">Sync local state with XAMPP MySQL database.</p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="app.syncToCloud()"><i class="fa-solid fa-cloud-arrow-up"></i> Push to Database</button>
+              <button class="btn btn-secondary" onclick="app.restoreFromCloud()"><i class="fa-solid fa-cloud-arrow-down"></i> Pull from Database</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: E-Class Record Export -->
+        <div id="admin-panel-eclass" class="admin-panel">
+          <div class="glass-card">
+            <h3><i class="fa-solid fa-file-csv text-primary"></i> DepEd E-Class Record Export</h3>
+            <p class="text-muted" style="font-size:14px; margin-bottom:16px;">
+              Export student grades following DepEd Order 8, s. 2015 format.<br>
+              Weights: Written Work 40% | Performance Task 40% | Quarterly Assessment 20%
+            </p>
+            <div class="eclass-controls">
+              <div class="form-group">
+                <label>Grade</label>
+                <select id="eclass-grade" class="form-control">
+                  <option value="all">All Grades</option>
+                  <option value="3">Grade 3</option>
+                  <option value="4">Grade 4</option>
+                  <option value="5">Grade 5</option>
+                  <option value="6">Grade 6</option>
+                  <option value="7">Grade 7</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Section</label>
+                <select id="eclass-section" class="form-control">
+                  <option value="A">Section A</option>
+                  <option value="B">Section B</option>
+                  <option value="C">Section C</option>
+                  <option value="D">Section D</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Quarter</label>
+                <select id="eclass-quarter" class="form-control">
+                  <option value="1">Quarter 1</option>
+                  <option value="2">Quarter 2</option>
+                  <option value="3">Quarter 3</option>
+                  <option value="4">Quarter 4</option>
+                </select>
+              </div>
+              <button class="btn btn-success" onclick="app.downloadEClassRecord()">
+                <i class="fa-solid fa-file-arrow-down"></i> Download CSV
+              </button>
+            </div>
+            <div id="eclass-preview" style="background:rgba(0,0,0,0.3); border-radius:12px; padding:16px; max-height:400px; overflow:auto; display:none;">
+              <table class="user-table" id="eclass-preview-table">
+                <thead id="eclass-preview-head"></thead>
+                <tbody id="eclass-preview-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: Settings -->
+        <div id="admin-panel-settings" class="admin-panel">
+          <div class="glass-card">
+            <h3><i class="fa-solid fa-sliders text-primary"></i> System Settings</h3>
+            <div class="form-group mt-20">
+              <label>Default Points per Difficulty</label>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <div style="flex:1;"><label>Easy</label><input type="number" id="admin-easy-pts" class="form-control" value="1"></div>
+                <div style="flex:1;"><label>Medium</label><input type="number" id="admin-medium-pts" class="form-control" value="3"></div>
+                <div style="flex:1;"><label>Hard</label><input type="number" id="admin-hard-pts" class="form-control" value="5"></div>
+              </div>
+              <button class="btn btn-success mt-10" onclick="app.saveSystemSettings()">Save Settings</button>
+            </div>
+          </div>
+          <div class="glass-card mt-20">
+            <h3><i class="fa-solid fa-chart-bar text-primary"></i> Aggregated Reports</h3>
+            <div class="form-group mt-10">
+              <label>Grade Filter</label>
+              <select id="admin-report-grade" class="form-control" style="max-width:200px;">
+                <option value="all">All Grades</option>
+                <option value="3">Grade 3</option>
+                <option value="4">Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+              </select>
+              <button class="btn btn-primary mt-10" onclick="app.generateReport()"><i class="fa-solid fa-file-export"></i> Generate Report</button>
+            </div>
+            <div id="admin-report-output" class="mt-20" style="background:rgba(0,0,0,0.3); padding:16px; border-radius:12px; max-height:300px; overflow-y:auto; font-family:monospace; font-size:14px; display:none;"></div>
+          </div>
+          <div class="glass-card mt-20">
+            <h3><i class="fa-solid fa-robot text-primary"></i> AI Settings</h3>
+            <p class="text-muted" style="font-size:14px; margin-bottom:14px;">AI features use free-tier APIs (Groq/Gemini) for question generation, explanations, and hints.</p>
+            <div id="ai-admin-status" style="background:rgba(0,0,0,0.2); border-radius:10px; padding:16px; font-size:14px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                <i class="fa-solid fa-spinner fa-spin"></i> Checking AI status...
+              </div>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap;">
+              <button class="btn btn-primary btn-sm" onclick="testAIConnection()"><i class="fa-solid fa-plug"></i> Test Connection</button>
+              <button class="btn btn-secondary btn-sm" onclick="clearAICache()"><i class="fa-solid fa-broom"></i> Clear AI Cache</button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function switchAdminTab(tabName) {
+      document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      document.getElementById('admin-panel-' + tabName).classList.add('active');
+
+      // Trigger data load for the selected tab
+      if (tabName === 'dashboard') app.loadAdminStats();
+      if (tabName === 'users') app.loadAdminUsers();
+      if (tabName === 'questions') app.renderQuestionBank();
+      if (tabName === 'eclass') app.previewEClassRecord();
+      if (tabName === 'settings') { app.loadSystemSettings(); loadAIAdminStatus(); }
+    }
+
+    async function loadAIAdminStatus() {
+      const container = document.getElementById('ai-admin-status');
+      if (!container) return;
+      try {
+        const res = await fetch('ai_api.php?action=status');
+        const data = await res.json();
+        const cacheRes = await fetch('ai_api.php', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({action:'cache_stats'}) });
+        const cacheData = await cacheRes.json();
+        const stats = cacheData.cache_stats || {};
+
+        const statusIcon = data.ai_enabled ? '🟢' : '🔴';
+        const statusText = data.ai_enabled ? 'Connected' : (data.has_key ? 'Disabled' : 'No API Key');
+        container.innerHTML = `
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div><strong>Status:</strong> ${statusIcon} ${statusText}</div>
+            <div><strong>Provider:</strong> ${data.provider || 'None'}</div>
+            <div><strong>Model:</strong> ${data.model || 'N/A'}</div>
+            <div><strong>Language:</strong> ${data.language || 'english'}</div>
+            <div><strong>Rate Limit:</strong> ${data.rate_limit || 10}/min</div>
+            <div><strong>Cached Responses:</strong> ${stats.total || 0}</div>
+          </div>
+          ${!data.has_key ? '<div style="margin-top:10px;padding:8px 12px;background:rgba(239,68,68,0.15);border-radius:8px;color:#fca5a5;font-size:13px;"><i class="fa-solid fa-key"></i> Add your free API key to <code>ai_config.php</code> to enable AI features.</div>' : ''}
+        `;
+      } catch (e) {
+        container.innerHTML = '<div style="color:var(--text-muted);"><i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b;"></i> Could not check AI status. Is XAMPP running?</div>';
+      }
+    }
+
+    async function testAIConnection() {
+      const container = document.getElementById('ai-admin-status');
+      container.innerHTML = '<div><i class="fa-solid fa-spinner fa-spin"></i> Testing AI connection...</div>';
+      await loadAIAdminStatus();
+    }
+
+    async function clearAICache() {
+      if (!confirm('Clear all cached AI responses? This cannot be undone.')) return;
+      try {
+        const res = await fetch('ai_api.php', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({action:'clear_cache'}) });
+        const data = await res.json();
+        alert(data.status === 'success' ? '✅ AI cache cleared!' : '❌ Error: ' + data.message);
+        loadAIAdminStatus();
+      } catch(e) { alert('Failed to clear cache.'); }
+    }
+  </script>
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+</body>
+</html>

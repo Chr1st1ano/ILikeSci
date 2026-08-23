@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Login</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { margin: 0; min-height: 100vh; }
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0f172a 100%);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-page::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%);
+      top: -200px; right: -200px;
+      border-radius: 50%;
+    }
+    .login-page::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(139,92,246,0.1), transparent 70%);
+      bottom: -150px; left: -150px;
+      border-radius: 50%;
+    }
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 48px 36px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+      position: relative;
+      z-index: 2;
+    }
+    .login-brand { text-align: center; margin-bottom: 32px; }
+    .login-brand i { font-size: 56px; color: #3b82f6; display: block; margin-bottom: 12px; }
+    .login-brand h1 { font-size: 36px; font-weight: 800; color: #e2e8f0; margin: 0; }
+    .login-brand p { color: #94a3b8; font-size: 15px; margin-top: 6px; }
+    .login-field { margin-bottom: 18px; }
+    .login-field label { display: block; font-size: 14px; font-weight: 600; color: #94a3b8; margin-bottom: 8px; }
+    .login-field input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      color: #e2e8f0;
+      font-size: 16px;
+      font-family: 'Outfit', sans-serif;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+    .login-field input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    }
+    .login-field input::placeholder { color: #64748b; }
+    .password-wrapper { position: relative; }
+    .password-wrapper .toggle-eye {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: #64748b; cursor: pointer; font-size: 16px; padding: 4px;
+    }
+    .password-wrapper .toggle-eye:hover { color: #3b82f6; }
+    .login-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 8px;
+    }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.4); }
+    .login-btn:active { transform: translateY(0); }
+    .login-error { color: #ef4444; text-align: center; font-size: 14px; margin-top: 12px; display: none; }
+    .login-footer { text-align: center; margin-top: 24px; color: #64748b; font-size: 14px; }
+    .login-footer a { color: #3b82f6; font-weight: 600; text-decoration: none; }
+    .login-footer a:hover { text-decoration: underline; }
+    .login-hint { text-align: center; color: #475569; font-size: 12px; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-box">
+      <div class="login-brand">
+        <i class="fa-solid fa-atom"></i>
+        <h1>ILikeSci</h1>
+        <p>Teacher Portal</p>
+      </div>
+
+      <div class="login-field">
+        <label for="login-user">Username</label>
+        <input type="text" id="login-user" placeholder="Enter your username" autofocus>
+      </div>
+
+      <div class="login-field">
+        <label for="login-pass">Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="login-pass" placeholder="Enter your password">
+          <button type="button" class="toggle-eye" onclick="togglePassword()">
+            <i class="fa-solid fa-eye" id="password-icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <button class="login-btn" onclick="handleLogin()">Login</button>
+      <p class="login-error" id="login-error">Invalid credentials</p>
+
+      <div class="login-footer">
+        <p>Don't have an account?<br>
+        <a href="signup.html">Register a Teacher Profile</a></p>
+      </div>
+
+      <p class="login-hint">Press Enter to login</p>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const input = document.getElementById('login-pass');
+      const icon = document.getElementById('password-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    // Enter key to login
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleLogin();
+    });
+
+    async function handleLogin() {
+      const user = document.getElementById('login-user').value.trim().toLowerCase();
+      const pass = document.getElementById('login-pass').value;
+      const errEl = document.getElementById('login-error');
+
+      if (!user || !pass) {
+        errEl.style.display = 'block';
+        errEl.textContent = 'Please enter both username and password.';
+        return;
+      }
+
+      // Authenticate via database only (no hardcoded users)
+      try {
+        const res = await fetch('auth.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: user, password: pass })
+        });
+        const data = await res.json();
+        if (data.status === 'success') {
+          loginSuccess(user, data.user.display_name || user, data.user.role);
+          return;
+        } else {
+          errEl.style.display = 'block';
+          errEl.textContent = data.message || 'Invalid username or password.';
+        }
+      } catch(e) {
+        errEl.style.display = 'block';
+        errEl.textContent = 'Cannot connect to the server. Make sure XAMPP MySQL is running.';
+      }
+    }
+
+    async function loginSuccess(username, displayName, role) {
+      // Set login state — MUST use same key as app.js ('ilikesci_hybrid_state')
+      let state = {};
+      const saved = localStorage.getItem('ilikesci_hybrid_state');
+      if (saved) {
+        try { state = JSON.parse(saved); } catch(e) { state = {}; }
+      }
+      state.isLoggedIn = true;
+      state.currentUser = username;
+      state.currentRole = role || 'teacher';
+      if (!state.profile) state.profile = {};
+      state.profile.name = displayName || username.charAt(0).toUpperCase() + username.slice(1);
+
+      // Load per-user profile from database (avatar, bio, border)
+      try {
+        const profRes = await fetch('profile_api.php?username=' + encodeURIComponent(username));
+        const profData = await profRes.json();
+        if (profData.status === 'success' && profData.profile) {
+          const p = profData.profile;
+          if (p.display_name) state.profile.name = p.display_name;
+          if (p.bio) state.profile.bio = p.bio;
+          if (p.avatar_data) state.profile.picture = p.avatar_data;
+          if (p.border_style) state.profile.border = p.border_style;
+        }
+      } catch(e) { /* offline — use localStorage fallback */ }
+
+      localStorage.setItem('ilikesci_hybrid_state', JSON.stringify(state));
+      window.location.href = 'index.html';
+    }
+
+    // If already logged in, redirect to dashboard
+    // Also clean up stale 'ilikesci_state' key from old versions
+    (function() {
+      // Migrate old key to new key if needed
+      const oldKey = localStorage.getItem('ilikesci_state');
+      if (oldKey) {
+        try {
+          const oldState = JSON.parse(oldKey);
+          // If old key has login state but new key doesn't exist, migrate
+          const newKey = localStorage.getItem('ilikesci_hybrid_state');
+          if (!newKey && oldState.isLoggedIn) {
+            localStorage.setItem('ilikesci_hybrid_state', oldKey);
+          }
+          // Clear old key to prevent future confusion
+          localStorage.removeItem('ilikesci_state');
+        } catch(e) {
+          localStorage.removeItem('ilikesci_state');
+        }
+      }
+
+      // Anti-flicker: detect redirect loop
+      const loopGuard = sessionStorage.getItem('ilikesci_login_guard');
+      const now = Date.now();
+      if (loopGuard && (now - parseInt(loopGuard)) < 2000) {
+        // We were here less than 2 seconds ago — stop redirecting
+        console.warn('ILikeSci: Redirect loop detected, staying on login page.');
+        return;
+      }
+
+      const saved = localStorage.getItem('ilikesci_hybrid_state');
+      if (saved) {
+        try {
+          const state = JSON.parse(saved);
+          if (state.isLoggedIn === true) {
+            sessionStorage.setItem('ilikesci_login_guard', now.toString());
+            window.location.href = 'index.html';
+          }
+        } catch(e) {}
+      }
+    })();
+  </script>
+</body>
+</html>

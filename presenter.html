@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ILikeSci — Lesson Presenter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark: #0f0f1a;
+      --bg-card: #1a1a2e;
+      --bg-slide: #16213e;
+      --accent: #4361ee;
+      --accent-glow: #4cc9f0;
+      --text: #edf2f4;
+      --text-muted: #8d99ae;
+      --success: #06d6a0;
+      --warning: #ffd166;
+      --radius: 16px;
+      --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* === TOP BAR === */
+    .presenter-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 24px;
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(67, 97, 238, 0.2);
+      z-index: 100;
+      min-height: 56px;
+    }
+    .presenter-topbar .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 1.1rem;
+    }
+    .presenter-topbar .brand i { color: var(--accent); }
+    .presenter-topbar .lesson-title {
+      font-size: 0.95rem; color: var(--text-muted);
+      max-width: 400px; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .topbar-actions { display: flex; gap: 8px; align-items: center; }
+    .topbar-actions button {
+      background: rgba(67, 97, 238, 0.15);
+      border: 1px solid rgba(67, 97, 238, 0.3);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: var(--transition);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .topbar-actions button:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(67, 97, 238, 0.4);
+    }
+
+    /* === MAIN LAYOUT === */
+    .presenter-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* === SIDEBAR (Slide Thumbnails) === */
+    .slide-sidebar {
+      width: 220px;
+      background: rgba(15, 15, 26, 0.9);
+      border-right: 1px solid rgba(67, 97, 238, 0.15);
+      overflow-y: auto;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: var(--transition);
+    }
+    .slide-sidebar.collapsed { width: 0; padding: 0; overflow: hidden; }
+
+    .slide-thumb {
+      background: var(--bg-card);
+      border: 2px solid transparent;
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+    .slide-thumb:hover { border-color: rgba(67, 97, 238, 0.5); transform: scale(1.02); }
+    .slide-thumb.active {
+      border-color: var(--accent);
+      background: rgba(67, 97, 238, 0.15);
+      box-shadow: 0 0 20px rgba(67, 97, 238, 0.2);
+    }
+    .slide-thumb .thumb-number {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .slide-thumb .thumb-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* === SLIDE CANVAS === */
+    .slide-canvas-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      background: radial-gradient(ellipse at center, rgba(67, 97, 238, 0.06) 0%, transparent 70%);
+    }
+
+    .slide-canvas {
+      width: 100%;
+      max-width: 1120px;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-slide);
+      border-radius: var(--radius);
+      box-shadow:
+        0 0 0 1px rgba(67, 97, 238, 0.2),
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 80px rgba(67, 97, 238, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      animation: slideIn 0.5s ease-out;
+    }
+
+    .slide-canvas.image-mode {
+      padding: 0 !important;
+      background: #000;
+      aspect-ratio: auto;
+      max-height: calc(100vh - 160px);
+    }
+
+    .slide-canvas img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: var(--radius);
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: high-quality;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    body.fullscreen-mode .slide-canvas.image-mode {
+      max-height: 100vh;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    body.fullscreen-mode .slide-canvas img {
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .slide-canvas::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-glow), var(--success));
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .slide-title {
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--text), var(--accent-glow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    .slide-content {
+      font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+      line-height: 1.8;
+      color: var(--text-muted);
+      max-width: 700px;
+      white-space: pre-line;
+    }
+
+    .slide-number-badge {
+      position: absolute;
+      bottom: 20px;
+      right: 24px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: rgba(0,0,0,0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    /* === OBJECTIVES SLIDE === */
+    .objectives-list {
+      text-align: left;
+      list-style: none;
+      max-width: 600px;
+    }
+    .objectives-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+      color: var(--text-muted);
+    }
+    .objectives-list li i {
+      color: var(--success);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    /* === NAV ARROWS === */
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(67, 97, 238, 0.2);
+      border: 1px solid rgba(67, 97, 238, 0.3);
+      color: var(--text);
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: var(--transition);
+      z-index: 10;
+    }
+    .nav-arrow:hover {
+      background: var(--accent);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 0 30px rgba(67, 97, 238, 0.5);
+    }
+    .nav-arrow.prev { left: 20px; }
+    .nav-arrow.next { right: 20px; }
+    .nav-arrow:disabled { opacity: 0.3; pointer-events: none; }
+
+    /* === PROGRESS BAR === */
+    .progress-bar-container {
+      width: 100%;
+      max-width: 960px;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .progress-track {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-glow));
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    .progress-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* === TIMER === */
+    .timer-display {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* === FULLSCREEN OVERRIDES === */
+    body.fullscreen-mode .presenter-topbar { display: none; }
+    body.fullscreen-mode .slide-sidebar { display: none; }
+    body.fullscreen-mode .slide-canvas-area { padding: 0; }
+    body.fullscreen-mode .slide-canvas {
+      max-width: 100%;
+      height: 100vh;
+      border-radius: 0;
+      aspect-ratio: auto;
+    }
+
+    /* === MOBILE === */
+    @media (max-width: 768px) {
+      .slide-sidebar { width: 0; padding: 0; overflow: hidden; }
+      .slide-canvas { padding: 30px 24px; }
+      .nav-arrow { width: 36px; height: 36px; font-size: 0.9rem; }
+      .nav-arrow.prev { left: 8px; }
+      .nav-arrow.next { right: 8px; }
+      .topbar-actions button span { display: none; }
+    }
+
+    /* === RECITATION DRAWER === */
+    .recitation-drawer {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 390px;
+      background: rgba(26, 26, 46, 0.98);
+      border: 1px solid rgba(6, 214, 160, 0.4);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(6, 214, 160, 0.15);
+      z-index: 9999;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .recitation-drawer.hidden {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      pointer-events: none;
+    }
+    .rec-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .rec-close-btn {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 1.1rem; cursor: pointer; transition: color 0.2s;
+    }
+    .rec-close-btn:hover { color: #fff; }
+    .rec-select {
+      background: rgba(15, 15, 26, 0.9);
+      border: 1px solid rgba(67, 97, 238, 0.3);
+      color: #fff;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .btn-fair-pick {
+      background: linear-gradient(135deg, #06d6a0, #118ab2);
+      border: none; color: #fff;
+      padding: 9px 14px; border-radius: 10px;
+      font-weight: 600; font-size: 0.82rem;
+      cursor: pointer; white-space: nowrap;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-fair-pick:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(6, 214, 160, 0.3);
+    }
+    .rec-score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .rec-score-btn {
+      border: none; padding: 10px 8px;
+      border-radius: 8px; font-weight: 600;
+      font-size: 0.8rem; cursor: pointer;
+      color: #fff; transition: transform 0.15s;
+      text-align: center;
+    }
+    .rec-score-btn:hover { transform: translateY(-2px); }
+    .rec-score-btn.s5 { background: linear-gradient(135deg, #10b981, #059669); }
+    .rec-score-btn.s4 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .rec-score-btn.s3 { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+    .rec-score-btn.s2 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .rec-score-btn.s1 { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .rec-score-btn.s0 { background: rgba(255, 255, 255, 0.1); color: var(--text-muted); }
+
+    /* === LOADING === */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      height: 100%;
+    }
+    .loading-spinner {
+      width: 48px; height: 48px;
+      border: 3px solid rgba(67, 97, 238, 0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="presenter-topbar">
+    <div class="brand">
+      <i class="fa-solid fa-atom fa-lg"></i>
+      <span>ILikeSci</span>
+      <span class="lesson-title" id="lesson-title">Loading lesson...</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="timer-display" id="timer">
+        <i class="fa-regular fa-clock"></i>
+        <span id="timer-value">00:00</span>
+      </div>
+      <button id="mode-toggle-btn" onclick="togglePresentationViewMode()" style="background:rgba(255,209,102,0.15);border-color:rgba(255,209,102,0.4);color:#ffd166;" title="Switch between Visual (PPTX/Canva) and Text Mode (T)">
+        <i class="fa-solid fa-file-image" id="mode-toggle-icon"></i>
+        <span id="mode-toggle-text">Visual Mode</span>
+      </button>
+      <button onclick="toggleRecitationDrawer()" style="background:rgba(6,214,160,0.15);border-color:rgba(6,214,160,0.4);color:#06d6a0;" title="Live Recitation (R)">
+        <i class="fa-solid fa-hand-sparkles"></i>
+        <span>Recitation</span>
+      </button>
+      <button onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+        <span>Slides</span>
+      </button>
+      <button onclick="toggleFullscreen()">
+        <i class="fa-solid fa-expand"></i>
+        <span>Fullscreen</span>
+      </button>
+      <button onclick="presenterAIExplain()" style="background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.3);" title="AI Explain (E)">
+        <i class="fa-solid fa-robot"></i>
+        <span>Explain</span>
+      </button>
+      <button onclick="window.location.href='lessons.html'" style="border-color: rgba(255,100,100,0.3);">
+        <i class="fa-solid fa-xmark"></i>
+        <span>Exit</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="presenter-body">
+    <!-- Sidebar -->
+    <div class="slide-sidebar" id="slide-sidebar"></div>
+
+    <!-- Slide Canvas -->
+    <div class="slide-canvas-area">
+      <button class="nav-arrow prev" id="btn-prev" onclick="prevSlide()">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+
+      <div class="slide-canvas" id="slide-canvas">
+        <div class="loading-state">
+          <div class="loading-spinner"></div>
+          <p style="color: var(--text-muted);">Loading presentation...</p>
+        </div>
+      </div>
+
+      <button class="nav-arrow next" id="btn-next" onclick="nextSlide()">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <div class="progress-bar-container" id="progress-container">
+        <span class="progress-label" id="progress-label">0 / 0</span>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let slides = [];
+    let currentSlide = 0;
+    let timerInterval = null;
+    let elapsedSeconds = 0;
+    let lessonMeta = {};
+    let isImageMode = false; // true when showing PPTX slide images
+
+    // Parse URL params
+    const params = new URLSearchParams(window.location.search);
+    const lessonId = params.get('id');
+    const pptxId = params.get('pptx');
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        elapsedSeconds++;
+        const m = String(Math.floor(elapsedSeconds / 60)).padStart(2, '0');
+        const s = String(elapsedSeconds % 60).padStart(2, '0');
+        document.getElementById('timer-value').textContent = `${m}:${s}`;
+      }, 1000);
+    }
+
+    // === PPTX Image Mode: Load from pptx_api.php ===
+    async function loadPPTXPresentation() {
+      if (!pptxId) return;
+      try {
+        const res = await fetch(`pptx_api.php?action=slides&id=${pptxId}`);
+        const data = await res.json();
+        if (data.status !== 'success' || !data.slides || data.slides.length === 0) {
+          showError('No slides found for this presentation.');
+          return;
+        }
+
+        isImageMode = data.has_images;
+        updateModeToggleButton();
+        slides = data.slides.map(s => ({
+          slide_number: s.slide_number,
+          type: s.type,
+          image_url: s.image_url || null,
+          title: s.title || `Slide ${s.slide_number}`,
+          content: s.content || '',
+          slide_type: s.slide_type || 'content'
+        }));
+
+        const upload = data.upload || {};
+        const titleText = upload.topic || upload.original_name || `Presentation #${pptxId}`;
+        const gradeText = upload.grade ? `Grade ${upload.grade}` : '';
+        document.getElementById('lesson-title').textContent =
+          gradeText ? `${gradeText} — ${titleText}` : titleText;
+
+        // Preload first few images for smooth start
+        if (isImageMode) {
+          slides.slice(0, 3).forEach(s => {
+            if (s.image_url) { const img = new Image(); img.src = s.image_url; }
+          });
+        }
+
+        renderSidebar();
+        goToSlide(0);
+        startTimer();
+      } catch (e) {
+        console.error('PPTX load error:', e);
+        showError('Could not load presentation. Make sure XAMPP is running.');
+      }
+    }
+
+    // === Text Mode: Load from lessons_api.php (existing behavior) ===
+    async function loadLesson() {
+      if (!lessonId) {
+        showError('No lesson ID provided. Go back and select a lesson.');
+        return;
+      }
+      try {
+        const lessonsRes = await fetch(`lessons_api.php?grade=`);
+        const lessonsData = await lessonsRes.json();
+        if (lessonsData.status === 'success') {
+          lessonMeta = lessonsData.lessons.find(l => l.id == lessonId) || {};
+        }
+
+        const slidesRes = await fetch(`lessons_api.php?slides=${lessonId}`);
+        const slidesData = await slidesRes.json();
+        if (slidesData.status === 'success' && slidesData.slides.length > 0) {
+          slides = slidesData.slides.map(s => ({
+            title: s.title,
+            content: s.content,
+            type: s.slide_type || 'content'
+          }));
+        } else if (lessonMeta.topic) {
+          slides = generateSlidesFromLesson(lessonMeta);
+        } else {
+          showError('No slides found for this lesson.');
+          return;
+        }
+
+        document.getElementById('lesson-title').textContent =
+          lessonMeta.topic ? `Grade ${lessonMeta.grade} — ${lessonMeta.topic}` : `Lesson #${lessonId}`;
+        renderSidebar();
+        goToSlide(0);
+        startTimer();
+      } catch (e) {
+        console.error('Load error:', e);
+        showError('Could not load lesson. Make sure XAMPP is running.');
+      }
+    }
+
+    function generateSlidesFromLesson(lesson) {
+      const result = [];
+      result.push({ title: lesson.topic, content: `Grade ${lesson.grade} — Quarter ${lesson.quarter}\nLesson ${lesson.lesson_number}`, type: 'title' });
+      if (lesson.objectives && lesson.objectives.length > 0)
+        result.push({ title: 'Learning Objectives', content: lesson.objectives, type: 'objectives' });
+      if (lesson.content) {
+        lesson.content.split('\n\n').filter(p => p.trim()).forEach((para, idx) => {
+          result.push({ title: idx === 0 ? 'Key Concepts' : `Concept ${idx + 1}`, content: para.trim(), type: 'content' });
+        });
+      }
+      if (lesson.questions && lesson.questions.length > 0)
+        result.push({ title: 'Review Questions', content: lesson.questions, type: 'questions' });
+      result.push({ title: 'End of Lesson', content: `Great job reviewing ${lesson.topic}!\n\nPress ESC or click Exit to return.`, type: 'end' });
+      return result;
+    }
+
+    function showError(msg) {
+      document.getElementById('slide-canvas').innerHTML = `
+        <div style="text-align:center;">
+          <i class="fa-solid fa-triangle-exclamation" style="font-size:3rem; color:var(--warning); margin-bottom:16px;"></i>
+          <p style="color:var(--text-muted); font-size:1.1rem;">${msg}</p>
+          <button onclick="window.location.href='lessons.html'" style="margin-top:20px; padding:10px 24px; background:var(--accent); border:none; color:#fff; border-radius:10px; cursor:pointer; font-size:1rem;">
+            <i class="fa-solid fa-arrow-left"></i> Back to Lessons
+          </button>
+        </div>
+      `;
+    }
+
+    // Render sidebar thumbnails
+    function renderSidebar() {
+      const sidebar = document.getElementById('slide-sidebar');
+      sidebar.innerHTML = '';
+      slides.forEach((slide, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = `slide-thumb ${idx === currentSlide ? 'active' : ''}`;
+        if (isImageMode && slide.image_url) {
+          // Image thumbnail
+          thumb.innerHTML = `
+            <div class="thumb-number">Slide ${idx + 1}</div>
+            <img src="${slide.image_url}" style="width:100%;border-radius:6px;margin-top:4px;" loading="lazy" alt="Slide ${idx+1}">
+          `;
+        } else {
+          thumb.innerHTML = `
+            <div class="thumb-number">Slide ${idx + 1}</div>
+            <div class="thumb-title">${slide.title}</div>
+          `;
+        }
+        thumb.onclick = () => goToSlide(idx);
+        sidebar.appendChild(thumb);
+      });
+    }
+
+    // Navigate to slide
+    function goToSlide(idx) {
+      if (idx < 0 || idx >= slides.length) return;
+      currentSlide = idx;
+      const slide = slides[currentSlide];
+      const canvas = document.getElementById('slide-canvas');
+
+      canvas.style.animation = 'none';
+      canvas.offsetHeight;
+      canvas.style.animation = 'slideIn 0.4s ease-out';
+
+      // === IMAGE MODE: Show slide as full image ===
+      if (isImageMode && slide.image_url) {
+        canvas.style.padding = '0';
+        canvas.innerHTML = `
+          <img src="${slide.image_url}"
+               style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius);"
+               alt="Slide ${currentSlide + 1}"
+               draggable="false">
+          <div class="slide-number-badge">${currentSlide + 1} / ${slides.length}</div>
+        `;
+        // Preload next 2 slides
+        for (let p = 1; p <= 2; p++) {
+          const next = slides[currentSlide + p];
+          if (next && next.image_url) { const img = new Image(); img.src = next.image_url; }
+        }
+      } else {
+        // === TEXT MODE: Existing behavior ===
+        canvas.style.padding = '60px 80px';
+        let contentHTML = '';
+        if (slide.type === 'objectives' && Array.isArray(slide.content)) {
+          contentHTML = `<ul class="objectives-list">` +
+            slide.content.map(obj => `<li><i class="fa-solid fa-check-circle"></i> ${obj}</li>`).join('') + `</ul>`;
+        } else if (slide.type === 'questions' && Array.isArray(slide.content)) {
+          contentHTML = `<ul class="objectives-list">` +
+            slide.content.map(q => `<li><i class="fa-solid fa-circle-question" style="color:var(--warning)"></i> ${typeof q === 'string' ? q : q.question || q}</li>`).join('') + `</ul>`;
+        } else {
+          contentHTML = `<div class="slide-content">${typeof slide.content === 'string' ? slide.content : ''}</div>`;
+        }
+        canvas.innerHTML = `
+          <h1 class="slide-title">${slide.title}</h1>
+          ${contentHTML}
+          <div class="slide-number-badge">${currentSlide + 1} / ${slides.length}</div>
+        `;
+      }
+
+      // Update progress
+      const pct = ((currentSlide + 1) / slides.length) * 100;
+      document.getElementById('progress-fill').style.width = `${pct}%`;
+      document.getElementById('progress-label').textContent = `${currentSlide + 1} / ${slides.length}`;
+
+      // Update nav arrows
+      document.getElementById('btn-prev').disabled = currentSlide === 0;
+      document.getElementById('btn-next').disabled = currentSlide === slides.length - 1;
+
+      // Update sidebar
+      document.querySelectorAll('.slide-thumb').forEach((el, i) => {
+        el.classList.toggle('active', i === currentSlide);
+        if (i === currentSlide) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    }
+
+    function nextSlide() { goToSlide(currentSlide + 1); }
+    function prevSlide() { goToSlide(currentSlide - 1); }
+
+    function toggleSidebar() {
+      document.getElementById('slide-sidebar').classList.toggle('collapsed');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+        document.body.classList.add('fullscreen-mode');
+      } else {
+        document.exitFullscreen();
+        document.body.classList.remove('fullscreen-mode');
+      }
+    }
+
+    // AI Explain for presenter (standalone — doesn't use app.js)
+    async function presenterAIExplain() {
+      const existing = document.getElementById('ai-explain-panel');
+      if (existing) { existing.remove(); return; }
+
+      const slide = slides[currentSlide];
+      if (!slide) return;
+
+      const topic = slide.title || '';
+      const slideText = typeof slide.content === 'string' ? slide.content : '';
+      const lessonTitle = document.getElementById('lesson-title').textContent || '';
+      const gradeMatch = lessonTitle.match(/Grade\s*(\d)/i);
+      const grade = gradeMatch ? gradeMatch[1] : '4';
+
+      const panel = document.createElement('div');
+      panel.id = 'ai-explain-panel';
+      panel.style.cssText = 'position:fixed;bottom:0;right:0;width:380px;max-height:60vh;background:rgba(26,26,46,0.98);border:1px solid rgba(139,92,246,0.3);border-radius:16px 0 0 0;padding:20px;overflow-y:auto;z-index:9999;box-shadow:-4px -4px 20px rgba(0,0,0,0.5);';
+      panel.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:20px;"><div class="loading-spinner" style="width:32px;height:32px;margin:0 auto 12px;"></div>AI is generating explanation...</div>';
+      document.body.appendChild(panel);
+
+      try {
+        const res = await fetch('ai_api.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'explain_topic', topic, grade, slide_text: slideText })
+        });
+        const data = await res.json();
+        const explanation = data.status === 'success' ? data.explanation : (slideText || 'Could not generate explanation.');
+        const srcIcon = data.source === 'ai' ? '🤖' : data.source === 'cache' ? '💾' : '📄';
+        panel.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <span style="font-size:13px;color:var(--text-muted);">${srcIcon} AI Explanation</span>
+            <button onclick="document.getElementById('ai-explain-panel').remove()" style="background:none;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div style="font-size:15px;line-height:1.7;color:var(--text);white-space:pre-wrap;">${explanation}</div>`;
+      } catch (e) {
+        panel.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <span style="font-size:13px;color:var(--text-muted);">📄 Slide Content</span>
+            <button onclick="document.getElementById('ai-explain-panel').remove()" style="background:none;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div style="font-size:15px;line-height:1.7;color:var(--text);white-space:pre-wrap;">${slideText || topic || 'No content available'}</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:10px;">⚠️ AI unavailable — showing raw slide text</div>`;
+      }
+    }
+
+    // === RECITATION DRAWER LOGIC ===
+    let recitationStudents = [];
+
+    function toggleRecitationDrawer() {
+      const drawer = document.getElementById('recitation-drawer');
+      if (!drawer) return;
+      drawer.classList.toggle('hidden');
+      if (!drawer.classList.contains('hidden') && recitationStudents.length === 0) {
+        loadRecitationStudents();
+      }
+    }
+
+    async function loadRecitationStudents() {
+      try {
+        const res = await fetch('student_api.php');
+        const data = await res.json();
+        if (data.status === 'success' && Array.isArray(data.students)) {
+          recitationStudents = data.students;
+          populateRecitationDropdown();
+        }
+      } catch (e) {
+        console.error('Failed to load students for recitation:', e);
+      }
+    }
+
+    function populateRecitationDropdown() {
+      const sel = document.getElementById('rec-student-select');
+      if (!sel) return;
+      sel.innerHTML = '';
+
+      if (recitationStudents.length === 0) {
+        const opt = document.createElement('option');
+        opt.value = '';
+        opt.textContent = '-- No students registered --';
+        sel.appendChild(opt);
+        return;
+      }
+
+      recitationStudents.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = `${s.name} (${s.recitations || 0} recs · ${s.score || 0} pts)`;
+        sel.appendChild(opt);
+      });
+
+      updateSelectedStudentInfo();
+      sel.onchange = updateSelectedStudentInfo;
+    }
+
+    function updateSelectedStudentInfo() {
+      const sel = document.getElementById('rec-student-select');
+      const info = document.getElementById('rec-selected-name');
+      if (!sel || !info) return;
+      const idx = sel.selectedIndex;
+      if (idx >= 0 && sel.options[idx]) {
+        info.textContent = sel.options[idx].textContent;
+      } else {
+        info.textContent = 'None';
+      }
+    }
+
+    function fairPickStudent() {
+      if (recitationStudents.length === 0) return;
+      const sorted = [...recitationStudents].sort((a, b) => (a.recitations || 0) - (b.recitations || 0));
+      const candidates = sorted.filter(s => (s.recitations || 0) === (sorted[0].recitations || 0));
+      const picked = candidates[Math.floor(Math.random() * candidates.length)];
+
+      const sel = document.getElementById('rec-student-select');
+      if (sel && picked) {
+        sel.value = picked.id;
+        updateSelectedStudentInfo();
+        showToast(`🎯 Fair Pick: ${picked.name}`);
+      }
+    }
+
+    async function submitRecitationScore(pts) {
+      const sel = document.getElementById('rec-student-select');
+      if (!sel || !sel.value) {
+        alert('Please select a student first.');
+        return;
+      }
+
+      const studentId = sel.value;
+      const studentObj = recitationStudents.find(s => s.id == studentId);
+      const studentName = studentObj ? studentObj.name : 'Student';
+      const topicName = (document.getElementById('lesson-title').textContent || 'Recitation').replace(/^Grade\s*\d\s*—\s*/i, '');
+
+      try {
+        const res = await fetch('recitation_api.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            student_id: studentId,
+            topic: topicName,
+            difficulty: pts >= 4 ? 'Hard' : pts >= 3 ? 'Medium' : 'Easy',
+            points: pts,
+            is_correct: pts > 0 ? 1 : 0
+          })
+        });
+        const data = await res.json();
+        if (data.status === 'success') {
+          showToast(`✅ +${pts} pts awarded to ${studentName}!`);
+          if (studentObj) {
+            studentObj.recitations = (studentObj.recitations || 0) + 1;
+            studentObj.score = (studentObj.score || 0) + pts;
+          }
+          populateRecitationDropdown();
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch (e) {
+        alert('Failed to record score. Network error.');
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.createElement('div');
+      t.style.cssText = 'position:fixed;top:80px;right:20px;background:rgba(6,214,160,0.95);color:#000;padding:12px 20px;border-radius:10px;font-weight:700;z-index:99999;box-shadow:0 10px 30px rgba(0,0,0,0.4);animation:slideIn 0.3s ease;';
+      t.textContent = msg;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2500);
+    }
+
+    function togglePresentationViewMode() {
+      isImageMode = !isImageMode;
+      updateModeToggleButton();
+      renderSidebar();
+      goToSlide(currentSlide);
+      const modeName = isImageMode ? 'Visual Mode (PPTX / Canva)' : 'Structured Text Mode';
+      showToast(`📱 Switched to ${modeName}`);
+    }
+
+    function updateModeToggleButton() {
+      const btn = document.getElementById('mode-toggle-btn');
+      const icon = document.getElementById('mode-toggle-icon');
+      const text = document.getElementById('mode-toggle-text');
+      if (!btn || !icon || !text) return;
+
+      if (isImageMode) {
+        icon.className = 'fa-solid fa-file-image';
+        text.textContent = 'Visual Mode';
+        btn.style.borderColor = 'rgba(6, 214, 160, 0.4)';
+        btn.style.color = '#06d6a0';
+        btn.style.background = 'rgba(6, 214, 160, 0.15)';
+      } else {
+        icon.className = 'fa-solid fa-align-left';
+        text.textContent = 'Text Mode';
+        btn.style.borderColor = 'rgba(255, 209, 102, 0.4)';
+        btn.style.color = '#ffd166';
+        btn.style.background = 'rgba(255, 209, 102, 0.15)';
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      // Don't trigger shortcuts if focus is inside dropdown or input
+      if (['input', 'select', 'textarea'].includes(document.activeElement.tagName.toLowerCase())) return;
+
+      switch(e.key) {
+        case 'ArrowRight': case ' ': e.preventDefault(); nextSlide(); break;
+        case 'ArrowLeft': e.preventDefault(); prevSlide(); break;
+        case 'Escape':
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+            document.body.classList.remove('fullscreen-mode');
+          } else {
+            const drawer = document.getElementById('recitation-drawer');
+            if (drawer && !drawer.classList.contains('hidden')) drawer.classList.add('hidden');
+          }
+          break;
+        case 'f': case 'F': toggleFullscreen(); break;
+        case 's': case 'S': toggleSidebar(); break;
+        case 'e': case 'E': presenterAIExplain(); break;
+        case 'r': case 'R': toggleRecitationDrawer(); break;
+        case 't': case 'T': togglePresentationViewMode(); break;
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) document.body.classList.remove('fullscreen-mode');
+    });
+
+    // Initialize — choose mode based on URL params
+    if (pptxId) {
+      loadPPTXPresentation();
+    } else {
+      loadLesson();
+    }
+    loadRecitationStudents();
+  </script>
+
+  <!-- Live Recitation Drawer -->
+  <div id="recitation-drawer" class="recitation-drawer hidden">
+    <div class="rec-drawer-header">
+      <div style="display:flex;align-items:center;gap:8px;font-weight:700;color:var(--success);">
+        <i class="fa-solid fa-hand-sparkles"></i>
+        <span>Live Class Recitation</span>
+      </div>
+      <button onclick="toggleRecitationDrawer()" class="rec-close-btn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="rec-drawer-body">
+      <label style="font-size:0.8rem;color:var(--text-muted);display:block;margin-bottom:6px;">Select Student for Recitation:</label>
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <select id="rec-student-select" class="rec-select" style="flex:1;"></select>
+        <button onclick="fairPickStudent()" class="btn-fair-pick" title="Pick student with lowest participation">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Fair Pick
+        </button>
+      </div>
+      <div id="rec-student-info" style="font-size:0.8rem;color:var(--accent-glow);margin-bottom:12px;background:rgba(67,97,238,0.1);padding:6px 10px;border-radius:8px;">
+        Selected: <strong id="rec-selected-name">None</strong>
+      </div>
+
+      <label style="font-size:0.8rem;color:var(--text-muted);display:block;margin-bottom:6px;">Award Oral Recitation Score:</label>
+      <div class="rec-score-grid">
+        <button onclick="submitRecitationScore(5)" class="rec-score-btn s5">5 · Outstanding (+5)</button>
+        <button onclick="submitRecitationScore(4)" class="rec-score-btn s4">4 · Very Good (+4)</button>
+        <button onclick="submitRecitationScore(3)" class="rec-score-btn s3">3 · Good (+3)</button>
+        <button onclick="submitRecitationScore(2)" class="rec-score-btn s2">2 · Fair (+2)</button>
+        <button onclick="submitRecitationScore(1)" class="rec-score-btn s1">1 · Needs Work (+1)</button>
+        <button onclick="submitRecitationScore(0)" class="rec-score-btn s0">0 · Pass / Incorrect</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

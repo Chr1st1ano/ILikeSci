@@ -1,0 +1,42 @@
+{
+    "customLessons": [
+        {
+            "title": "Matter",
+            "grade": "4",
+            "slides": [
+                {
+                    "title": "Introduction to Matter",
+                    "content": "Today we will learn about Matter. This is a fundamental concept in Science for Grade 4.",
+                    "mediaType": "image",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Key Concept",
+                    "content": "A detailed explanation of the concept goes here. Remember to use visuals!",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1 | Step 2 | Step 3"
+                }
+            ]
+        }
+    ],
+    "questions": [
+        {
+            "grade": "4",
+            "topic": "Matter",
+            "difficulty": "Easy",
+            "text": "What is the basic definition of Matter?"
+        },
+        {
+            "grade": "4",
+            "topic": "Matter",
+            "difficulty": "Medium",
+            "text": "Explain the process of Matter in your own words."
+        },
+        {
+            "grade": "4",
+            "topic": "Matter",
+            "difficulty": "Hard",
+            "text": "How does Matter affect our daily lives at Central Elementary School?"
+        }
+    ]
+}

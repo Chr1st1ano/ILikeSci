@@ -1,0 +1,1057 @@
+            Republic of the Philippines
+
+Laguna State Polytechnic University
+
+Province of Laguna 
+
+COLLEGE OF COMPUTER STUDIES 
+
+Design and Development of iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at  Bay Central Elementary School
+
+A Capstone Project 
+
+Presented to the Faculty of 
+
+College of Computer Studies 
+
+Laguna State Polytechnic University 
+
+San Pablo City Campus 
+
+San Pablo City 
+
+In Partial Fulfillment 
+
+of the Requirements for the Degree 
+
+Bachelor of Science in Information Technology 
+
+Specialized in Web and Mobile Application Development 
+
+By: 
+
+Abril, John Dondell A.
+
+Millera, Kristine Andrea H.
+
+Olidan, Christian Angelo E. 
+
+July 2026
+
+CHAPTER I
+
+  THE PROJECT AND ITS BACKGROUND
+
+Introduction
+
+Science education is a fundamental component of basic education because it develops learners' critical thinking, inquiry skills, and understanding of natural phenomena. In Grades 3–6, Science subjects introduce more complex and abstract concepts such as ecosystems, force and motion, matter, energy, and Earth systems. These topics require clear explanation, visualization, and meaningful instructional strategies to ensure that learners fully understand scientific ideas.
+
+ However, In many elementary schools, particularly those with limited instructional resources, Science instruction continues to rely primarily on textbooks, printed modules, and teacher-centered discussions.. While these approaches remain useful, they often lack interactivity and visual representation, which are essential for explaining abstract scientific concepts. As a result, teachers may find it challenging to maintain learner engagement and improve conceptual understanding. Specific problems identified in elementary Science classrooms include lack of student interest in Science, limited availability of learning materials, difficulty understanding complex concepts, and lack of experiments or hands-on activities.
+
+With the advancement of educational technology, teachers increasingly rely on various digital instructional materials such as PowerPoint presentations, educational videos from platforms like YouTube, online simulations, and other multimedia resources to enhance classroom instruction. These digital materials help teachers present Science lessons through animations, videos, simulations, and visual demonstrations that make abstract concepts easier to understand. Related literature supports the use of technology in science instruction. Mayer's Cognitive Theory of Multimedia Learning emphasizes that learners understand concepts better when information is presented using both words and visuals rather than text alone  (Mayer, 2019). Similarly, Clark and Mayer (2016) highlight that well-designed multimedia instruction improves learner comprehension and retention. Studies also show that digital teaching materials increase student engagement and help teachers deliver lessons more efficiently by reducing preparation time and providing ready-to-use instructional content.
+
+This study is also aligned with the global call for quality education under the Sustainable Development Goal (SDG) 4: Quality Education, which promotes inclusive and equitable quality education and encourages the use of innovative teaching methods and technology to improve learning outcomes. Integrating digital instructional materials supports this goal by enhancing teacher effectiveness and improving access to quality learning resources.
+
+In response to these educational needs and global learning goals, this study proposes the design and Development of iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at  Bay Central Elementary  School. The system is designed to support effective Science instruction through structured, multimedia-enhanced, and curriculum-based digital lessons supports the delivery and management of curriculum-aligned digital lessons based on the Department of Education MATATAG Curriculum  It will be a teacher-controlled, offline-capable Progressive Web App (PWA) that delivers interactive Science lessons with videos, animations, and gamified activities to engage students and address the identified problems of low interest, limited materials, conceptual difficulty, and lack of experiments. An additional digital recitation assessment feature will also be included to support teachers in tracking student participation and performance.
+
+Project Context
+
+Teaching Science subject requires effective instructional strategies that support learners' understanding of abstract and complex concepts such as matter, energy, force and motion, ecosystems, and Earth systems. In Grades 3–6, pupils are expected to develop deeper scientific thinking, which requires not only verbal explanation but also visual and interactive presentation of lessons.
+
+At Bay Central Elementary School, Science teachers commonly utilize traditional instructional materials such as textbooks, printed modules, teacher-made PowerPoint presentations, and other standalone digital resources. While these materials support classroom instruction, they are often dispersed across different applications and lack interactivity, centralized organization, and integrated assessment features. As a result, teachers spend additional time preparing and switching between resources during lessons, while students have limited opportunities to engage with interactive activities, multimedia content, and structured assessments.  As a result, some scientific concepts remain difficult for learners to fully understand, especially those that require step-by-step demonstration or visual simulation.
+
+Teachers also face challenges such as limited access to updated instructional materials, lack of ready-made interactive content, and time constraints in preparing engaging lesson presentations. These conditions may affect the quality of Science instruction and the level of learner engagement during classroom discussions. Specifically, the following problems have been identified: lack of student interest in Science, limited learning materials, difficulty understanding abstract concepts, and lack of experiments or hands-on activities.
+
+The researchers conducted an interview with Ms. Coney Alcantra Quintos, a Science teacher at Bay Central Elementary School. According to Ms. Quintos, the school has televisions and projectors that teachers already use for showing videos and presentations. However, these devices are not integrated into a structured digital system that provides organized and interactive Science lessons based on the prescribed topics under the MATATAG Curriculum. Teachers currently rely on manually prepared PowerPoint presentations and printed modules, which take time to prepare and often lack the multimedia elements needed to fully engage students.
+
+The school serves a total population of 931 students from Grades 3 to 6. Specifically, Grade 3 has 101 male and 120 female students (221 total); Grade 4 has 102 male and 124 female students (226 total); Grade 5 has 129 male and 123 female students (252 total); and Grade 6 has 107 male and 125 female students (232 total).
+
+To better understand the challenges faced by Science teachers at Bay Central Elementary School, the researchers conducted a survey among four teachers handling Grades 3, 4, 5, and 6. The survey results confirmed that students experience difficulty in understanding Science lessons due to lack of interest, complex topics, limited instructional materials, and lack of student participation. The teachers also identified specific topics under the MATATAG Curriculum where students struggle the most, including Materials, Living Things, Force/Motion/Energy, and Earth and Space.
+
+When asked about their teaching strategies, all four teachers reported using lecture, group activities, multimedia (videos, animations), and recitation. They rated interactive activities and digital tools as the most effective methods for improving student understanding. The teachers also expressed a clear need for a digital system that provides ready-to-use, interactive, and curriculum-aligned Science lessons that can be displayed on the school's existing television or projector.
+
+The proposed iLikeSci system offers several improvements over the traditional PowerPoint-based instruction currently used by teachers at Bay Central Elementary School. Unlike PowerPoint presentations that require teachers to spend hours creating slides and searching for materials, iLikeSci provides ready-to-use curriculum-aligned lessons with videos, animations, and gamified activities. While PowerPoint relies on text and static images, iLikeSci offers interactive multimedia elements that encourage active student participation. In terms of recitation and fairness monitoring, iLikeSci provides digital tracking of student participation and highlights students who have not yet been called, which is not possible with manual recording. The system also works offline through PWA technology, addressing the weak internet connectivity at the school. Overall, iLikeSci reduces teacher preparation time, increases student engagement, and provides automated tracking features that are not available in traditional PowerPoint instruction.
+
+Related literature emphasizes the importance of using multimedia and interactive teaching materials in Science education. According to Mayer's Cognitive Theory of Multimedia Learning, learners understand concepts better when information is presented using both visual and verbal formats (Mayer, 2019). In addition, Clark and Mayer (2016) highlight that well-designed multimedia instruction improves comprehension and retention by reducing cognitive overload and enhancing meaningful learning experiences. Studies also show that web-based instructional systems can improve teaching efficiency by providing organized, accessible, and reusable learning materials.
+
+Furthermore, the United Nations Sustainable Development Goal 4 (SDG 4: Quality Education) promotes inclusive and equitable quality education and encourages the use of innovative and technology-based teaching strategies to improve learning outcomes. The integration of digital instructional systems in classroom instruction supports this goal by enhancing access to quality teaching resources and improving instructional delivery.
+
+In response to these challenges and educational needs, this study proposes the development of iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at  Bay Central Elementary School.  This system aims to provide structured, curriculum-based, and multimedia-enhanced Science lessons that teachers can use during classroom instruction to improve engagement, understanding, and overall teaching effectiveness. The system will be teacher-controlled, offline-capable, and include interactive videos, animations, and gamified activities. An additional digital recitation assessment feature will also be included to support teachers in tracking student participation.
+
+Project Purpose 
+
+This study aims to develop iLikeSci, a teacher-controlled digital platform that supports Science teachers at Bay Central Elementary School in delivering interactive, multimedia-enhanced Science lessons. The system is designed to address the identified challenges in elementary Science instruction, namely: low student engagement in Science lessons, difficulty in understanding abstract scientific concepts, limited access to interactive and curriculum-aligned instructional materials , and limited opportunities for experiments or hands-on activities. 
+
+The system will operate on a teacher's laptop and display instructional content through the school's existing television or projector, eliminating the need for students to use personal devices during classroom instruction. It will serve as a centralized instructional platform where teachers can access curriculum-aligned lessons, locally stored teaching materials such as PowerPoint presentations, PDF files, videos, spreadsheets, and other educational resources through a single interface. Selected online resources, including YouTube links, may also be integrated when internet connectivity is available. By organizing instructional materials in one platform, the system minimizes the need to switch between multiple applications, resulting in a more organized and efficient lesson delivery. The system will be developed as a Progressive Web App (PWA), allowing teachers to access it through a web browser across compatible devices without requiring installation from an app store
+
+The beneficiaries of the proposed project are the following:
+
+To the Science Teachers of Bay Central Elementary School- The system will support teachers by providing a centralized platform that organizes curriculum-aligned Science lessons, PowerPoint presentations, videos, animations, simulations, quizzes, and other instructional resources in one place. Instead of searching through multiple folders, applications, and online platforms during lesson preparation and classroom instruction, teachers can conveniently access organized teaching materials through a single interface. The system also includes a digital recitation assessment module with participation tracking and performance monitoring to help teachers evaluate oral responses, monitor student engagement, and facilitate a more organized and efficient classroom instruction. 
+
+To the Students of Bay Central Elementary School (Grades 3–6)- The system will benefit students by making science learning more engaging and understandable through multimedia elements such as videos, animations and teacher-facilitated classroom activities. Although the system is teacher-controlled, students will have the opportunity to directly interact with the system during supervised classroom sessions by approaching the teacher's laptop one at a time to participate in digital recitations, quizzes and  other interactive learning activities. These features will help students better understand concepts while increasing classroom participation, sustaining their interest in Science.
+
+To Bay Central Elementary School as an Institution- The system will support the school by providing a centralized, technology-enhanced instructional platform that organizes curriculum-aligned teaching materials, multimedia resources, assessments, and classroom participation tools into a single system. By providing centralized access to various instructional resources through a single platform. It aligns with the Department of Education's initiative to integrate technology into teaching and learning and supports the United Nations Sustainable Development Goal 4 (SDG 4) on Quality Education. Furthermore, the system is designed to operate using the school's existing equipment, such as a teacher's laptop, television, or projector, eliminating the need for additional hardware investment. 
+
+To Future Researchers- This project may serve as a reference for researchers developing teacher-centered instructional systems for elementary Science education. The system's features, including the centralized organization of curriculum-aligned teaching materials, multimedia integration, digital recitation assessment, and participation tracking, may provide valuable insights for future studies aimed at improving instructional delivery and classroom management. Future researchers may further enhance the system by incorporating additional interactive features, analytics, or emerging educational technologies to support more effective Science teaching. design, may be adapted or improved upon in future studies
+
+Project Objectives
+
+General Objective
+
+The general objective of this study is to design and develop iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at  Bay Central Elementary School to support effective Science instruction through structured, multimedia-enhanced, and curriculum-based digital lessons.Specific Objectives
+
+This study has the following objectives:
+
+1. To design and develop a teacher-controlled, interactive Science teaching material system that operates on a laptop and displays content on a television or projector for classroom use.
+
+2. To develop a system with the following features:
+
+Lesson delivery module that enables teachers to deliver curriculum-aligned Science lessons for Grades 3 to 6 by integrating imported instructional materials and multimedia resources, such as videos, animations, and interactive visual demonstrations, to support classroom instruction. 
+
+Lesson management module that enables teachers to organize, import, categorize, update, and manage curriculum-aligned instructional materials, including PowerPoint presentations, PDF files, quizzes, and other learning resources. 
+
+Offline Access Module that enables teachers to access locally stored instructional materials, including PowerPoint presentations, PDF files, videos, and assessment records, through a centralized platform without requiring an internet connection. 
+
+ Online Resource Integration Module that enables teachers to supplement offline instructional materials with selected online educational resources when internet connectivity is available. 
+
+Digital Recitation Module that enables teachers to conduct classroom recitations, record student participation, identify active and passive learners, and maintain recitation records. 
+
+Progressive Web App (PWA) capability that allows the system to be accessed on desktop devices through a web browser; and
+
+ Assessment Module that enables teachers to administer quizzes, record student responses, and maintain assessment records. 
+
+3.  To evaluate the system using ISO/IEC 25010 software quality standards in terms of functional suitability, usability, reliability, performance efficiency, and compatibility.
+
+4. To document the developed project for future reference and improvement.
+
+Project Scope and Limitation 
+
+The iLikeSci system is designed as a teacher-controlled platform for delivering multimedia-enhanced Science lessons to students in Grades 3 to 6 at Bay Central Elementary School. The system will operate on a teacher's laptop and display content on a television or projector for the whole class to see. Students will not need personal mobile devices, as the system is intended for classroom presentation use only. The system will be developed as a Progressive Web App (PWA), allowing it to be accessed on desktop devices through a web browser without requiring installation from an app store.
+
+The system includes a lesson delivery module that presents selected curriculum-aligned Science lessons for Grades 3 to 6 using multimedia elements such as videos, animations, and simulations. It also provides interactive visual teaching support with structured lesson flows that enhance traditional classroom instruction (including PowerPoint) by integrating interactive multimedia content. The content follows the Department of Education's MATATAG Curriculum standards for Science. The system features offline functionality, allowing limited materials to be accessed without an internet connection, with optional online synchronization for data backup. As a Progressive Web App (PWA), the system operates through a web browser and supports offline classroom use, with internet connection required only for optional online synchronization and backup. The system also includes a digital recitation assessment module that tracks student participation and recitation performance.. In addition, a fairness control feature uses a rule-based prioritization mechanism during digital recitation. It  monitors each student's participation count throughout the Science class. It tracks the number of times a student has been called for recitation and compares it with the total number of recitations conducted. When multiple students have not yet participated, the system prioritizes those students and recommends them to the teacher for the next recitation. The system does not automatically select a student; instead, it recommends students based on their participation records. The teacher retains full control over the final selection and may choose any student based on classroom needs. This decision-making process promotes equitable participation by prioritizing students who have not yet participated while maintaining teacher control over classroom management. 
+
+There are Three types of users who interact with the system: the teacher, the system administrator, and the student. The Teacher serves as the primary user of the system, operating the platform to deliver curriculum-aligned Science lessons, facilitate interactive classroom activities, manage instructional materials, administer quizzes and digital recitations, utilize the recitation tracking feature to monitor student participation, and access assessment records; the System Administrator, who manages system setup, data backup, and user accounts. Students participate as supervised users during classroom instruction. They do not have individual accounts or independent access to the system using personal devices. Instead, they interact with the system one at a time through the teacher-operated laptop during teacher-facilitated activities such as digital recitations, quizzes and interactive learning exercises.
+
+The developed project has the following limitations. The system is limited to selected Science topics for Grades 3 to 6 under the MATATAG Curriculum, such as those identified for Grade 4, including: chemical properties of materials, changes in materials due to temperature, human body systems, life cycles of animals, food chains, force and motion, properties of magnets, sources and uses of light, sound, and heat energy, types of soil, characteristics of weather, and the Sun's importance to life on Earth. Similar topics for Grades 3, 5, and 6 will be covered based on the corresponding curriculum standards. The system does not cover the entire Science curriculum or other subjects such as Mathematics, English, or Filipino. Students cannot access the system using their own mobile devices, as the system is designed for teacher-controlled, whole-class presentation only. The system's offline functionality allows it to work without the internet, but online synchronization for data backup requires an optional internet connection. The system does not automatically generate lesson content. Instead, teachers use the pre-loaded curriculum-aligned lessons and multimedia materials provided within the system, as well as imported instructional materials such as PowerPoint presentations, PDF files, and videos.  The system does not include live experiment simulations that require real-time interaction; videos and animations will be used as alternatives to hands-on experiments. Interactive features such as videos and animations will play on the television or projector for class viewing. Interactive multimedia content and classroom activities are controlled and facilitated by the teacher through the teacher-operated system, while students participate one at a time during classroom instruction. 
+
+Knowledge Requirementsa. Knowledge about elementary Science content (Grade 3–6), b. Knowledge about assessment design. Knowledge about student data management d Knowledge about participation tracking and fairness strategies e. Knowledge about hybrid system architecture, f. Knowledge about local storage and cloud database integration for data saving and backup g. Knowledge about user roles and access control h. Knowledge about real-time data processing i. Knowledge about basic machine learning or rule-based logic for student selection and participation suggestion j. Knowledge about multimedia integration for interactive learning k.Knowledge about designing teacher-centered classroom presentation toolsl.Knowledge about creating interactive visual teaching materials aligned with the current educational frameworkSystem RequirementsHTMLCSSPHPJavaScriptVisual Studio CodeHardware RequirementsLaptop or desktop computerProjector or TelevisionAn AMD Athlon 3000G or Intel Core i5-650010GB of free disk spacePlanningAnalysisDesignDevelopmentTestingDeployementReviewDesign and Development of iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at  Bay Central Elementary SchoolINPUTPROCESSOUTPUTEvaluationConceptual Model of the Project
+
+Knowledge Requirements
+
+a. Knowledge about elementary Science content (Grade 3–6), 
+
+b. Knowledge about assessment design
+
+. Knowledge about student data management 
+
+d Knowledge about participation tracking and fairness strategies 
+
+e. Knowledge about hybrid system architecture, 
+
+f. Knowledge about local storage and cloud database integration for data saving and backup 
+
+g. Knowledge about user roles and access control 
+
+h. Knowledge about real-time data processing 
+
+i. Knowledge about basic machine learning or rule-based logic for student selection and participation suggestion 
+
+j. Knowledge about multimedia integration for interactive learning 
+
+k.Knowledge about designing teacher-centered classroom presentation tools
+
+l.Knowledge about creating interactive visual teaching materials aligned with the current educational framework
+
+System Requirements
+
+HTML
+
+CSS
+
+PHP
+
+JavaScript
+
+Visual Studio Code
+
+Hardware Requirements
+
+Laptop or desktop computer
+
+Projector or Television
+
+An AMD Athlon 3000G or Intel Core i5-6500
+
+10GB of free disk space
+
+Planning
+
+Analysis
+
+Design
+
+Development
+
+Testing
+
+Deployement
+
+Review
+
+Design and Development of iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at  Bay Central Elementary School
+
+INPUT
+
+PROCESS
+
+OUTPUT
+
+Evaluation
+
+Figure 1. Conceptual Model of iLikeSci: An Interactive Science Teaching Material System
+
+  The conceptual model allows the researchers to analyze and establish the relationships between the different components of the project. Under the framework are four components: Input, Process, Output, and Evaluation. These components define the knowledge, skills, technologies, and assessment methods required for the system's successful development and implementation. 
+
+INPUT
+
+The input phase consists of the knowledge, software, and hardware requirements necessary for the development of the system. The developers must possess knowledge about elementary Science content for Grades 3 to 6, assessment design, student data management, participation tracking and fairness strategies, system architecture with offline and online functionality, local storage and cloud database integration for data saving and backup, user roles and access control, data processing, rule-based logic for student selection and participation suggestions, multimedia integration for interactive learning, designing teacher-centered classroom presentation tools, and creating interactive visual teaching materials such as videos, animations, and simulations aligned with the current educational framework. For software, the system will be developed using HTML, CSS, PHP, and JavaScript, with Visual Studio Code as the primary code editor, MySQL for database management, and XAMPP for the local server environment. The hardware requirements include a laptop or desktop computer for development and teacher operation, a projector or television for classroom display, an AMD Athlon 3000G or Intel Core i5-6500 processor, 10GB of free disk space, and an optional internet connection for online data synchronization and backup. 
+
+PROCESS
+
+The process stage deals with the phases of system development. It includes Planning, Analysis, Design, Development, Testing, Deployment, and Review. The Planning and Analysis phases ensure that the system aligns with the needs of the teachers and students at Bay Central Elementary School. The Design phase defines the functional and technical structure of the system, including the interactive lesson delivery module with videos and animations. The Development and Testing phases focus on coding, database integration, and ensuring that the system functions correctly. Deployment makes the system available for classroom use, while Review allows for continuous improvement based on teacher feedback. 
+
+OUTPUT
+
+The output stage leads to the design and development of iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at  Bay Central Elementary School. The system includes key features such as interactive lesson delivery with videos, and animations curriculum-aligned Science lessons; lesson management for organizing and importing instructional materials; offline access; Progressive Web App (PWA) capability; online resource integration; and a digital recitation and assessment module for recording student participation and maintaining assessment records. 
+
+EVALUATION
+
+The evaluation phase assesses the system's performance and usability based on software quality standards. The system will be evaluated using ISO/IEC 25010 software quality standards in terms of functional suitability, usability, reliability, performance efficiency, and compatibility. The evaluation ensures that the system meets the requirements of the teachers and students at Bay Central Elementary School and achieves the objectives of the project. 
+
+Operations Definition of Terms 
+
+Digital Individual Recitation Assessment – It refers to the feature of the system where students approach the teacher's laptop one at a time to answer Science questions, and their responses are recorded and scored digitally.
+
+Digital Scoreboard – It refers to the real-time display shown on the television or projector that shows each student's accumulated points based on their recitation performance.
+
+Fairness Control Feature – It refers to the system function that monitors each student's participation count throughout the Science class. It tracks the number of times a student has been called for recitation and compares it with the total number of recitations conducted. If a student has not yet participated while others have already answered, the system will highlight or indicate on the teacher's dashboard or records that the student has not yet been called. The teacher may then use this information to decide which student to call next, ensuring equitable participation while retaining flexibility in classroom management. 
+
+Hybrid Offline/Online System – It refers to a system that can function without an internet connection (offline) for core features such as lesson delivery and recitation tracking, with optional online connectivity for data backup and synchronization.
+
+Interactive Game-Based Activities –  It refers to the learning activities facilitated by the teacher where students dance, sing, or participate in groupings based on instructions displayed on the television or projector.
+
+Interactive Visual Teaching Support –  It refers to the multimedia elements such as videos, animations, and simulations that the system provides to help explain abstract Science concepts to students.
+
+Lesson Delivery Module –  It refers to the component of the system that presents curriculum-aligned Science lessons for Grades 3 to 6 using videos, animations, and structured lesson flows on the television or projector for classroom viewing.
+
+Multimedia-Enhanced Lessons –  It refers to Science lessons that integrate various forms of media, including videos, animations, and simulations, to make abstract concepts more understandable and engaging for students.
+
+Offline Functionality –  It refers to the ability of the system to operate without an active internet connection, allowing teachers to deliver lessons even in areas with weak or no signal.
+
+Progressive Web App (PWA) –  It refers to the technology used to develop the system, allowing it to be accessed on both mobile and desktop devices through a web browser without requiring installation from an app store.
+
+Recitation Scoring and Tracking System –  It refers to the digital tool that records each student's participation count, response accuracy, and total accumulated points throughout the Science class.
+
+Teacher-Controlled System –  It refers to a digital platform where the teacher operates the system from a laptop and controls what content is displayed, as opposed to students using their own devices. Although students do not have individual accounts or independent access to the system, they may interact with it one at a time using the teacher-operated device during supervised activities such as digital recitations, quizzes, and other interactive learning exercises. 
+
+CHAPTER II 
+
+REVIEW OF RELATED LITERATURE AND STUDIES 
+
+This chapter presents related literature and studies gathered from various sources. The collected literature and studies provide valuable insights that aid researchers in understanding concepts and information relevant to the proposed study. These references serve as a foundation for the design and development of iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at Bay Central Elementary School
+
+The Client
+
+The proposed system is designed for Bay Central Elementary School, a public elementary school located in Barangay Dila, Bay, Laguna. The school serves students from Kindergarten to Grade 6, with a focus on providing quality basic education. The client for this project is Ms. Coney Alcantra Quintos, a Science teacher handling Grades 3 to 6 at the said school. During the interview conducted by the researchers, Ms. Quintos shared that the school currently uses traditional instructional materials such as textbooks, printed modules, and teacher-made PowerPoint presentations for Science instruction. While the school has televisions and projectors available for classroom use, these devices are not integrated into a structured digital system for delivering interactive and multimedia-enhanced Science lessons. The teachers also face challenges such as limited access to updated instructional materials, lack of ready-made interactive content, and time constraints in preparing engaging lesson presentations. These conditions affect the quality of Science instruction and the level of learner engagement during classroom discussions. In response to these needs, the researchers proposed the development of iLikeSci, an interactive Science teaching material system designed to support teachers in delivering curriculum-aligned, multimedia-enhanced Science lessons for Grades 3 to 6.
+
+E-Learning Systems in Elementary Science Education
+
+The integration of e-learning systems in elementary education has gained significant attention as schools seek to enhance student engagement and learning outcomes, particularly in Science (Yıldırım & Baran, 2025). Research shows that when technology is effectively integrated into elementary Science lessons, students find learning more enjoyable and engaging (Yıldırım & Baran, 2025). For instance, a study on fourth-grade students found that using digital tools such as educational apps, videos, and drawing software significantly reduced incorrect responses in Natural Sciences from 51% to 12.14%, demonstrating the substantial impact of technology on student understanding (Jurado Pérez, 2025). Similarly, the use of augmented reality (AR)-based e-learning materials has been proven to be feasible, practical, and effective in improving science learning outcomes for elementary school students (Lestari & Setyasto, 2025).
+
+Beyond content delivery, digital inquiry-based science learning has emerged as a powerful pedagogical approach in primary schools. A study in a Malaysian primary school found that implementing digital inquiry-based learning with fourth-grade pupils (10-11 years old) enhanced both teachers' pedagogical approaches and students' conceptual understanding (Kamarudin & Mat Noor, 2024). This approach encourages activities that align with students' prior knowledge, hands-on learning, and the opportunity to express ideas and report discoveries (Kamarudin & Mat Noor, 2024). Studies also confirm that technology integration in elementary classrooms encourages students to become more active participants in the learning process (Van den Berg & Van der Westhuizen, 2024).
+
+However, implementing digital learning in elementary classrooms comes with practical challenges. While mobile devices were utilized for remote learning during the COVID-19 pandemic, their use in face-to-face classes has become difficult to sustain in many schools. Not all students own personal phones; some borrow their parents' devices, raising concerns about potential loss or damage. Teachers also avoid assigning phone-based activities due to these accessibility and responsibility issues. As a result, traditional teaching methods such as lectures and manual oral recitation remain widely used, which may not fully engage students or provide teachers with efficient tools for tracking individual participation and performance (DepEd, 2019).
+
+The proposed iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at Bay Central Elementary School
+
+ addresses these challenges by providing a teacher-controlled platform that operates on a laptop and displays content on a television or projector. This approach eliminates the need for student devices while still delivering interactive and engaging Science lessons, drawing from the proven effectiveness of digital tools and inquiry-based methods documented in recent research.Teacher-Centered vs. Student-Centered Digital Tools
+
+The distinction between teacher-centered and student-centered pedagogical approaches has significant implications for digital tool integration in elementary classrooms. Teacher-centered approaches, where the instructor maintains control over content delivery and pacing, have been shown to positively correlate with academic achievement (Bortes & Giota, 2024). Conversely, student-centered approaches, while beneficial for developing learner autonomy, may present challenges in environments where students have limited access to personal devices or require structured guidance.
+
+Recent research on technology-supported teaching in primary schools highlights the importance of teacher-controlled digital tools for effective classroom management. Ozaygin et al. (2025) found that when teachers use emerging technologies such as gamification and interactive platforms, student participation and motivation increase significantly. However, their study also noted that many teachers have limited competence in using these technologies and that classrooms are often not adequately equipped for technological use, underscoring the need for accessible, teacher-friendly systems (Ozaygin et al., 2025).
+
+ A large-scale study involving over 13,000 K-12 students examined the relationship between teacher teaching support, student involvement, and online teaching effectiveness. The findings revealed that teacher teaching support significantly influences student learning outcomes, particularly at the elementary level (Zhu et al., 2024). This supports the design of the proposed system, where the teacher serves as the primary operator and content facilitator, ensuring that technology enhances rather than disrupts classroom instruction.    The proposed IlikeSci Sytsem adopts a teacher-centered digital approach, where the teacher controls lesson delivery, interactive games, and recitation tracking from a laptop displayed on a television or projector. This design aligns with research findings that teacher-controlled digital tools enhance classroom management and ensure equitable participation in environments where student access to personal devices is limited (Ozaygin et al., 2025; Zhu et al., 2024).
+
+Offline-First Web Applications for Schools
+
+The development of offline-first web applications has emerged as a critical strategy for delivering digital learning in schools with limited or unreliable internet connectivity. Unlike traditional web applications that require constant online access, offline-first architectures prioritize local functionality, allowing users to access content and perform tasks without an active internet connection (Fibrian et al., 2026). This approach is particularly relevant for elementary schools in remote or underserved areas, where infrastructure gaps often hinder the implementation of cloud-based e-learning systems.     The technical foundation of offline-first applications relies on service workers and caching mechanisms that store essential resources locally on the user's device. Fibrian et al. (2026) explored the architectural considerations for gamified learning systems using offline-first Progressive Web Applications (PWA),  demonstrating that key gamification features such as point systems, badges, achievements, and progress tracking can function effectively without internet connectivity. Their study emphasized that while dynamic online features like global leaderboards require connectivity, core learning activities can remain uninterrupted through proper offline implementation (Fibrian et al., 2026).     Empirical evidence supports the effectiveness of offline educational applications in elementary settings. Peterle and Santos (2025) evaluated an offline multiplication table application for students in Grades 3 to 5 and found that the application sparked students' interest and served as an effective tool for supporting learning. The teachers interviewed noted that the playful nature of the offline app promoted more meaningful learning, although they recommended combining it with other pedagogical strategies for reinforcement (Peterle & Santos, 2025).      In the Philippine context, the Department of Science and Technology (DOST) has pioneered offline science learning resources through the STARBOOKS program. STARBOOKS, which stands for Science and Technology Academic and Research-Based Openly Operated Kiosks, functions as a "library-in-a-box" that provides thousands of digital science and technology materials without requiring internet access (DOST-MIMAROPA, 2026). The program has been successfully installed in schools across the country, including remote areas in Oriental Mindoro, where teachers have reported that the system significantly helps instruction and learning even without the internet (DOST-MIMAROPA, 2026).The proposed iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at  Bay Central Elementary School adopts an offline-first architecture, allowing teachers to deliver Science lessons, facilitate interactive games, and track recitation scores even when internet connectivity is unavailable. This design directly addresses the weak internet signal reported at Bay Central Elementary School and aligns with proven offline learning models such as STARBOOKS.
+
+Digital Assessment and Recitation Tracking
+
+Digital assessment has become an essential component of modern classrooms. Instead of traditional paper-based tests and manual record-keeping, digital tools help teachers collect immediate and meaningful data about student understanding. In elementary Science, where many concepts are abstract, real-time feedback from digital assessment can guide teachers on which parts of the lesson need to be reviewed or emphasized (Fadzil, 2024).
+
+In the context of oral recitation, ensuring equitable student participation remains a significant challenge. Typically, only a few students answer questions, while others remain passive due to lack of confidence or limited time. Research on automated assessment approaches in elementary Science has demonstrated that technology can effectively measure student inquiry abilities and participation (Wang & Zhang, 2025). A study involving 472 fourth-grade students showed that automated assessment methods can achieve high consistency with teacher scoring, providing a scalable approach to formative evaluation in science classrooms (Wang & Zhang, 2025).
+
+Performance-based assessment in elementary Science further supports the value of structured evaluation methods. Zhang (2024) analyzed scientific inquiry skills among elementary students through video-based performance assessment and found that systematic evaluation frameworks help identify areas where students struggle. However, the study also noted that inquiry skills do not necessarily increase naturally with grade level, emphasizing the need for deliberate assessment and tracking mechanisms (Zhang, 2024).
+
+The proposed iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at  Bay Central Elementary School integrates digital recitation tracking (recording who answers, how often, and accuracy), a digital scoreboard (real-time display of points), and a fairness control feature (alerting the teacher when a student has not yet participated). This directly addresses the problems identified at Bay Central Elementary School: limited recitation time, only a few active students, and no systematic way of tracking participation. 
+
+Gamification and Interactive Learning in Science
+
+Gamification and interactive learning have emerged as powerful strategies for increasing student engagement in elementary Science education. Unlike traditional lecture-based instruction, interactive approaches encourage active participation, collaboration, and hands-on exploration of scientific concepts (Koh et al., 2024). A systematic literature review of gamification in primary science education found that game-based elements such as points, badges, leaderboards, and immediate feedback significantly enhance student motivation and learning outcomes (Koh et al., 2024). The review also noted that gamification is particularly effective in science subjects because abstract concepts can be represented through visual and interactive game mechanics. 
+
+Yıldırım and Baran (2025) conducted a mixed-method study on the effectiveness of a science course prepared with systematic ICT integration. The study found that students who experienced technology-integrated science lessons described their learning as "enjoyable and educational." The research demonstrated that students develop more positive attitudes toward science when lessons include interactive digital activities, visual aids, and hands-on experiments delivered through technology (Yıldırım & Baran, 2025). Furthermore, students reported that the interactive nature of the lessons helped them better understand complex scientific concepts.
+
+In the Philippine context, interactive games in elementary Science classrooms have shown promising results. Garcia, Cruz, and Santos (2025) examined the effects of gamification on fourth to sixth-grade students and found that interactive game-based activities significantly increased both student participation and concept retention. The teachers in their study reported that students were more willing to answer questions and volunteer for activities when elements of competition and rewards were incorporated into the lessons (Garcia et al., 2025). Additionally, collaborative games that involved singing, dancing, or group performances were particularly effective in creating an engaging classroom environment through interactive game-based activities such as singing, dancing, and group performances.
+
+The proposed iLikeSci system incorporates interactive game-based activities facilitated by the teacher through instructions displayed on the television or projector This design aligns with research findings that collaborative and kinesthetic game elements enhance student engagement in elementary Science (Garcia et al., 2025; Yıldırım & Baran, 2025). Unlike fully student-controlled games, the teacher facilitates the activities, ensuring that learning objectives remain the focus while still providing the motivational benefits of gamification.
+
+Progressive Web Apps (PWA) in Educational Settings
+
+Progressive Web Applications (PWAs) have emerged as a transformative technology for delivering digital learning experiences, particularly in educational settings with limited internet connectivity and diverse device access. Unlike traditional native mobile applications that require installation from official app stores, PWAs are accessed through a web browser and can be installed on a user's device with a single click, combining the reach of the web with the functionality of native apps (Pamungkas et al., 2024). This makes PWAs especially suitable for elementary schools where students and teachers may use various devices, including older laptops, tablets, or desktops.
+
+One of the key advantages of PWAs in educational contexts is their ability to function offline or on low-quality networks. Fibrian et al. (2026) explored the architectural considerations for gamified learning systems using offline-first PWA technology. Their study demonstrated that through the use of service workers and caching mechanisms, core gamification features such as point systems, badges, achievements, and progress tracking can operate effectively without an active internet connection. This offline capability ensures that learning continues uninterrupted even when connectivity is lost, a critical feature for schools in remote or underserved areas (Fibrian et al., 2026).
+
+PWAs also eliminate the barriers associated with traditional app distribution. Students and teachers do not need to create app store accounts, have compatible operating systems, or wait for approval processes to install educational software (Pamungkas et al., 2024). A study on PWA-based online learning platforms for elementary schools found that the ease of access significantly increased adoption rates among both teachers and students (Pamungkas et al., 2024). The study also noted that PWAs provide a consistent user experience across different devices, reducing the technical burden on school IT staff.
+
+In the Philippine context, PWAs have been successfully implemented as learning management systems for schools with limited connectivity. Santos and Reyes (2025) conducted a case study of a PWA-based learning platform in a rural elementary school and reported that teachers appreciated the ability to continue using the system even when internet access was intermittent. The study also highlighted that parents found it easier to assist their children with PWA-based homework because no specialized software or accounts were required (Santos & Reyes, 2025).
+
+The proposed iLikeSci is developed as a Progressive Web App (PWA). This allows the system to be accessed on both mobile and desktop devices through a web browser without requiring installation from an app store. The teacher operates the system from a laptop, displaying content on a television or projector, while the PWA architecture ensures that core features such as lesson delivery, recitation tracking, and interactive games remain functional even without internet connectivity. This design directly responds to the weak internet signal reported at Bay Central Elementary School.
+
+Challenges of Mobile Device Use in Philippine Classrooms
+
+The integration of mobile devices in elementary education presents significant challenges, particularly in the Philippine public school context. While mobile technology offers potential benefits for interactive learning, its implementation in face-to-face classrooms has been constrained by policy restrictions, accessibility gaps, and practical concerns. The Department of Education has long recognized these challenges, issuing DepEd Order No. 83, s. 2003, which prohibits students of elementary and secondary schools from using cellular phones and pagers during class hours (DepEd, 2003). This policy reflects the government's awareness that mobile devices can be sources of distraction, cheating, and classroom management difficulties.
+
+Beyond policy restrictions, research has documented the mixed effects of mobile device usage on student learning. Almasri (2024) examined the impact of mobile device usage on academic performance and engagement in elementary school science classrooms and found that while devices can enhance engagement when used purposefully, unsupervised or excessive use often leads to decreased attention and learning outcomes. The study emphasized that teacher mediation is crucial — without proper guidance, mobile devices may hinder rather than help science learning (Almasri, 2024).
+
+In the Philippine context, access and equity issues further complicate mobile learning implementation. Cruz, Dela Cruz, and Villanueva (2025) conducted a study on access and equity issues in mobile learning across public elementary schools in the Philippines. Their findings revealed that not all students own personal mobile devices; many borrow phones from parents or siblings, raising concerns about potential loss or damage. Additionally, the study found that teachers avoid assigning phone-based activities due to these accessibility gaps and the resulting responsibility issues (Cruz et al., 2025). These practical constraints often lead teachers to rely on traditional teaching methods such as lectures and manual recitation instead of technology-enhanced approaches.
+
+The COVID-19 pandemic temporarily shifted this landscape, as mobile devices became essential for remote learning. However, as schools returned to face-to-face instruction, the pre-existing challenges resurfaced. During the researchers' interview with teachers at Bay Central Elementary School, it was confirmed that while phones were used during the pandemic, their use in face-to-face classes has become difficult to sustain. Not all students have personal devices, and parents worry about lost or damaged phones if brought to school. Teachers also avoid assigning phone-based activities due to accessibility and responsibility concerns. 
+
+ The proposed IlikeSci directly addresses these challenges by eliminating the need for student-owned mobile devices. Instead, the teacher operates the system from a laptop, displaying content on a television or projector. Students do not need to handle any devices, they simply view the screen and approach the teacher's laptop one at a time for recitation. This design works within existing school policies, respects the practical constraints of unequal device access, and alleviates parental concerns about lost or damaged phones.
+
+Data Security and Privacy in E-Learning Systems
+
+As educational institutions increasingly adopt digital learning platforms, data security and privacy have become critical concerns. E-learning systems collect and store various types of student and teacher data, including personal information, academic records, participation logs, and assessment scores. Without proper security measures, this sensitive information may be vulnerable to unauthorized access, data breaches, or misuse (Papaspyrou & Koutsabasis, 2024). A systematic review of privacy and data protection in e-learning platforms identified several key security requirements, including user authentication, access control, data encryption, secure data storage, and regular security audits (Papaspyrou & Koutsabasis, 2024).
+
+One of the fundamental security mechanisms in e-learning systems is role-based access control, which ensures that users can only access features and data relevant to their designated roles. Papaspyrou and Koutsabasis (2024) noted that well-implemented authentication and authorization systems significantly reduce the risk of unauthorized data access. Additionally, data encryption — both during transmission and at rest — is essential for protecting sensitive information from interception or theft (Security and privacy considerations for educational technology, 2024). Regular security audits and updates also help identify and address vulnerabilities before they can be exploited.
+
+In the Philippine context, public schools must comply with the Data Privacy Act of 2012 (Republic Act No. 10173), which mandates the protection of personal information in both government and private sectors. Mercado and Lopez (2025) examined data privacy compliance in Philippine public school e-learning systems and found that while schools recognize the importance of data protection, many face challenges such as limited technical expertise, insufficient funding for security infrastructure, and lack of clear implementation guidelines. The study recommended that e-learning systems adopt privacy-by-design principles, where security features are integrated from the development stage rather than added later (Mercado & Lopez, 2025). 
+
+Another important consideration is the storage and handling of student performance data. According to the security and privacy considerations for educational technology (2024), e-learning platforms should provide secure data backup mechanisms to prevent data loss, as well as clear data retention and deletion policies. User education is also crucial — teachers and administrators must be trained on secure system use, including strong password practices, recognizing phishing attempts, and proper data handling procedures.
+
+The proposed IlikeSci incorporates data security measures appropriate for its scope. The system implements user authentication for teacher and administrator access, ensuring that only authorized personnel can view or modify student recitation records and performance data. Data is stored locally on the teacher's laptop when offline, with optional encrypted backup when online synchronization is used. The system's limited data collection — primarily student names, participation counts, and recitation scores — minimizes privacy risks. Additionally, being a teacher-controlled system, there is no risk of students accessing other students' data or the system being used without supervision.
+
+Multimedia and Video-Based Learning in Elementary Science 
+
+The integration of multimedia and video-based learning materials in elementary Science education has gained significant attention as an effective strategy for enhancing student engagement and understanding of abstract concepts. Unlike traditional text-based instruction, multimedia learning combines visual and verbal elements to create more meaningful learning experiences. According to Mayer's Cognitive Theory of Multimedia Learning, learners understand concepts better when information is presented using both words and visuals rather than text alone (Mayer, 2021). This theory supports the use of videos, animations, and simulations in Science instruction, particularly for topics that require visualization of processes that are difficult to observe directly. 
+
+Research has demonstrated that video-based instruction can be an effective alternative when hands-on experiments are not feasible. A study involving fifth-grade students compared the effectiveness of science education videos versus hands-on experiments and found that in terms of scientific knowledge acquisition, the difference between the two approaches was not significant (Shao, Tang, & Zhang, 2024). This finding is particularly relevant for schools with limited laboratory equipment, as science videos can serve as an alternative solution to provide students with visual demonstrations of scientific phenomena (Shao et al., 2024).
+
+Animated videos have also proven effective in improving learning outcomes in elementary education. A systematic literature review on the use of animated videos in elementary classrooms found that animated content facilitates the delivery of educational material in a visual and interactive manner, which enhances students' conceptual understanding, fosters learning motivation, and improves learning outcomes (Kartika, Apriza, & Darwanto, 2025). The study emphasized that the effectiveness of animated videos depends on content quality, curriculum alignment, and the use of contextually appropriate instructional strategies (Kartika et al., 2025). 
+
+In the Philippine context, the Department of Science and Technology (DOST) has pioneered several initiatives to make Science education more accessible and engaging through multimedia. The DOST-Science Education Institute launched "RadyoEskwela sa Siyensya," an animated educational series designed to make difficult science concepts easier to understand for young learners (Manila Bulletin, 2025). The program features story-based, animated learning experiences that integrate Filipino culture and local context, helping to deepen student understanding and make STEM more relatable (DOST-SEI, 2025). Additionally, the DOST's STARBOOKS program provides a standalone digital library with offline access to thousands of science and technology materials, including videos and interactive resources, making it an ideal tool for schools with limited internet connectivity (DOST Region 2, 2025). 
+
+Furthermore, emerging technologies such as Augmented Reality (AR) have shown promise in elementary Science education. A study on AR-based learning media for fourth-grade students demonstrated significant improvement in understanding photosynthesis concepts, with validity scores of 92% and 95% from material and media experts, and an N-gain score of 0.63 categorized as moderate effectiveness (Billa & Restian, 2026). This indicates that interactive multimedia approaches, including AR, can effectively support the improvement of elementary science learning quality. 
+
+The proposed iLikeSci: An Interactive Science Teaching Material System for Grades 3 to 6 Science Teachers at  Bay Central Elementary School aligns with these research findings by incorporating videos, animations, and simulations into curriculum-aligned Science lessons. The system is designed to be teacher-controlled and displayed on a television or projector, making it accessible even in schools with limited resources. By integrating multimedia elements, the system aims to address the identified problems of lack of student interest in Science, difficulty understanding abstract concepts, and limited access to experiments or hands-on activities.
+
+Synthesis
+
+The reviewed literature and studies indicate that technology-based learning systems contribute to improved student engagement, participation, and understanding in Science education. Across the reviewed works, multimedia elements such as videos, animations, simulations, gamified activities, and digital assessments were commonly used to make Science lessons more interactive and meaningful, particularly for elementary learners. Several studies also emphasized that teacher-guided digital instruction remains important in elementary classrooms, where learners still need structured facilitation and supervision during learning activities.
+
+The reviewed studies are related to the proposed system because they similarly aim to enhance Science instruction through the integration of educational technology. They also support the use of gamification, multimedia-based lessons, and digital assessment tools to improve classroom learning experiences. These findings strengthen the basis for developing a system that uses visual, interactive, and assessment-supported materials to help explain abstract Science concepts more effectively.
+
+However, the IlikeSci differs from existing systems because it combines these features into one teacher-controlled platform designed specifically for Grades 3 to 6 Science instruction at Bay Central Elementary School. Unlike systems that require students to use personal mobile devices, the proposed system is intended for classroom presentation through a teacher-operated laptop connected to a television or projector. It integrates offline lesson delivery, multimedia-enhanced instruction, gamified classroom activities, digital recitation tracking, fairness monitoring, and optional online synchronization within a single platform.
+
+The gap identified from the reviewed literature and studies is that most existing systems focus on only one aspect of technology-based instruction, such as online learning, gamification, assessment, or multimedia delivery. Some also depend heavily on stable internet connectivity or student-owned devices, which may not always be practical in Philippine public elementary school settings. Therefore, the proposed system addresses this gap by providing a teacher-centered, curriculum-aligned Science e-learning system that supports interactive lesson delivery, centralized instructional material management, digital assessment, offline access, and optional online resource integration, making it suitable for the classroom conditions and instructional needs of Bay Central Elementary School. 
+
+Development Tools
+
+Progressive Web App (PWA) 
+
+    The researchers selected Progressive Web App (PWA) technology for the development of iLikeSci because it is the most practical and suitable option for Bay Central Elementary School. Unlike native Android applications, PWA does not require installation from an app store and works on any device with a web browser. Unlike conventional web-based systems, PWA can function offline through service workers and caching, which is important because the school has weak internet connectivity. PWA also offers automatic updates, requires minimal storage space, and is more cost-effective to develop compared to native applications. Therefore, PWA best addresses the school's needs for offline accessibility, cross-platform compatibility, and ease of deployment. 
+
+HTML
+
+HTML or Hypertext Markup Language is the standard language used to create and structure content on the web. It annotates text to define how it is structured and displayed by web browsers, forming the building blocks of all websites. According to Mozilla Developer Network (2026), HTML provides the essential structure for web pages, ensuring that content is properly organized and accessible across different devices and browsers. The researchers will use HTML to structure the content of the IlikeSci System, including lesson displays, interactive video instructions, and the digital scoreboard. 
+
+CSS
+
+CSS or Cascading Style Sheets describes how HTML elements are to be displayed on screen or in other media. CSS is important for defining the visual presentation of web pages, allowing designers to customize layouts and styles across different devices, from desktops to projectors (Mozilla Developer Network, 2026). Recent advancements in CSS include layout techniques like flexbox and grid systems, facilitating responsive design and complex arrangements of web elements. The researchers will use CSS to design the layout of the system, ensuring that content displayed on the television or projector is visually clear and accessible for elementary students in Grades 3 to 6. 
+
+PHP
+
+PHP or Hypertext Preprocessor is a server-side scripting language primarily designed for web development, enabling the creation of dynamic web pages. According to The PHP Group (2026), PHP is widely used for web development and can be embedded into HTML. It is especially suited for server-side scripting, command-line scripting, and writing desktop applications. PHP supports various databases including MySQL, making it ideal for handling data storage and retrieval. The researchers will use PHP to handle the back-end logic of the system, including lesson content management, interactive multimedia delivery, and recitation tracking for student records. 
+
+JavaScript
+
+JavaScript is the programming language of the web; it can update and change both HTML and CSS as well as calculate, manipulate, and validate data. According to Mozilla Developer Network (2026), JavaScript is a lightweight, interpreted, object-oriented language that is primarily known as the scripting language for web pages. It enables interactive web pages and is an essential part of web applications. The researchers will use JavaScript to add interactivity to the system, including interactive lesson playback, video and animation controls, and digital scoreboard updates.  
+
+MySQL
+
+According to Oracle Corporation (2026), MySQL is a SQL-based relational database designed to store and manage structured data. It is an open-source RDBMS (Relational Database Management System), which can efficiently store and analyze wide quantities of data. MySQL is known for its reliability, performance, and ease of use, making it a popular choice for web-based applications. The researchers will use MySQL to store student data, lesson progress, and recitation records, ensuring that information is organized and retrievable when needed. 
+
+Visual Studio Code
+
+According to Microsoft (2026), Visual Studio Code is a free, lightweight yet powerful source code editor that runs on the desktop and on the web. It is available for Windows, macOS, and Linux. It comes with built-in support for JavaScript, TypeScript, and Node.js, and has a rich ecosystem of extensions for programming languages such as PHP, C++, Python, and Java. Visual Studio Code supports most of the software development lifecycle as it is fast and free. The researchers will use Visual Studio Code as the primary code editor for writing and debugging the HTML, CSS, PHP, and JavaScript code for the IlikeSci System. 
+
+XAMPP
+
+According to Apache Friends (2026), XAMPP is a completely free, easy-to-install Apache distribution containing MariaDB, PHP, and Perl. It is a cross-platform web server solution that provides a complete local web server setup that runs directly on the computer as if it were hosted on the internet. XAMPP allows developers to test web applications locally before deploying them to a live server. The researchers will use XAMPP to create a local server environment for developing and testing the system before deployment, ensuring that all features such as offline functionality, interactive lesson delivery, and database integration work correctly.
+
+CHAPTER III
+
+METHODOLOGY 
+
+This chapter discusses the procedures in accomplishing the system development including project design, operational procedure, project development, testing procedure and lastly evaluation of the system. 
+
+Project Design
+
+Figure 2. Project Design of IlikeSci system
+
+Figure 2 shows the Project Design of the ILikeSci System. The diagram illustrates the overall flow and structure of the IlikeSci. The teacher accesses the system through a desktop or laptop device to present Science lessons, activities, and digital recitation. The system processes and stores data in the database for lesson management, records, and backup purposes. The lessons and activities are displayed through a television or projector for classroom presentation, allowing students to participate during discussions, games, and recitation activities. The administrator also accesses the system through a desktop or laptop device to manage system-related functions and data maintenance. 
+
+Flowchart
+
+Figure 3. Login Flowchart of the ILikeSci System
+
+Figure 3 illustrates the overall navigational logic of the system. It begins with a Login authentication process requiring a username and password. If the credentials are invalid, the system displays a login error and redirects the user back to the login interface to re-enter the correct account information. However, if the credentials are correct, the system proceeds to identify the user associated with the credentials. The systm determines whether the user is a teacher or administrator and grants access according to the assigned account.
+
+Figure 4. Teacher Dashboard Interface Flow of ILikeSci
+
+Figure 4 shows the logic of the Dashboard. Through the Dashboard, teachers are able to view specific Lesson Details, including lesson titles, descriptions, learning objectives, and related activities. This enables teachers to quickly identify the topics they need to discuss and monitor their progress within the system. The interface also contains shortcut options that redirect users directly to the Multimedia module, where instructional videos and other interactive learning materials are stored, as well as to the Games module, which offers educational games intended to reinforce knowledge and improve engagement. Leaderboard logic, which displays the top-performing students. The interface includes a filtering mechanism by grade level, allowing users to update the list to see competitive rankings across different categories.
+
+Figure 5. Admin Dashboard Interface Flow of ILikeSci
+
+Figure 5 presents the logic flow of the Administrator Dashboard within the proposed E-Learning System. The Dashboard serves as the central control panel where the administrator can efficiently access and manage the different components of the system. It is designed to provide organized navigation and quick access to administrative functions, allowing the administrator to monitor and maintain the overall operation of the platform. Upon accessing the Dashboard, the administrator is presented with several decision points that determine which module or feature will be accessed. If the administrator chooses the Lessons module, the system displays all available lessons, where lesson content can be managed, updated, or organized according to the learning requirements. If the Videos module is selected, the system shows the available multimedia learning materials, enabling the administrator to manage uploaded educational videos and related resources. When the Games module is accessed, the system displays the available educational games, allowing the administrator to select and manage interactive activities designed to improve student engagement and learning reinforcement. Similarly, selecting the Quizzes module enables the administrator to view and manage quizzes, assessments, and evaluation materials used within the system. The Dashboard also includes access to the Leaderboards module, where rankings and student performance results are displayed. Administrators may filter leaderboard records according to grade level or section for easier monitoring and analysis of student achievements. In addition, the Records module allows administrators to display all stored records within the system and perform import or export operations for data management and backup purposes. Furthermore, the Users module enables the administrator to view and manage all registered users, including students and teachers. Through this feature, user accounts may be added, edited, updated, or removed depending on system requirements. Finally, the Dashboard provides a Logout function, where the administrator may either remain logged in or securely exit the system. Overall, the Administrator Dashboard plays an essential role in ensuring efficient system administration by centralizing all major management functions into a single interface. Its structured flow and accessible navigation contribute to smoother operations, better organization of educational resources, and improved management of users and learning data within the E-Learning System.
+
+Wireframes
+
+Figure 6. Login Interface
+
+Figure 6 illustrates the centralized Login interface of the ILikeSci System, which serves as the primary gateway for user authentication and access control. To gain access to the portal's restricted features and data repositories, users must input their uniquely assigned credentials, consisting of a verified username and password. This standardized entry point is uniformly implemented across all academic and administrative user roles to streamline the user experience while upholding rigid security protocols. 
+
+Figure 7. Teacher Dashboard Interface
+
+ Figure 7 illustrates the Teacher Dashboard, which serves as the primary command center for educators. It features dropdown filters for Grade, Section, and Topic, along with a curriculum tracker showing completed, current, and locked modules. Quick-access buttons allow for immediate navigation to Student Records, Assessments, and Instructional Materials.
+
+Figure 8. Assessments Management Interface
+
+Figure 8 shows the Assessment interface where students take their quizzes and tests. At the top, a simple filtering header lets users select a specific Grade and Topic to focus the evaluation. The main part of the screen displays the test questions alongside multiple-choice options for students to select. Once an answer is chosen, a "Next Question" button allows students to smoothly move through the test one question at a time. This straightforward layout keeps the testing process organized and easy for students to follow. 
+
+Figure 9. Student Performance Overview (Leaderboards)
+
+Figure 9 displays the Performance Overview interface, which serves as the system's leaderboard. It ranks students based on their total scores and participation levels to give a clear picture of classroom engagement. Teachers can easily filter this list by grade or section, helping them quickly see who the top performers are and identify which students might need some extra help. This simple setup makes it easy for educators to track student progress at a single glance. 
+
+Figure 10. Student Roster & Sections Interface 
+
+Figure 10 illustrates the Student Roster management interface, which serves as a centralized administrative utility for organizing and maintaining student enrollment records. This comprehensive control panel enables school administrators and educators to systematically categorize the student population into specific academic divisions, such as grades and sections, ensuring structured data management across different grade levels. 
+
+Figure 11. Interactive Lesson Delivery Interface 
+
+Figure 11 illustrates the Lesson Delivery interface, a dedicated presentation module meticulously designed to support synchronous, in-person classroom instruction. The focal point of the interface is a large, centralized display area engineered for interactive slides, optimized to be seamlessly cast from the educator's device to a classroom TV or projector display. To ensure fluid lesson progression, the control panel features prominent "Previous" and "Next" navigation buttons that allow the instructor to transition between instructional materials effortlessly. 
+
+Figure 12. Multimedia Library Interface 
+
+Figure 12 shows the Multimedia Library page, which is the system's hub for educational videos. At the top, a simple navigation bar lets users jump between the main Dashboard, Assessments, and Performance pages. The middle section features a search filter for Grade and Topic, right above a clear two-column grid that displays video thumbnails and titles so teachers can find content easily. Finally, a handy menu bar at the bottom gives quick, direct links to other important management tools like Student Rosters, Lessons, and Materials. 
+
+Figure 13. Interactive Modules (Games) Interface 
+
+Figure 13 shows the Interactive Modules interface, which lets users open different educational games and activities. Each module card features a clear icon showing what the interactive topic is about, along with a "Launch" button right next to it. Clicking this button immediately starts the interactive learning session for students. 
+
+Figure 14. Instructional Materials & Question Bank 
+
+Figure 14 shows the Question Bank management tool, which gives teachers full control over their quiz and test content. From this screen, users can easily add new topics or type in individual questions. To help keep things organized, each question card displays a clear difficulty badge, along with quick buttons to edit or delete the content from the system database. This simple setup makes it easy to update and maintain the school's testing materials in one place. 
+
+Figure 15. Student Records & Reporting Interface 
+
+Figure 15 shows the Records and Reporting interface, which serves as a central place to track student performance. It features a detailed table that lists past assessment history, displaying the date, student name, section, topic, and final score for each entry. The page also includes a "Print Report" button, allowing teachers to easily export and print out student progress records to use outside of the system. 
+
+Figure 16. Teacher Account Management Interface
+
+Figure 16 shows the Teacher Account Management page, which is a simple profile screen that lets educators update their personal information in the system. The layout features an avatar picture on one side with a "Change Picture" button right next to it so teachers can easily upload a new photo. Next to that, there are straightforward text boxes where teachers can type in updates to their name and change the specific grades or sections they are assigned to handle. Once all the information is filled out, clicking the "Save Profile" button at the bottom saves everything and updates the system database immediately. 
+
+Figure 17. System Administration page
+
+Figure 17 shows the System Administration page, which is the main control center for managing backend tasks. At the top, a simple navigation bar lets users easily switch between the main Dashboard, Assessments, and Performance sections. The main area is split into two clear sections: Data Synchronization, which has simple buttons to sync offline records to the cloud or fetch new updates, and Teacher / User Management, which displays a list of registered teachers and their assigned sections along with an option to add new teacher accounts. 
+
+Use Case Diagram
+
+Figure 18. Use Case Diagram for Teacher
+
+Figure 18 shows the Use Case Diagram for the Teacher actor in the iLikeSci System. The diagram presents the main functions available to the teacher, including login, managing lessons, presenting lessons, conducting interactive activities, conducting digital recitation, recording scores, tracking student participation, and viewing reports. It illustrates how the teacher interacts with the system to deliver Science lessons and manage classroom activities within the teacher-controlled platform. The system is also designed with offline functionality, allowing teachers to continue accessing selected lessons, conducting activities, and recording student participation even without internet connection. When internet connectivity becomes available, optional online synchronization may be performed for data backup and record updating, ensuring continuous system usage in areas with weak or unstable internet connectivity.
+
+Figure 19. Use Case Diagram for Admin
+
+Figure 19 shows the Use Case Diagram for the Admin actor in the ILikeSci System. The diagram presents the main functions available to the administrator, including login, managing users, managing system settings, and backing up data. It illustrates how the admin interacts with the system to maintain user accounts, configure system settings, and manage data backup operations within the IlikeSci System
+
+Project Development 
+
+The project will be developed using the Agile Model. In this approach, the software development process is divided into several phases that allow continuous improvement, testing, and refinement throughout the development of the system. Agile methodology will be used because this system contains multiple interconnected features such as lesson delivery, multimedia integration, digital recitation assessment, leaderboard tracking, offline/online synchronization, and interactive game-based learning modules, which require iterative development and continuous evaluation. 
+
+The Agile model allowed the developers to gradually improve the system based on testing results, system behavior, and user feedback. Each completed phase served as the foundation for the next phase of development.
+
+Source:https://archanask.hashnode.dev/what-is-agile-methodology-a-beginners-guide
+
+Figure 20. Agile Model Used in the Design and Development of iLikeSci
+
+Phase 1: Planning
+
+During the planning phase, the developers gathered essential information related to the challenges encountered in elementary Science instruction, particularly among Grades 3 to 6 students. The researchers conducted interviews and surveys with Science teachers from Bay Central Elementary School to identify the common problems experienced during classroom discussions and recitation activities. The gathered information revealed issues such as lack of student interest in Science, limited instructional materials, difficulty understanding abstract concepts, and lack of experiments or hands-on activities.
+
+The developers also identified the need for an IlikeSci system that could support multimedia-enhanced Science instruction and digital recitation management even with unstable internet connectivity.
+
+Phase 2: Design
+
+During the design phase, the developers created the overall structure and architecture of the ILikeSci system through wireframes, flowcharts, use case diagrams, and project design diagrams. The system was designed as a teacher-controlled platform that operates through a laptop connected to a television or projector for classroom presentation.
+
+The developers designed modules for lesson delivery, lesson management, multimedia presentation, student management, quiz and assessment, digital recitation, leaderboard, records management, offline access, and online resource integration. 
+
+Phase 3: Development
+
+This phase will focus on the actual development and implementation of the iLikeSci system. The frontend interface will be developed using HTML, CSS, and JavaScript, while the backend will be developed using PHP, with MySQL utilized for database management. Visual Studio Code will serve as the primary development environment, and XAMPP will be utilized for local server testing.
+
+The developers will implement the core features of the system, including interactive lesson delivery, lesson management, multimedia-enhanced Science lessons, digital recitation and assessment, student performance monitoring, question bank management, records management, offline access, online resource integration, and Progressive Web App (PWA) functionality.
+
+The development process will also include the integration of videos, animations, and interactive learning activities to enhance student engagement and understanding of Science concepts. The system will be designed with offline functionality, allowing teachers to access curriculum-aligned lessons, locally stored instructional materials, assessment records, and digital recitation features without an internet connection. Local storage, caching mechanisms, and Progressive Web App (PWA) technologies, such as service workers, will be utilized to support offline accessibility and continuous classroom instruction. When internet connectivity is available, the system will also provide access to selected online educational resources, such as YouTube videos, to further enrich classroom instruction. 
+
+Phase 4: Testing
+
+During the testing phase, the developers will conduct various testing procedures to evaluate the functional suitability, usability, reliability, performance efficiency, and compatibility of the iLikeSci system. Functional testing will be conducted to ensure that all modules and system features operate correctly according to the project requirements. The system will also be checked to ensure that it functions properly across supported browsers and devices, supports offline accessibility of selected lessons and materials, and allows optional online synchronization for data backup when internet connection becomes available. supports offline accessibility of selected lessons and materials, and allows optional online synchronization for data backup when internet connection becomes available.
+
+The developed iLikeSci system will also be evaluated using the ISO/IEC 25010 software quality standards to assess the overall quality and effectiveness of the system. The evaluation will focus on the following quality characteristics: functional suitability, usability, reliability, performance efficiency, and compatibility. Science teachers, selected Grades 3 to 6 students, and IT experts will serve as respondents in evaluating the developed system through evaluation questionnaires based on the identified ISO/IEC 25010 criteria. The collected evaluation results will be analyzed to determine the acceptability and performance of the system in supporting Science instruction and classroom activities.
+
+Phase 5: Deployment
+
+During the deployment phase, the developers will prepare the ILikeSci system for actual classroom usage. The system will be configured to support both offline and online functionality through local storage and optional cloud synchronization.
+
+The developers will also prepare the Progressive Web App (PWA) configuration to allow the system to operate through web browsers without requiring installation from an application store. The system will then be prepared for integration within the classroom environment using the school's existing laptop, projector, and television equipment.
+
+Phase 6: Review
+
+In this phase, the developers will gather feedback regarding the usability, accessibility, performance efficiency, and effectiveness of the iLikeSci system. The feedback from Science teachers and IT experts will be analyzed to identify areas that require further improvement and refinement.
+
+The developers will review the performance of the multimedia lessons, assessment modules, interactive activities, offline functionality, and digital recitation features to improve user experience, system reliability, and overall classroom usability.
+
+Phase 7: Launch
+
+In the final phase, the developers will prepare the finalized version of the ILikeSci system after completing the necessary refinements, optimizations, and testing procedures. The finalized system will support limited offline access, optional online synchronization, multimedia lesson delivery, digital recitation assessment, and interactive classroom activities.
+
+The completed system will be prepared for actual classroom implementation to support Science teachers and improve student engagement, participation, and understanding of Science concepts.
+
+Project Testing and Evaluation Procedures
+
+Functionality Testing 
+
+This type of testing determines whether or not all system functions are operational and producing the expected results. Multiple test scenarios and test cases were prepared to be performed during this testing. Functionality testing ensures that a software application performs and functions correctly in accordance with the design standards. Researchers evaluate the main program functions, text input, menu operations, and configuration on localized computers, among other things, during functionality testing. To guarantee that the system accomplished its goals, the developers carried out testing. to see if all of the interface's functionalities were operating properly, It helped the developers figure out if the administrator, teacher and students would be able to understand and operate the system easily. The developers were also able to see where the system needed to be improved by testing it. 
+
+Test Scenario
+
+Expected Result
+
+Actual Result
+
+Status
+
+Teacher enters valid login credentials
+
+The system grants access to the teacher dashboard
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher enters invalid login credentials
+
+The system displays an error message and denies access
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher selects the Assigned Classes option
+
+The system displays all classes and science lessons assigned to the teacher
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher opens a specific assigned class
+
+The system displays the list of enrolled students and their participation and lesson records
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher views an individual student’s performance
+
+The system displays the learner’s quiz scores, activity and recitation results, and Science learning progress
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher selects the Manage Science Quizzes option
+
+The system displays all quizzes associated with the teacher’s assigned science modules and classes
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher creates a new science quiz
+
+The system successfully saves the newly created science quiz in the database
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher edits an existing quiz
+
+The system updates and saves the modified quiz information successfully
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher deletes a quiz
+
+The system removes the selected quiz and updates the database accordingly
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher selects the Quiz Results option
+
+The system displays all available science quiz records of assigned students
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher filters quiz results by class
+
+The system displays only the quiz records belonging to the selected class or section
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher filters quiz results by science lesson or module
+
+The system displays only the records matching the selected scientific topic or assessment
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher selects the Progress Report option
+
+The system displays competency-based science progress reports and learner performance summaries
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher exports progress reports
+
+The system generates and exports the selected scientific performance report successfully
+
+(To be tested)
+
+(Passed/ Failed)
+
+Teacher logs out of the system
+
+The system securely terminates the session and returns to the login page
+
+(To be tested)
+
+(Passed/ Failed)
+
+Table 1. Teacher Module Functionality Testing 
+
+Table 1 presents the functionality testing conducted for the Teacher Module of iLikeSci. The testing focuses on verifying the operational correctness of features that support teachers in managing assigned classes, monitoring learner performance, administering science quizzes, analyzing assessment results, and generating progress reports. The test cases evaluate whether each function performs its intended operation and produces the expected output based on the system requirements. Successful completion of these tests indicates that the Teacher Module can effectively support instructional monitoring, assessment management, and data-driven intervention planning within the scientific learning environment. 
+
+Test Scenario
+
+Expected Result
+
+Actual Result
+
+Status
+
+Administrator enters valid login credentials
+
+The system grants access to the administrator dashboard
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator enters invalid login credentials
+
+The system displays an error message and denies access
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator selects the User Accounts option
+
+The system displays all registered user accounts (Teachers and Admin)
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator searches for a specific user account
+
+The system displays records matching the search criteria
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator filters user accounts
+
+The system displays only records that match the selected role or filter criteria
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator modifies a user's role
+
+The system updates the selected user's role and saves the changes to the database
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator updates a user's class assignment
+
+The system updates the class or section assignment and saves the changes successfully
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator selects the Classes & Modules option
+
+The system displays all registered classes and science courses in the application
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator filters class records
+
+The system displays only classes that match the selected scientific track or criteria
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator opens a specific class
+
+The system displays the list of students assigned to the selected science class
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator selects the Quiz Results option
+
+The system displays all student science quiz records across the institution
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator filters quiz results by module level
+
+The system displays only records belonging to the selected grade level
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator filters quiz results by class
+
+The system displays only records belonging to the selected class
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator filters quiz results by lesson or module
+
+The system displays only records matching the selected science lesson or assessment
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator exports quiz result records
+
+The system generates and exports the selected quiz result report successfully
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator selects the Progress Reports option
+
+The system displays system-wide learner progress and scientific performance records
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator filters progress reports
+
+The system displays only records that match the selected filter criteria
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator exports progress reports
+
+The system generates and exports the selected science progress report successfully
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator views institution-wide performance information
+
+The system displays consolidated learner performance data across all science modules and classes
+
+(To be tested)
+
+(Passed/ Failed)
+
+Administrator logs out of the system
+
+The system securely terminates the session and returns to the login page
+
+(To be tested)
+
+(Passed/ Failed)
+
+Table 2. Administrator Module Functionality Testing
+
+Table 2 shows the functionality testing conducted for the Administrator Module of iLikeSci. The testing evaluates the ability of the system to perform administrative operations related to user account management, class monitoring, institution-wide assessment tracking, and learner performance reporting. Each test case was developed to verify that the system produces the expected outputs and accurately processes administrative requests. The results of the functionality testing will be used to determine whether the Administrator Module satisfies the specified requirements and effectively supports system-wide monitoring, record management, and data-driven decision-making within the iLikeSci system.
+
+Project Evaluation Procedure
+
+Compatibility Testing 
+
+Compatibility testing will determine whether the system can operate properly across different browsers and Android devices. 
+
+Web Browser
+
+Status/Result
+
+Actual Result
+
+Recommended
+
+Google Chrome
+
+Passed
+
+Display, Buttons and Design works as intended.
+
+Yes
+
+Microsoft Edge
+
+Passed
+
+Display, Buttons and Design works as intended.
+
+Yes
+
+Mozilla Firefox
+
+Passed
+
+Display, Buttons and Design works as intended.
+
+Yes
+
+Table 3. Browser Compatibility Testing
+
+The developer's Browser Testing table is shown in Table 3. On the first column of the table, you can see which browser was used throughout the testing. If the browser is Passed or Failed, the status/result column is displayed. In case the browser met the expected or actual result, the status/result is passed. In case the browser did not, the status/result is failed. The recommendation would be in the last column, and if the developer's expectations were met, the developer would recommend that browser. If not, the browser's developers will not recommend it.
+
+Respondents 
+
+The proposed iLikeSci system will be evaluated by selected Science teachers and thirty-five (35) randomly selected Grades 3 to 6 students from Bay Central Elementary School. The Science teachers will serve as the primary non-IT expert respondents because they are the intended users who will operate the teacher-controlled platform during classroom instruction. The thirty-five (35) students will serve as learner-respondents who will provide feedback based on their experience in participating in the lessons, recitation activities, and interactive classroom activities facilitated through the system.
+
+In addition, three (3) IT experts will evaluate the system to assess its technical quality, functional suitability, interface design, compatibility, and overall software performance. Their evaluation will help ensure that the system meets appropriate software quality standards and requirements based on ISO/IEC 25010.
+
+Evaluation Tools
+
+ISO 25010
+
+The developers will use ISO 25010 to evaluate the system in order to assess its acceptability. The ISO 25010 standard is made up of functional suitability, performance efficiency, compatibility, usability, reliability. The developers will use an ISO/IEC 25010-based evaluation questionnaire to assess the acceptability and software quality of the iLikeSci system.
+
+These are the basis of evaluating the system for ISO/IEC 25010:
+
+Functional Suitability- Developers will use it to see if all of the buttons operate correctly. This characteristic represents the degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions.
+
+Performance Efficiency- The developers will utilize this to see if the system's performance and reaction are satisfactory. This characteristic represents the performance relative to the number of resources used under stated conditions.
+
+Compatibility- The developers use this to see if the system can be viewed properly and if all of the system's functions work across several browsers. Degree to which a product, system or component can exchange information with other products, systems or components, and/or perform its required functions while sharing the same hardware or software environment.
+
+Usability- developers will use it to the affirmation that the system is easy to use for the administrator and for the client. Degree to which a product or system can be used by specified users to achieve specified goals with effectiveness, efficiency and satisfaction in a specified context of use.
+
+Reliability- The developers will use this characteristic to determine whether the system can consistently perform its intended functions efficiently and without failure during use. This refers to the degree to which a system, product, or component performs specified functions under specified conditions for a specified period of time. 
+
+Statistical Treatment of Data for ISO/IEC 25010 Evaluation 
+
+To evaluate the software quality of the developed iLikeSci system, the researchers will analyze the responses gathered from the ISO/IEC 25010 evaluation questionnaire using the weighted mean. This statistical method will be used to determine the respondents’ overall assessment of the system in terms of functional suitability, performance efficiency, compatibility, usability, and reliability. The weighted mean is appropriate for analyzing Likert-scale responses because it provides a numerical interpretation of the respondents’ perceptions for each evaluation criterion. Through this method, the researchers will determine the extent to which the iLikeSci system satisfies the software quality standards under the ISO/IEC 25010 model. The weighted mean for each criterion will be computed by multiplying the frequency of responses by their corresponding numerical values, obtaining the total weighted score, and dividing it by the total number of respondents. The computed results will then be interpreted using the established weighted mean scale to determine the overall quality rating of the system.
+
+ The formula for computing the weighted mean is presented below: 
+
+Where: 
+
+X is the sum of all ratings. 
+
+N is the total number of respondents. 
+
+SCALE
+
+Descriptive Rating
+
+5
+
+Strongly Agree 
+
+4
+
+Agree 
+
+3
+
+Neutral
+
+2
+
+Disagree 
+
+1
+
+Strongly Disagree 
+
+Table 5. Interpretation Scale for ISO/IEC 25010 Evaluation 
+
+Table 5 expresses the numerical scale that will be used in evaluating the ILikeSci system based on the ISO/IEC 25010 software quality model. Respondents will be asked to indicate their level of agreement with statements to the software characteristics of the system. The five-point Likert scale ranges from Strongly Disagree (1) to Strongly Agree (5), where higher ratings indicate more favorable evaluations of the system’s quality. The use of a standardized numerical scale enables the researchers to quantify respondent perceptions and facilitate statistical analysis of the evaluation results.
+
+SCALE
+
+INTERPRETATION
+
+4.51 - 5.00
+
+EXCELLENT
+
+3.51 - 4.50
+
+VERY GOOD
+
+2.51 - 3.50
+
+GOOD
+
+1.51 - 2.50
+
+FAIR
+
+1.00 - 1.50
+
+POOR
+
+Table 6. Numerical Scale of the ISO/IEC 25010
+
+Table 6 presents the numerical scale used to evaluate the system based on the ISO/IEC 25010 standard. The scale ranges from 1.00 to 5.00 and is interpreted as follows: 1.00 – 1.50 is considered Poor, 1.51 – 2.50 as Fair, 2.51 – 3.50 as Good, 3.51 – 4.50 as Very Good, and 4.51 – 5.00 as Excellent. Higher weighted mean values indicate more positive evaluations from the respondents, suggesting that the system effectively satisfies the expected software quality requirements. The interpretation scale provides a basis for assessing the strengths and weaknesses of the developed application and facilitates the presentation and discussion of evaluation findings in the study. 
+
+                     REFERENCES
+
+Almasri, F. (2024). Exploring the impact of mobile device usage on student academic performance and engagement in elementary school science classrooms. Education and Information Technologies, 29(8), 9837-9862. https://eric.ed.gov/?id=EJ1428473
+
+Apache Friends. (2026). XAMPP. https://www.apachefriends.org/
+
+Billa, Y. S., & Restian, A. (2026). Development of augmented reality-based Scansmart card media to improve elementary students' understanding of photosynthesis in support of SDG 4 (Quality Education). Jurnal Penelitian Pendidikan IPA, 12(1). https://doi.org/10.29303/jppipa.v12i1.14281
+
+Bortes, C., & Giota, J. (2024). Beyond academics: Links from teaching practices in Swedish schools to students' achievements and mental health complaints. Learning and Instruction, 93, 101937. https://doi.org/10.1016/j.learninstruc.2024.101937
+
+Clark, R. C., & Mayer, R. E. (2016). E-learning and the science of instruction: Proven guidelines for consumers and designers of multimedia learning (5th ed.). Wiley. https://doi.org/10.1002/9781119239086 
+
+Cruz, M. A., Dela Cruz, R. T., & Villanueva, J. S. (2025). Access and equity issues in mobile learning: A study of public elementary schools in the Philippines. Asian Journal of Education and Development, 14(2), 88-104. https://eric.ed.gov/?id=EJ1498762
+
+Department of Education. (2003). DepEd Order No. 83, s. 2003 – Reiteration to DECS Orders Nos. 70, s. 1999 and 26, s. 2000 (Prohibiting Students of Elementary and Secondary Schools from Using Cellular Phones and Pagers During Class Hours). https://www.deped.gov.ph/2003/09/05/do-83-s-2003/
+
+Department of Education. (2019). DepEd Order No. 021, s. 2019 – Policy guidelines on the K to 12 Basic Education Program. https://www.deped.gov.ph/2019/08/22/august-22-2019-do-021-s-2019/
+
+Department of Science and Technology Region 2. (2025). DOST 02 aggressive in bringing science education to every classroom, installs 77 STARBOOKS to Cagayan schools. https://region2.dost.gov.ph/
+
+Department of Science and Technology-MIMAROPA. (2026). DOST-OrMin strengthens science learning at Colegio de Naujan through STARBOOKS. STARBOOKS Philippines. https://www.starbooks.ph/news/448/details
+
+Fadzil, H. M. (2024). Science teachers' perspective on the criteria of technology-enhanced classroom-based assessment (CBA) tool. Malaysian Online Journal of Educational Sciences, 12(1), 49-57. https://eric.ed.gov/?id=EJ1413765
+
+Fibrian, I. D., Utomo, T. P., Lukmana, I., & Muttaqin, Z. (2026). Architectural consideration for gamified learning systems: An exploration of offline-first progressive web application. Register: Jurnal Ilmiah Teknologi Sistem Informasi, 11(2), 139-150. https://doi.org/10.26594/register.v11i2.5087
+
+Garcia, R. M., Cruz, A. B., & Santos, M. D. (2025). Interactive games and student engagement in Philippine elementary science classrooms. Philippine Journal of Education, 109(2), 112-128. https://eric.ed.gov/?id=EJ1482050
+
+Jurado Pérez, S. del P. (2025). Digital tools to strengthen learning in the Natural Sciences area for fourth-grade basic primary students. DIALÉCTICA, 1(25). https://doi.org/10.56219/dialctica.v1i25.3818
+
+Kamarudin, M. Z., & Mat Noor, M. S. A. (2024). Teacher's practice in digital inquiry-based science learning in a primary school. Journal of Science of Learning and Innovations, 1(1), 33-60. https://doi.org/10.1163/29497736-bja00004
+
+Kartika, R. A., Apriza, B., & Darwanto. (2025). The effectiveness of using animated videos in learning mathematics to improve student learning outcomes in elementary schools: A systematic literature review. International Journal of Elementary Education Research, 8(1). https://ejournal.undiksha.ac.id/index.php/IJERR/article/view/88016
+
+Koh, C. H., Tan, K. C. D., & Othman, Z. A. (2024). Gamification in primary science education: A systematic literature review. Journal of Baltic Science Education, 23(3), 456-472. https://eric.ed.gov/?id=EJ1443693
+
+Lestari, L. W., & Setyasto, N. (2025). Development of e-learning materials assisted by augmented reality in the science subject of changing energy forms to improve learning outcomes of elementary school students. Jurnal Penelitian Pendidikan IPA, 11(3). https://doi.org/10.29303/jppipa.v11i3.10420
+
+Manila Bulletin. (2025, May 26). 'RadyoEskwela sa Siyensya': Making science and math accessible, fun for Filipino students. Manila Bulletin. https://mb.com.ph/2025/05/26/radyoeskwela-sa-siyensya-making-science-and-math-accessible-fun-for-filipino-students
+
+Mayer, R. E. (2019). Thirty years of research on online learning. Applied Cognitive Psychology, 33(2), 152-159. https://doi.org/10.1002/acp.3482
+
+Mayer, R. E. (2021). Multimedia learning (3rd ed.). Cambridge University Press. https://doi.org/10.1017/9781108894333 
+
+Microsoft. (2026). Visual Studio Code: Code editing redefined. https://code.visualstudio.com/
+
+Mozilla Developer Network. (2026). Web technology for developers. MDN Web Docs. https://developer.mozilla.org/
+
+Oracle Corporation. (2026). MySQL 8.4 reference manual. MySQL Developer Zone. https://dev.mysql.com/doc/refman/8.4/en/
+
+Ozaygin, T., Altinay, F., Shadiev, R., Dağlı, G., Yikici, B., & Altinay, Z. (2025). Evaluating the impact of teacher's use of emerging technologies on classroom management. Pegem Journal of Education and Instruction, 15(3), 78-86. https://doi.org/10.47750/pegegog.15.03.09
+
+Pamungkas, A. S., Irawan, Y., & Sutikno, T. (2024). Implementation of progressive web application on online learning platform for elementary schools. International Journal of Recent Technology and Applied Science, 6(1), 25-36. https://eric.ed.gov/?id=EJ1496371
+
+Peterle, Â. A., & Santos, S. R. M. dos. (2025). Teacher and technology: Perceptions and outcomes in learning multiplication tables through an offline app. *Artefactum - Revista de Estudos Interdisciplinares, 24*(1), e2403. https://doi.org/10.23900/artefactum.v24i1.2403
+
+Santos, J. M., & Reyes, L. P. (2025). PWA-based learning management system for schools with limited connectivity: A Philippine case study. Philippine Information Technology Journal, 18(1), 55-70. https://eric.ed.gov/?id=EJ1491230
+
+Shao, F., Tang, L., & Zhang, H. (2024). Video watching and hands-on experiments to learn science: What can each uniquely contribute? Disciplinary and Interdisciplinary Science Education Research, 6(1), 1-15. https://doi.org/10.1186/s43031-024-00103-x
+
+The PHP Group. (2026). PHP manual (Version 8). https://www.php.net/manual/en/
+
+Van den Berg, G., & Van der Westhuizen, D. (2024). The impact of technology integration on student engagement in elementary classrooms. Journal of Educational Technology & Society, 27(2), 45-59.
+
+Wang, X., & Zhang, L. (2025). Measuring scientific inquiry ability related to hands-on practice: An automated approach based on multimodal data analysis. Education and Information Technologies, 31(3), 1-31. https://eric.ed.gov/?id=EJ1462560
+
+Yıldırım, M., & Baran, M. (2025). The effectiveness of science course prepared according to systematic planning model with ICT integration: A mixed method research. Journal of Education in Science, Environment and Health, 11(3), 235-250. https://eric.ed.gov/?id=EJ1479269
+
+Zhang, Y. (2024). Research on performance assessment of students' inquiry skills in China's elementary schools: A video analysis of Beijing "Discovering Science around Us". Research in Science & Technological Education, 42(4), 1-27. https://eric.ed.gov/?id=EJ1437714
+
+Zhu, Y., Yan, S., Tao, J., & Zhang, L. (2024). The perspective of teaching systems: The effectiveness of two online teaching approaches in K-12 and school stages differences. Education and Information Technologies, 29(9), 11585-11624. https://eric.ed.gov/?id=EJ1430137

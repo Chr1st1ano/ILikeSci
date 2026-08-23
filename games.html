@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Games</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar (Duolingo-style) -->
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content-area">
+      <section id="view-games" class="view-section active">
+        <h1>Interactive Games</h1>
+        <p class="subtitle">Kinesthetic learning activities displayed on TV</p>
+        <div class="filter-bar glass-card mt-20" style="justify-content:space-between; align-items:center;">
+          <div style="display:flex; gap:12px; align-items:center;">
+            <button class="btn btn-secondary" onclick="app.openTVDisplay()"><i class="fa-solid fa-display"></i> TV Mode</button>
+            <button class="btn btn-secondary" onclick="app.toggleTVFullscreen()"><i class="fa-solid fa-expand"></i> TV Fullscreen</button>
+          </div>
+        </div>
+        <div class="media-grid mt-20">
+          <div class="glass-card media-card"><div class="media-icon bg-dance"><i class="fa-solid fa-music"></i></div><h3>DANCE</h3><p>Sing and dance to science songs.</p><button class="btn btn-primary btn-sm mt-10" onclick="app.launchGame('dance')"><i class="fa-solid fa-play"></i> Launch Dance Game</button></div>
+          <div class="glass-card media-card"><div class="media-icon bg-sing"><i class="fa-solid fa-microphone"></i></div><h3>SING</h3><p>Science-themed karaoke.</p><button class="btn btn-primary btn-sm mt-10" onclick="app.launchGame('sing')"><i class="fa-solid fa-play"></i> Launch Sing Game</button></div>
+          <div class="glass-card media-card"><div class="media-icon bg-group"><i class="fa-solid fa-users"></i></div><h3>GROUPINGS</h3><p>Timer and instructions for forming science-themed groups.</p><button class="btn btn-primary btn-sm mt-10" onclick="app.launchGame('groupings')"><i class="fa-solid fa-play"></i> Launch Groupings Game</button></div>
+          <div class="glass-card media-card"><div class="media-icon bg-puzzle"><i class="fa-solid fa-puzzle-piece"></i></div><h3>4 PICS 1 WORD</h3><p>Guess the word from 4 pictures.</p><button class="btn btn-primary btn-sm mt-10" onclick="launch4Pics1Word()"><i class="fa-solid fa-play"></i> Launch Game</button></div>
+        </div>
+        <div id="game-display" class="game-screen hidden">
+          <div class="game-header"><h2 id="game-title">Game Title</h2><div style="display:flex; gap:12px;"><button class="btn btn-secondary btn-sm" onclick="app.toggleGameFullscreen()"><i class="fa-solid fa-expand"></i> TV Mode</button><button class="btn btn-secondary btn-sm" onclick="app.closeGame()"><i class="fa-solid fa-xmark"></i> Close</button></div></div>
+          <div class="game-content glass-card" id="game-content-area"></div>
+          <div class="game-controls glass-card mt-20"><h3>Award Points</h3><div class="score-buttons"><button class="btn score-correct" onclick="app.awardGamePoints(1)">+1 pt</button><button class="btn score-correct" onclick="app.awardGamePoints(3)">+3 pts</button><button class="btn score-correct" onclick="app.awardGamePoints(5)">+5 pts</button></div><div class="mt-20"><label>Select Student:</label><select id="game-student-select" class="form-control mt-10"></select></div></div>
+        </div>
+
+        <!-- 4 Pics 1 Word Game Modal -->
+        <div id="pics1word-modal" class="game-modal hidden">
+          <div class="game-modal-content glass-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+              <h2>4 Pics 1 Word</h2>
+              <div style="display:flex; gap:12px;">
+                <button class="btn btn-secondary btn-sm" onclick="showPics1WordOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
+                <button class="btn btn-secondary btn-sm" onclick="closePics1WordModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+              </div>
+            </div>
+            <div id="pics-grid" class="pics-grid">
+              <!-- 4 pictures will be loaded here -->
+            </div>
+            <div class="mt-20">
+              <label>Your Answer:</label>
+              <input type="text" id="pics-answer" class="form-control mt-10" placeholder="Type your answer...">
+              <div class="mt-10" style="display:flex; gap:12px;">
+                <button class="btn btn-primary" onclick="checkPicsAnswer()">Submit</button>
+                <button class="btn btn-secondary" onclick="nextPicsWord()">Next Word</button>
+                <button class="btn btn-secondary" onclick="revealPicsAnswer()">Reveal Answer</button>
+              </div>
+            </div>
+            <div id="pics-feedback" class="mt-20 text-center" style="font-size:24px; font-weight:bold;"></div>
+          </div>
+        </div>
+
+        <style>
+          .game-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+          }
+          .game-modal-content {
+            width: 90%;
+            max-width: 1000px;
+            padding: 30px;
+            border-radius: 20px;
+          }
+          .pics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+          }
+          .pics-item {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+          }
+          .pics-item:hover {
+            transform: scale(1.05);
+          }
+          .bg-puzzle {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+          }
+        </style>
+
+        <script>
+          const pics1WordData = [
+            {
+              word: 'SUN',
+              images: ['☀️', '🌞', '🌅', '🔆'],
+              hint: 'Source of light and heat'
+            },
+            {
+              word: 'PLANT',
+              images: ['🌱', '🌿', '🌳', '🌻'],
+              hint: 'Living organism that makes its own food'
+            },
+            {
+              word: 'WATER',
+              images: ['💧', '🌊', '💦', '🚿'],
+              hint: 'Essential liquid for life'
+            },
+            {
+              word: 'LIGHT',
+              images: ['💡', '🔦', '🌟', '⚡'],
+              hint: 'Form of energy we can see'
+            },
+            {
+              word: 'HEAT',
+              images: ['🔥', '🌡️', '☀️', '♨️'],
+              hint: 'Thermal energy'
+            }
+          ];
+
+          let currentPicsIndex = 0;
+
+          function launch4Pics1Word() {
+            currentPicsIndex = 0;
+            loadPicsWord();
+            document.getElementById('pics1word-modal').classList.remove('hidden');
+          }
+
+          function loadPicsWord() {
+            const data = pics1WordData[currentPicsIndex];
+            const grid = document.getElementById('pics-grid');
+            grid.innerHTML = '';
+            
+            data.images.forEach((img, i) => {
+              const item = document.createElement('div');
+              item.className = 'pics-item';
+              item.textContent = img;
+              item.onclick = () => alert(`Image ${i + 1}: ${data.hint}`);
+              grid.appendChild(item);
+            });
+
+            document.getElementById('pics-answer').value = '';
+            document.getElementById('pics-feedback').textContent = '';
+          }
+
+          function checkPicsAnswer() {
+            const answer = document.getElementById('pics-answer').value.toUpperCase();
+            const correct = pics1WordData[currentPicsIndex].word.toUpperCase();
+            const feedback = document.getElementById('pics-feedback');
+
+            if (answer === correct) {
+              feedback.textContent = '✅ Correct! Great job!';
+              feedback.style.color = 'green';
+            } else {
+              feedback.textContent = '❌ Try again!';
+              feedback.style.color = 'red';
+            }
+          }
+
+          function nextPicsWord() {
+            currentPicsIndex = (currentPicsIndex + 1) % pics1WordData.length;
+            loadPicsWord();
+          }
+
+          function revealPicsAnswer() {
+            const correct = pics1WordData[currentPicsIndex].word;
+            document.getElementById('pics-answer').value = correct;
+            document.getElementById('pics-feedback').textContent = `The answer is: ${correct}`;
+            document.getElementById('pics-feedback').style.color = 'blue';
+          }
+
+          function closePics1WordModal() {
+            document.getElementById('pics1word-modal').classList.add('hidden');
+          }
+
+          function showPics1WordOnTV() {
+            const data = pics1WordData[currentPicsIndex];
+            const html = `
+              <div class="pics-grid">
+                ${data.images.map(img => `<div class="pics-item">${img}</div>`).join('')}
+              </div>
+              <p style="font-size:32px; margin-top:30px;">Hint: ${data.hint}</p>
+            `;
+            app.showGameOnTV('4 Pics 1 Word', html);
+          }
+
+          // Close modal on escape key
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+              closePics1WordModal();
+            }
+          });
+        </script>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+</body>
+</html>

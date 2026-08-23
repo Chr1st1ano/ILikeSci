@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Multimedia</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar (Duolingo-style) -->
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content-area">
+      <section id="view-multimedia" class="view-section active">
+        <h1>Simulations & Visual Aids</h1>
+        <p class="subtitle">Group activities and visual learning</p>
+        <div class="filter-bar glass-card mt-20" style="justify-content:space-between; align-items:center;">
+          <div style="display:flex; gap:12px; align-items:center;">
+            <button class="btn btn-secondary" onclick="app.openTVDisplay()"><i class="fa-solid fa-display"></i> TV Mode</button>
+            <button class="btn btn-secondary" onclick="app.toggleTVFullscreen()"><i class="fa-solid fa-expand"></i> TV Fullscreen</button>
+          </div>
+        </div>
+        
+        <!-- Tabbed Navigation Menu -->
+        <div class="tab-menu mt-20">
+          <button class="tab-btn active" data-tab="youtube" onclick="switchTab('youtube')">
+            <i class="fa-brands fa-youtube"></i> YouTube Videos
+          </button>
+          <button class="tab-btn" data-tab="local" onclick="switchTab('local')">
+            <i class="fa-solid fa-file-video"></i> Local Videos
+          </button>
+          <button class="tab-btn" data-tab="audio" onclick="switchTab('audio')">
+            <i class="fa-solid fa-music"></i> Audio & Songs
+          </button>
+          <button class="tab-btn" data-tab="pictures" onclick="switchTab('pictures')">
+            <i class="fa-solid fa-images"></i> Picture Gallery
+          </button>
+          <button class="tab-btn" data-tab="pdfs" onclick="switchTab('pdfs')">
+            <i class="fa-solid fa-file-pdf"></i> PDF Documents
+          </button>
+          <button class="tab-btn" data-tab="simulations" onclick="switchTab('simulations')">
+            <i class="fa-solid fa-gamepad"></i> Simulations
+          </button>
+          <button class="tab-btn" data-tab="ppts" onclick="switchTab('ppts')">
+            <i class="fa-solid fa-file-powerpoint"></i> PowerPoints
+          </button>
+        </div>
+        <div class="glass-card mt-20 upload-toolbar">
+          <div>
+            <h3 id="upload-toolbar-title">Upload Files</h3>
+            <p id="upload-toolbar-help" class="subtitle">Switch to Local Videos, Audio & Songs, Picture Gallery, or PDF Documents to upload files directly from this page.</p>
+          </div>
+          <div class="upload-toolbar-actions">
+            <button id="add-file-btn" class="btn btn-primary" onclick="triggerSingleUpload()"><i class="fa-solid fa-file-arrow-up"></i> Add File</button>
+            <button id="add-multiple-files-btn" class="btn btn-secondary" onclick="triggerMultipleUpload()"><i class="fa-solid fa-files"></i> Add Multiple Files</button>
+          </div>
+          <input type="file" id="single-media-input" class="hidden">
+          <input type="file" id="multi-media-input" class="hidden" multiple>
+        </div>
+        
+        <!-- YouTube Videos Tab -->
+        <div id="tab-youtube" class="tab-content active">
+          <div class="media-grid mt-20">
+            <div class="glass-card media-card"><div class="media-icon bg-video"><i class="fa-brands fa-youtube"></i></div><h3>Photosynthesis</h3><p>Learn how plants make food from sunlight.</p><button class="btn btn-primary btn-sm mt-10" onclick="showYouTubeVideo('dXuNkS5qvIs')"><i class="fa-solid fa-play"></i> Watch Video</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-video"><i class="fa-brands fa-youtube"></i></div><h3>Simple Machines</h3><p>Understanding levers, pulleys, and wedges.</p><button class="btn btn-primary btn-sm mt-10" onclick="showYouTubeVideo('RguJ1T2kMn0')"><i class="fa-solid fa-play"></i> Watch Video</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-video"><i class="fa-brands fa-youtube"></i></div><h3>Water Cycle</h3><p>How water moves through our planet.</p><button class="btn btn-primary btn-sm mt-10" onclick="showYouTubeVideo('al-do-HGuKnQ')"><i class="fa-solid fa-play"></i> Watch Video</button></div>
+          </div>
+        </div>
+
+        <!-- Local Videos Tab -->
+        <div id="tab-local" class="tab-content hidden">
+          <div class="media-grid mt-20">
+            <div class="glass-card media-card"><div class="media-icon bg-local"><i class="fa-solid fa-file-video"></i></div><h3>Lesson 1 Video</h3><p>Grade 4 Science - Lesson 1 introduction.</p><button class="btn btn-primary btn-sm mt-10" onclick="showLocalVideo('lesson1.mp4')"><i class="fa-solid fa-play"></i> Watch Video</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-local"><i class="fa-solid fa-file-video"></i></div><h3>Lesson 2 Video</h3><p>Filipino inventions and discoveries.</p><button class="btn btn-primary btn-sm mt-10" onclick="showLocalVideo('lesson2.mp4')"><i class="fa-solid fa-play"></i> Watch Video</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-local"><i class="fa-solid fa-file-video"></i></div><h3>Chemical Changes</h3><p>Physical vs chemical changes in matter.</p><button class="btn btn-primary btn-sm mt-10" onclick="showLocalVideo('chemical-changes.mp4')"><i class="fa-solid fa-play"></i> Watch Video</button></div>
+          </div>
+          <div id="uploaded-local-grid" class="media-grid mt-20"></div>
+        </div>
+
+        <!-- Simulations Tab -->
+        <div id="tab-simulations" class="tab-content hidden">
+          <div class="media-grid mt-20">
+            <div class="glass-card media-card"><div class="media-icon bg-plant"><i class="fa-solid fa-atom"></i></div><h3>Build an Atom</h3><p>Interactive chemistry simulation of atoms.</p><button class="btn btn-primary btn-sm mt-10" onclick="showSimulation('https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en.html', 'Build an Atom')"><i class="fa-solid fa-play"></i> Run Simulation</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-machine"><i class="fa-solid fa-person-skating"></i></div><h3>Energy Skate Park</h3><p>Physics simulation on conservation of energy.</p><button class="btn btn-primary btn-sm mt-10" onclick="showSimulation('https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_en.html', 'Energy Skate Park')"><i class="fa-solid fa-play"></i> Run Simulation</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-weather"><i class="fa-solid fa-water"></i></div><h3>States of Matter</h3><p>Observe atoms in solid, liquid, and gas.</p><button class="btn btn-primary btn-sm mt-10" onclick="showSimulation('https://phet.colorado.edu/sims/html/states-of-matter-basics/latest/states-of-matter-basics_en.html', 'States of Matter')"><i class="fa-solid fa-play"></i> Run Simulation</button></div>
+          </div>
+        </div>
+
+        <!-- Audio Tab -->
+        <div id="tab-audio" class="tab-content hidden">
+          <div class="media-grid mt-20">
+            <div class="glass-card media-card"><div class="media-icon bg-audio"><i class="fa-solid fa-music"></i></div><h3>You Are My Sunshine</h3><p>Science-themed song for engaging students.</p><button class="btn btn-primary btn-sm mt-10" onclick="playAudio('sunshine.mp3')"><i class="fa-solid fa-play"></i> Play</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-audio"><i class="fa-solid fa-music"></i></div><h3>Photosynthesis Song</h3><p>Learn about photosynthesis through music.</p><button class="btn btn-primary btn-sm mt-10" onclick="playAudio('photosynthesis-song.mp3')"><i class="fa-solid fa-play"></i> Play</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-audio"><i class="fa-solid fa-music"></i></div><h3>Water Cycle Song</h3><p>Sing along to learn about the water cycle.</p><button class="btn btn-primary btn-sm mt-10" onclick="playAudio('water-cycle-song.mp3')"><i class="fa-solid fa-play"></i> Play</button></div>
+          </div>
+          <div id="uploaded-audio-grid" class="media-grid mt-20"></div>
+        </div>
+
+        <!-- Pictures Tab -->
+        <div id="tab-pictures" class="tab-content hidden">
+          <div class="media-grid mt-20">
+            <div class="glass-card media-card"><div class="media-icon bg-picture"><i class="fa-solid fa-image"></i></div><h3>Sun Safety</h3><p>Pictures showing sun protection methods.</p><button class="btn btn-primary btn-sm mt-10" onclick="showPictureGallery('sun-safety')"><i class="fa-solid fa-images"></i> View Gallery</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-picture"><i class="fa-solid fa-image"></i></div><h3>Plants</h3><p>Various plant types and structures.</p><button class="btn btn-primary btn-sm mt-10" onclick="showPictureGallery('plants')"><i class="fa-solid fa-images"></i> View Gallery</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-picture"><i class="fa-solid fa-image"></i></div><h3>Simple Machines</h3><p>Examples of levers, pulleys, and wedges.</p><button class="btn btn-primary btn-sm mt-10" onclick="showPictureGallery('machines')"><i class="fa-solid fa-images"></i> View Gallery</button></div>
+          </div>
+          <div id="uploaded-pictures-grid" class="media-grid mt-20"></div>
+        </div>
+
+        <!-- PDFs Tab -->
+        <div id="tab-pdfs" class="tab-content hidden">
+          <div class="media-grid mt-20">
+            <div class="glass-card media-card"><div class="media-icon bg-pdf"><i class="fa-solid fa-file-pdf"></i></div><h3>Lesson 1 - Photosynthesis</h3><p>Science 4 - Quarter 1 Lesson 1 materials.</p><button class="btn btn-primary btn-sm mt-10" onclick="openPDF('lesson1-photosynthesis.pdf')"><i class="fa-solid fa-eye"></i> View PDF</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-pdf"><i class="fa-solid fa-file-pdf"></i></div><h3>Lesson 2 - Sun Safety</h3><p>Science 4 - Quarter 1 Lesson 2 materials.</p><button class="btn btn-primary btn-sm mt-10" onclick="openPDF('lesson2-sun-safety.pdf')"><i class="fa-solid fa-eye"></i> View PDF</button></div>
+            <div class="glass-card media-card"><div class="media-icon bg-pdf"><i class="fa-solid fa-file-pdf"></i></div><h3>Activity Sheets</h3><p>Printable activity worksheets for students.</p><button class="btn btn-primary btn-sm mt-10" onclick="openPDF('activity-sheets.pdf')"><i class="fa-solid fa-eye"></i> View PDF</button></div>
+          </div>
+          <div id="uploaded-pdfs-grid" class="media-grid mt-20"></div>
+        </div>
+
+        <!-- PowerPoints Tab -->
+        <div id="tab-ppts" class="tab-content hidden">
+          <div class="media-grid mt-20">
+            <div class="glass-card media-card"><div class="media-icon bg-ppt"><i class="fa-solid fa-file-powerpoint"></i></div><h3>Sample Presentation</h3><p>Introduction to Science Grade 4.</p><button class="btn btn-primary btn-sm mt-10" onclick="alert('PowerPoints are best viewed by downloading or converting to PDF for in-app viewing.')"><i class="fa-solid fa-circle-info"></i> Info</button></div>
+          </div>
+          <div id="uploaded-ppts-grid" class="media-grid mt-20"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- YouTube Video Modal -->
+    <div id="youtube-modal" class="video-modal hidden">
+      <div class="video-modal-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2>Video Player</h2>
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-secondary btn-sm" onclick="showVideoOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
+            <button class="btn btn-secondary btn-sm" onclick="closeYouTubeModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+          </div>
+        </div>
+        <iframe id="youtube-frame" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <!-- Local Video Modal -->
+    <div id="local-modal" class="video-modal hidden">
+      <div class="video-modal-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2>Video Player</h2>
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-secondary btn-sm" onclick="showLocalVideoOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
+            <button class="btn btn-secondary btn-sm" onclick="closeLocalModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+          </div>
+        </div>
+        <video id="local-video" width="100%" height="500" controls>
+          Your browser does not support video.
+        </video>
+      </div>
+    </div>
+
+    <!-- Audio Player Modal -->
+    <div id="audio-modal" class="video-modal hidden">
+      <div class="video-modal-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2 id="audio-title">Audio Player</h2>
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-secondary btn-sm" onclick="showAudioOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
+            <button class="btn btn-secondary btn-sm" onclick="closeAudioModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+          </div>
+        </div>
+        <audio id="audio-player" width="100%" controls style="width:100%;">
+          Your browser does not support audio.
+        </audio>
+        <div class="mt-20">
+          <h3>Lyrics / Notes</h3>
+          <p id="audio-lyrics" style="margin-top:10px; line-height:1.6;"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Picture Gallery Modal -->
+    <div id="gallery-modal" class="video-modal hidden">
+      <div class="video-modal-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2 id="gallery-title">Picture Gallery</h2>
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-secondary btn-sm" onclick="showGalleryOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
+            <button class="btn btn-secondary btn-sm" onclick="closeGalleryModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+          </div>
+        </div>
+        <div id="gallery-grid" class="gallery-grid">
+          <!-- Pictures will be loaded here -->
+        </div>
+        <div class="mt-20" style="display:flex; justify-content:center; gap:12px;">
+          <button class="btn btn-secondary" onclick="prevGalleryImage()"><i class="fa-solid fa-chevron-left"></i> Previous</button>
+          <button class="btn btn-secondary" onclick="nextGalleryImage()">Next <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF Viewer Modal -->
+    <div id="pdf-modal" class="video-modal hidden">
+      <div class="video-modal-content" style="max-width: 95%; height: 90vh;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2 id="pdf-title">PDF Viewer</h2>
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-secondary btn-sm" onclick="showPDFOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
+            <button class="btn btn-secondary btn-sm" onclick="closePDFModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+          </div>
+        </div>
+        <iframe id="pdf-frame" style="width:100%; height: calc(100% - 60px); border:none; border-radius:10px;"></iframe>
+      </div>
+    </div>
+
+    <!-- Simulation Modal -->
+    <div id="simulation-modal" class="video-modal hidden">
+      <div class="video-modal-content" style="max-width: 95%; height: 90vh;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2 id="simulation-title">Interactive Simulation</h2>
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-secondary btn-sm" onclick="showSimulationOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
+            <button class="btn btn-secondary btn-sm" onclick="closeSimulationModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+          </div>
+        </div>
+        <iframe id="simulation-frame" style="width:100%; height: calc(100% - 60px); border:none; border-radius:10px;" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <style>
+      .video-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      .video-modal-content {
+        width: 90%;
+        max-width: 1000px;
+        background: var(--glass-bg);
+        padding: 24px;
+        border-radius: 16px;
+      }
+      .bg-video {
+        background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+      }
+      .bg-local {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .bg-audio {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+      .bg-picture {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      }
+      .bg-pdf {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+      }
+      .bg-ppt {
+        background: linear-gradient(135deg, #d24726 0%, #a33219 100%);
+      }
+      .hidden {
+        display: none !important;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      .gallery-item {
+        aspect-ratio: 1;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 64px;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+      .gallery-item:hover {
+        transform: scale(1.05);
+      }
+      .gallery-item.active {
+        border: 4px solid var(--primary);
+      }
+      .tab-menu {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .tab-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .tab-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+      .tab-btn.active {
+        background: var(--primary);
+        color: white;
+      }
+      .tab-content {
+        animation: fadeIn 0.3s ease-out;
+      }
+      .upload-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .upload-toolbar .subtitle {
+        margin: 8px 0 0;
+      }
+      .upload-toolbar-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .upload-toolbar .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .media-preview-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 16px;
+        margin-bottom: 16px;
+      }
+      .upload-empty-card {
+        border-style: dashed;
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 11px;
+      }
+      @media (max-width: 767px) {
+        .upload-toolbar {
+          align-items: stretch;
+        }
+        .upload-toolbar-actions {
+          width: 100%;
+        }
+        .upload-toolbar-actions .btn {
+          flex: 1;
+          justify-content: center;
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+
+    <script>
+      let currentYouTubeId = '';
+      let currentSimulationUrl = '';
+      let currentLocalVideo = '';
+      let currentLocalVideoSource = '';
+      let currentAudioFile = '';
+      let currentAudioSource = '';
+      let currentGalleryIndex = 0;
+      let currentGalleryData = { title: '', images: [], captions: [], imageMode: false };
+      let currentPDFFile = '';
+      let currentPDFSource = '';
+      let activeUploadTab = 'youtube';
+      let mediaDbPromise = null;
+
+      const CUSTOM_MEDIA_STORAGE_KEY = 'ilikesci_custom_multimedia_library';
+      const MEDIA_DB_NAME = 'ilikesci_multimedia_files';
+      const MEDIA_DB_VERSION = 1;
+      const MEDIA_STORE_NAME = 'files';
+      const previewObjectUrls = {
+        local: [],
+        audio: [],
+        pictures: [],
+        pdfs: []
+      };
+      let galleryObjectUrls = [];
+
+      const pictureGalleries = {
+        'sun-safety': {
+          title: 'Sun Safety',
+          images: ['☀️', '🧢', '🕶️', '⛱️', '🧴', '👕'],
+          captions: ['Sun', 'Hat', 'Sunglasses', 'Umbrella', 'Sunscreen', 'Cover up'],
+          imageMode: false
+        },
+        'plants': {
+          title: 'Plants',
+          images: ['🌱', '🌿', '🌳', '🌻', '🌷', '🍃'],
+          captions: ['Seedling', 'Leaves', 'Tree', 'Sunflower', 'Tulip', 'Foliage'],
+          imageMode: false
+        },
+        'machines': {
+          title: 'Simple Machines',
+          images: ['⚙️', '🔧', '🏗️', '🚜', '🪜', '🚪'],
+          captions: ['Gear', 'Lever', 'Pulley', 'Wheel', 'Ramp', 'Hinge'],
+          imageMode: false
+        }
+      };
+
+      const audioFiles = {
+        'sunshine.mp3': {
+          title: 'You Are My Sunshine',
+          lyrics: 'You are my sunshine, my only sunshine\nYou make me happy when skies are gray\nYou\'ll never know dear, how much I love you\nPlease don\'t take my sunshine away'
+        },
+        'photosynthesis-song.mp3': {
+          title: 'Photosynthesis Song',
+          lyrics: 'Photosynthesis, making food from light\nChlorophyll catches the rays so bright\nCarbon dioxide from the air\nOxygen released everywhere!'
+        },
+        'water-cycle-song.mp3': {
+          title: 'Water Cycle Song',
+          lyrics: 'Evaporation, condensation too\nPrecipitation falls for me and you\nThe water cycle goes round and round\nKeeping life on the ground!'
+        }
+      };
+
+      const uploadTabConfig = {
+        local: {
+          label: 'Local Videos',
+          heading: 'Add Local Videos',
+          help: 'Upload one or many lesson videos directly from this page.',
+          accept: 'video/*',
+          iconClass: 'fa-solid fa-file-video',
+          iconBg: 'bg-local',
+          actionIcon: 'fa-solid fa-play',
+          actionLabel: 'Watch Video',
+          emptyTitle: 'No uploaded videos yet',
+          emptyText: 'Use Add File or Add Multiple Files to keep video lessons on this device.',
+          openHandler: 'showUploadedLocalVideo'
+        },
+        audio: {
+          label: 'Audio & Songs',
+          heading: 'Add Audio & Songs',
+          help: 'Upload one or many audio files directly from this page.',
+          accept: 'audio/*',
+          iconClass: 'fa-solid fa-music',
+          iconBg: 'bg-audio',
+          actionIcon: 'fa-solid fa-play',
+          actionLabel: 'Play Audio',
+          emptyTitle: 'No uploaded audio yet',
+          emptyText: 'Use Add File or Add Multiple Files to save songs and recorded audio offline.',
+          openHandler: 'playUploadedAudio'
+        },
+        pictures: {
+          label: 'Picture Gallery',
+          heading: 'Add Pictures',
+          help: 'Upload one or many image files directly from this page.',
+          accept: 'image/*',
+          iconClass: 'fa-solid fa-image',
+          iconBg: 'bg-picture',
+          actionIcon: 'fa-solid fa-images',
+          actionLabel: 'View Image',
+          emptyTitle: 'No uploaded pictures yet',
+          emptyText: 'Use Add File or Add Multiple Files to build your visual aids gallery.',
+          openHandler: 'showUploadedPicture'
+        },
+        pdfs: {
+          label: 'PDF Documents',
+          heading: 'Add PDF Documents',
+          help: 'Upload one or many PDF files directly from this page.',
+          accept: '.pdf,application/pdf',
+          iconClass: 'fa-solid fa-file-pdf',
+          iconBg: 'bg-pdf',
+          actionIcon: 'fa-solid fa-eye',
+          actionLabel: 'View PDF',
+          emptyTitle: 'No uploaded PDFs yet',
+          emptyText: 'Use Add File or Add Multiple Files to keep activity sheets and references offline.',
+          openHandler: 'openUploadedPDF'
+        },
+        ppts: {
+          label: 'PowerPoint Presentations',
+          heading: 'Add PowerPoints',
+          help: 'Upload .pptx or .ppt files to your library.',
+          accept: '.pptx,.ppt,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-powerpoint',
+          iconClass: 'fa-solid fa-file-powerpoint',
+          iconBg: 'bg-ppt',
+          actionIcon: 'fa-solid fa-download',
+          actionLabel: 'Download / Open',
+          emptyTitle: 'No PowerPoints yet',
+          emptyText: 'Upload your lesson presentations here.',
+          openHandler: 'openUploadedPPT'
+        }
+      };
+
+      const uploadedMedia = loadUploadedMediaState();
+
+      function loadUploadedMediaState() {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(CUSTOM_MEDIA_STORAGE_KEY) || '{}');
+          return {
+            local: Array.isArray(parsed.local) ? parsed.local : [],
+            audio: Array.isArray(parsed.audio) ? parsed.audio : [],
+            pictures: Array.isArray(parsed.pictures) ? parsed.pictures : [],
+            pdfs: Array.isArray(parsed.pdfs) ? parsed.pdfs : [],
+            ppts: Array.isArray(parsed.ppts) ? parsed.ppts : []
+          };
+        } catch (error) {
+          return {
+            local: [],
+            audio: [],
+            pictures: [],
+            pdfs: [],
+            ppts: []
+          };
+        }
+      }
+
+      function saveUploadedMediaState() {
+        localStorage.setItem(CUSTOM_MEDIA_STORAGE_KEY, JSON.stringify(uploadedMedia));
+      }
+
+      function openMediaDatabase() {
+        if (mediaDbPromise) return mediaDbPromise;
+
+        mediaDbPromise = new Promise((resolve, reject) => {
+          const request = indexedDB.open(MEDIA_DB_NAME, MEDIA_DB_VERSION);
+
+          request.onupgradeneeded = () => {
+            const db = request.result;
+            if (!db.objectStoreNames.contains(MEDIA_STORE_NAME)) {
+              db.createObjectStore(MEDIA_STORE_NAME, { keyPath: 'id' });
+            }
+          };
+
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error);
+        });
+
+        return mediaDbPromise;
+      }
+
+      async function storeUploadedFile(id, file) {
+        const db = await openMediaDatabase();
+
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(MEDIA_STORE_NAME, 'readwrite');
+          tx.objectStore(MEDIA_STORE_NAME).put({
+            id,
+            blob: file,
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            updatedAt: Date.now()
+          });
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error || new Error('Failed to store file.'));
+        });
+      }
+
+      async function getUploadedFile(id) {
+        const db = await openMediaDatabase();
+
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(MEDIA_STORE_NAME, 'readonly');
+          const request = tx.objectStore(MEDIA_STORE_NAME).get(id);
+          request.onsuccess = () => resolve(request.result || null);
+          request.onerror = () => reject(request.error);
+        });
+      }
+
+      function createMediaId(tabName) {
+        return `${tabName}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+      }
+
+      function formatDisplayName(fileName) {
+        const baseName = fileName.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim();
+        return (baseName || 'Uploaded File').replace(/\b\w/g, char => char.toUpperCase());
+      }
+
+      function formatFileSize(bytes) {
+        if (!bytes) return '0 B';
+
+        const units = ['B', 'KB', 'MB', 'GB'];
+        let value = bytes;
+        let unitIndex = 0;
+
+        while (value >= 1024 && unitIndex < units.length - 1) {
+          value /= 1024;
+          unitIndex += 1;
+        }
+
+        const decimals = value >= 10 || unitIndex === 0 ? 0 : 1;
+        return `${value.toFixed(decimals)} ${units[unitIndex]}`;
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function revokeUrl(url) {
+        if (url && url.startsWith('blob:')) {
+          URL.revokeObjectURL(url);
+        }
+      }
+
+      function setCurrentLocalVideoSource(source) {
+        if (currentLocalVideoSource !== source) revokeUrl(currentLocalVideoSource);
+        currentLocalVideoSource = source;
+      }
+
+      function setCurrentAudioSource(source) {
+        if (currentAudioSource !== source) revokeUrl(currentAudioSource);
+        currentAudioSource = source;
+      }
+
+      function setCurrentPDFSource(source) {
+        if (currentPDFSource !== source) revokeUrl(currentPDFSource);
+        currentPDFSource = source;
+      }
+
+      function clearPreviewUrls(tabName) {
+        previewObjectUrls[tabName].forEach(revokeUrl);
+        previewObjectUrls[tabName] = [];
+      }
+
+      function trackPreviewUrl(tabName, blob) {
+        const url = URL.createObjectURL(blob);
+        previewObjectUrls[tabName].push(url);
+        return url;
+      }
+
+      function clearGalleryObjectUrls() {
+        galleryObjectUrls.forEach(revokeUrl);
+        galleryObjectUrls = [];
+      }
+
+      function getUploadDescription(tabName, item) {
+        const sizeText = formatFileSize(item.size);
+
+        if (tabName === 'local') return `Uploaded video • ${sizeText}`;
+        if (tabName === 'audio') return `Uploaded audio • ${sizeText}`;
+        if (tabName === 'pictures') return `Uploaded image • ${sizeText}`;
+        if (tabName === 'ppts') return `PowerPoint • ${sizeText}`;
+        return `Uploaded PDF • ${sizeText}`;
+      }
+
+      function fileMatchesTab(tabName, file) {
+        const fileName = file.name.toLowerCase();
+
+        if (tabName === 'local') return file.type.startsWith('video/') || /\.(mp4|webm|ogg|mov|m4v)$/i.test(fileName);
+        if (tabName === 'audio') return file.type.startsWith('audio/') || /\.(mp3|wav|ogg|m4a|aac)$/i.test(fileName);
+        if (tabName === 'pictures') return file.type.startsWith('image/') || /\.(png|jpg|jpeg|gif|webp|bmp|svg)$/i.test(fileName);
+        if (tabName === 'pdfs') return file.type === 'application/pdf' || /\.pdf$/i.test(fileName);
+        if (tabName === 'ppts') return file.type.includes('presentation') || file.type.includes('powerpoint') || /\.(pptx|ppt)$/i.test(fileName);
+        return false;
+      }
+
+      function updateUploadControls(tabName) {
+        activeUploadTab = tabName;
+
+        const titleEl = document.getElementById('upload-toolbar-title');
+        const helpEl = document.getElementById('upload-toolbar-help');
+        const addFileBtn = document.getElementById('add-file-btn');
+        const addMultipleBtn = document.getElementById('add-multiple-files-btn');
+        const config = uploadTabConfig[tabName];
+
+        if (!config) {
+          titleEl.textContent = 'Upload Files';
+          helpEl.textContent = 'Switch to Local Videos, Audio & Songs, Picture Gallery, or PDF Documents to upload files directly from this page.';
+          addFileBtn.disabled = true;
+          addMultipleBtn.disabled = true;
+          return;
+        }
+
+        titleEl.textContent = config.heading;
+        helpEl.textContent = config.help;
+        addFileBtn.disabled = false;
+        addMultipleBtn.disabled = false;
+      }
+
+      function triggerSingleUpload() {
+        openUploadPicker(false);
+      }
+
+      function triggerMultipleUpload() {
+        openUploadPicker(true);
+      }
+
+      function openUploadPicker(allowMultiple) {
+        const config = uploadTabConfig[activeUploadTab];
+        if (!config) {
+          alert('Open Local Videos, Audio & Songs, Picture Gallery, or PDF Documents first.');
+          return;
+        }
+
+        const input = document.getElementById(allowMultiple ? 'multi-media-input' : 'single-media-input');
+        input.accept = config.accept;
+        input.dataset.tab = activeUploadTab;
+        input.value = '';
+        input.click();
+      }
+
+      async function handleMediaUpload(event) {
+        const files = Array.from(event.target.files || []);
+        const tabName = event.target.dataset.tab || activeUploadTab;
+        const config = uploadTabConfig[tabName];
+
+        if (!config || files.length === 0) return;
+
+        let addedCount = 0;
+        let skippedCount = 0;
+
+        for (const file of files) {
+          if (!fileMatchesTab(tabName, file)) {
+            skippedCount += 1;
+            continue;
+          }
+
+          try {
+            const id = createMediaId(tabName);
+            await storeUploadedFile(id, file);
+            uploadedMedia[tabName].unshift({
+              id,
+              name: file.name,
+              type: file.type,
+              size: file.size,
+              addedAt: new Date().toISOString()
+            });
+            addedCount += 1;
+          } catch (error) {
+            skippedCount += 1;
+            console.error('Failed to upload media file:', error);
+          }
+        }
+
+        saveUploadedMediaState();
+        await renderUploadedMediaTab(tabName);
+        event.target.value = '';
+
+        if (addedCount === 0) {
+          alert(`No compatible ${config.label.toLowerCase()} files were added.`);
+          return;
+        }
+
+        let message = `${addedCount} file${addedCount === 1 ? '' : 's'} added to ${config.label}.`;
+        if (skippedCount > 0) {
+          message += ` ${skippedCount} incompatible file${skippedCount === 1 ? ' was' : 's were'} skipped.`;
+        }
+        alert(message);
+      }
+
+      function getEmptyUploadCard(config) {
+        return `
+          <div class="glass-card media-card upload-empty-card">
+            <div class="media-icon ${config.iconBg}"><i class="${config.iconClass}"></i></div>
+            <h3>${config.emptyTitle}</h3>
+            <p>${config.emptyText}</p>
+          </div>
+        `;
+      }
+
+      async function renderUploadedMediaTab(tabName) {
+        const container = document.getElementById(`uploaded-${tabName}-grid`);
+        const config = uploadTabConfig[tabName];
+        if (!container || !config) return;
+
+        clearPreviewUrls(tabName);
+        container.innerHTML = '';
+
+        const items = uploadedMedia[tabName] || [];
+        if (items.length === 0) {
+          container.innerHTML = getEmptyUploadCard(config);
+          return;
+        }
+
+        let renderedCount = 0;
+
+        for (const item of items) {
+          try {
+            const record = await getUploadedFile(item.id);
+            if (!record || !record.blob) continue;
+
+            const card = document.createElement('div');
+            card.className = 'glass-card media-card';
+            const title = escapeHtml(formatDisplayName(item.name));
+            const description = escapeHtml(getUploadDescription(tabName, item));
+
+            if (tabName === 'pictures') {
+              const previewUrl = trackPreviewUrl(tabName, record.blob);
+              card.innerHTML = `
+                <img src="${previewUrl}" alt="${escapeHtml(item.name)}" class="media-preview-image">
+                <h3>${title}</h3>
+                <p>${description}</p>
+                <button class="btn btn-primary btn-sm mt-10" onclick="${config.openHandler}('${item.id}')"><i class="${config.actionIcon}"></i> ${config.actionLabel}</button>
+              `;
+            } else {
+              card.innerHTML = `
+                <div class="media-icon ${config.iconBg}"><i class="${config.iconClass}"></i></div>
+                <h3>${title}</h3>
+                <p>${description}</p>
+                <button class="btn btn-primary btn-sm mt-10" onclick="${config.openHandler}('${item.id}')"><i class="${config.actionIcon}"></i> ${config.actionLabel}</button>
+              `;
+            }
+
+            container.appendChild(card);
+            renderedCount += 1;
+          } catch (error) {
+            console.error('Failed to render uploaded media item:', error);
+          }
+        }
+
+        if (renderedCount === 0) {
+          container.innerHTML = getEmptyUploadCard(config);
+        }
+      }
+
+      async function renderUploadedMedia() {
+        await renderUploadedMediaTab('local');
+        await renderUploadedMediaTab('audio');
+        await renderUploadedMediaTab('pictures');
+        await renderUploadedMediaTab('pdfs');
+        await renderUploadedMediaTab('ppts');
+      }
+
+      function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.add('hidden');
+        });
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+
+        document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        updateUploadControls(tabName);
+      }
+
+      function showYouTubeVideo(videoId) {
+        currentYouTubeId = videoId;
+        document.getElementById('youtube-frame').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        document.getElementById('youtube-modal').classList.remove('hidden');
+      }
+
+      function closeYouTubeModal() {
+        document.getElementById('youtube-frame').src = '';
+        document.getElementById('youtube-modal').classList.add('hidden');
+      }
+
+      function showLocalVideo(videoFile) {
+        currentLocalVideo = videoFile;
+        setCurrentLocalVideoSource(`videos/${videoFile}`);
+        const player = document.getElementById('local-video');
+        player.src = currentLocalVideoSource;
+        player.play();
+        document.getElementById('local-modal').classList.remove('hidden');
+      }
+
+      async function showUploadedLocalVideo(fileId) {
+        const item = uploadedMedia.local.find(entry => entry.id === fileId);
+        if (!item) return;
+
+        const record = await getUploadedFile(fileId);
+        if (!record || !record.blob) {
+          alert('Unable to load this video file.');
+          return;
+        }
+
+        currentLocalVideo = item.name;
+        setCurrentLocalVideoSource(URL.createObjectURL(record.blob));
+        const player = document.getElementById('local-video');
+        player.src = currentLocalVideoSource;
+        player.play();
+        document.getElementById('local-modal').classList.remove('hidden');
+      }
+
+      function closeLocalModal() {
+        const player = document.getElementById('local-video');
+        player.pause();
+        player.src = '';
+        document.getElementById('local-modal').classList.add('hidden');
+      }
+
+      function showVideoOnTV() {
+        if (currentYouTubeId) {
+          app.showVideoOnTV(`https://www.youtube.com/embed/${currentYouTubeId}?autoplay=1`);
+        }
+      }
+
+      function showLocalVideoOnTV() {
+        if (currentLocalVideoSource) {
+          app.showVideoOnTV(currentLocalVideoSource);
+        }
+      }
+
+      function playAudio(audioFile) {
+        currentAudioFile = audioFile;
+        const audioData = audioFiles[audioFile];
+        document.getElementById('audio-title').textContent = audioData.title;
+        document.getElementById('audio-lyrics').textContent = audioData.lyrics;
+        setCurrentAudioSource(`audio/${audioFile}`);
+        const player = document.getElementById('audio-player');
+        player.src = currentAudioSource;
+        player.play();
+        document.getElementById('audio-modal').classList.remove('hidden');
+      }
+
+      async function playUploadedAudio(fileId) {
+        const item = uploadedMedia.audio.find(entry => entry.id === fileId);
+        if (!item) return;
+
+        const record = await getUploadedFile(fileId);
+        if (!record || !record.blob) {
+          alert('Unable to load this audio file.');
+          return;
+        }
+
+        currentAudioFile = item.name;
+        document.getElementById('audio-title').textContent = formatDisplayName(item.name);
+        document.getElementById('audio-lyrics').textContent = `Uploaded audio file • ${formatFileSize(item.size)}`;
+        setCurrentAudioSource(URL.createObjectURL(record.blob));
+        const player = document.getElementById('audio-player');
+        player.src = currentAudioSource;
+        player.play();
+        document.getElementById('audio-modal').classList.remove('hidden');
+      }
+
+      function closeAudioModal() {
+        const player = document.getElementById('audio-player');
+        player.pause();
+        player.src = '';
+        document.getElementById('audio-modal').classList.add('hidden');
+      }
+
+      function showAudioOnTV() {
+        if (!currentAudioSource) return;
+
+        const title = document.getElementById('audio-title').textContent;
+        const notes = document.getElementById('audio-lyrics').textContent;
+        const notesHtml = escapeHtml(notes).replace(/\n/g, '<br>');
+        app.showGameOnTV(title, `
+          <div>
+            <audio src="${currentAudioSource}" controls autoplay style="width:100%; margin-top:20px;"></audio>
+            <p style="font-size:24px; margin-top:20px; white-space:pre-line;">${notesHtml}</p>
+          </div>
+        `);
+      }
+
+      function showPictureGallery(galleryKey) {
+        clearGalleryObjectUrls();
+        currentGalleryData = pictureGalleries[galleryKey];
+        currentGalleryIndex = 0;
+        document.getElementById('gallery-title').textContent = currentGalleryData.title;
+        renderGallery();
+        document.getElementById('gallery-modal').classList.remove('hidden');
+      }
+
+      async function showUploadedPicture(fileId) {
+        const item = uploadedMedia.pictures.find(entry => entry.id === fileId);
+        if (!item) return;
+
+        const record = await getUploadedFile(fileId);
+        if (!record || !record.blob) {
+          alert('Unable to load this image file.');
+          return;
+        }
+
+        clearGalleryObjectUrls();
+        const imageUrl = URL.createObjectURL(record.blob);
+        galleryObjectUrls = [imageUrl];
+        currentGalleryData = {
+          title: formatDisplayName(item.name),
+          images: [imageUrl],
+          captions: [formatDisplayName(item.name)],
+          imageMode: true
+        };
+        currentGalleryIndex = 0;
+        document.getElementById('gallery-title').textContent = currentGalleryData.title;
+        renderGallery();
+        document.getElementById('gallery-modal').classList.remove('hidden');
+      }
+
+      function renderGallery() {
+        const grid = document.getElementById('gallery-grid');
+        grid.innerHTML = '';
+
+        currentGalleryData.images.forEach((img, index) => {
+          const item = document.createElement('div');
+          item.className = `gallery-item ${index === currentGalleryIndex ? 'active' : ''}`;
+
+          if (currentGalleryData.imageMode) {
+            const image = document.createElement('img');
+            image.src = img;
+            image.alt = currentGalleryData.captions[index] || currentGalleryData.title;
+            item.appendChild(image);
+          } else {
+            item.textContent = img;
+          }
+
+          item.onclick = () => {
+            currentGalleryIndex = index;
+            renderGallery();
+          };
+
+          grid.appendChild(item);
+        });
+      }
+
+      function prevGalleryImage() {
+        if (!currentGalleryData.images.length) return;
+        currentGalleryIndex = (currentGalleryIndex - 1 + currentGalleryData.images.length) % currentGalleryData.images.length;
+        renderGallery();
+      }
+
+      function nextGalleryImage() {
+        if (!currentGalleryData.images.length) return;
+        currentGalleryIndex = (currentGalleryIndex + 1) % currentGalleryData.images.length;
+        renderGallery();
+      }
+
+      function closeGalleryModal() {
+        document.getElementById('gallery-modal').classList.add('hidden');
+      }
+
+      function showGalleryOnTV() {
+        if (!currentGalleryData.images.length) return;
+
+        const itemsHtml = currentGalleryData.images.map((img, index) => {
+          if (currentGalleryData.imageMode) {
+            return `
+              <div class="gallery-item ${index === currentGalleryIndex ? 'active' : ''}">
+                <img src="${img}" alt="${escapeHtml(currentGalleryData.captions[index] || currentGalleryData.title)}">
+              </div>
+            `;
+          }
+
+          return `
+            <div class="gallery-item ${index === currentGalleryIndex ? 'active' : ''}" style="font-size:80px;">${img}</div>
+          `;
+        }).join('');
+
+        app.showGameOnTV(currentGalleryData.title, `
+          <div class="gallery-grid">${itemsHtml}</div>
+          <p style="font-size:36px; margin-top:30px; text-align:center;">${escapeHtml(currentGalleryData.captions[currentGalleryIndex] || currentGalleryData.title)}</p>
+        `);
+      }
+
+      function openPDF(pdfFile) {
+        currentPDFFile = pdfFile;
+        const pdfName = formatDisplayName(pdfFile);
+        document.getElementById('pdf-title').textContent = pdfName;
+        setCurrentPDFSource(`pdfs/${pdfFile}`);
+        document.getElementById('pdf-frame').src = currentPDFSource;
+        document.getElementById('pdf-modal').classList.remove('hidden');
+      }
+
+      async function openUploadedPDF(fileId) {
+        const item = uploadedMedia.pdfs.find(entry => entry.id === fileId);
+        if (!item) return;
+
+        const record = await getUploadedFile(fileId);
+        if (!record || !record.blob) {
+          alert('Unable to load this PDF file.');
+          return;
+        }
+
+        currentPDFFile = item.name;
+        document.getElementById('pdf-title').textContent = formatDisplayName(item.name);
+        setCurrentPDFSource(URL.createObjectURL(record.blob));
+        document.getElementById('pdf-frame').src = currentPDFSource;
+        document.getElementById('pdf-modal').classList.remove('hidden');
+      }
+
+      function closePDFModal() {
+        document.getElementById('pdf-frame').src = '';
+        document.getElementById('pdf-modal').classList.add('hidden');
+      }
+
+      function showPDFOnTV() {
+        if (currentPDFSource) {
+          const title = document.getElementById('pdf-title').textContent;
+          app.showGameOnTV(title, `<iframe src="${currentPDFSource}" style="width:100%; height:80vh; border:none;"></iframe>`);
+        }
+      }
+
+      async function openUploadedPPT(fileId) {
+        const item = uploadedMedia.ppts.find(entry => entry.id === fileId);
+        if (!item) return;
+
+        const record = await getUploadedFile(fileId);
+        if (!record || !record.blob) {
+          alert('Unable to load this PowerPoint file.');
+          return;
+        }
+
+        // Browsers can't render PPTX directly easily without external services.
+        // We will trigger a download so the user can open it in PowerPoint/LibreOffice.
+        const url = URL.createObjectURL(record.blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = item.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 100);
+      }
+
+      function showSimulation(url, title) {
+        currentSimulationUrl = url;
+        document.getElementById('simulation-title').textContent = title;
+        document.getElementById('simulation-frame').src = url;
+        document.getElementById('simulation-modal').classList.remove('hidden');
+      }
+
+      function closeSimulationModal() {
+        document.getElementById('simulation-frame').src = '';
+        document.getElementById('simulation-modal').classList.add('hidden');
+      }
+
+      function showSimulationOnTV() {
+        if (currentSimulationUrl) {
+          const title = document.getElementById('simulation-title').textContent;
+          app.showGameOnTV(title, `<iframe src="${currentSimulationUrl}" style="width:100%; height:80vh; border:none;" allowfullscreen></iframe>`);
+        }
+      }
+
+      document.getElementById('single-media-input').addEventListener('change', handleMediaUpload);
+      document.getElementById('multi-media-input').addEventListener('change', handleMediaUpload);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeYouTubeModal();
+          closeLocalModal();
+          closeAudioModal();
+          closeGalleryModal();
+          closePDFModal();
+          closeSimulationModal();
+        }
+      });
+
+      window.addEventListener('beforeunload', () => {
+        Object.keys(previewObjectUrls).forEach(clearPreviewUrls);
+        clearGalleryObjectUrls();
+        revokeUrl(currentLocalVideoSource);
+        revokeUrl(currentAudioSource);
+        revokeUrl(currentPDFSource);
+      });
+
+      updateUploadControls('youtube');
+      renderUploadedMedia();
+    </script>
+  </div>
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+</body>
+</html>

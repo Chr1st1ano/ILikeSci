@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Lessons</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .tab-menu { display: flex; gap: 0; margin-top: 20px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+    .tab-btn {
+      flex: 1; padding: 14px 20px; border: none; font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.04); color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .tab-btn:hover { background: rgba(59, 130, 246, 0.1); color: var(--primary); }
+    .tab-btn.active { background: var(--primary); color: white; }
+    .tv-controls {
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+      padding: 16px; margin-top: 20px;
+    }
+    .tv-controls .btn { min-width: 140px; }
+    .lesson-selector { margin-top: 20px; }
+    .lesson-selector .form-group { margin-bottom: 16px; }
+    .lesson-selector .form-group label { font-weight: 600; margin-bottom: 8px; display: block; }
+    .builder-slide-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 24px; margin-bottom: 20px;
+      position: relative; transition: all 0.3s ease; backdrop-filter: blur(5px);
+    }
+    .builder-slide-card:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateX(10px); border-color: var(--primary);
+    }
+    .slide-number { position: absolute; top: 15px; right: 25px; font-size: 24px; font-weight: 900; color: var(--primary); opacity: 0.3; }
+    .builder-actions { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .lesson-item-card {
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(255,255,255,0.05); padding: 15px 20px; border-radius: 12px;
+      margin-bottom: 10px; border: 1px solid transparent; transition: all 0.3s ease;
+    }
+    .lesson-item-card:hover { border-color: var(--primary); background: rgba(59, 130, 246, 0.1); }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content-area">
+      <section id="view-lessons" class="view-section active">
+        <h1>Lesson Delivery</h1>
+        <p class="subtitle">Display Science lessons on TV/projector for the class</p>
+
+        <!-- Tab Switcher -->
+        <div class="tab-menu">
+          <button class="tab-btn active" data-tab="delivery" onclick="switchLessonTab('delivery')">
+            <i class="fa-solid fa-chalkboard-user"></i> Delivery Mode
+          </button>
+          <button class="tab-btn" data-tab="presentations" onclick="switchLessonTab('presentations')">
+            <i class="fa-solid fa-file-powerpoint"></i> Presentations
+          </button>
+          <button class="tab-btn" data-tab="builder" onclick="switchLessonTab('builder')">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Lesson Builder
+          </button>
+          <button class="tab-btn" data-tab="resources" onclick="switchLessonTab('resources')">
+            <i class="fa-solid fa-folder-open"></i> Resource Hub
+          </button>
+        </div>
+
+        <!-- Delivery Mode Tab -->
+        <div id="tab-delivery" class="tab-content active">
+          <!-- TV Control Bar -->
+          <div class="glass-card tv-controls">
+            <button class="btn btn-primary" onclick="app.openTVDisplay()">
+              <i class="fa-solid fa-display"></i> Open TV Mode
+            </button>
+            <button class="btn btn-secondary" onclick="app.toggleTVFullscreen()">
+              <i class="fa-solid fa-expand"></i> TV Fullscreen
+            </button>
+            <button class="btn btn-secondary" onclick="app.closeTVDisplay()">
+              <i class="fa-solid fa-xmark"></i> Close TV
+            </button>
+          </div>
+
+          <!-- Lesson Selector -->
+          <div class="glass-card lesson-selector">
+            <h3><i class="fa-solid fa-book-open text-primary"></i> Select Lesson</h3>
+            <div class="form-group mt-20">
+              <label>Grade Level</label>
+              <select id="lesson-grade" class="form-control" onchange="app.updateLessonTopics()">
+                <option value="3">Grade 3</option>
+                <option value="4">Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Topic</label>
+              <select id="lesson-topic" class="form-control" onchange="app.loadLessonContent()"></select>
+            </div>
+            <button class="btn btn-primary mt-20 w-100" onclick="app.displayLessonOnTV()">
+              <i class="fa-solid fa-tv"></i> Display on TV
+            </button>
+          </div>
+        </div>
+
+        <!-- Presentations Tab (PPTX) -->
+        <div id="tab-presentations" class="tab-content hidden">
+          <div class="glass-card mt-20">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+              <div>
+                <h3><i class="fa-solid fa-file-powerpoint text-primary"></i> PowerPoint Presentations</h3>
+                <p class="subtitle">Upload .pptx files and present them in the Canva-style viewer</p>
+              </div>
+              <button class="btn btn-success" onclick="app.showPPTXUploadModal()">
+                <i class="fa-solid fa-upload"></i> Import PPTX
+              </button>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px;">
+              <div style="position:relative;flex:2;min-width:180px;">
+                <i class="fa-solid fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;"></i>
+                <input type="text" id="pptx-search" class="form-control" placeholder="Search presentations..." style="padding-left:34px;" oninput="app.loadPPTXList()">
+              </div>
+              <select id="pptx-sort" class="form-control" style="flex:1;min-width:140px;" onchange="app.loadPPTXList()">
+                <option value="date">Sort by Date</option>
+                <option value="name">Sort by Name</option>
+                <option value="grade">Sort by Grade</option>
+                <option value="slides">Sort by Slides</option>
+              </select>
+              <button class="btn-icon" id="pptx-sort-dir" onclick="togglePPTXSortDir()" title="Toggle Ascending/Descending" style="font-size:16px;">
+                <i class="fa-solid fa-arrow-down-wide-short" id="pptx-sort-dir-icon"></i>
+              </button>
+            </div>
+            <div id="pptx-list" class="mt-20"></div>
+          </div>
+        </div>
+
+        <!-- Lesson Builder Tab -->
+        <div id="tab-builder" class="tab-content hidden">
+          <div class="glass-card mt-20">
+            <h3 id="builder-form-title"><i class="fa-solid fa-wand-magic-sparkles text-primary"></i> Create Interactive Lesson</h3>
+            <p class="subtitle">Design slide-by-slide interactive teaching materials</p>
+            
+            <div class="form-group mt-20">
+              <label>Lesson Title</label>
+              <input type="text" id="builder-lesson-title" class="form-control" placeholder="e.g. Parts of a Plant">
+            </div>
+            <div class="form-group mt-10">
+              <label>Grade Level</label>
+              <select id="builder-grade" class="form-control" onchange="app.renderCustomLessonsList()">
+                <option value="3">Grade 3</option>
+                <option value="4">Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+              </select>
+            </div>
+            
+            <div class="form-group mt-10">
+              <label>Quarter</label>
+              <select id="builder-quarter" class="form-control">
+                <option value="1">Quarter 1</option>
+                <option value="2">Quarter 2</option>
+                <option value="3">Quarter 3</option>
+                <option value="4">Quarter 4</option>
+              </select>
+            </div>
+
+            <div class="form-group mt-10">
+              <label>Lesson Number</label>
+              <input type="number" id="builder-lesson-number" class="form-control" placeholder="e.g. 5" min="1" value="1">
+            </div>
+
+            <div class="form-group mt-10">
+              <label>Topic / Unit</label>
+              <input type="text" id="builder-topic" class="form-control" placeholder="e.g. Properties of Materials (Must match dashboard units to show up)">
+            </div>
+
+            <div class="form-group mt-10">
+              <label>Learning Objectives (One per line)</label>
+              <textarea id="builder-objectives" class="form-control" placeholder="e.g. Identify hard and soft materials&#10;Classify materials by property" rows="3" style="font-family: inherit; font-size: 15px; padding: 10px;"></textarea>
+            </div>
+
+            <div id="builder-slides-container" class="mt-20">
+              <!-- Slides will be added here -->
+            </div>
+
+            <div class="builder-actions">
+              <button class="btn btn-secondary" onclick="app.addBuilderSlide()">
+                <i class="fa-solid fa-plus"></i> Add Slide
+              </button>
+              <button class="btn btn-primary" onclick="app.autoFillTestLesson(1)" title="Automate 1-Slide Test Lesson Creation">
+                <i class="fa-solid fa-bolt"></i> Auto 1-Slide Test
+              </button>
+              <button class="btn btn-primary" onclick="app.autoFillTestLesson(3)" title="Automate 3-Slide Test Lesson Creation">
+                <i class="fa-solid fa-layer-group"></i> Auto 3-Slide Test
+              </button>
+              <button class="btn btn-primary" onclick="app.autoFillTestLesson(5)" title="Automate 5-Slide Test Lesson Creation">
+                <i class="fa-solid fa-sliders"></i> Auto 5-Slide Test
+              </button>
+              <button class="btn btn-success" onclick="app.saveCustomLesson()">
+                <i class="fa-solid fa-save"></i> Save Lesson Material
+              </button>
+            </div>
+          </div>
+          
+          <div class="glass-card mt-20">
+            <h3><i class="fa-solid fa-folder-open text-primary"></i> My Saved Materials</h3>
+            <div id="custom-lessons-list" class="mt-20">
+              <!-- List of saved lessons -->
+          </div>
+        </div>
+
+        <!-- Resource Hub Tab -->
+        <div id="tab-resources" class="tab-content hidden">
+          <div class="glass-card mt-20">
+            <h3><i class="fa-solid fa-folder-open text-primary"></i> Drag & Drop Resource Hub</h3>
+            <p class="subtitle" style="margin-bottom:16px;">Drag and drop any lesson material. The system will automatically classify and format it:</p>
+
+            <div id="resource-drop-zone" style="border:2px dashed rgba(59,130,246,0.4); border-radius:16px; padding:40px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(59,130,246,0.03);"
+                 onclick="document.getElementById('resource-file-input').click()"
+                 ondragover="event.preventDefault(); this.style.borderColor='var(--primary)'; this.style.background='rgba(59,130,246,0.08)';"
+                 ondragleave="this.style.borderColor='rgba(59,130,246,0.4)'; this.style.background='rgba(59,130,246,0.03)';"
+                 ondrop="event.preventDefault(); this.style.borderColor='rgba(59,130,246,0.4)'; this.style.background='rgba(59,130,246,0.03)'; app.handleResourceDrop(event.dataTransfer.files);">
+              <i class="fa-solid fa-cloud-arrow-up" style="font-size:3rem; color:var(--primary); margin-bottom:12px; display:block;"></i>
+              <p style="font-weight:600; font-size:16px; margin-bottom:6px;">Drag & Drop Files Here or Click to Browse</p>
+              <p class="text-muted" style="font-size:13px;">Supports PowerPoint (.pptx), Documents (.pdf, .docx, .doc), Question Banks (.json, .csv, .txt), and Media (images & videos)</p>
+              <p id="resource-upload-status" style="color:var(--primary); font-weight:600; margin-top:10px; min-height:20px;"></p>
+              <input type="file" id="resource-file-input" class="hidden" multiple onchange="app.handleResourceDrop(this.files)">
+            </div>
+            
+            <div class="form-group mt-15" style="max-width:300px;">
+              <label style="font-size:13px; font-weight:600;">Assign to Grade (for question parsing):</label>
+              <select id="resource-grade-assign" class="form-control">
+                <option value="3">Grade 3</option>
+                <option value="4" selected>Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Classified Resource List -->
+          <div class="glass-card mt-20">
+            <h3><i class="fa-solid fa-list-check text-primary"></i> Classroom Materials</h3>
+            <p class="subtitle">Select a category to view your uploaded and classified teaching resources:</p>
+
+            <div style="display:flex; gap:10px; margin-top:16px; margin-bottom:20px; flex-wrap:wrap;">
+              <button class="btn btn-secondary btn-sm active btn-res-filter" data-cat="all" onclick="filterResources('all')">All Resources</button>
+              <button class="btn btn-secondary btn-sm btn-res-filter" data-cat="lessons" onclick="filterResources('lessons')">Lesson PDF/Word Docs</button>
+              <button class="btn btn-secondary btn-sm btn-res-filter" data-cat="media" onclick="filterResources('media')">Images & Videos</button>
+            </div>
+
+            <div id="resource-hub-list" class="mt-10">
+              <!-- Dynamically populated files -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Lesson Display Viewer -->
+        <div id="lesson-display" class="lesson-screen hidden">
+          <div class="lesson-header">
+            <h2 id="lesson-display-title">Lesson Title</h2>
+            <div style="display:flex; gap:12px;">
+              <button class="btn btn-secondary btn-sm" onclick="app.toggleLessonFullscreen()">
+                <i class="fa-solid fa-expand"></i> TV Mode
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="app.closeLesson()">
+                <i class="fa-solid fa-xmark"></i> Close
+              </button>
+            </div>
+          </div>
+          <div class="lesson-content glass-card" id="lesson-content-area"></div>
+          <div class="lesson-controls glass-card mt-20">
+            <button class="btn btn-primary" onclick="app.previousSlide()">
+              <i class="fa-solid fa-chevron-left"></i> Previous
+            </button>
+            <span id="slide-counter" style="margin:0 20px; font-weight:600;">1 / 5</span>
+            <button class="btn btn-primary" onclick="app.nextSlide()">
+              <i class="fa-solid fa-chevron-right"></i> Next
+            </button>
+            <button class="btn btn-success" id="start-recitation-btn" onclick="app.startLessonRecitation()" style="margin-left:20px; display:none;">
+              <i class="fa-solid fa-clipboard-question"></i> Start Recitation
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function switchLessonTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+      document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+      if(tabName === 'builder') app.renderCustomLessonsList();
+      if(tabName === 'presentations') app.loadPPTXList();
+      if(tabName === 'resources') app.loadResourcesList();
+    }
+    function filterResources(cat) {
+      document.querySelectorAll('.btn-res-filter').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.querySelector(`.btn-res-filter[data-cat="${cat}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+      if (typeof app.renderResourcesList === 'function') app.renderResourcesList(cat);
+    }
+    let pptxSortDesc = true;
+    function togglePPTXSortDir() {
+      pptxSortDesc = !pptxSortDesc;
+      document.getElementById('pptx-sort-dir-icon').className = pptxSortDesc
+        ? 'fa-solid fa-arrow-down-wide-short'
+        : 'fa-solid fa-arrow-up-short-wide';
+      app.loadPPTXList();
+    }
+    window.getPPTXSortDir = () => pptxSortDesc ? 'desc' : 'asc';
+  </script>
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+</body>
+</html>

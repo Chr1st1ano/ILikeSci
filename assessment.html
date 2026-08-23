@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Assessment</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar (Duolingo-style) -->
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab active" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content-area">
+      <section id="view-assessment" class="view-section active">
+        <h1>Assessment</h1>
+        <p class="subtitle">Recitation and evaluation tools</p>
+
+        <!-- Tabbed Navigation -->
+        <div class="tab-menu mt-20">
+          <button class="tab-btn active" data-tab="flashquiz" onclick="switchAssessmentTab('flashquiz')">
+            <i class="fa-solid fa-bolt"></i> Flash Quiz
+          </button>
+          <button class="tab-btn" data-tab="checklist" onclick="switchAssessmentTab('checklist')">
+            <i class="fa-solid fa-list-check"></i> Checklist
+          </button>
+        </div>
+
+        <!-- Flash Quiz Tab -->
+        <div id="tab-flashquiz" class="tab-content active">
+          <div class="filter-bar glass-card mt-20">
+            <select id="assess-grade" class="form-control" onchange="app.updateAssessmentTopics()"><option value="3">Grade 3</option><option value="4" selected>Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option></select>
+            <select id="assess-topic" class="form-control"></select>
+          </div>
+          <div class="glass-card mt-20">
+            <h3>Difficulty</h3>
+            <div class="mt-20" style="display:flex; gap:12px; flex-wrap:wrap;">
+              <button class="btn btn-diff active" data-diff="Easy" onclick="app.setDifficulty('Easy')">Easy (1pt)</button>
+              <button class="btn btn-diff" data-diff="Medium" onclick="app.setDifficulty('Medium')">Medium (3pts)</button>
+              <button class="btn btn-diff" data-diff="Hard" onclick="app.setDifficulty('Hard')">Hard (5pts)</button>
+            </div>
+          </div>
+          <div class="glass-card mt-20"><h3>Select Student</h3><div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;"><select id="assess-student" class="form-control" style="flex:1;"></select><button class="btn btn-secondary" onclick="app.suggestStudent()"><i class="fa-solid fa-lightbulb text-warning"></i> Suggest</button><button class="btn btn-primary" onclick="app.openStudentSpinner()"><i class="fa-solid fa-dharmachakra"></i> Spin Wheel</button></div></div>
+          <div style="display:flex; gap:12px; margin-top:20px;">
+            <button class="btn btn-primary flex-1" onclick="app.startQuizFlash()"><i class="fa-solid fa-play"></i> Start Flash Quiz</button>
+            <button class="btn btn-secondary flex-1" onclick="app.openTVDisplay()"><i class="fa-solid fa-display"></i> TV Mode</button>
+            <button class="btn btn-secondary" onclick="app.showRubricOnTV()"><i class="fa-solid fa-table-list"></i> Rubric</button>
+          </div>
+          <div id="assessment-flash" class="flash-screen hidden">
+            <div class="flash-header">
+              <span class="badge diff-badge" id="flash-diff">Easy</span>
+              <span id="flash-student-name">Student Name</span>
+            </div>
+            <div class="participation-insight" id="participation-insight" style="padding:10px; background:rgba(59, 130, 246, 0.2); border-radius:8px; margin-bottom:10px; font-size:14px; text-align:center;">
+              <i class="fa-solid fa-circle-info"></i> Performance Insight: <span id="participation-text">Ready</span>
+            </div>
+            <div class="flash-question glass-card"><h2 id="flash-q-text">Question goes here...</h2></div>
+            <div class="flash-controls glass-card mt-20">
+              <h3>Oral Recitation Rubric</h3>
+              <p class="subtitle">Select points based on response quality (1-5)</p>
+              <div class="rubric-buttons" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-top:15px;">
+                <button class="btn score-btn" onclick="app.recordRubricResult(1)" style="background:#ef4444; color:white;">1</button>
+                <button class="btn score-btn" onclick="app.recordRubricResult(2)" style="background:#f59e0b; color:white;">2</button>
+                <button class="btn score-btn" onclick="app.recordRubricResult(3)" style="background:#3b82f6; color:white;">3</button>
+                <button class="btn score-btn" onclick="app.recordRubricResult(4)" style="background:#8b5cf6; color:white;">4</button>
+                <button class="btn score-btn" onclick="app.recordRubricResult(5)" style="background:#10b981; color:white;">5</button>
+              </div>
+              <div class="rubric-labels" style="display:flex; justify-content:space-between; margin-top:8px; font-size:12px; color:var(--text-muted);">
+                <span>Beginning</span>
+                <span>Advanced</span>
+              </div>
+              <div style="display:flex; gap:10px; margin-top:20px;">
+                <button class="btn score-incorrect flex-1" onclick="app.recordQuizResult(false)"><i class="fa-solid fa-xmark"></i> Incorrect (0)</button>
+                <button class="btn btn-secondary" onclick="app.showAIHint(document.getElementById('flash-q-text').textContent, state.assessment.topic)" title="AI Study Hint" style="background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.3);"><i class="fa-solid fa-robot"></i> Hint</button>
+                <button class="btn btn-primary flex-1" onclick="app.toggleAssessmentFullscreen()"><i class="fa-solid fa-expand"></i> Fullscreen</button>
+                <button class="btn btn-secondary flex-1" onclick="app.cancelQuiz()"><i class="fa-solid fa-stop"></i> Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checklist Tab -->
+        <div id="tab-checklist" class="tab-content hidden">
+          <div class="glass-card mt-20">
+            <h3>Evaluation Checklist</h3>
+            <p class="subtitle">Put a check mark (/) if it's a GOOD practice and cross mark (x) if it's NOT A GOOD practice</p>
+            <div class="mt-20">
+              <label>Select Student:</label>
+              <select id="checklist-student" class="form-control mt-10"></select>
+            </div>
+            <div class="checklist-items mt-20" id="checklist-items">
+              <div class="checklist-item">
+                <span class="checklist-text">Playing under the sun at noon time.</span>
+                <div class="checklist-buttons">
+                  <button class="btn btn-success btn-sm" onclick="markChecklistItem(0, 'check')">✓</button>
+                  <button class="btn btn-danger btn-sm" onclick="markChecklistItem(0, 'cross')">✗</button>
+                </div>
+              </div>
+              <div class="checklist-item">
+                <span class="checklist-text">Wearing a wide-brimmed hat on sunny days.</span>
+                <div class="checklist-buttons">
+                  <button class="btn btn-success btn-sm" onclick="markChecklistItem(1, 'check')">✓</button>
+                  <button class="btn btn-danger btn-sm" onclick="markChecklistItem(1, 'cross')">✗</button>
+                </div>
+              </div>
+              <div class="checklist-item">
+                <span class="checklist-text">Looking at the sun directly.</span>
+                <div class="checklist-buttons">
+                  <button class="btn btn-success btn-sm" onclick="markChecklistItem(2, 'check')">✓</button>
+                  <button class="btn btn-danger btn-sm" onclick="markChecklistItem(2, 'cross')">✗</button>
+                </div>
+              </div>
+              <div class="checklist-item">
+                <span class="checklist-text">Using an umbrella on sunny days.</span>
+                <div class="checklist-buttons">
+                  <button class="btn btn-success btn-sm" onclick="markChecklistItem(3, 'check')">✓</button>
+                  <button class="btn btn-danger btn-sm" onclick="markChecklistItem(3, 'cross')">✗</button>
+                </div>
+              </div>
+              <div class="checklist-item">
+                <span class="checklist-text">Lying on beaches all day.</span>
+                <div class="checklist-buttons">
+                  <button class="btn btn-success btn-sm" onclick="markChecklistItem(4, 'check')">✓</button>
+                  <button class="btn btn-danger btn-sm" onclick="markChecklistItem(4, 'cross')">✗</button>
+                </div>
+              </div>
+            </div>
+            <div class="mt-20" style="display:flex; gap:12px;">
+              <button class="btn btn-primary" onclick="submitChecklist()">Submit Evaluation</button>
+              <button class="btn btn-secondary" onclick="showChecklistOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
+            </div>
+            <div id="checklist-score" class="mt-20" style="font-size:24px; font-weight:bold;"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <style>
+      .tab-menu {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .tab-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .tab-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+      .tab-btn.active {
+        background: var(--primary);
+        color: white;
+      }
+      .tab-content {
+        animation: fadeIn 0.3s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .hidden {
+        display: none !important;
+      }
+      .checklist-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+      .checklist-text {
+        flex: 1;
+        font-size: 16px;
+      }
+      .checklist-buttons {
+        display: flex;
+        gap: 8px;
+      }
+      .checklist-item.marked-check {
+        background: rgba(0, 200, 0, 0.2);
+        border: 2px solid green;
+      }
+      .checklist-item.marked-cross {
+        background: rgba(200, 0, 0, 0.2);
+        border: 2px solid red;
+      }
+    </style>
+
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+  <script>
+      let checklistMarks = [null, null, null, null, null];
+
+      function switchAssessmentTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.add('hidden');
+        });
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+      }
+
+      function markChecklistItem(index, mark) {
+        checklistMarks[index] = mark;
+        const items = document.querySelectorAll('.checklist-item');
+        items[index].classList.remove('marked-check', 'marked-cross');
+        if (mark === 'check') {
+          items[index].classList.add('marked-check');
+        } else if (mark === 'cross') {
+          items[index].classList.add('marked-cross');
+        }
+      }
+
+      function submitChecklist() {
+        const studentId = document.getElementById('checklist-student').value;
+        if (!studentId) return alert('Please select a student first.');
+
+        const correctAnswers = [0, 1, 0, 1, 0]; // 0 = bad (should be cross), 1 = good (should be check)
+        let score = 0;
+
+        checklistMarks.forEach((mark, i) => {
+          if (mark === 'check' && correctAnswers[i] === 1) score++;
+          if (mark === 'cross' && correctAnswers[i] === 0) score++;
+        });
+
+        const percentage = (score / correctAnswers.length) * 100;
+        document.getElementById('checklist-score').textContent = `Score: ${score}/${correctAnswers.length} (${percentage}%)`;
+
+        // Award points to student
+        const student = state.students.find(s => s.id == studentId);
+        if (student) {
+          student.totalScore += score;
+          saveState();
+        }
+
+        alert(`Evaluation submitted! Score: ${score}/${correctAnswers.length} (${percentage}%)`);
+      }
+
+      function showChecklistOnTV() {
+        const html = `
+          <h3>Evaluation Checklist</h3>
+          <p>Put a check mark (/) if it's a GOOD practice and cross mark (x) if it's NOT A GOOD practice</p>
+          ${document.getElementById('checklist-items').innerHTML}
+        `;
+        app.showGameOnTV('Evaluation Checklist', html);
+      }
+
+      // Populate checklist student dropdown
+      document.addEventListener('DOMContentLoaded', () => {
+        const studentSelect = document.getElementById('checklist-student');
+        if (studentSelect && state && state.students) {
+          state.students.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = s.name;
+            studentSelect.appendChild(opt);
+          });
+        }
+      });
+    </script>
+  </div>
+</body>
+</html>

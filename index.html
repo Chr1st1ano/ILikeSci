@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Science Curriculum</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Options Menu Modal -->
+  <div id="options-menu" class="options-overlay hidden">
+    <div class="glass-card options-card">
+      <h2 class="text-center mb-20"><i class="fa-solid fa-gear"></i> Options Menu</h2>
+      <div class="options-section">
+        <h3>Sound & Music</h3>
+        <div class="option-row">
+          <label>Sound Effects</label>
+          <button class="btn-toggle" id="toggle-sound" onclick="app.toggleSound()">
+            <i class="fa-solid fa-volume-high"></i> ON
+          </button>
+        </div>
+        <div class="option-row">
+          <label>Background Music</label>
+          <button class="btn-toggle" id="toggle-music" onclick="app.toggleMusic()">
+            <i class="fa-solid fa-music"></i> ON
+          </button>
+        </div>
+        <div class="option-row">
+          <label>Performance Mode (Low-End)</label>
+          <button class="btn-toggle" id="toggle-performance" onclick="app.togglePerformance()">
+            <i class="fa-solid fa-bolt"></i> OFF
+          </button>
+        </div>
+      </div>
+      <div class="options-section mt-20">
+        <h3>System</h3>
+        <button class="btn btn-secondary w-100 mb-10" onclick="app.restartApp()">
+          <i class="fa-solid fa-rotate-right"></i> Restart Application
+        </button>
+        <button class="btn btn-danger w-100" onclick="app.quitApp()">
+          <i class="fa-solid fa-power-off"></i> Quit / Logout
+        </button>
+      </div>
+      <button class="btn btn-primary w-100 mt-20" onclick="app.closeOptionsMenu()">
+        <i class="fa-solid fa-play"></i> Resume
+      </button>
+      <p class="text-muted text-center mt-20" style="font-size:12px;">Press [ESC] to close</p>
+    </div>
+  </div>
+
+  <div class="app-wrapper" id="main-app">
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small" onclick="app.oyoEasterEgg()">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      
+      <div class="top-nav-center">
+        <button class="nav-tab active" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+      <!-- Lesson Path (Duolingo-style learning ladder) -->
+      <div class="lesson-path">
+        <div class="path-header">
+          <h1>Science Curriculum</h1>
+          <div class="curriculum-selectors" style="display: flex; gap: 10px; margin-top: 10px; justify-content: center; flex-wrap: wrap;">
+            <select id="dash-grade-select" class="form-control" style="width: auto; min-width: 120px; font-size: 16px; padding: 8px;" onchange="app.updateDashboardTopics()">
+              <option value="3">Grade 3</option>
+              <option value="4">Grade 4</option>
+              <option value="5">Grade 5</option>
+              <option value="6">Grade 6</option>
+            </select>
+            <select id="dash-topic-select" class="form-control" style="width: auto; min-width: 200px; font-size: 16px; padding: 8px;" onchange="app.renderDashboardLessons()">
+              <!-- Topics populated dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <div class="path-container" id="lesson-path-container">
+          <!-- Lessons will be dynamically loaded here -->
+          <div class="lesson-node completed">
+            <div class="lesson-icon"><i class="fa-solid fa-seedling"></i></div>
+            <div class="lesson-info">
+              <h3>Lesson 1: Living Things</h3>
+              <p>Introduction to plants and animals</p>
+            </div>
+            <button class="btn-lesson btn-review" onclick="window.location.href='lessons.html'">Review</button>
+          </div>
+          <div class="lesson-node completed">
+            <div class="lesson-icon"><i class="fa-solid fa-flask"></i></div>
+            <div class="lesson-info">
+              <h3>Lesson 2: Matter</h3>
+              <p>Solids, liquids, and gases</p>
+            </div>
+            <button class="btn-lesson btn-review" onclick="window.location.href='lessons.html'">Review</button>
+          </div>
+          <div class="lesson-node current">
+            <div class="lesson-icon"><i class="fa-solid fa-eye"></i></div>
+            <div class="lesson-info">
+              <h3>Lesson 3: Five Senses</h3>
+              <p>How we perceive the world</p>
+            </div>
+            <button class="btn-lesson btn-start" onclick="window.location.href='lessons.html'">Start</button>
+          </div>
+          <div class="lesson-node locked">
+            <div class="lesson-icon"><i class="fa-solid fa-leaf"></i></div>
+            <div class="lesson-info">
+              <h3>Lesson 4: Plant Parts</h3>
+              <p>Roots, stems, leaves, and flowers</p>
+            </div>
+            <button class="btn-lesson btn-locked"><i class="fa-solid fa-lock"></i></button>
+          </div>
+          <div class="lesson-node locked">
+            <div class="lesson-icon"><i class="fa-solid fa-paw"></i></div>
+            <div class="lesson-info">
+              <h3>Lesson 5: Animal Parts</h3>
+              <p>Body parts and their functions</p>
+            </div>
+            <button class="btn-lesson btn-locked"><i class="fa-solid fa-lock"></i></button>
+          </div>
+          <div class="lesson-node locked">
+            <div class="lesson-icon"><i class="fa-solid fa-wind"></i></div>
+            <div class="lesson-info">
+              <h3>Lesson 6: Air and Weather</h3>
+              <p>Understanding weather patterns</p>
+            </div>
+            <button class="btn-lesson btn-locked"><i class="fa-solid fa-lock"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Access Panel -->
+      <div class="quick-access">
+        <div class="quick-card" onclick="window.location.href='multimedia.html'">
+          <i class="fa-solid fa-video text-primary"></i>
+          <h3>Videos</h3>
+          <p>Science animations</p>
+        </div>
+        <div class="quick-card" onclick="window.location.href='games.html'">
+          <i class="fa-solid fa-gamepad text-success"></i>
+          <h3>Games</h3>
+          <p>Interactive learning</p>
+        </div>
+        <div class="quick-card" onclick="window.location.href='students.html'">
+          <i class="fa-solid fa-users text-secondary"></i>
+          <h3>Students</h3>
+          <p>Class management</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+  <script>
+    // Easter Egg
+    let oyoCode = [];
+    document.addEventListener('keydown', (e) => {
+      oyoCode.push(e.key.toLowerCase());
+      if (oyoCode.length > 3) oyoCode.shift();
+      if (oyoCode.join('') === 'oyo') {
+        alert("You found the easter egg! Hello Oyo, the creator of ILikeSci!");
+        document.body.style.transform = "rotate(360deg)";
+        document.body.style.transition = "transform 1s";
+        setTimeout(() => { document.body.style.transform = "none"; }, 1000);
+      }
+    });
+  </script>
+</body>
+</html>

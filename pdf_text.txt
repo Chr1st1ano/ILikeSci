@@ -1,0 +1,1296 @@
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+Republic of the Philippines  
+Department of Education  
+DepEd Complex, Meralco Avenue, Pasig City  
+ 
+ 
+ 
+ 
+    
+ 
+MATATAG CURRICULUM    
+ 
+SCIENCE  
+GRADES  4 and 7 
+ 
+ 
+Page 2 of 38 
+ SCIENCE SHAPING PAPER  
+I. Introduction  
+The Science Shaping Paper is developed to provide the narrative for the development of the recalibrated Science Curriculum. I t outlines 
+the goals, theoretical and philosophical foundations, and rationale that shape the Science Curriculum. It presents the b ig ideas and cross -cutting 
+concepts in Science to emphasize the development of durable understanding among learners as well as skills applicable in vari ous contexts.  
+The Science Shaping Paper and the Science curriculum are based on the General Shaping Paper, taking into consideration the fi ndings of 
+the curriculum review conducted in 2019 -2020. Furthermore, the Science curriculum draws on the goals of the 2016 Science K to 12 curriculum. 
+Its new features include: (a) expanding technological literacy to technology and engineering literacy to enable learners to d evelop their ability to 
+connect science content to real -world technological and engineering applications; (b) i ntroduction of key stage and grade level standards to 
+articulate expectations of what learners should be capable of doing at each key stage and grade level; and (c) developmental sequence of content 
+in consideration of the prior learning of students and th e cognitive and language demands of learning new science ideas. Specifically, in 
+sequencing the science content, three modes of thinking  have been considered, starting from the simplest level when a person reacts to the 
+physical environment; is able to int ernalize actions through words and images, and the most complex level; and is already able to think using a 
+symbol system such as written language and number systems.  
+The recalibration of the Science curriculum draws from and supports the DepEd MATATAG agenda, which sets the new direction in  
+resolving basic education challenges through the four critical components:  
+• MAking the curriculum relevant to produce competent and job -ready, active, and responsible citizens;  
+• TAking steps to accelerate delivery of basic education facilities and services;  
+• TAking good care of learners by promoting learner well -being, inclusive education, and a positive learning environment; and  
+•  Giving support to teachers to teach better.  
+It comes at a time when rapid changes and disruptions are happening. According to Marope, Griffin, and Gallagher (2017), in t he face of 
+such persistent and rapid changes, education, through its curricula, should serve as lifelong learning systems, demonstr ating constant self -
+renewal and innovation.  
+ The succeeding sections are organized as follows:  
+▪ The Shape of the Grades 3 to 10 Science Curriculum  
+▪ Development of the Curriculum  
+o Curriculum Goals, Theoretical and Philosophical Bases, Curriculum Framework, Key Stage Standards, Grade Level Standards  
+▪ Elements Contributing to the Curriculum  
+Page 3 of 38 
+ o Big Ideas, Cross -cutting Concepts, Developmental Sequence of Concepts, Development of 21st Century Skills, Social Issues and 
+Government Priorities, STEM, Pedagogies, Assessment, and Resources, Curriculum Organization.  
+The Shape of the Grades 3 to 10 Science Curriculum  
+The Science curriculum has been developed with the view that science is essential for Filipino learners in an increasingly sc ientific, 
+technological, and challenging world.  
+Science offers systematic processes and practices to investigate the natural and man -made world and to innovate and to collaborate with 
+other people to explore frontiers and challenges, and to look for solutions to real -world problems. It offers a well -established and reliable body of 
+knowledge that is increasingly accessible to all and at a range of conceptual levels. Science offers unique ways of thinking and acting in everyday 
+social settings, as well as in more technical and professional settings. It of fers ways to exhibit values and attitudes to contribute to an improved 
+world.  
+The Science curriculum supports Filipino learners to engage with science -related issues, and with the ideas of science, as a reflective 
+citizen. It supports them to explain phenomena scientifically, evaluate and design scientific inquiry, and interpret dat a and evidence. It encourages 
+and supports them to apply scientific, environmental, technological, and engineering knowledge, practices, and principles in the context of real -
+life situations.  
+II.        Development of the Curriculum  
+A.     Curriculum Goals  
+The overall goal of the Grades 3 to 10 Science curriculum is the achievement of scientific, environmental, and technology and engineering 
+literacy of all learners.  
+On achieving the outcomes of the curriculum, learners will be ready to actively participate in local, national, and global co ntexts and make 
+meaningful contributions to a dynamic, culturally diverse, and expanding world. By successfully completing the Scie nce curriculum, Filipino 
+learners will demonstrate capabilities as put forth in the Basic Education Development Plan (BEDP) 2030.  
+B.     Theoretical and Philosophical Bases  
+The Science curriculum presents a modern outlook incorporating learning approaches drawn from an increasingly expanding body of 
+worldwide education research and education experience that recommend that science curricula and the teaching and learning of science for the 
+elementary and secondary years focus on engaging learners in scientific inquiry and the nature and practice of science.  
+Page 4 of 38 
+ The Enhanced Basic Education Act of 2013 (RA 10533), Section 5.e requires that the curriculum support and reflect universally  recognized 
+theories of learning, particularly Constructivism . Other theories contributing to the development of the Science curriculum include Social cognition 
+theory, Brain -based theories of learning, and Vygotsky’s Zone of Proximal Development (ZPD).  
+The Constructivist theory of learning  suggests that learners learn by expanding their knowledge based on their prior knowledge.  One 
+of the primary goals of using constructivist teaching is for learners to learn how to learn when they are trained to take the  initiative for their own 
+learning experiences. Therefore, learners learn best when they can construct a personal understanding based on experiencing things and  
+reflecting on those experiences. Constructivism emphasizes the active role of learners in bui lding their own understanding. Rather than passively 
+receiving information, learners reflect on their experiences, create mental representations, and incorporate new knowledge in to their schemas, 
+thus promoting deeper learning and understanding.  
+The Social Constructivist Theory  advocated by Vygotsky posits three important ideas on the processes of learning and development of 
+an individual. First, these processes involve co -construction with others. Social interaction plays a key role in shaping what learners know 
+(cognition). Se cond, language mediates the learning process as they communicate with others, which includes not only verbal but also non -verbal 
+communication. Knowledge and concepts are conveyed in the language and modes of communication w e use. And third, learning and development 
+take place within cultural and historical contexts. This means that learners' participation in the classroom and in school is  also influenced by 
+other institutions in which they participate, such as their home and  community. There is a need to accommodate learners’ diverse backgrounds, 
+acknowledging their development as whole persons and tapping into their everyday practices, emotions, and identities . 
+Vygotsky’s  Zone of Proximal Development  (ZPD)  refers to the difference between what a learner can do without help and what he or she 
+can achieve with guidance and encouragement from a skilled partner. The term ‘proximal’ suggests that area where the learner is ‘close’ to 
+grasping the knowledge or skil ls to be learned. It recommends that learning occurs best in the ZPD – the zone where instruction is the most 
+beneficial – where the task is only just beyond the individual’s capabilities. An important process: therefore, is for the teacher to iden tify wha t 
+the learner already knows and can do so the teacher can provide the ‘close to’ environment. Successful scaffolding thus requi res appropriate 
+selections, thoughtful organization, and sensitive presentation of suitable tasks.  
+The Science curriculum acknowledges the learners’ direct interaction to their environment through assimilation and reinforcem ent as a 
+crucial factor in learning and knowledge acquisition. The Social cognition learning model  suggests that “most human behavior is learned 
+observationally through modeling,” thus, learners can learn from observing others either as a live model, a symbolic model, o r a verbal 
+instructional model. This pedagogical theory explains as well how attenti on, retention of ideas, reproduct ion of skills, and motivation, are 
+influenced by how learners observe others and their experiences as they interact in their social and media environment.  
+The Brain -based learning theory  is a relatively new educational theory that puts premium on the recent research about cognitive and 
+neurosciences on how the brain learns and how learners learn differently as they age, grow, and mature cognitively, emotional ly, and socially.  It 
+strongly  suggests that learning can be improved and accelerated if teachers structure educational experiences in the classroom to refl ect 
+conditions that facilitate learning and improve brain functions and health and deliver lessons based on the science of learning.  
+Page 5 of 38 
+ The Cognitive load theory  is a theory of how human brains process, learn and store information. The theory suggests that working 
+memory has a limited capacity and that overloading it reduces the effectiveness of teaching. Furthermore, Dylan William has d escribed cognitive 
+load the ory as “the single most important thing for teachers to know” (William 2017). A large body of research evidence indicates tha t instruction 
+is most effective when designed according to the limitations of working memory.  
+C.    Curriculum  Framework  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 1. Science Curriculum Framework  
+A central feature of the Science curriculum is the balanced integration of three interrelated content strands:  
+●       Performing scientific inquiry skills;  
+●       Understanding and applying scientific knowledge; and  
+●       Developing and demonstrating scientific attitudes and values . 
+
+Page 6 of 38 
+ This content is structured into a developmental sequence  of science content, which progressively increases in conceptual demand. The 
+design supports learners to engage with and learn in science appropriate to the expected prior experiences and learning.  
+To support the achievement of the developmental sequence, the Science curriculum has cross -disciplinary opportunities for learning built 
+into learning competencies to reinforce the knowledge and understanding, skills and processes, and values and attitudes  content included in the 
+domains for a grade level or stage.  
+The learning of this content is principally facilitated using the inquiry approach , supported through approaches that challenge learners 
+according to their prior learning and needs.  
+Participation in scientific inquiry enables students to develop ideas about science and how ideas are developed through scien tific activity. The 
+key characteristic of such activity is an attempt to answer a question to which students do not know the answer  or to explain something they do 
+not understand. The answer to some questions can be found by first -hand investigation, but for others information is needed from secondary 
+sources. Therefore, capabilities involved in conducting scientific inquiry have a ke y role in the development of big ideas.  
+From Harlen , W. (Ed.) Working with big ideas of science education ; (2015)  
+Other approaches that enhance inquiry learning and have also contributed to the curriculum design include:  
+●       applications -led learning,  
+●       the science -technology -society approach,  
+●       problem -based learning, and  
+●       multi -disciplinary learning . 
+The Science curriculum adopts in a developmental way the Big Ideas (Harlen, et al. 2015) and Crosscutting Concepts  of Science (A 
+Framework for the K -12 Science Education: Practices, Crosscutting Concepts, and Core Ideas, 2012), as well as integrates government priorities 
+identified as appropriate to the science learning area.  
+The Science curriculum recognizes the place of science and technology in everyday human affairs. It integrates science and te chnology in 
+the social, economic, personal, and ethical aspects of life. The science curriculum promotes strong links between scien ce and technology, 
+including indigenous know -how in the use of natural materials, thus contributing to the preservation of the country’s cultural heritage.  
+The three areas of knowledge and understanding , skills and processes , and values and attitude  are intertwined within the learning 
+competencies in the Science curriculum as these are best learned in context. This reduces the load on the teacher to find mat ching skills, 
+processes, and values and attitudes for the concepts to produce authentic activi ties. 
+Organizing the curriculum around situations and problems that challenge and activate learners’ curiosity motivates them to en gage and 
+appreciate science as relevant and useful.  
+Page 7 of 38 
+ The intention of the curriculum is not to rely solely on textbooks, but to engage learners in science, as well as technologic al and engineering -
+related practices and processes and to incorporate varied hands -on and minds -on activities to develop learners’ interest and encourage them to 
+be active learners. Where learning competencies suggest engagement with and demonstrations of knowledge and understanding, th is curriculum 
+sets the expectation that learners will actively engage in locating and interpreting t he relevant scientific facts, concepts, laws, and theories, and 
+reinterpret or represent them as a deliberate learning strategy. This approach is strongly supported in brain -based learning, which suggests that 
+teachers can promote higher learning through g uidance with questions rather than by requiring learners to rote learn.  
+The Science curriculum is designed to be learner -centered and inquiry -based, emphasizing the use of evidence in constructing explanations 
+and providing opportunities for collaboration, innovation, creative scientific exploration, and engineering design. Th e curriculum explicitly 
+presents many learning competencies that require active learner participation and leadership. Thus, teachers should also deli berately look for 
+opportunities to apply inquiry learning when addressing any learning competency, as this models the nature and practice of science in authentic 
+scientific research and enterprise.  
+Assessment is an integral part of teaching and learning. The curriculum is designed to progressively introduce science concep ts and skills 
+and build towards learning of more conceptually complex content. For that reason, it is crucial that the prior experi ences, knowledge, and 
+understanding of learners are considered and assessed in formative ways to ensure that an accessible but challenging level of  teaching and 
+learning is offered to learners, maximizing the effectiveness of instruction (Vygotsky, 1978). Further information about assessment is described 
+in the last part of this paper.  
+The Science curriculum provides learners with a repertoire of competencies for lifelong learning, for the world of work, and playing part in 
+a well -informed society. It envisions learners with scientific, environmental, and technology and engineering liter acy. Learners will be productive 
+members of society because they are critical and creative problem solvers, responsible stewards of nature, innovative/inventi ve thinkers, informed 
+decision makers, and collaborative and effective communicators.  
+The curriculum provides Content standards  for each Domain and Grade to support teachers to identify the level of science knowledge, 
+skills, and values to be taught and learned. It also clearly articulates Performance standards  to support the teacher to assess the levels of 
+knowledge, skills, and values that learners demonstrate in relation to the Content  and Learning Competencies  addressed during and at the end 
+of each quarter of teaching and learning.  
+The Science curriculum is structured using the following organizers:  
+●       Content  – signaling the key areas of focus for a Quarter;  
+●      Content Standards  – indicating the conceptual level expected for the Quarter;  
+●       Learning Competencies  – identifying the specific aspects of content for learners to achieve;  
+●      Performance Standards  – providing a level for teachers to use to judge learner achievement at the end of each quarter; and  
+●       Performance Tasks  – samples of tasks where the learner applies their knowledge, understanding, skills and processes, values and 
+attitudes, through which teachers can judge the levels of achievement of the performance standard for each quarter in the dom ain. 
+Page 8 of 38 
+   
+IV. Elements Contributing to the Science Curriculum  
+A.   Big Ideas  
+The concepts and skills of Science are not taught in isolation, but rather in the context of big ideas in Science with increa sing levels of 
+complexity from one grade level to another in developmental progression, thus paving the way to a deeper understandi ng of core concepts. The 
+integration across science domains leads to a meaningful understanding of interrelated concepts and their applications in rea l-life situations.  
+One of the reported findings from the curriculum review is that the curriculum is congested – that there is an unequal distribution of 
+learning competencies across different cognitive demands and grade levels. Specifically, there are many learning competen cies on the cognitive 
+demands communicating understanding of science concepts and analyzing information and advance scientific arguments. To addres s this issue, 
+the learning standards are redesigned with a focus on the Big Ideas, and the content standards are progressively appropriate for each grade level. 
+Additionally, the learning competencies ensure a comparable distribution of cognitive demands across different cognitive doma ins and grade 
+levels, for the learners to learn to perform basic procedures bef ore undertaking the more cognitively demanding competencies.  
+A Big Idea  is a statement of an idea that is central to learning – one that links numerous understandings into a coherent whole. It also 
+represents a progression towards understanding key concepts in different learning areas (Charles, 2005). Grounding the learne r’s content 
+knowledge on a relatively few Big Ideas establishes a robust understanding of the learning area. The connection of Big Ideas to many other ideas 
+allows the learner to see it as a set of interrelated concepts, skills, and facts thus, promo ting memory and enhancing transfer.  
+B.   Crosscutting Science Concepts  
+Crosscutting concepts are described as “dimensions that unify the study of science and engineering through their common appli cation 
+across fields.” ( A Framework for K -12 Science Education Practices, Crosscutting Concepts, and Core Ideas, National Academy of Sciences, 2012)  
+Research suggests that learners, over multiple years of school, actively engage in science and engineering practices and appl y crosscutting 
+concepts to deepen their understanding of each field’s disciplinary core ideas.  
+The Science curriculum recognizes the importance of utilizing internationally accepted crosscutting ideas that recur across t he different 
+science domains and across grade levels. These crosscutting concepts include the following:  
+●       Structure and function,  
+●       Stability and change,  
+●       Systems and system models,  
+●       Energy and matter: flows, cycles, and conservation,  
+Page 9 of 38 
+ ●       Scale, proportion and measurement,  
+●       Patterns,  
+●       Cause and effect,  and 
+●       The nature and practices of Science . 
+Crosscutting concepts connect the small ideas in the different science domains as the learning areas are introduced in every quarter.  
+C.    The Developmental Sequence of Concepts  
+The Science curriculum has been structured to progressively develop conceptual understanding of science ideas and practices b y carefully 
+paying attention to the introduction of new ideas. It is cognizant of the following important factors that influence st udents’ readiness to learn 
+science ideas and practices:  
+1. The experiences and expected prior learning of students;  
+2. The stages of development of students as described in educational research (that learners progress through modes of thinking  from 
+birth to adulthood: from sensorimotor  to iconic to concrete symbolic , to formal  and finally to post-formal .); 
+3. The cognitive demand of new science ideas for learners;  
+4. The language demands associated with new ideas in science; and  
+5. The need to reinforce new ideas within and across science domains in a consistent manner.  
+The Science curriculum for Grades 3 to 10 particularly responds to the first three modes of thinking  to inform the sequencing of science 
+content. The  Sensori -motor  mode identifies the developmental stage when a person reacts to the physical environment. For the very young child, 
+it is the mode in which motor skills are acquired. In adult life, this mode is utilized as skills associated with sports and other physical  activities 
+that develop and evolve. The Iconic  mode identifies when a person can internalize actions in the form of images. It is in this mode that the young 
+child develops words and images that represent objects and events. For the adult, this mode of fu nctioning assists in the appreciation of art and 
+music and leads to a form of knowledge referred to as intuitive. The Concrete symbolic  mode identifies when a person thinks using a symbol 
+system such as written language and number systems. Thinking in this mode is reliant on a ‘real -world’ referent. This is the most common mode 
+addressed in learning in the upper primary and secondary scho ol (Biggs & Collis, 1982).  
+The design of the Science curriculum promotes interactive, concrete and hands -on instructional approaches in the early grades, especially 
+in the introduction of more difficult concepts. The delivery of a lesson will call for activating prior knowledge in w hich new learning is built over 
+prior learning. The presentation of content follows a progression from Grade 3 to Grade 10 towards scientific, environmental,  and technology and 
+engineering literacy of all learners.  
+a.    Vertical Articulation  
+Page 10 of 38 
+ The various concepts, processes, and skills in the four domains of the Science curriculum are arranged in an increasing level  of complexity 
+from Grade 3 to Grade 10. It reinforces new ideas through the use of the development of key ideas towards the big id eas as described by Harlen, 
+et al., (2015), and this learning is reinforced by integrating the crosscutting concepts of science developmentally through t he various domains.  
+The progression of concepts across grade levels provides opportunity for the development of understanding of key science conc epts. This 
+is fundamental to the process whereby learners construct their understanding and skills. Since science is taught as a se parate learning area 
+from Grade 3, the learning standards leading to the acquisition of good health habits and development of curiosity about self  and the environment 
+using basic process skills in Grades 1 and 2 are articulated in other learning areas.  
+b.    Horizontal Articulation  
+The learning of science is interconnected with other learning areas especially languages and mathematics. The foundational sk ills, 
+especially literacy and numeracy, introduced in the other learning areas are paramount to the understanding and acquisition o f concepts and 
+skills in science. These basic skills, together with the other essential skills, such as communication, collaboration, and cr itical thinking, ensure 
+not only the learning of science content but also address and establish connections and appl ications in other learning areas. Linking science 
+with literacy and numeracy is vital to fill in the gaps where the learners' knowledge and skills may be inadequate.  
+The curriculum also makes use of the interconnection between science and the other learning areas such as Edukasyong Pantahan an at 
+Pangkabuhayan/Technology Livelihood Education (EPP/TLE), Araling Panlipunan (AP), the language subjects, and Mathematics, amo ng others. 
+Analysis of factors affecting the Program for International Student Assessment (PISA) performance of Filipino learners has sh own that the 
+development of problem solving, critical thinking, and information literacy in subject areas such as Aralin g Panlipunan, English, and Filipino is 
+related to the development of the same set of 21st century skills in Science.  
+D.    Development of the 21st Century Skills  
+One of the daunting challenges of 21st century education is to respond to the needs and demands of this fast -paced dynamic world. 
+Accelerated digitalization and artificial intelligence, shifting job market demands, information explosion, pressures of glob al competitiveness, and 
+transforming sc ientific innovations and technological advancements redefine the knowledge, skill and competency sets that the next generatio n 
+of learners must be equipped with to be adequately prepared.  
+The Department of Education (DepEd) recognizes and responds to these needs and demands through appropriate changes in the 
+educational system. DepEd also continues to respond to the challenges through the refinement of the K to 12 curricula to prod uce holis tically 
+developed Filipino learners with essential 21st century knowledge and skills needed to participate in and provide significant contributions to the 
+society and to nation -building.  
+21st Century Skills are the knowledge, skills, attitudes, and competencies that learners need to develop so that they can prepare for and 
+succeed in work and life in the 21st century (DepEd Order No. 21, s. 2019). It also refers to the knowledge, skills and attitudes necessary to be 
+Page 11 of 38 
+ competitive in the 21st century workforce, participate appropriately in an increasingly diverse society, use new technologies and cope with rapidly 
+changing workplaces (Binkley et al.  2012; Scoular and Care, 2018). These skills are transversal in nature and work in conjunction with 
+foundational literacy and numeracy skills and discipline -specific competencies (e.g., scientific literacy).  
+       Every K to 12 graduate is expected to be equipped with 21st Century Skills which include the following:  
+(a) Information, Media and Technology skills – the ability to gather, manage, evaluate, use, and synthesize information through media and 
+technology. These skills allow learners to navigate a fluid and dynamic environment of knowledge creation and acquisit ion. Among the skills and 
+competencies that the science curriculum emphasizes include Visual, Information, Technology,  and Digital literacies . 
+(b) Learning and Innovation skills – the ability to think critically, analyze and solve problems, create  and implement innovations, and 
+generate functional knowledge. The science curriculum highlights Creativity, Openness, Critical thinking, Problem -solving, and Reflective thinking.  
+(c) Life and Career skills – prepares learners to make informed life and career decisions to enable them to become citizens that engage in 
+a dynamic global community and to successfully adapt to meet the challenges and opportunities to lead in the global w orkforce.  The science 
+curriculum helps develop Informed decision -making, Self -discipline, Future orientation, and Resilience and adversity management . 
+(d) Communication skills – the ability to express oneself clearly and collaborate with others. The science curriculum puts premium on 
+communication skills including all forms and context including but not limited to verbal and non -verbal, active listening,  as well as the abilities 
+to express feelings and provide feedback. The science curriculum focuses on the development of the sub -skills: Teamwork, Collaboration, 
+Intrapersonal skills, Interactive communication, and Communicating in a diverse environment.  
+E.   Social Issues and Government Priorities  
+The Science curriculum contributes to the achievement of government priorities to address current social issues by integratin g developing 
+learners’ awareness in relation to those aspects of the content that are most applicable and provide authentic signifi cance for learners. The 
+common goal is achieved by bringing relevant issues and applications to curriculum learning contexts in science to support le arners to develop 
+their understanding, skills, and values and attitudes towards becoming responsible and pr oductive citizens.  
+Science, as a discipline, puts premium on the investigation of natural phenomena and as such addresses and contributes to the  goals of 
+the many government priorities, which include the following:  
+●       Reduction and management of risks and disaster;  
+●       Fighting against climate change;  
+●       Environmental protection and conservation;  
+●   Sustainable development of resources and energy, including the Green economy, Renewable energy, Sustainable mining; and  
+●       Comprehensive Sexuality Education (CSE).  
+Page 12 of 38 
+ F.   STEM  
+Science, Technology, Engineering and Mathematics (STEM) is a government priority and is significant in the development of pro blem 
+solvers, innovative thinkers, and entrepreneurs who can contribute to inclusive economic development. As depicted in the STEM  Framework, 
+this development is achieved through three learning areas in the K to 12 curriculum – Science, Mathematics, and Technology and Livelihood 
+Education (TLE), which may collectively employ the Engineering Design Process (EDP) to attain curriculum go als. Though distinct and taught 
+separately, these three learning areas are interrelated, and each contributes knowledge and skills for the solution to real -world problems. Figure 
+2 shows a diagrammatic representation of the STEM Framework . 
+ 
+Figure 2. STEM Framework  
+Utilizing the EDP in the instruction allows learners to design solutions based on understanding the needs and contexts, build and test 
+solutions, repeat steps as many times as needed to make improvements, learn from unsuccessful attempts, and discover differen t or novel design 
+possibilities to arrive at optimal soluti ons. In the curriculum, EDP is exhibited through problem solving and investigative approaches where 
+learners apply their mathematical, scientific, and technological understanding to formulate, conjecture, reason, create, and evaluate.  
+G.    Pedagogies, Assessment, and Resources  
+The Science Curriculum Framework identifies the pedagogies that the curriculum embraces to improve learning in science for Fi lipino 
+learners.  These pedagogical approaches can be included appropriately by teachers in the delivery of science lessons to adap t to the learners’ 
+context and learning environment. These approaches are described below to guide teachers in using each pedagogical approach.  
+
+Page 13 of 38 
+ Inquiry -based learning  approach puts a premium on questioning, investigating, proving, probing, explaining, predicting, and establishing 
+connections of evidence (Calburn, 2020). Instead of a transmissive mode of teaching, this approach involves inquiry and susta ined active 
+engag ement of learners. The approach is characterized in the classroom by questions and discussions. Inquiry allows learners to fo rmulate 
+questions and find solutions through learning real -life-based investigations and research projects. Concepts and specific scientific terms need to 
+be explained in simple language. Applications and situations need to be explained in relevant contexts and are best explored through science 
+activities. In this approach learners also engage in developing proc ess skills, analyzing and evaluating evidence, experiencing and discussing, 
+and talking to their peers about their own understanding (Suchman, 1964). Learners collaborate with others to make discoverie s, solve problems, 
+and plan investigations.  
+An applications -led approach  suggests that it is useful to consider the application of the concept rather than of an approach based on 
+the traditional logic of the discipline. Applications -led approach means that the science to be taught is determined by applications from life and 
+NOT by the logic of the discipline of science. Although this curriculum does not suggest an applications -led approach for the entire curriculum, 
+the inclusion in each quarter in each of the domains of learning of suggested Perform ance Tasks is intended to reflect the importance given to 
+the expectation that the learners demonstrate how their learning can be applied to their everyday lives.  
+The Science Technology Society approach (STS) focuses on the societal role of science and technology in the contemporary and modern 
+world. It provides a dynamic and interdisciplinary relationship of history, philosophy and sociology including cultural persp ectives to answer and 
+respond to current scie nce concerns, issues and problems (Pritchard & Woollard, 2010). By using this approach, the learners expand their 
+understanding of science across disciplines and holistically view problems by examining the cons equences of science and technology.  
+Problem -based Learning approach (PBL)  is the acquisition of knowledge and skills using critical thinking and creativity to solve real -life 
+problems. In this approach, real -world problems motivate learners to seek out deeper understanding of concepts, design reasoned decisions and 
+defend them,  and collaborate among themselves (Duch et al., 2001). Through this approach, development of critical thinking, problem -solving 
+abilities, and collaboration and communication skills, are essentially given a focus. An ef fective and versatile approach for PBL is design thinking 
+or engineering design process, which can be used to generate solutions based on the needs of intended users.  
+A multidisciplinary  (cross -disciplinary) design is built into the Science curriculum. A multidisciplinary approach is defined by UNESCO 
+as “curriculum integration which focuses primarily on the different disciplines and the diverse perspectives they bring to illust rate a topic, theme or 
+issue. A multidisciplinary curriculum is one in which the same topic is studied from the viewpoint of more t han one discipline .” The Science 
+curriculum lends itself to greater integration of disciplines as may be adopted in some schools. Similarly, UNESCO defines a transdisciplinary 
+approach  as “an approach to curriculum integration which dissolves the boundaries between the conventional disciplines and organizes teach ing 
+and learning around the construction of meaning in the context of real -world problems or themes. ” An interdisciplinary approach  is defined as 
+“An approach to curriculum integration that generates an understanding of themes and ideas that cut across disciplines and of the connections 
+between different discipli nes and their relationship to the real world. It normally emphasizes process and meaning rather than product and content 
+by combining contents, theories, methodologies, and perspectives from two or more disciplines.”  
+Page 14 of 38 
+ Assessment for the Science Curriculum  
+1. Classroom Assessment  is an ongoing process of identifying, gathering, organizing, and interpreting quantitative and qualitative information 
+about what learners know and can do (DepEd Order 31, s. 2020).  
+The alignment of assessment to curriculum and pedagogy ensures that assessments are fair, valid and reliable in judging, prov iding 
+feedback, and adjusting for the cognitive progress of the learners. Appropriate assessment shall be employed to holistically measure the learners’ 
+current and developing abilities while developing personal accountability in the process  (DepEd Order 8, s. 2015).  
+Assessment for the Science curriculum should be organized to:  
+●       identify prior learning and to set goals for learning;  
+●  support  learners explicitly to take an active role in assessing and evaluating their learning; and  
+●  judge the level of achievement of the learners against the content, performance and grade standards of the intended learning.  
+As instruction for the Science curriculum is expected to be inquiry -based, it is critical that before addressing the learning competencies 
+for that quarter the teacher identifies what the learners already know and can do. This may or may not be through for mal assessment tasks but 
+should provide the information needed to properly plan learning activities for individual learners and the class overall. The se types of assessment 
+may be used any time during inquiry -based science instruction to check on understan ding of scientific concepts, verify the development of 
+scientific inquiry, and reiterate the Science process skills. Assessment to check on learners' learning also provides a proce ss to provide feedback 
+and adapt to the needs of the learner, thus allowing the teacher to adjust instruction to meet learners' ever -changing needs.  
+  
+2. Performance Tasks and Standards  
+The Science curriculum requires learners to complete at least one substantial performance task for each quarter. These may be  through 
+independent or collaborative work. The curriculum provides Performance Standards along with sample tasks to guide teachers  on the 
+performance level expected. The levels of learner performance are judged using criteria suitable for the task.  
+The Performance standards, which are closely aligned with the Content Standards, provide a mechanism for teachers to make jud gements 
+on how well learners are applying science knowledge and understanding, skills and processes, and values and attitudes descr ibed in the 
+curriculum content.  
+Performance Tasks and Standards assist the teachers and learners to answer the questions:  
+1. “What do learners do with what they know?”  
+2. “How well do learners demonstrate their learning?”  
+3. “How well do learners apply their learning in different situations, including in real -life contexts?”  
+Page 15 of 38 
+ 4. “What tools and measures and values do learners use or draw on to demonstrate what they know?”  
+Resources and Technologies  
+The implementation of the Science curriculum can be delivered across available learning delivery resources. The teaching and learning 
+process is not limited to face -to-face. The curriculum allows the adoption of a distance or blended learning approach. Tea chers may need to 
+change their usual practice of instruction – they would have to be familiar with the pedagogical and technological demands of these new learning 
+approaches.  
+There are several innovative teaching methods and technological tools that should be introduced appropriately in basic scienc e education. 
+These emerging methodologies, strategies and tools should be appropriately chosen, and integrated into the science les sons to fit learners’ 
+cognitive abilities and classroom contexts. Among these innovative teaching methods and tools which can be applied to science  are design 
+thinking and engineering design processes, robotics technology, mobile learning applications, lea rning analytics, games and gamification, and 
+virtual and remote laboratories.  Teaching methods and strategies should cater to the needs, skills and contexts of diverse l earners. The 
+Department of Education will continually assess and evaluate the applicab ility of these emerging approaches.  
+H.    Curriculum Organization  
+The Science curriculum is organized into discipline -oriented domains . 
+The domains for Grades 3 -6 are:  
+●       Materials  
+●       Force, Motion, and Energy  
+●       Living things; and  
+●       Earth and space.  The domains for Grades 7 -10 are:  
+●       Science of Materials  
+●       Force, Motion, and Energy  
+●       Life Science; and  
+●       Earth and Space Science.  
+  
+The learning competencies in the Science curriculum are written as statements of what learners know and can do. They signal learning 
+activities that require active learner participation using an inquiry approach to deliver deep learning.  
+Teachers are encouraged to develop learning activities and opportunities that progressively build conceptual understanding, s kills, values 
+and attitudes within domain quarters by considering the learning competencies holistically, rather than as a list of things/content to cover.  
+Over a grade, teachers are encouraged to develop learning activities and opportunities that connect with and draw on content from other 
+domain quarters.  
+Page 16 of 38 
+ The science curriculum provides cross -domain alignment of significant science knowledge, skills, processes and attitude -related contexts 
+and competencies to allow learners to apply and reinforce learning in varying contexts throughout each year and key sta ge. 
+ 
+LEARNING AREA STANDARDS  
+Science Curriculum Overview  
+The Science curriculum provides learners with a repertoire of competencies important for lifelong learning and in the world o f work in a 
+skill-based society. It envisions the development of scientifically , environmentally , and technology  literate  learners  who are productive 
+members of society and who are critical problem solvers , responsible stewards of nature , innovative and creative citizens , informed decision makers , 
+and collaborative and effective communicators . 
+A central feature of the Science curriculum is the balanced integration of three interrelated content strands:  
+·        Performing scientific inquiry skills,  
+·        Understanding and applying scientific knowledge, and  
+·        Developing and demonstrating scientific attitudes and values . 
+It is designed and organized through the integration of the three interrelated content strands. The acquisition of these cont ent strands is 
+facilitated by drawing from the key pedagogical approaches: inquiry -based learning, applications -led approach, the science -technology -
+society approach, problem -based learning, and multi -disciplinary learning. The approaches are based on sound and valued educational 
+research and concepts including Constructivism , the Social Cognition Learning Model , Brain -based Learning  and Vygotsky’s Zone of proximal 
+development . 
+The Science curriculum explicitly adapts in a developmental way Big Ideas  (Harlen, et al., 2015) and Cross Cutting Concepts of Science 
+(A Framework for K -12 Science Education: Practices, Crosscutting Concepts, and Core Ideas, 2012), and integrates governmental thrusts of the 
+Philippines identified as appropriate to the science learning area. The science curriculum recognizes the place of science and technology in 
+everyday human affairs. It integrates science and technology in the social, economic, personal,  and ethical aspects of life. The science curriculum 
+promotes a strong link between science and technology, including indigenous technology, thus preserving our country’s cultura l heritage.  
+Science concepts and science processes are intertwined through the learning competencies in the Science G3 to G10 curriculum.  A learner -
+centered and inquiry -based approach facilitates the acquisition of science concepts. Organizing the curriculum around si tuations and problems 
+that challenge and stir up learners’ curiosity motivates them to learn and appreciate science as relevant and useful. Rather than relying solely 
+on textbooks, a variety of hands -on, minds -on, and hearts -on activities are advocated to develop learners’ interest and lead them to becoming 
+active learners to acquire deep knowledge for applying 21st Century Skills.  
+Page 17 of 38 
+ The Science curriculum emphasizes the use of evidence in constructing explanations and providing opportunities for collaborat ion, 
+innovation, creative scientific exploration, and engineering design.  
+Concepts and skills in the learning domains are not taught in isolation, but rather in the context of important ideas in Scie nce with 
+increasing levels of complexity from one grade level to another in developmental progression, thus paving the way to a dee per understanding of 
+core concepts. The integration across science topics and other disciplines will lead to a meaningful understanding of interre lated concepts and 
+their applications in real -life situations.  
+Assessment is an integral part of teaching and learning. The curriculum is designed to progressively introduce science concep ts and skills 
+and build towards learning of more conceptually complex content. For that reason, it is crucial that the prior experi ences, knowledge and 
+understanding of learners are considered and assessed in formative ways. Doing so ensures that an accessible and engaging lev el of teaching 
+and learning is offered to learners, hence maximizing the effectiveness of instruction (Vygotsk y, 1978). Regular monitoring will ensure 
+effectiveness of the implementation of the Science curriculum and its responsiveness to the needs of the learner and the dema nds of the highly 
+globalized community.  
+ 
+I.  Key Stage Standards  
+Key Stage 1 Standard  
+At the end of Grade 3, the learners acquire healthy habits and curiosity about self and their environment using basic process  skills of 
+observing, communicating, comparing, classifying, measuring, inferring, and predicting. This curiosity will help learner s value science as an 
+important tool in helping them continue to explore their natural and physical environment. This also includes developing scie ntific knowledge or 
+concepts.  
+The specific objectives of Key Stage 1 are to ensure that the learners:  
+a.  understand the properties of objects around them;  
+b.  describe the basic needs of living things;  
+c. demonstrate and practice basic science process skills to investigate scientifically; and  
+d.  exhibit curiosity and appreciation of the natural world.  
+Key Stage 2 Standard  
+At the end of Grade 6, the learners have the essential skills of scientific inquiry – designing simple investigations, using appropriate 
+procedures and tools to gather evidence, observing patterns, determining relationships, drawing conclusions based on ev idence, and 
+communicating ideas in varied ways to make meaning of the observations and/or changes that occur in the environment. The cont ent and skills 
+learned will be applied to maintain good health, ensure the protection and improvement of the environmen t, and practice safety measures in 
+daily activities.  
+Page 18 of 38 
+ The specific objectives of Key Stage 2 are to ensure that the learners:  
+a. acquire knowledge and skills necessary to explain natural phenomena;  
+b. understand and recall science concepts and connect them with new information;  
+c. conduct investigations safely using appropriate equipment; and  
+d.  communicate scientific observations and ideas accurately.  
+Key Stage 3 Standard  
+At the end of Grade 10, the learners demonstrate scientific, environmental, and technological and engineering literacies that  would lead 
+to rational choices on issues confronting them. Having been exposed to scientific investigations related to real life, they recognize that the central 
+feature of an investigation is that if one variable is changed, the effect of the change on another variable can be measured.  The contexts of 
+investigations can be problems at the local or national levels, and can encourage learners to communicate their findings to other people. The 
+learners demonstrate understanding of science concepts and apply science inquiry skills in addressing real -world problems through scientific 
+investigations.  
+The specific objectives of Key Stage 3 are to ensure that the learners:  
+a. apply science concepts in designing scientific investigations and/or possible solutions to real -world problems;  
+b. evaluate scientific evidence in drawing interpretations and conclusions;  
+c.  exhibit critical and analytical thinking in making decisions in scientific contexts; and  
+d. demonstrate desirable attitudes and skills in conducting scientific investigations.  
+II. Grade Level Standards  
+Kindergarten – Grade 2  
+The grade level standards for Kindergarten, Grade 1, and Grade 2 form part of other curricula, including the English curricul um and the 
+Mathematics curriculum. The content, including learning competencies for these grades, is not included in the Science cu rriculum; however, the 
+content of other curricula has been used to develop the Science curriculum. The use of the Science curriculum should be built  on and incorporate 
+the content of other curricula especially in use with Grade 3 learners, where understand ing of expected prior learning is essential.  
+Grade 3  
+At the end of Grade 3, learners demonstrate simple science process skills of observing, predicting, and measuring to explore com mon local 
+materials, their physical properties, and how they have been used over hundreds of years. They locate and describe non -living things that produce 
+useful materials. They observe, describe, and measure living and non -living things in their local environment. They describe the basic needs of 
+living things and explain how their body parts allow them to carry out their daily acti vities. They recognize the need to protect the environment 
+to ensure that the basic needs of living things can be met.  
+Page 19 of 38 
+ Learners use everyday language to explore, describe, and make suggestions about the simple movements of objects. They learn t hrough 
+guided activities to make safe and careful observations of natural objects in the sky and demonstrate scientific ways of rec ording observations to 
+reveal patterns in nature. Learners identify and explore sources of light and sound in their local environment and suggest ho w to use them safely 
+in their lives. They apply their curiosity in the world around them and their creativit y to propose solutions to simple challenges. Learners 
+demonstrate safe handling procedures in using equipment and materials.  
+Grade 4  
+At the end of Grade 4, learners describe chemical properties of materials and that changes to them are sometimes harmful. The y identify 
+that plants and animals have systems whose function is to keep them alive. They observe, describe, and create representa tions to show how 
+living things interact with their habitat, survive, and reproduce. They use diagrams to show the feeding relationship among d ifferent organisms.  
+Learners use simple equipment to identify types of soil that hold water and support plant growth. Learners use simple equipme nt and 
+processes to measure and record data about movement, and describe and predict how things around them move. They describe the  concepts of 
+speed and force. They recognize that science processes are used to gain deeper understanding about the properties of magnets,  light, sound, and 
+heat. Learners apply their developing observation skills and objectivity to identify where energy i s evident in their local communities and how it 
+is used by people. They use instruments and secondary sources to measure and describe the characteristics of weather and use the information 
+to make predictions. Learners demonstrate appreciation for the dang ers of extreme weather events and use safe practice to protect themselves. 
+Learners use personal observations and reliable secondary information sources to describe the sun and explain its importance to life on Earth. 
+They exhibit objectivity and open -mind edness in gathering information related to environmental issues and concerns in the community.  
+Grade 5  
+At the end of Grade 5, learners identify matter as having mass and taking up space and existing in three states based on the properties of 
+shape and volume. They identify that heat is involved in changes of state. They plan and carry out a simple scientifi c investigation following 
+appropriate steps and identifying appropriate equipment. Learners describe and create models of the body systems that represe nt how humans 
+grow, develop, and reproduce. They use tables to group living things as plants, animals, or  microorganisms. They use skills of observing, 
+predicting, measuring, and recording to plan and carry out a simple activity to compare the life cycles of plants and animals . They plan and carry 
+out valid and reliable scientific investigations to explore fr ictional forces by identifying and controlling variables. They observe and describe basic 
+features of static electricity and electric current and explain and recognize applications of forces and electrical energy in  the home and community.  
+Learners explain the role of the water cycle in changing landforms and earth materials. They explain the causes and impacts o f extreme 
+weather and identify appropriate and safe ways to respond to such events. They recognize the scale of space and describe the features of the 
+solar system. They use models to communicate significant relationships and movements. They demonstrate curiosity and creativi ty in 
+communicating information about earth processes to other people. Learners use objectivity and measurement  to carry out scientific investigations 
+Page 20 of 38 
+ using fair tests and multiple trials to explore how forces influence the movement of familiar objects and predict how gravity  affects objects on 
+Earth.  
+Grade 6  
+At the end of Grade 6, learners describe the benefits of various separation techniques and demonstrate skills through the use  of equipment. 
+They use diagrams and flowcharts to describe changes of state. They use the words reversible and irreversible to des cribe changes to materials. 
+They identify mixtures such as solutions and give examples such as mixture. They recognize and apply their understanding of t he features of a 
+fair test. Learners describe the different ways that plants reproduce and plan a simpl e scientific investigation to determine which method works 
+best in a given habitat. They describe that vertebrates are animals with a backbone and that invertebrates do not have a back bone. They design 
+and produce an example of a food web that identifies t he role of consumers, producers, scavengers, and decomposers. They identify the technical 
+terms biotic and abiotic as referring to living and non -living things.  
+Learners carry out investigations to observe patterns and systems scientifically. They support their observations and conclus ions to explain 
+occurrences and concepts using technical scientific language. They use critical thinking skills and creativity to m ake models and other devices 
+to communicate their understanding to other people.  
+Learners describe that volcanoes can have unexpected and severe impacts on communities and that the uncertainty and impacts o f 
+unpredicted eruptions can be offset by understanding and following alerts from authorities. Learners explain that the weather  patterns that 
+produce seasons are largely predictable, and use models to explain natural processes and timing, such as the changes of seaso n. Learners 
+identify that scientific models are valuable in explaining other observations of patterns in nature, such as  the apparent movement of celestial 
+objects across the sky. They exhibit respect for cultures and interpretations of natural phenomena by indigenous people over generations and 
+respect explanations of phenomena using scientific inquiry and objectivity.  
+Grade 7  
+At the end of Grade 7, learners use models to describe the Particle theory of matter. They use diagrams and illustrations to explain the 
+motion and arrangement of particles during changes of state. They explain the role of solute and solvent in solutions a nd the factors that affect 
+solubility. They demonstrate skills to plan and conduct a scientific investigation making accurate measurements and using sta ndard units. 
+Learners describe the parts and function of a compound microscope and use this to identify cell structure. They describe the cell as the basic 
+unit of life and that some organisms are unicellular and some multicellular. They explain that there are two types of cell di vision, and that 
+reproduction can occur through sexual or asexual processes. Th ey use diagrams to make connections between organisms and their environment 
+at various levels of organization. They explain the process of energy transfer through trophic levels in food chains.  
+Learners use systems to analyze and explain natural phenomena and explain the dynamics of faults and earthquakes. They identi fy and 
+assess the earthquake risks for their local communities using authentic and reliable secondary data. They use national and l ocal disaster 
+Page 21 of 38 
+ awareness and risk reduction management plans to identify and explain to others what to do in the event of an earthquake and/ or tsunami. 
+Learners explain the cause and effects of secondary impacts that some coastal communities may experience should a tsuna mi be produced by 
+either a local or distant earthquake. Learners identify and explain how Solar energy influences the atmosphere and weather sy stems of the Earth 
+and that these are the dominant processes that influence the climate of the country.  
+Learners employ scientific techniques, concepts, and models to investigate forces and motion, and describe their findings usi ng scientific 
+language, force diagrams, and distance -time graphs. They use their curiosity, knowledge and understanding, and skills  to propose solutions to 
+problems related to motion and energy. They use scientific investigations to describe the properties of heat energy.  They ap ply their knowledge 
+and problem -solving skills in everyday situations and explore how modern technologies may be used to overcome current global energy concerns.  
+Grade 8  
+At the end of Grade 8, learners apply knowledge and understanding of acceleration to everyday situations involving motion. Th ey represent 
+and interpret acceleration in distance -time, and velocity -time graphs to make predictions about the movement of object s. Learners link motion 
+to kinetic energy and potential energy and explain transformations between them using everyday examples. Learners relate unde rstanding of 
+kinetic energy and potential energy to an appreciation of the hydroelectric resources of the c ountry which generates electricity for use in homes, 
+communities, and industries. They use scientific investigations to explore the properties of light and apply their learning t o solving problems in 
+everyday situations. Learners use models, flow charts, a nd diagrams to explain how body systems work together for the growth and survival of 
+an organism. They represent patterns of inheritance and predict simple ratios of offspring. They explain that the classificat ion of living things 
+shows the diversity and t he unity of living things. They describe the processes of respiration and photosynthesis, and plan and record a scientific 
+investigation to verify the raw materials needed. They use flow charts and diagrams to explain the cycles in nature.  
+Learners describe the large -scale features of the ‘blue planet’ Earth and relate those features to the geological characteristics of the upper 
+crustal layers of the Earth. They identify and describe the nature and impact of volcanic activity in building ne w crust and identify that these 
+crust forming processes account for patterns and changes in the distribution of volcanoes, earthquakes, and mountain chains t hat have occurred 
+over time. Learners identify the relationships between landforms and oceans to ex plain the formation and impacts of typhoons. Learners describe 
+the structure of the atom and how our understandings have changed over time. They draw models of the atom and use tables to i dentify the 
+properties of subatomic particles. They explain that ele ments and compounds are pure substances. They identify elements, their symbols, their 
+valence electrons, their positions in groups and periods on the periodic table. They design and/or create timelines or docume ntaries as interesting 
+learning tools.  
+Grade 9  
+At the end of Grade 9, learners describe that the transmission of traits is determined by DNA, genes, and chromosomes and exp lain that 
+high levels of diversity help to maintain stability of an ecosystem. They identify critically endangered plants and anima ls of the Philippines and 
+strategies to protect and conserve them.  They describe features of typical Philippine ecosystems and conduct a survey to exp lore possibilities to 
+Page 22 of 38 
+ minimize the impact of human activities. Learners carry out a valid and reliable scientific investigation, showing the format ion of a new substance. 
+They demonstrate an understanding of the significance of valence and identify bonds as ionic, covalent, or metallic. They recognize the symbols 
+of common elements and the formula for common compounds.  They describe the properties of ionic, covalent, and metallic subst ances. They 
+demonstrate critical and creative thinking in producing a learning tool about the role of bonds.  
+Learners exhibit skills in gathering information from secondary sources and identify the location and geological setting of t he Philippines 
+to explain its unique landforms and dynamic geologic activity in a global context. They recognize the size and scale  of the Earth and describe 
+evidence for a dynamic Earth. Learners demonstrate curiosity and open -mindedness to evaluate theories of the formation of the Solar System. 
+They describe modern scientific processes and technologies used by scientists to investig ate the nature and evolution of the Solar System. 
+Learners demonstrate a practical understanding of Newton’s three laws of motion and explain everyday application of Newton’s laws. Learners 
+explain the features of electricity and electrical circuitry in ho mes. Learners gather information from secondary sources to describe the nature 
+and features of frequencies across the electromagnetic spectrum and identify practical applications and detrimental effects t hat electromagnetic 
+radiation can have on living thi ngs. 
+Grade 10  
+At the end of Grade 10, learners describe and explain the geologically dynamic nature of the Philippine archipelago in relati on to its plate 
+tectonic setting, and use models to explain the earth structures, movements, and natural events that occur. They explain mech anisms that have 
+contributed to the current distributions of continents and make predictions about changes that can be ex pected in the future.  Learners describe 
+rapid changes that are occurring in local and global climate patterns and propose solutions to address these changes. Learner s describe 
+qualitatively the factors that affect the trajectory of projectiles. They disti nguish different types of collisions and describe the impacts on the 
+motion of objects. They carry out investigations using models to identify relationships that affect the motion of objects and  apply their 
+understanding to real -life situations. Learners g ather information from secondary sources to identify, describe, and explain how science impacts 
+human activities and the environment.  
+Learners explain that there are different indicators for classifying substances as acids, bases, or salts. They describe the identifying factors 
+for a chemical reaction as well as the important types of chemical reactions. They explain how some important c hemical reactions impact the 
+natural and built environments. They write balanced chemical equations using formula and apply the principles of conservation  of mass. They 
+explain factors that affect the rate of a reaction and that some reactions are exotherm ic, and others are endothermic. They demonstrate the 
+knowledge and the skills needed to plan and conduct valid and reliable scientific investigations and record them appropriatel y. Learners describe 
+homeostasis as a process that allows an organism to maint ain stability. They describe and discuss that natural selection is the driving mechanism 
+of evolutionary change. They explain the meaning of the term biotechnology and debate the societal, environmental, and ethica l implications of 
+utilizing biotechnologic al products and methods. They discuss the factors that limit the ecosystem’s carrying capacity and the role of population 
+growth.  
+Page 23 of 38 
+ For the operational purposes of curriculum implementation in schools, the four domains in the Science curriculum have been as signed in 
+quarters as shown below, with Grades 3 to 6 in the elementary school and Grades 7 to 10 in the junior high school.  
+ 
+ 
+SEQUENCE OF DOMAIN PER QUARTER  
+  Elementary  Junior High School  
+Grade 3  Grade 4  Grade 5  Grade 6  Grade 7  Grade 8  Grade 9  Grade 10  
+First 
+Quarter  Materials  Materials  Materials  Materials  Science of 
+Material s Life Science  Force, Motion, 
+and Energy  Earth and 
+Space Science  
+Second 
+Quarter  Living Things  Living Things  Living Things  Living Things  Life Science  Science of 
+Material s Earth and 
+Space Science  Force, Motion, 
+and Energy  
+Third 
+Quarter  Force, 
+Motion, and 
+Energy  Force, Motion, 
+and Energy  Force, 
+Motion, and 
+Energy  Force, 
+Motion, and 
+Energy  Force, Motion, 
+and Energy  Earth and 
+Space Science  Life Science  Science of 
+Material s 
+Fourth 
+Quarter  Earth and 
+Space  Earth and 
+Space  Earth and 
+Space  Earth and 
+Space  Earth and 
+Space Science  Force, Motion, 
+and Energy  Science of 
+Material s Life Science  
+ 
+ 
+ 
+ 
+ 
+Page 24 of 38 
+ SCIENCE CURRICULUM GUIDE  
+GRADE 4 FIRST QUARTER - Materials  
+Content  Content Standards  
+Learners learn that:  Learning Competency  
+The learners … 
+1. Science inventions  
+2. Materials and their 
+uses 
+3. Gathering scientific 
+information  1. Science inventions have 
+brought about major 
+changes to our daily lives.  
+2. Chemical properties of 
+materials determine their 
+uses.  
+3. Communication skills and 
+open mindedness are 
+needed in solving 
+environmental issues.  1. use information from secondary sources to identify a famous Filipino and/or 
+foreign scientist and their invention/s;  
+2. use information from the home or the local community to identify a science 
+invention and explain its impact on their everyday life;  
+3. describe the chemical properties of materials, such as they can be burnt, react 
+with other materials, or are degradable or biodegradable;  
+4. describe changes in properties of materials when exposed to certain changes in 
+temperature, such as changes when wood or coal are burned;  
+5. demonstrate ways to minimize harmful changes in materials, such as restriction 
+of burning of waste materials, and care in handling reactive materials;  
+6. identify issues and concerns in the local community and how they could be 
+addressed by science, such as the treatment of waste; and  
+7. apply science process skills and attitudes in conducting a guided survey about 
+environmental issues and concerns including grouping and classifying, 
+communicating, and open mindedness.  
+Performance Standard  
+By the end of the Quarter, learners  describe chemical properties of materials and changes to them. They demonstrate an understanding that 
+science processes can solve everyday problems and use creativity and determination to provide examples. They exhibit objectiv ity and open -
+mindedness in g athering information related to environmental issues and concerns in the community.  
+Suggested Performance Task/s  
+A. Create a simple model, illustration or write a story about a favorite science invention that you use in everyday life.  
+B. Plan and produce a sample of useful fertilizer from household waste.  
+ 
+Page 25 of 38 
+  
+GRADE 4 SECOND QUARTER - Living Things  
+Content  Content Standards  
+Learners learn that:  Learning Competency  
+The learners … 
+1. Systems in plants 
+and animals  
+2. Plants and animals 
+and their habitats  
+3. Life cycles of 
+animals  
+4. Animals and the 
+food they eat  
+5. Food chains  1. Animals and plants have 
+systems that function to 
+keep them alive.  
+2. Animals and plants live in 
+habitats that meet their 
+basic needs.  
+3. Animals have life cycles 
+that include development 
+and reproduction.  
+4. Animals can be grouped 
+according to the food that 
+they eat.  
+5. Food chains show a series 
+of living things that 
+depend on each other for 
+food. 
+6. Using drawings, tables, 
+and flowcharts is an 
+important skill in learning 
+science concepts and in 
+learning about science 
+processes.  1. describe in simple terms how the following human body systems work: muscular, 
+skeletal, digestive, circulatory, and respiratory;  
+2. observe the root and shoot system in plants and describe why they are 
+important;  
+3. use a drawing or diagram to classify some Philippine animals and plants, based 
+on their habitat: some live on land (terrestrial), live in water (aquatic) or fly in the 
+air (aerial);  
+4. make a list or draw up a table with examples of animals and plants in a 
+particular habitat, such as a garden, rice field, seashore, and mangrove swamp;  
+5. use flow charts to compare the different stages in the life cycle of animals, such 
+as a butterfly, frog, chicken, and human;  
+6. use information from secondary sources to group animals according to the food 
+they eat. Some are:  
+a. plant eaters (herbivores),  
+b. meat eaters (carnivores), and  
+c. plant and meat -eaters (omnivores); and  
+7. draw a simple food chain using living things from the Philippines and label them 
+as herbivores, carnivores, and omnivores.  
+Performance Standard  
+By the end of the Quarter, learners  identify that plants and animals have systems whose function is to keep them alive. They observe, 
+describe, and create representations to show how living things interact with their habitat, survive, and reproduce in specifi c environments. 
+They use flowcha rts to show the feeding relationship among different organisms within a given environment.  
+Suggested Performance Task  
+Create a diorama, terrarium, or an aquarium to illustrate how some plants or animals live on land or in water.  
+Page 26 of 38 
+  
+GRADE 4 THIRD QUARTER - Force, Motion, and Energy  
+Content  
+ Content Standards  
+The learners learn that:  Learning Competencies  
+The learners … 
+1. Forces and 
+movement  
+2. Observing, 
+measuring, and 
+predicting  
+3. Magnets  
+4. Sound, light, and 
+heat energy  1. Science processes help in 
+observing and predicting 
+how things move.  
+2. Pushes and pulls can 
+change the position and 
+shape of objects.  
+3. Gathering scientific 
+information helps explain 
+the behavior of objects 
+and materials.  
+4. Magnets affect some 
+objects and materials 
+without touching them.  
+5. Energy is present 
+whenever there is 
+movement, sound, light, 
+or heat.  1. participate in guided activities to discover and predict how rigid and soft objects 
+can be moved and/or changed in shape;  
+2. measure accurately the distance and time when things move using simple 
+equipment;  
+3. identify that how far an object moves in a given time is called speed;  
+4. construct and label simple graphs of different speeds including stationary and 
+uniform speeds, both fast and slow;  
+5. participate in guided activities to demonstrate that pushes and pulls can be used 
+to change the speed and direction of an object including making it go faster, turn 
+it to a different direction, slow it down, and stop it;  
+6. demonstrate through guided activities that pushes and pulls can be used to 
+change the speed and direction of an object;  
+7. determine how forces can change the shape of objects such as when they are 
+pushed, pulled, stretched, bent, twisted, or squeezed;  
+8. carry out guided investigations to identify the properties of magnets, including 
+how they affect other magnets and objects made of different materials;  
+9. identify examples of how objects can affect other objects even when they are not 
+in contact with each other, such as magnets attracting other objects, light from 
+the sun affecting our eyes, and skin, and loud noises hurting our ears;  
+10. identify that energy is something that can cause change including light, sound, 
+and heat energy; and  
+11. observe and identify sources and uses of light, sound, and heat energy at school, 
+at home and in the local community.  
+Performance Standard  
+By the end of the Quarter, learners use simple equipment and processes to measure and record data related to movement and describe and 
+predict the way things around them move using more scientifically technical language and concepts, such as speed and force. T hey 
+Page 27 of 38 
+ demonstrate an understanding that science processes are used to gain deeper understanding about forces and energy that cannot  be seen 
+directly, including the properties of magnet, light, sound, and heat. Learners apply their observation skills and objectiv ity to identify where 
+energy is evident in their local communities and how it is used by people.  
+Suggested Performance Tasks  
+A. Develop a poster to show some sources and uses of heat energy in your home or neighborhood.  
+B. Collaborate in a small group to develop a safety guide that explains how to stay safe around intense light and sound. Include information 
+on ways to protect eyes and ears and explain how the suggested ways could provide protection.  
+ 
+ 
+GRADE 4 FOURTH QUARTER - Earth and Space  
+Content  Content Standards  
+The learners learn that:  Learning Competencies  
+The learners … 
+1. Soils 
+2. Characteristics of 
+weather  
+3. Characteristics of 
+the Sun  1. Soil and water resources 
+are needed by plants and 
+animals to live and grow.  
+2. Characteristics of the 
+weather can be observed 
+and measured.  
+3. The Sun is a ball of hot 
+gases about 100 times the 
+size of Earth, which 
+radiates light energy 
+needed by living things.  1. participate in guided activities using simple equipment to compare different types 
+of soil including sandy, clay, silt, and loam, including comparing the ability of the 
+soils to hold water;  
+2. recognize that water is one of the basic needs of plants and animals;  
+3. participate in a guided investigation to identify the effect of different types of soil 
+on the growth of plants;  
+4. identify some of the basic characteristics used to describe the weather, such as 
+air temperature, air pressure, wind speed, wind direction, humidity, rain, and 
+cloud cover;  
+5. use weather instruments to measure and record some of the characteristics of 
+weather during a school day;  
+6. examine a local weather chart to make simple interpretations about the local 
+weather and how it might change and describe and practice safety precautions to 
+use during poor or extreme weather conditions;  
+7. describe some of the overall characteristics of the Sun, such as its composition, 
+its size, and the main energy it radiates;  
+8. describe the changes in the direction and length of shadows from a shadow stick 
+and use the information to infer why the Sun changes position during a day; and  
+Page 28 of 38 
+ 9. make suggestions about the importance of the Sun to living things for a group or 
+class discussion and confirm and record ideas by referring to trustworthy 
+secondary sources of information.  
+Performance Standard  
+By the end of the Quarter, learners use simple equipment to identify how types of soil hold water to support the growth of plants. They use 
+instruments and secondary sources to measure and describe the characteristics of weather and use the information to make predictions 
+about weather patterns in their local area. They demonstrate appreciation for the dangers of extreme weather events and use s afe practice to 
+protect themselves if they are caught in bad weather. Learners use personal observations and reliable secondary information sources to 
+describe the Sun and explain its importance to life on Earth.  
+Suggested Performance Task  
+Construct a sundial that can indicate the time of the day.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Page 29 of 38 
+ Grade 7 FIRST QUARTER - Science of Materials  
+Content  Content Standards  
+Learners learn that:  Learning Competency  
+The learners … 
+1. Use of models  
+2. The Particle model 
+and changes of 
+state 
+3. Planning, following, 
+and recording 
+scientific 
+investigations  
+4. Solutions, 
+solubility, and 
+concentration  1. Scientists use models to 
+explain phenomena.  
+2. The particle model 
+explains the properties of 
+solids, liquids, and gases 
+and the processes 
+involved in changes of 
+state.  
+3. Diagrams and flowcharts 
+are very useful in 
+demonstrating and 
+explaining the motion and 
+arrangement of particles 
+during changes of state.  
+4. There are specific 
+processes for planning, 
+conducting, and recording 
+scientific investigations.  
+5. The properties of 
+solutions such as 
+solubility and reaction to 
+litmus determine their 
+use. 1. recognize that scientists use models to explain phenomena that cannot be easily 
+seen or detected;  
+2. describe the Particle Model of Matter as “All matter is made up of tiny particles 
+with each pure substance having its own kind of particles.”;  
+3. describe that particles are constantly in motion, have spaces between them, 
+attract each other, and move faster as the temperature increases (or with the 
+addition of heat);  
+4. use diagrams and illustrations to describe the arrangement, spacing, and relative 
+motion of the particles in each of the three states (phases) of matter;  
+5. explain the changes of state in terms of particle arrangement and energy 
+changes:  
+a. solid → liquid → vapor, and  
+b. vapor → liquid → solid;  
+6. follow appropriate steps of a scientific investigation which includes:  
+a. Aim or problem,  
+b. Materials and equipment,  
+c. Method or procedures,  
+d. Results including data, and  
+e. Conclusion.  
+7. make accurate measurements using standard units for physical quantities and 
+organize the collected data when carrying out a scientific investigation;  
+8. identify the role of the solute and solvent in a solution;  
+9. express quantitatively the amount of solute present in a given volume of solvent;  
+10. demonstrate how different factors affect the solubility of a solute in a given 
+solvent, such as heat;  
+11. identify solutions, which can be found at home and in school and that react with 
+litmus indicator, as acids, bases, and salts; and  
+12.  demonstrate proper use and handling of science equipment.  
+Page 30 of 38 
+ Performance Standard  
+By the end of the Quarter, learners  recognize that scientists use models  to describe the particle model of matter. They use diagrams and 
+illustrations to explain the motion and arrangement of particles during changes of state. They demonstrate an understanding o f the role of 
+solute and solvent in solutions and the factors that af fect solubility. They demonstrate skills to plan and conduct a scientific investigation 
+making accurate measurements and using standard units.  
+Suggested Performance Task  
+Design and carry out an investigation to determine the amount of salt in a sample of seawater.  
+ 
+ 
+GRADE 7 SECOND QUARTER - Life Science  
+Content  Content Standards  
+Learners learn that:  Learning Competency  
+The learners … 
+1. Science equipment: 
+the compound 
+microscope  
+2. Plant and animal 
+cells 
+3. Cellular 
+reproduction  
+4. Levels of biological 
+organization  
+5. Trophic levels and 
+the transfer of 
+energy  
+ 
+ 
+ 1. Familiarity and proper 
+use of a compound 
+microscope are essential 
+to observe cells.  
+2. The organelles of plant 
+and animal cells can be 
+identified using a 
+compound microscope.  
+3. Cells are the basic unit of 
+life and mitosis, and 
+meiosis are the basic 
+forms of cell division.  
+4. Fertilization occurs when 
+a male reproductive cell 
+fuses with a female 
+reproductive cell.  1. identify the parts and functions, and demonstrate proper handling and storing of 
+a compound microscope;  
+2. use proper techniques in observing and identifying the parts of a cell with a 
+microscope such as the cell membrane, nucleus, cytoplasm, mitochondria, 
+chloroplasts, and ribosomes;  
+3. recognize that some organisms consist of a single cell (unicellular) like in bacteria 
+and some consist of many cells (multicellular) like in a human;  
+4. differentiate plant and animal cells based on their organelles;  
+5. recognize that cells reproduce through two types of cell division, mitosis and 
+meiosis, and describe mitosis as cell division for growth and repair;  
+6. explain that genetic information is passed on to offspring from both parents by 
+the process of meiosis and fertilization;  
+7. differentiate sexual from asexual reproduction in terms of: a) number of parents 
+involved, and b) similarities of offspring to parents;  
+8. use a labelled diagram to describe the connections between the levels of 
+biological organization to one another from cells to the biosphere;  
+Page 31 of 38 
+  5. Sexual reproduction is 
+the basis of heredity.  
+6. The level of biological 
+organization provides a 
+simple way of connecting 
+the simplest part of the 
+living world to the most 
+complex.  
+7. Identifying trophic levels 
+helps understand the 
+transfer of energy from 
+one organism to another 
+as shown in a food 
+pyramid.  9. describe the trophic levels of an organism as levels of energy in a food pyramid; 
+and 
+10. use examples of food pyramids to describe the transfer of energy between 
+organisms from one trophic level to another.  
+Performance Standard  
+By the end of the Quarter, learners demonstrate understanding of the parts and function of a compound microscope and use this to identify 
+cell structure. They recognize that the cell is the basic unit of life and that some organisms are unicellular and some are m ulticellular. They 
+explain that there are two types of cell division, and that reproduction can occur through sexual or asexual processes. They u se diagrams to 
+make connections between organisms and their environment at various levels of organization. They explain the process  of energy transfer 
+through trophic levels in food chains.  
+Suggested Performance Task  
+Create a visual representation, such as poster, model, or e -poster, explaining the trophic level in a chosen ecosystem.  
+ 
+ 
+GRADE 7 THIRD QUARTER - Force, Motion, and Energy  
+Content  Content Standards  
+The learners learn that:  Learning Competencies  
+The learners … 
+Page 32 of 38 
+ 1. Balanced and 
+unbalanced forces  
+2. Motion: 
+displacement and 
+velocity  
+3. Distance -Time 
+graphs  
+4. Identifying and 
+controlling 
+variables  
+5. Heat transfer  1. Scientists and engineers 
+analyze forces to predict 
+their effects on 
+movement.  
+2. Vectors differentiate the 
+concepts of speed and 
+velocity.  
+3. Graphing motion provides 
+more accurate predictions 
+about speed and velocity.  
+4. The particle model 
+explains natural systems 
+and processes.  
+5. Scientists and engineers 
+conduct innovative 
+research to find solutions 
+to the current global 
+energy crisis by seeking 
+renewable energy 
+solutions.  1. identify that forces act between objects and can be measured.  
+2. identify and describe everyday situations that demonstrate:  
+a. balanced forces such as a box resting on an inclined plane, a man 
+standing still, or an object moving with constant velocity;  
+b. unbalanced forces, such as freely falling fruit or an accelerating car;  
+3. draw a free -body diagram to represent the relative magnitude and direction of the 
+forces involving balanced and unbalanced forces;  
+4. identify that when forces are not balanced, they can cause changes in the 
+object’s speed or direction of motion;  
+5. explain the difference between distance and displacement in everyday situations 
+in relation to a reference point;  
+6. distinguish between speed and velocity using the concept of vectors;  
+7. describe uniform velocity and represent it using distance -time graphs;  
+8. explain the difference between heat and temperature;  
+9. identify advantageous and disadvantageous examples of conduction, convection, 
+and radiation;  
+10. explain in terms of the particle model the processes underlying convection and 
+conduction of heat energy; and  
+11. gather information from secondary sources to identify and describe examples of 
+innovative devices that can be used to transform heat energy into electrical 
+energy.  
+Performance Standard  
+By the end of the Quarter, learners  employ scientific techniques, concepts, and models to investigate forces and motion and represent their 
+understanding using scientific language, force diagrams, and distance -time graphs. They use their curiosity, knowledge and understanding, 
+and skills to  propose solutions to problems related to motion and energy. They explore how modern technologies might be used to overcome 
+current global energy concerns.  
+Suggested Performance Task  
+Develop a 2 -4 page  brochure for parents or leaders in your community to inform them about modern technologies that can be used 
+sustainably to transform heat into electricity in the local community.  
+Page 33 of 38 
+  
+ 
+GRADE 7 FOURTH QUARTER - Earth and Space Science  
+Content  Content Standards  
+The learners learn that:  Learning Competencies  
+The learners … 
+1. System models  
+2. Earthquakes  
+3. The Sun’s 
+influence on Earth  1. Rapid movements along 
+normal, reverse or strike -
+slip faults cause 
+earthquakes.  
+2. The damage or effects on 
+communities depend on 
+the magnitude of and 
+distance from an 
+earthquake.  
+3. Sunlight is the Earth’s 
+external source of energy.  
+4. Solar energy influences 
+the atmosphere and 
+weather patterns.  
+5. The revolution, rotation, 
+and the tilt of the Earth 
+explain the patterns of 
+day and night and the 
+seasons.  1. classify geological faults according to the angle of the fault plane and direction 
+of slip;  
+2. use models or illustrations to explain how movements along faults generate 
+earthquakes and identify and explain which types of faults are most likely to 
+occur in the Philippines and explain why;  
+3. describe how the effects of earthquakes on communities depend on their 
+magnitude;  
+4. use the PHIVOLCS FaultFinder or other reliable information source to identify 
+where the nearest fault system is located from their community and assess the 
+risk of earthquakes to their local community;  
+5. make models of fault scenarios to illustrate:  
+a. the epicenter of an earthquake from its focus,  
+b. the intensity of an earthquake from its magnitude, and  
+c. how underwater earthquakes may or may not generate tsunamis;  
+6. refer to the local disaster readiness plans to demonstrate what to do during and 
+after an earthquake;  
+7. explain how earthquakes result in tsunamis that devastate shoreline 
+communities;  
+8. describe procedures that the authorities have in place to alert communities of 
+pending tsunamis and what procedures can be implemented should a tsunami 
+impact a community;  
+9. explain how energy from the Sun interacts with the atmosphere;  
+10. make a physical model or use drawings to demonstrate how the tilt of the Earth 
+relative to its orbit around the Sun affects the intensity of sunlight absorbed by 
+different areas of Earth over a year;  
+11. explain, using models, how the tilt of the Earth affects the changes in the length 
+of daytime at different times of the year; and  
+Page 34 of 38 
+ 12. explain how solar energy contributes to the occurrence of land and sea breezes, 
+monsoons, and the Intertropical Convergence Zone (ITCZ).  
+Performance Standard  
+By the end of the Quarter, learners appreciate the value of using systems to analyze and explain natural phenomena and demonstrate their 
+understanding in explaining the dynamics of faults and earthquakes. They are confident in identifying and assessing the earth quake risk for 
+their local com munities using authentic and reliable secondary data. They use the country’s disaster awareness and risk reduction 
+management plans to identify and explain to others what to do in the event of an earthquake. Learners explain the cause and e ffects of 
+second ary impacts that some coastal communities may experience should a tsunami be produced by either local or distant earthquake 
+activity. Learners use reliable scientific information to identify and explain how solar energy influences the atmosphere and weather systems 
+of the Earth and use such information to appreciate and explain the dominant processes that influence the climate of the Phil ippines.  
+Suggested Performance Tasks  
+A. Design, test, and evaluate a model house that can withstand a model earthquake.  
+B. Design, test, and evaluate a model of an innovative house that can adapt to the different weather conditions in the countr y. 
+ 
+ 
+GLOSSARY  
+ 
+The curriculum organizers described below are used together to form the curriculum description in the Grades 3 to 10 Science Curriculum 
+Guide. The definitions within this section are drawn from DepEd Order No. 8, s. 2015 and DepEd Order No. 21, s. 2019.  
+1)        Standard  – In its broadest sense, it is something against which other things can be compared to for the purpose of determining 
+accuracy, estimating quantity or judging quality. It is a stated expectation of what one should know and be able to do.  
+2)        Key Stage  – This refers to stages in the K to 12 Program reflecting distinct developmental milestones. These are Key Stage 1 
+(Kindergarten – Grade 3), Key Stage 2 (Grades 4 – 6), Key Stage 3 (Grades 7 – 10), and Key Stage 4 (Grades 11 and 12).  
+3)        Key Stage Standard  – This shows the level or quality of proficiency that the learner is able to demonstrate in each key stage after 
+learning a particular area in relation to the core learning area standard . 
+4)  Grade Level Standard  – This shows the level or quality of proficiency that the learner is able to demonstrate in each Grade after 
+learning a particular area in relation to the core learning area standard . 
+Page 35 of 38 
+ 5)  Content Domain  – This is a particular strand or domain of the curriculum in which the scope and sequence of a set of related 
+topics and skills are covered.  
+6)  Content Standard  – The content standards identify and set the essential knowledge and understanding intended to be learned. 
+They cover a specified scope of sequential topics within each learning strand, domain, theme, or component. Content standards  answer 
+the question, “ What should the learners know?”  
+7)        Learning Competency  – This refers to a specific skill performed with varying degrees of independence. It has different levels of 
+difficulty and performance levels. It also refers to the ability to perform activities according to the standards expected by  drawing from 
+one’s k nowledge, skills, and attitudes.  
+8)     Performance Standard  – The performance standards describe the abilities and skills that learners are expected to demonstrate in 
+relation to the content standards and the integration of 21st century skills. The integration of knowledge, understanding, and skills is 
+expressed through creation, innovation, and adding value to products/performance during independent work or in collaboration with 
+others.  
+ 
+REFERENCES:  
+A Framework for K -12 Science Education: Practices, Crosscutting Concepts, and Core Ideas (2012).  
+American Association for the Advancement of Science. The Nature of Science. 2009 
+http://www.project2061.org/publications/bsl/online/index.php?chapter=1  
+Archer, A., & Hughes, C. (2011). Explicit Instruction: Effective and Efficient Teaching. NY: Guilford Publications.  
+Athuman, J. J. (2017). Comparing the effectiveness of an inquiry -based approach to that of conventional style of teaching in the development of 
+students’ science process skills.  
+ Bandura, A. (1986) Social foundations of thought and action: a social cognitive theory., Englewood Cliffs, N.J.: Prentice -Hall. 
+Bernardo, A. B. I. (2021). Socioeconomic status moderates the relationship between growth mindset and learning in mathematics  and science: 
+Evidence from PISA 2018 Philippine data. International Journal of School & Educational Psychology, 9(2), 208 –222. 
+https://doi.org/10.1080/21683603.2020.1832635  
+Bruner, J. (1964). The course of cognitive growth. Retrieved from https://www.uky.edu/~gmswan3/544/Bruner_1964_CoCG.pdf  
+Page 36 of 38 
+ Committee on a Conceptual Framework for New K -12 Science Education Standards; National Academies of Sciences, Engineering, and Medicine. 
+2012. A Framework for K -12 Science Education: Practices, Crosscutting Concepts, and Core Ideas. Washington, DC: The Nat ional Academies 
+Press. https://doi.org/10.17226/13165.  
+Charles, R. (2005) Big Ideas and Understandings as the Foundation for Elementary and Middle School Mathematics. NCSM Journal.  Vol. 7 No. 
+3, pp 9 -24 https://thelearningexchange.ca/wp -content/uploads/2011/10/BigIdeas_NCSM_Spr05v7.pdf  accessed April 27, 2021  
+Department of Education (2015) DepEd Order No. 8, s. 2015, Interim Guidelines for Assessment and Grading in Light of the Basi c Education 
+Learning Continuity Plan. Retrieved from https://www.deped.gov.ph/wp -content/uploads/2020/10/DO_s2020_031.pdf . 
+Department of Education (2020) DepEd Order No. 31, s. 2020, Policy Guidelines on Classroom Assessment for the K to 12 Basic E ducation 
+Program. Retrieved from https://www.deped.gov.ph/wp -content/uploads/2015/04/DO_s2015_08.pdf . 
+Department of Education (2019) DepEd Order No. 21, s. 2019,” Policy Guidelines on the K to 12 basic Education Program”  
+Department of Education (2016) Department of Education, K to 12 Science Curriculum Guide. Retrieved from https://www.deped.gov.ph/wp -
+content/uploads/2019/01/Science -CG_with -tagged -sci-equipment_revised.pdf . 
+Department of Education (2018) DepEd Order No. 31, series 2018 (DO 31), Policy Guidelines on the Implementation of the Compre hensive 
+Sexuality Education (CSE). Retrieved from Comprehensive Sexuality Education: Developing responsible youth vs rising risks | Department of 
+Education (deped.gov.ph)  
+Department of Education (2018) On fighting against climate change: Imuseños unite through green schools | Department of Education 
+(deped.gov.ph)  
+Duch, B. J., Groh, S. E, & Allen, D. E. (Eds.). (2001). The power of problem -based learning. Sterling, VA: Stylus.  
+Gutiérrez, K. D., & Rogoff, B. (2003). Cultural ways of learning: Individual traits or repertoires of practice. Educational Researcher, 32(5), 19 –25. 
+https://doi.org/10.3102/0013189X032005019  
+Harlen, W. (Ed.) et al. (2015). Working with big ideas of science education. Trieste, Italy: Science Education Programme of I AP. 
+Implementing Rules and Regulations of RA 10533, “The Enhanced Basic Education Act of 2013”  
+International Bureau of Education – Scientific Literacy http://www.ibe.unesco.org/en/glossary -curriculum -terminology/s/scientific -
+literacy#:~:text=Within%20the%20framework%20of%20the,evidence%2Dbased%20conclusions%20about%20science%2D  
+ 
+Page 37 of 38 
+ Joymie R. Orbe Allen A. Espinosa Janir T. Datukan; Teaching Chemistry in a Spiral Progression Approach: Lessons from Science Teachers in the 
+Philippines  
+Laal, Marjan & Laal, Mozhgan. (2012). Collaborative learning: What is it?. Procedia - Social and Behavioral Sciences. 
+10.1016/j.sbspro.2011.12.092.  
+Liu, C. H., & Matthews, R. (2006). Vygotsky’s philosophy: Constructivism and its criticisms examined. International Education  Journal, 6(3), 
+386–399. 
+McBride, B. B., C. A. Brewer, A. R. Berkowitz, and W. T. Borrie. (2013). Environmental literacy, ecological literacy, ecolite racy: What do we 
+mean and how did we get here? Ecosphere 4(5):67. http://dx.doi.org/10.1890/ES13 -00075.1  
+Montenegro, E., & Jankowski, N. A. (2017). Equity and assessment: Moving towards culturally responsive assessment. Occasional  Paper, 29.  
+Mortimore, Peter (1999). Understanding Pedagogy: And Its Impact on Learning. Paul Chapman Publishing Ltd A SAGE Publications Company 6 
+Bonhill Street London EC2A 4PU  
+Nasir, N. S., Lee, C. D., Pea, R., & McKinney de Royston, M. (2021). Rethinking learning: What the interdisciplinary science tells us. Educational 
+Researcher, 50(8), 557 –565. https://doi.org/10.3102/0013189X211047251  
+National Assessment and Governing Board https://www.nagb.gov/naep -frameworks/technology -and-engineering -literacy/2014 -technology -
+framework/toc/ch_0/technology_literacy.html  
+National Academies of Science and Engineering https://www.nap.edu/read/4962/chapter/4#22  
+ National Assessment Governing Board U.S. Department Of Education Technology & Engineering Literacy. Framework The 2018 Nation al 
+Assessment Of Educational Progress.  
+https://www.nagb.gov/content/dam/nagb/en/documents/publications/frameworks/technology/2018 -technology -framework.pdf    
+ Panizzon D, Pegg J, Arthur D, and McCloughan G. (2021) Designing a developmental progression to assess students’ conceptual understandings 
+by focusing on the language demands in Science ; University of New England, Australia. Published in the Australian Journal of Education . 
+Piaget, J, (1950). The Psychology of Intelligence. New York: Routledge.  
+PISA; 10-How-PISA-D-measures -science -literacy.pdf (oecd.org)  
+Pritchard, Alan & Woollard, John (2010) Psychology for the classroom: constructivism and social learning. Routledge 270 Madison Avenue, New 
+York, NY 10016  
+Page 38 of 38 
+ Ravitch, Diane. (2007). EdSpeak: A Glossary of Education Terms, Phrases, Buzzwords, and Jargon. Virginia: Alexandria Associat ion for 
+Supervision and Curriculum and Development.  
+ Shepard, L. A. (2019). Classroom assessment to support teaching and learning. The ANNALS of the American Academy of Political  and Social 
+Science, 683(1), 183 -200. 
+ Spinelli, C. G. (2008). Addressing the issue of cultural and linguistic diversity and assessment: Informal evaluation measure s for English 
+language learners. Reading & writing quarterly, 24(1), 101 -118. 
+SEAMEO Basic Education Standards (SEA -BES) (2017): Common Core Regional Learning Standards (CCRLS) in Mathematics and Science; 
+Editors: Dominador Dizon Mangao, Nur Jahan Ahmad, Masami Isoda.  
+Suchman, J.R. (1964). The Illinois studies in inquiry training. Journal of Research in Science Teaching 2:230 –232. 
+ Surif , J., Ibrahim, N. H., Alwi, A. M., Loganathan, P., & Serman, N. S. (2019, December). Effect of Inductive Teaching Method To I mprove Science 
+Process Skills In Electrochemistry. In 2019 IEEE International Conference on Engineering, Technology and Education ( TALE) (pp. 1 -5). IEEE.  
+Vygotsky, L.S. 1978. Mind in society: The Development of Higher Mental Processes. Massachusetts: Harvard University Press.  
+World Economic Forum, Defining Education 4.0: A Taxonomy for the Future of Learning; 2023.  
+ 
+ 
+         

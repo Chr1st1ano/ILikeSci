@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Dashboard</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-screen" class="login-overlay">
+    <div class="glass-card login-card">
+      <div class="brand text-center" style="display:block; margin-bottom: 24px;">
+        <i class="fa-solid fa-atom pulse text-primary" style="font-size: 48px;"></i>
+        <h2 style="font-size:32px; margin-top:10px;">ILikeSci</h2>
+      </div>
+      <h3 class="text-center" style="margin-bottom: 20px;">Teacher Portal</h3>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <input type="text" id="login-user" class="form-control" placeholder="Username">
+      </div>
+      <div class="form-group" style="margin-bottom: 24px;">
+        <input type="password" id="login-pass" class="form-control" placeholder="Password">
+      </div>
+      <button class="btn btn-primary w-100" onclick="app.handleLogin()">Secure Login</button>
+      <p id="login-error" class="text-danger hidden mt-10" style="text-align:center;">Invalid credentials</p>
+    </div>
+  </div>
+
+  <div class="app-wrapper hidden" id="main-app">
+    <!-- Top Navigation Bar (Duolingo-style) -->
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span>ILikeSci</span>
+        </div>
+      </div>
+      
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+      
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+      <section class="glass-card">
+        <h1>Welcome, Ma'am Coney!</h1>
+        <p class="subtitle">Simplify your assessments and recordings offline.</p>
+        
+        <div class="stats-grid">
+          <div class="glass-card stat">
+            <i class="fa-solid fa-graduation-cap text-primary"></i>
+            <div><h3>Grade 3-7</h3><p>Active Levels</p></div>
+          </div>
+          <div class="glass-card stat" onclick="window.location.href='assessment.html'" style="cursor:pointer">
+            <i class="fa-solid fa-clipboard-question text-secondary"></i>
+            <div><h3>Start Quiz</h3><p>Recitation Mode</p></div>
+          </div>
+          <div class="glass-card stat" onclick="window.location.href='games.html'" style="cursor:pointer">
+            <i class="fa-solid fa-gamepad text-success"></i>
+            <div><h3>Interactive Games</h3><p>Kinesthetic Learning</p></div>
+          </div>
+          <div class="glass-card stat" onclick="window.location.href='scoreboard.html'" style="cursor:pointer">
+            <i class="fa-solid fa-trophy text-warning"></i>
+            <div><h3>Scoreboard</h3><p>Real-time Rankings</p></div>
+          </div>
+        </div>
+
+        <div class="glass-card mt-20">
+          <h3>Cloud Sync</h3>
+          <div style="display:flex; gap:12px; margin-top:16px;">
+            <button class="btn btn-primary" onclick="app.syncToCloud()"><i class="fa-solid fa-cloud-arrow-up"></i> Backup to Cloud</button>
+            <button class="btn btn-secondary" onclick="app.restoreFromCloud()"><i class="fa-solid fa-cloud-arrow-down"></i> Restore from Cloud</button>
+          </div>
+        </div>
+
+        <div class="glass-card mt-20 text-center easter-egg" onclick="alert('OYO says: Always focus on working performance first! 🚀')">
+          <p><i class="fa-solid fa-code"></i> Legit</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+</body>
+</html>

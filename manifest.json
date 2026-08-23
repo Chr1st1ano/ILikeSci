@@ -1,0 +1,20 @@
+{
+  "name": "ILikeSci - Hybrid Science E-Learning System",
+  "short_name": "ILikeSci",
+  "start_url": "./landing.html",
+  "display": "standalone",
+  "description": "A hybrid Offline/Online Science E-Learning system for teacher-centered classroom use.",
+  "lang": "en",
+  "dir": "ltr",
+  "theme_color": "#0a0f25",
+  "background_color": "#0a0f25",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230a0f25'/%3E%3Ccircle cx='256' cy='256' r='120' fill='%233b82f6'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

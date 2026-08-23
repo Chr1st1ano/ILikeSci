@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ILikeSci - Interactive Science Learning Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .landing-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 28px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .brand i {
+      font-size: 36px;
+      animation: pulse 2s infinite;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: white;
+      color: #667eea;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid white;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 80px);
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 64px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 24px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 24px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+      font-size: 64px;
+      color: #667eea;
+      margin-bottom: 24px;
+    }
+
+    .feature-card h3 {
+      font-size: 24px;
+      margin-bottom: 16px;
+      color: #333;
+    }
+
+    .feature-card p {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .how-it-works {
+      background: white;
+      padding: 80px 40px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 48px;
+      font-weight: 800;
+      color: #333;
+      margin-bottom: 60px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .step {
+      text-align: center;
+    }
+
+    .step-number {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 800;
+      color: white;
+      margin: 0 auto 24px;
+    }
+
+    .step h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .step p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 100px 40px;
+      color: white;
+    }
+
+    .cta-section h2 {
+      font-size: 48px;
+      margin-bottom: 24px;
+    }
+
+    .cta-section p {
+      font-size: 20px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .hero h1 {
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .hero p {
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.3s forwards;
+    }
+
+    .hero-buttons {
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.6s forwards;
+    }
+
+    .feature-card {
+      opacity: 0;
+      transition: all 0.6s ease;
+    }
+
+    .feature-card.visible {
+      opacity: 1;
+    }
+
+    .step {
+      opacity: 0;
+      transition: all 0.6s ease;
+    }
+
+    .step.visible {
+      opacity: 1;
+    }
+
+    .cta-section {
+      opacity: 0;
+      transition: all 0.8s ease;
+    }
+
+    .cta-section.visible {
+      opacity: 1;
+    }
+
+    /* Particle background */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+    }
+
+    .particle:nth-child(1) { left: 10%; top: 20%; }
+    .particle:nth-child(2) { left: 20%; top: 80%; }
+    .particle:nth-child(3) { left: 60%; top: 40%; }
+    .particle:nth-child(4) { left: 80%; top: 10%; }
+    .particle:nth-child(5) { left: 50%; top: 70%; }
+    .particle:nth-child(6) { left: 30%; top: 30%; }
+    .particle:nth-child(7) { left: 70%; top: 60%; }
+    .particle:nth-child(8) { left: 90%; top: 90%; }
+
+    .hide-mobile {
+      display: inline;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .hide-mobile {
+        display: none;
+      }
+
+      .landing-nav {
+        padding: 16px 20px;
+      }
+
+      .hero {
+        padding: 40px 20px;
+      }
+
+      .features {
+        padding: 40px 20px;
+      }
+
+      .section-title {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle Background -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <nav class="landing-nav">
+    <div class="brand">
+      <i class="fa-solid fa-atom"></i>
+      <span class="hide-mobile">ILikeSci</span>
+    </div>
+    <div class="nav-buttons">
+      <a href="index.html" class="btn btn-secondary">
+        <i class="fa-solid fa-info-circle"></i>
+        <span class="hide-mobile">About</span>
+      </a>
+      <a href="index.html" class="btn btn-primary">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        Sign In
+      </a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Make Science Learning Fun & Interactive</h1>
+      <p>A gamified platform for teachers and students. Digital flash quizzes, interactive games, real-time scoring, and TV mode for classroom presentations.</p>
+      <div class="hero-buttons">
+        <a href="index.html" class="btn btn-primary">
+          <i class="fa-solid fa-rocket"></i>
+          Get Started
+        </a>
+        <a href="#features" class="btn btn-secondary">
+          <i class="fa-solid fa-arrow-down"></i>
+          Learn More
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="features" id="features">
+    <div class="feature-card">
+      <i class="fa-solid fa-bolt feature-icon"></i>
+      <h3>Digital Flash Quizzes</h3>
+      <p>Quick recitation assessments with automatic scoring. Easy, Medium, and Hard difficulty levels with fair student suggestion system.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-gamepad feature-icon"></i>
+      <h3>Interactive Games</h3>
+      <p>Dance, sing, and group activities with timer and point tracking. Gamified learning that keeps students engaged.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-display feature-icon"></i>
+      <h3>TV Presenter Mode</h3>
+      <p>Dual-screen display like Canva. Control from your laptop while showing content on external monitor or TV for the class.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-trophy feature-icon"></i>
+      <h3>Real-time Scoreboard</h3>
+      <p>Live ranking system with fairness alerts. Track student progress and encourage healthy competition.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-book feature-icon"></i>
+      <h3>Curriculum Lessons</h3>
+      <p>Import and organize lesson plans with slide-by-slide delivery. Support for MATATAG K to 10 Curriculum.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fa-solid fa-cloud feature-icon"></i>
+      <h3>Cloud Sync</h3>
+      <p>Backup and restore data to MySQL database. Offline support with automatic sync when online.</p>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Sign In</h3>
+        <p>Teachers sign in with their credentials to access the dashboard.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Add Students</h3>
+        <p>Add your students with their grade levels to the system.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Start Quizzes</h3>
+        <p>Select topic, difficulty, and student to begin flash quizzes.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Track Progress</h3>
+        <p>Monitor student scores and recitations in real-time.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Ready to Transform Your Science Class?</h2>
+    <p>Join teachers using ILikeSci to make science learning engaging and fun.</p>
+    <a href="index.html" class="btn btn-primary">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      Sign In Now
+    </a>
+  </div>
+
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Intersection Observer for scroll-triggered animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          // Add staggered delay for feature cards
+          if (entry.target.classList.contains('feature-card')) {
+            const cards = document.querySelectorAll('.feature-card');
+            const cardIndex = Array.from(cards).indexOf(entry.target);
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, cardIndex * 100);
+          } else if (entry.target.classList.contains('step')) {
+            const steps = document.querySelectorAll('.step');
+            const stepIndex = Array.from(steps).indexOf(entry.target);
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, stepIndex * 150);
+          } else {
+            entry.target.classList.add('visible');
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe elements
+    document.querySelectorAll('.feature-card').forEach(el => observer.observe(el));
+    document.querySelectorAll('.step').forEach(el => observer.observe(el));
+    document.querySelectorAll('.cta-section').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

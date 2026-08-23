@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Materials</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar (Duolingo-style) -->
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content-area">
+      <section id="view-materials" class="view-section active">
+        <h1>Question Bank</h1>
+        <p class="subtitle">Manage assessment questions by grade and topic</p>
+        <div class="filter-bar glass-card mt-20" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+          <div style="position:relative;flex:2;min-width:180px;">
+            <i class="fa-solid fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;"></i>
+            <input type="text" id="mat-search" class="form-control" placeholder="Search questions..." style="padding-left:34px;" oninput="app.renderQuestionBank()">
+          </div>
+          <select id="mat-grade" class="form-control" onchange="app.updateMaterialTopics()"><option value="3">Grade 3</option><option value="4">Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option></select>
+          <select id="mat-topic" class="form-control" onchange="app.renderQuestionBank()"></select>
+          <button class="btn btn-secondary" onclick="app.openTVDisplay()" title="TV Display"><i class="fa-solid fa-display"></i> <span class="hide-mobile">TV</span></button>
+          <button class="btn btn-primary" onclick="app.promptNewTopic()"><i class="fa-solid fa-plus"></i> Add Topic</button>
+          <button class="btn btn-secondary" onclick="app.showAIGenerateModal()" title="AI Question Generator"><i class="fa-solid fa-robot"></i> <span class="hide-mobile">AI Generate</span></button>
+        </div>
+        <div class="glass-card mt-20"><h3>Add Question</h3><div class="form-group mt-20"><input type="text" id="mat-q-text" placeholder="Question text..." class="form-control"></div><div class="form-group mt-20"><select id="mat-diff" class="form-control"><option value="Easy">Easy</option><option value="Medium">Medium</option><option value="Hard">Hard</option></select></div><div class="form-group mt-20"><select id="mat-type" class="form-control"><option value="multiple-choice">Multiple Choice</option><option value="identification">Identification</option><option value="open-ended">Open Ended</option></select></div><button class="btn btn-success mt-10" onclick="app.addMaterialQuestion()"><i class="fa-solid fa-plus"></i> Add Question</button></div>
+
+        <!-- File Import Section -->
+        <div class="glass-card mt-20" id="file-import-section">
+          <h3><i class="fa-solid fa-file-import text-primary"></i> Import Questions from File</h3>
+          <p class="subtitle" style="margin-bottom:14px;">Upload extracted curriculum files (.txt, .csv, .json) to auto-parse and import questions into the database.</p>
+
+          <div id="drop-zone" style="border:2px dashed rgba(67,97,238,0.4); border-radius:14px; padding:32px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(67,97,238,0.04);"
+            onclick="document.getElementById('import-q-file').click()"
+            ondragover="event.preventDefault(); this.style.borderColor='#4361ee'; this.style.background='rgba(67,97,238,0.1)';"
+            ondragleave="this.style.borderColor='rgba(67,97,238,0.4)'; this.style.background='rgba(67,97,238,0.04)';"
+            ondrop="event.preventDefault(); this.style.borderColor='rgba(67,97,238,0.4)'; this.style.background='rgba(67,97,238,0.04)'; app.handleImportFile(event.dataTransfer.files[0]);">
+            <i class="fa-solid fa-cloud-arrow-up" style="font-size:2.4rem; color:#4361ee; margin-bottom:10px;"></i>
+            <p style="font-weight:600; margin-bottom:4px;">Drag & Drop or Click to Upload</p>
+            <p class="text-muted" style="font-size:0.85rem;">.txt (extracted curriculum), .csv, or .json</p>
+          </div>
+          <input type="file" id="import-q-file" class="hidden" accept=".txt,.csv,.json" onchange="app.handleImportFile(this.files[0])">
+
+          <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+            <label style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
+              Default difficulty:
+              <select id="import-diff" class="form-control" style="width:auto;">
+                <option value="Easy">Easy</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </label>
+            <label style="font-size:0.85rem; display:flex; align-items:center; gap:6px;">
+              <input type="checkbox" id="import-mc-only"> Multiple-choice only
+            </label>
+          </div>
+
+          <!-- Preview Table (shown after parsing) -->
+          <div id="import-preview" class="hidden mt-20">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <h4 id="import-preview-title"><i class="fa-solid fa-magnifying-glass"></i> Parsed Questions</h4>
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-secondary btn-sm" onclick="app.toggleAllImport()"><i class="fa-solid fa-check-double"></i> Toggle All</button>
+                <button class="btn btn-success btn-sm" onclick="app.importSelectedQuestions()"><i class="fa-solid fa-database"></i> Import Selected to DB</button>
+                <button class="btn btn-secondary btn-sm" onclick="app.clearImportPreview()"><i class="fa-solid fa-xmark"></i> Clear</button>
+              </div>
+            </div>
+            <div id="import-table-container" style="max-height:400px; overflow-y:auto; border:1px solid rgba(0,0,0,0.1); border-radius:10px;"></div>
+            <p id="import-status" class="text-muted mt-10" style="font-size:0.85rem;"></p>
+          </div>
+        </div>
+
+        <div id="q-bank-list" class="mt-20"></div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+</body>
+</html>

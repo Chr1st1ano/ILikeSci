@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Capstone Hybrid App</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-screen" class="login-overlay">
+    <div class="glass-card login-card">
+      <div class="brand text-center" style="display:block; margin-bottom: 24px;">
+        <i class="fa-solid fa-atom pulse text-primary" style="font-size: 48px;"></i>
+        <h2 style="font-size:32px; margin-top:10px;">ILikeSci</h2>
+      </div>
+      <h3 class="text-center" style="margin-bottom: 20px;">Teacher Portal</h3>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <input type="text" id="login-user" class="form-control" placeholder="Username">
+      </div>
+      <div class="form-group" style="margin-bottom: 24px;">
+        <input type="password" id="login-pass" class="form-control" placeholder="Password">
+      </div>
+      <button class="btn btn-primary w-100" onclick="app.handleLogin()">Secure Login</button>
+      <p id="login-error" class="text-danger hidden mt-10" style="text-align:center;">Invalid credentials</p>
+    </div>
+  </div>
+
+  <div class="app-wrapper hidden" id="main-app">
+    <!-- Top Navigation Bar (Duolingo-style) -->
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span>ILikeSci</span>
+        </div>
+      </div>
+      
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+      
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+      <section class="glass-card text-center" style="padding: 60px 20px;">
+        <h1>Layout Template</h1>
+        <p class="subtitle">This is a legacy template page. Redirecting to the main dashboard...</p>
+        <button class="btn btn-primary mt-20" onclick="window.location.href='dashboard.html'">Go to Dashboard</button>
+      </section>
+    </main>
+  </div>
+  
+  <script src="app.js"></script>
+</body>
+</html>
