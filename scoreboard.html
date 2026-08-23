@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Scoreboard</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .sort-controls { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .sort-controls select { min-width:130px; }
+    .sort-btn { padding:8px 14px; border:1px solid var(--glass-border); border-radius:10px; background:rgba(255,255,255,0.05); color:var(--text-muted); cursor:pointer; font-size:14px; transition:all 0.2s; display:flex; align-items:center; gap:6px; }
+    .sort-btn:hover { background:rgba(59,130,246,0.15); color:var(--primary); }
+    .sort-btn.active { background:rgba(59,130,246,0.2); color:var(--primary); border-color:var(--primary); }
+    .sheet-table { width:100%; border-collapse:collapse; font-size:14px; }
+    .sheet-table th { background:rgba(59,130,246,0.12); color:var(--text-muted); font-size:12px; text-transform:uppercase; letter-spacing:0.5px; padding:10px 12px; text-align:left; border-bottom:2px solid rgba(59,130,246,0.2); cursor:pointer; user-select:none; transition:background 0.15s; white-space:nowrap; }
+    .sheet-table th:hover { background:rgba(59,130,246,0.22); }
+    .sheet-table th .sort-icon { font-size:10px; margin-left:4px; opacity:0.5; }
+    .sheet-table th.sorted .sort-icon { opacity:1; color:var(--primary); }
+    .sheet-table td { padding:10px 12px; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .sheet-table tr:hover { background:rgba(59,130,246,0.06); }
+    .sheet-table tr.rank-1 { background:rgba(255,215,0,0.08); }
+    .sheet-table tr.rank-1 td:first-child { color:#ffd700; font-weight:800; }
+    .sheet-table tr.highlight-zero { background:rgba(239,68,68,0.06); }
+    .insight-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; }
+    .insight-card { background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:14px; padding:16px; text-align:center; }
+    .insight-card .num { font-size:28px; font-weight:800; }
+    .insight-card .label { font-size:12px; color:var(--text-muted); margin-top:4px; }
+    .participation-bar { height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; min-width:60px; }
+    .participation-fill { height:100%; border-radius:3px; transition:width 0.3s; }
+    .status-active { color:#06d6a0; }
+    .status-passive { color:#ef4444; }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab active" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content-area">
+      <section id="view-scoreboard" class="view-section active">
+        <h1><i class="fa-solid fa-trophy text-warning"></i> Digital Scoreboard</h1>
+        <p class="subtitle">Participation tracking · Fairness control · Performance insight</p>
+
+        <!-- Filters & Sort Controls -->
+        <div class="glass-card mt-20" style="padding:16px;">
+          <div class="sort-controls">
+            <select id="scoreboard-grade" class="form-control" onchange="app.renderScoreboard()">
+              <option value="all">All Grades</option>
+              <option value="3">Grade 3</option>
+              <option value="4">Grade 4</option>
+              <option value="5">Grade 5</option>
+              <option value="6">Grade 6</option>
+            </select>
+            <select id="scoreboard-section" class="form-control" onchange="app.renderScoreboard()">
+              <option value="all">All Sections</option>
+              <option value="A">Section A</option>
+              <option value="B">Section B</option>
+              <option value="C">Section C</option>
+              <option value="D">Section D</option>
+            </select>
+            <select id="scoreboard-sort" class="form-control" onchange="app.renderScoreboard()">
+              <option value="points">Sort by Points</option>
+              <option value="name">Sort by Name</option>
+              <option value="recitations">Sort by Recitations</option>
+              <option value="grade">Sort by Grade Level</option>
+              <option value="proficiency">Sort by Proficiency</option>
+            </select>
+            <button class="sort-btn" id="sort-dir-btn" onclick="toggleSortDirection()">
+              <i class="fa-solid fa-arrow-down-wide-short" id="sort-dir-icon"></i>
+              <span id="sort-dir-label">Desc</span>
+            </button>
+            <button class="btn btn-secondary" onclick="app.openTVDisplay()"><i class="fa-solid fa-display"></i> <span class="hide-mobile">TV</span></button>
+            <button class="btn btn-primary" onclick="app.toggleFullscreen()"><i class="fa-solid fa-expand"></i></button>
+            <button class="btn btn-secondary" onclick="app.refreshScoreboard()"><i class="fa-solid fa-rotate"></i></button>
+          </div>
+        </div>
+
+        <!-- Performance Insight Cards -->
+        <div class="insight-cards mt-20">
+          <div class="insight-card">
+            <div class="num text-primary" id="sb-total-students">0</div>
+            <div class="label">Total Students</div>
+          </div>
+          <div class="insight-card">
+            <div class="num text-warning" id="sb-total-recitations">0</div>
+            <div class="label">Total Recitations</div>
+          </div>
+          <div class="insight-card">
+            <div class="num status-active" id="sb-active-count">0</div>
+            <div class="label"><i class="fa-solid fa-user-check"></i> Active (≥3)</div>
+          </div>
+          <div class="insight-card">
+            <div class="num status-passive" id="sb-passive-count">0</div>
+            <div class="label"><i class="fa-solid fa-user-clock"></i> Passive (<3)</div>
+          </div>
+          <div class="insight-card">
+            <div class="num" style="color:#ffd166;" id="sb-zero-count">0</div>
+            <div class="label"><i class="fa-solid fa-triangle-exclamation"></i> Never Participated</div>
+          </div>
+        </div>
+
+        <!-- Fairness Alert -->
+        <div id="fairness-alert" class="fairness-banner glass-card mt-20 hidden">
+          <i class="fa-solid fa-triangle-exclamation text-warning"></i>
+          <span id="fairness-message"></span>
+        </div>
+
+        <!-- Suggest Next Student -->
+        <div id="next-student-suggestion" class="glass-card mt-20" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <button class="btn btn-secondary" onclick="app.suggestNextStudent()"><i class="fa-solid fa-lightbulb text-warning"></i> Suggest Next Student</button>
+          <p id="suggested-student-text" style="margin:0; flex:1;"></p>
+        </div>
+
+        <!-- Sheet-style Scoreboard Table -->
+        <div class="glass-card mt-20" style="overflow-x:auto;">
+          <table class="sheet-table">
+            <thead>
+              <tr>
+                <th onclick="sortByColumn('rank')" style="width:50px;">Rank <i class="fa-solid fa-sort sort-icon"></i></th>
+                <th onclick="sortByColumn('name')">Student <i class="fa-solid fa-sort sort-icon"></i></th>
+                <th onclick="sortByColumn('grade')" style="width:80px;">Grade <i class="fa-solid fa-sort sort-icon"></i></th>
+                <th onclick="sortByColumn('section')" style="width:80px;">Section <i class="fa-solid fa-sort sort-icon"></i></th>
+                <th onclick="sortByColumn('points')" style="width:100px;">Total Points <i class="fa-solid fa-sort sort-icon"></i></th>
+                <th onclick="sortByColumn('recitations')" style="width:100px;">Recitations <i class="fa-solid fa-sort sort-icon"></i></th>
+                <th onclick="sortByColumn('proficiency')" style="width:120px;">Proficiency <i class="fa-solid fa-sort sort-icon"></i></th>
+                <th style="width:80px;">Status</th>
+              </tr>
+            </thead>
+            <tbody id="scoreboard-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    let sortAscending = false;
+
+    function toggleSortDirection() {
+      sortAscending = !sortAscending;
+      document.getElementById('sort-dir-icon').className = sortAscending
+        ? 'fa-solid fa-arrow-up-short-wide'
+        : 'fa-solid fa-arrow-down-wide-short';
+      document.getElementById('sort-dir-label').textContent = sortAscending ? 'Asc' : 'Desc';
+      document.getElementById('sort-dir-btn').classList.toggle('active', sortAscending);
+      app.renderScoreboard();
+    }
+
+    function sortByColumn(col) {
+      document.getElementById('scoreboard-sort').value = col === 'rank' ? 'points' : col;
+      app.renderScoreboard();
+    }
+
+    // Expose sortAscending to app.js
+    window.getScoreboardSortDir = () => sortAscending;
+  </script>
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Teacher Registration</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { margin: 0; min-height: 100vh; }
+    .signup-page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0f172a 100%);
+      padding: 20px;
+      position: relative;
+      overflow-y: auto;
+    }
+    .signup-page::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(139,92,246,0.12), transparent 70%);
+      top: -150px; left: -100px;
+      border-radius: 50%;
+    }
+    .signup-page::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(59,130,246,0.1), transparent 70%);
+      bottom: -200px; right: -200px;
+      border-radius: 50%;
+    }
+    .signup-box {
+      width: 100%;
+      max-width: 660px;
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 24px;
+      padding: 40px 36px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+      position: relative;
+      z-index: 2;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .signup-brand { text-align: center; margin-bottom: 28px; }
+    .signup-brand i { font-size: 48px; color: #8b5cf6; display: block; margin-bottom: 10px; }
+    .signup-brand h1 { font-size: 30px; font-weight: 800; color: #e2e8f0; margin: 0; }
+    .signup-brand p { color: #94a3b8; font-size: 14px; margin-top: 4px; }
+    .section-title {
+      font-size: 15px; font-weight: 700; color: #94a3b8;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 6px; margin-bottom: 16px; margin-top: 24px;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-group { margin-bottom: 0; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: #94a3b8; margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      color: #e2e8f0; font-size: 15px;
+      font-family: 'Outfit', sans-serif;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: #64748b; }
+    .form-group textarea { resize: vertical; min-height: 70px; }
+    .form-group select option { background: #1e293b; color: #e2e8f0; }
+    .full-width { grid-column: 1 / -1; }
+    .signup-actions { display: flex; gap: 12px; margin-top: 28px; }
+    .signup-actions button {
+      flex: 1; padding: 14px; border: none; border-radius: 12px;
+      font-size: 16px; font-weight: 700; cursor: pointer;
+      font-family: 'Outfit', sans-serif; transition: all 0.3s;
+    }
+    .btn-cancel { background: rgba(255,255,255,0.08); color: #94a3b8; }
+    .btn-cancel:hover { background: rgba(255,255,255,0.12); }
+    .btn-register { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; flex: 2; }
+    .btn-register:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(139,92,246,0.4); }
+    .signup-footer { text-align: center; margin-top: 20px; color: #64748b; font-size: 14px; }
+    .signup-footer a { color: #8b5cf6; font-weight: 600; text-decoration: none; }
+    .signup-footer a:hover { text-decoration: underline; }
+    .signup-msg { text-align: center; font-size: 14px; margin-top: 12px; display: none; }
+    .signup-msg.error { color: #ef4444; }
+    .signup-msg.success { color: #10b981; }
+  </style>
+</head>
+<body>
+  <div class="signup-page">
+    <div class="signup-box">
+      <div class="signup-brand">
+        <i class="fa-solid fa-user-plus"></i>
+        <h1>Teacher Registration</h1>
+        <p>Create your ILikeSci account to manage your classroom.</p>
+      </div>
+
+      <form id="signup-form" onsubmit="event.preventDefault(); registerTeacher();">
+        <h4 class="section-title">Personal Information</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="e.g. Maria" required>
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="e.g. Cruz" required>
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" required>
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+              <option value="" disabled selected>Select Gender</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="other">Other / Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+
+        <h4 class="section-title">Account Details</h4>
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Choose a unique username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Create a strong password" required minlength="3">
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" placeholder="Re-enter password" required>
+          </div>
+        </div>
+
+        <h4 class="section-title">Professional Profile</h4>
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="handled-sections">Handled Grades / Sections</label>
+            <input type="text" id="handled-sections" placeholder="e.g. Grade 4 Section A, Grade 5 Section B" required>
+          </div>
+          <div class="form-group full-width">
+            <label for="bio">Profile Bio (Optional)</label>
+            <textarea id="bio" placeholder="Tell your students a little bit about yourself..."></textarea>
+          </div>
+        </div>
+
+        <p class="signup-msg" id="signup-msg"></p>
+
+        <div class="signup-actions">
+          <button type="button" class="btn-cancel" onclick="window.location.href='login.html'">Cancel</button>
+          <button type="submit" class="btn-register">Complete Registration</button>
+        </div>
+      </form>
+
+      <div class="signup-footer">
+        <p>Already have an account? <a href="login.html">Log in here</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function registerTeacher() {
+      const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
+      const username = document.getElementById('username').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      const confirmPw = document.getElementById('confirm-password').value;
+      const dob = document.getElementById('dob').value;
+      const gender = document.getElementById('gender').value;
+      const sections = document.getElementById('handled-sections').value.trim();
+      const bio = document.getElementById('bio').value.trim();
+      const msg = document.getElementById('signup-msg');
+
+      // Validation
+      if (password !== confirmPw) {
+        msg.className = 'signup-msg error'; msg.style.display = 'block';
+        msg.textContent = 'Passwords do not match.';
+        return;
+      }
+      if (username.length < 3) {
+        msg.className = 'signup-msg error'; msg.style.display = 'block';
+        msg.textContent = 'Username must be at least 3 characters.';
+        return;
+      }
+
+      // Try to register in database
+      try {
+        const res = await fetch('register.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username, password,
+            first_name: fname, last_name: lname,
+            dob, gender, sections, bio
+          })
+        });
+        const data = await res.json();
+        if (data.status === 'success') {
+          msg.className = 'signup-msg success'; msg.style.display = 'block';
+          msg.textContent = 'Registration complete! Redirecting to login...';
+          setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+        } else {
+          msg.className = 'signup-msg error'; msg.style.display = 'block';
+          msg.textContent = data.message || 'Registration failed.';
+        }
+      } catch(e) {
+        // Offline: save locally
+        const saved = localStorage.getItem('ilikesci_hybrid_state');
+        let state = saved ? JSON.parse(saved) : {};
+        if (!state.adminUsers) state.adminUsers = [];
+        state.adminUsers.push({ username, password, name: fname + ' ' + lname });
+        localStorage.setItem('ilikesci_hybrid_state', JSON.stringify(state));
+
+        msg.className = 'signup-msg success'; msg.style.display = 'block';
+        msg.textContent = 'Registered offline! Redirecting to login...';
+        setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+      }
+    }
+  </script>
+</body>
+</html>

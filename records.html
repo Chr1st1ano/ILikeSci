@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Records (DepEd K-12)</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content-area">
+      <section id="view-records" class="view-section active">
+        <h1>Student Records & Grading</h1>
+        <p class="subtitle">DepEd K-12 Grading System — Science (WW 40% | PT 40% | QA 20%)</p>
+        
+        <div class="filter-bar glass-card mt-20" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+          <div style="position:relative;flex:2;min-width:180px;">
+            <i class="fa-solid fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;"></i>
+            <input type="text" id="records-search" class="form-control" placeholder="Search students..." style="padding-left:34px;" oninput="app.renderRecords()">
+          </div>
+          <select id="records-grade-filter" class="form-control" style="flex:1;" onchange="app.renderRecords()">
+            <option value="all">All Grades</option>
+            <option value="3">Grade 3</option>
+            <option value="4">Grade 4</option>
+            <option value="5">Grade 5</option>
+            <option value="6">Grade 6</option>
+          </select>
+          <select id="records-section-filter" class="form-control" style="flex:1;" onchange="app.renderRecords()">
+            <option value="all">All Sections</option>
+            <option value="A">Section A</option>
+            <option value="B">Section B</option>
+            <option value="C">Section C</option>
+            <option value="D">Section D</option>
+          </select>
+          <select id="records-sort-filter" class="form-control" style="flex:1;" onchange="app.renderRecords()">
+            <option value="grade">Sort by Transmuted Grade</option>
+            <option value="points">Sort by Points</option>
+            <option value="recitations">Sort by Recitations</option>
+            <option value="name">Sort by Name</option>
+          </select>
+          <button class="btn-icon" id="records-sort-dir" onclick="toggleRecordsSortDir()" title="Toggle Ascending/Descending" style="font-size:16px;">
+            <i class="fa-solid fa-arrow-down-wide-short" id="records-sort-dir-icon"></i>
+          </button>
+          <button class="btn btn-secondary" onclick="app.openTVDisplay()" title="TV Display"><i class="fa-solid fa-display"></i> <span class="hide-mobile">TV</span></button>
+          <button class="btn btn-secondary" onclick="exportRecordsCSV()"><i class="fa-solid fa-file-csv"></i> CSV</button>
+          <button class="btn btn-secondary" onclick="exportRecordsJSON()"><i class="fa-solid fa-file-code"></i> JSON</button>
+        </div>
+
+        <div class="stats-grid mt-20">
+          <div class="glass-card stat"><i class="fa-solid fa-users text-primary"></i><h3 id="records-total-students">0</h3><p>Total Students</p></div>
+          <div class="glass-card stat"><i class="fa-solid fa-comments text-warning"></i><h3 id="records-total-recitations">0</h3><p>Total Recitations</p></div>
+          <div class="glass-card stat"><i class="fa-solid fa-user-check text-success"></i><h3 id="records-active-learners">0</h3><p>Active (≥3)</p></div>
+          <div class="glass-card stat"><i class="fa-solid fa-user-clock text-danger"></i><h3 id="records-passive-learners">0</h3><p>Passive (<3)</p></div>
+        </div>
+
+        <!-- DepEd Grading Legend -->
+        <div class="glass-card mt-20" style="padding:16px;">
+          <h4 style="margin-bottom:10px;"><i class="fa-solid fa-info-circle text-primary"></i> DepEd Proficiency Levels</h4>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; font-size:13px;">
+            <span class="badge deped-outstanding">O: Outstanding (90-100)</span>
+            <span class="badge deped-very-satisfactory">VS: Very Satisfactory (85-89)</span>
+            <span class="badge deped-satisfactory">S: Satisfactory (80-84)</span>
+            <span class="badge deped-fairly-satisfactory">FS: Fairly Satisfactory (75-79)</span>
+            <span class="badge deped-dnme">DNME: Did Not Meet (&lt;75)</span>
+          </div>
+        </div>
+
+        <div class="glass-card mt-20 table-responsive">
+          <table class="records-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Grade</th>
+                <th>Recitations</th>
+                <th>Points</th>
+                <th>Initial Grade</th>
+                <th>Transmuted</th>
+                <th>Level</th>
+              </tr>
+            </thead>
+            <tbody id="records-body"></tbody>
+          </table>
+        </div>
+
+        <!-- DepEd E-Class Record (XLSX) -->
+        <div class="glass-card mt-20" style="padding:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+            <div>
+              <h3><i class="fa-solid fa-file-excel text-success"></i> DepEd E-Class Record</h3>
+              <p class="subtitle">Grade 4-6 Science — WW 40% | PT 40% | QA 20% (DepEd Order No. 8)</p>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn btn-success btn-sm" onclick="showXLSXImportModal()"><i class="fa-solid fa-file-import"></i> Import XLSX</button>
+              <button class="btn btn-primary btn-sm" onclick="exportEClassXLSX()"><i class="fa-solid fa-file-arrow-down"></i> Export XLSX</button>
+              <button class="btn btn-secondary btn-sm" onclick="addEClassStudent()"><i class="fa-solid fa-user-plus"></i> Add Student</button>
+              <button class="btn btn-secondary btn-sm" onclick="app.showAIInsights()" title="AI Performance Insights" style="background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.3);color:#c084fc;"><i class="fa-solid fa-brain"></i> <span class="hide-mobile">AI Insights</span></button>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
+            <select id="eclass-q-grade" class="form-control" style="width:auto;" onchange="loadEClassRecords()">
+              <option value="4">Grade 4</option>
+              <option value="5">Grade 5</option>
+              <option value="6">Grade 6</option>
+            </select>
+            <select id="eclass-q-section" class="form-control" style="width:auto;" onchange="loadEClassRecords()">
+              <option value="A">Section A</option>
+              <option value="B">Section B</option>
+              <option value="C">Section C</option>
+              <option value="D">Section D</option>
+            </select>
+            <div style="display:flex;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--glass-border);">
+              <button class="eclass-q-tab active" data-q="1" onclick="switchEClassQuarter(1)">Q1</button>
+              <button class="eclass-q-tab" data-q="2" onclick="switchEClassQuarter(2)">Q2</button>
+              <button class="eclass-q-tab" data-q="3" onclick="switchEClassQuarter(3)">Q3</button>
+              <button class="eclass-q-tab" data-q="4" onclick="switchEClassQuarter(4)">Q4</button>
+            </div>
+          </div>
+          <div id="eclass-table-container" style="overflow-x:auto;max-height:600px;overflow-y:auto;">
+            <p style="text-align:center;color:var(--text-muted);padding:30px;">Click <strong>Import XLSX</strong> or <strong>Add Student</strong> to begin</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+  <style>
+    .eclass-q-tab { padding:8px 18px; border:none; background:transparent; color:var(--text-muted); cursor:pointer; font-family:inherit; font-size:13px; font-weight:600; transition:all 0.2s; }
+    .eclass-q-tab:hover { background:rgba(59,130,246,0.1); color:var(--primary); }
+    .eclass-q-tab.active { background:var(--primary); color:#fff; }
+    .eclass-tbl { width:100%; border-collapse:collapse; font-size:12px; }
+    .eclass-tbl th, .eclass-tbl td { padding:6px 8px; border:1px solid rgba(255,255,255,0.08); text-align:center; white-space:nowrap; }
+    .eclass-tbl th { background:rgba(59,130,246,0.15); color:var(--primary); font-weight:700; font-size:11px; position:sticky; top:0; z-index:2; }
+    .eclass-tbl td { background:rgba(0,0,0,0.15); }
+    .eclass-tbl td.name-cell { text-align:left; font-weight:600; position:sticky; left:0; z-index:1; background:var(--bg-card,#1e293b); min-width:140px; }
+    .eclass-tbl tr:hover td { background:rgba(59,130,246,0.08); }
+    .eclass-tbl .gender-sep td { background:rgba(168,85,247,0.1); font-weight:700; color:#c084fc; text-align:left; }
+    .eclass-tbl .hps-row td { background:rgba(6,214,160,0.08); font-weight:600; color:#06d6a0; }
+    .eclass-input { width:40px; padding:2px 4px; border:1px solid rgba(255,255,255,0.1); border-radius:4px; background:transparent; color:inherit; text-align:center; font-size:12px; }
+    .eclass-input:focus { border-color:var(--primary); outline:none; }
+  </style>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+  <script>
+    let recordsSortDesc = true;
+    let eclassQuarter = 1;
+    let eclassData = [];
+
+    function toggleRecordsSortDir() {
+      recordsSortDesc = !recordsSortDesc;
+      document.getElementById('records-sort-dir-icon').className = recordsSortDesc
+        ? 'fa-solid fa-arrow-down-wide-short'
+        : 'fa-solid fa-arrow-up-short-wide';
+      app.renderRecords();
+    }
+    window.getRecordsSortDir = () => recordsSortDesc ? 'desc' : 'asc';
+
+    function switchEClassQuarter(q) {
+      eclassQuarter = q;
+      document.querySelectorAll('.eclass-q-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`.eclass-q-tab[data-q="${q}"]`).classList.add('active');
+      loadEClassRecords();
+    }
+
+    async function loadEClassRecords() {
+      const grade = document.getElementById('eclass-q-grade').value;
+      const section = document.getElementById('eclass-q-section').value;
+      const container = document.getElementById('eclass-table-container');
+      container.innerHTML = '<p style="text-align:center;padding:20px;color:var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</p>';
+
+      try {
+        const res = await fetch(`xlsx_records_api.php?action=list&grade=${grade}&section=${section}&quarter=${eclassQuarter}`);
+        const data = await res.json();
+        eclassData = data.records || [];
+        renderEClassTable();
+      } catch(e) {
+        container.innerHTML = '<p style="text-align:center;padding:20px;color:#ff6b6b;">Could not load records. Is XAMPP running?</p>';
+      }
+    }
+
+    function renderEClassTable() {
+      const container = document.getElementById('eclass-table-container');
+      if (!eclassData.length) {
+        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:30px;">No records for this quarter. Import XLSX or add students.</p>';
+        return;
+      }
+
+      const males = eclassData.filter(r => r.gender === 'M');
+      const females = eclassData.filter(r => r.gender === 'F');
+
+      let html = '<table class="eclass-tbl"><thead><tr>';
+      html += '<th>#</th><th style="text-align:left;">Learner\'s Name</th>';
+      for(let i=1;i<=10;i++) html += `<th>WW${i}</th>`;
+      html += '<th>Total</th><th>PS</th><th>WS</th>';
+      for(let i=1;i<=10;i++) html += `<th>PT${i}</th>`;
+      html += '<th>Total</th><th>PS</th><th>WS</th>';
+      html += '<th>QA</th><th>PS</th><th>WS</th>';
+      html += '<th>Init</th><th>Trans</th>';
+      html += '</tr></thead><tbody>';
+
+      // HPS row
+      const sample = eclassData[0];
+      const wwH = sample.ww_highest || [];
+      const ptH = sample.pt_highest || [];
+      html += '<tr class="hps-row"><td></td><td style="text-align:left;">Highest Possible Score</td>';
+      for(let i=0;i<10;i++) html += `<td>${wwH[i]||''}</td>`;
+      html += '<td></td><td>100</td><td>0.4</td>';
+      for(let i=0;i<10;i++) html += `<td>${ptH[i]||''}</td>`;
+      html += '<td></td><td>100</td><td>0.4</td>';
+      html += `<td>${sample.qa_highest||''}</td><td>100</td><td>0.2</td>`;
+      html += '<td></td><td></td></tr>';
+
+      function renderGroup(students, label) {
+        html += `<tr class="gender-sep"><td colspan="29">${label}</td></tr>`;
+        students.forEach((r, idx) => {
+          const ww = r.ww_scores || [];
+          const pt = r.pt_scores || [];
+          const lvl = r.transmuted_grade >= 90 ? '#06d6a0' : r.transmuted_grade >= 85 ? '#4cc9f0' : r.transmuted_grade >= 80 ? '#ffd166' : r.transmuted_grade >= 75 ? '#f77f00' : '#ef476f';
+          html += `<tr><td>${idx+1}</td><td class="name-cell">${r.student_name}</td>`;
+          for(let i=0;i<10;i++) html += `<td>${ww[i]!=null?ww[i]:''}</td>`;
+          html += `<td><b>${r.ww_total}</b></td><td>${r.ww_ps}</td><td>${r.ww_ws}</td>`;
+          for(let i=0;i<10;i++) html += `<td>${pt[i]!=null?pt[i]:''}</td>`;
+          html += `<td><b>${r.pt_total}</b></td><td>${r.pt_ps}</td><td>${r.pt_ws}</td>`;
+          html += `<td>${r.qa_score}</td><td>${r.qa_ps}</td><td>${r.qa_ws}</td>`;
+          html += `<td>${r.initial_grade}</td><td style="font-weight:800;color:${lvl};">${r.transmuted_grade}</td>`;
+          html += '</tr>';
+        });
+      }
+
+      if (males.length) renderGroup(males, 'MALE');
+      if (females.length) renderGroup(females, 'FEMALE');
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function showXLSXImportModal() {
+      const modal = document.createElement('div');
+      modal.id = 'xlsx-import-modal';
+      modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:99999;';
+      modal.innerHTML = `
+        <div style="background:var(--bg-card,#1e293b);border:1px solid var(--glass-border);border-radius:16px;padding:28px;width:90%;max-width:500px;">
+          <h3><i class="fa-solid fa-file-excel text-success"></i> Import E-Class Record XLSX</h3>
+          <p class="subtitle" style="margin:8px 0 16px;">Upload the DepEd GRADE-4-6 SCIENCE XLSX file</p>
+          <div class="form-group" style="margin-bottom:14px;">
+            <label>Grade Level</label>
+            <select id="xlsx-grade" class="form-control">
+              <option value="4">Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom:14px;">
+            <label>Section</label>
+            <select id="xlsx-section" class="form-control">
+              <option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="D">Section D</option>
+            </select>
+          </div>
+          <div style="border:2px dashed var(--glass-border);border-radius:12px;padding:24px;text-align:center;cursor:pointer;margin-bottom:16px;" onclick="document.getElementById('xlsx-file-input').click()">
+            <i class="fa-solid fa-file-excel" style="font-size:36px;color:#06d6a0;margin-bottom:8px;display:block;"></i>
+            <p style="color:var(--text-muted);">Click to select XLSX file</p>
+            <p id="xlsx-file-name" style="color:var(--primary);font-weight:600;margin-top:6px;"></p>
+            <input type="file" id="xlsx-file-input" class="hidden" accept=".xlsx,.xls" onchange="this.parentNode.querySelector('#xlsx-file-name').textContent = this.files.length ? this.files[0].name : ''">
+          </div>
+          <p id="xlsx-import-status" style="font-size:0.85rem;color:var(--text-muted);text-align:center;min-height:20px;"></p>
+          <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:12px;">
+            <button class="btn btn-secondary" onclick="document.getElementById('xlsx-import-modal').remove()">Cancel</button>
+            <button class="btn btn-success" onclick="processXLSXImport()"><i class="fa-solid fa-database"></i> Import to Database</button>
+          </div>
+        </div>`;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', e => { if(e.target === modal) modal.remove(); });
+    }
+
+    async function processXLSXImport() {
+      const fileInput = document.getElementById('xlsx-file-input');
+      const statusEl = document.getElementById('xlsx-import-status');
+      if (!fileInput || !fileInput.files.length) { statusEl.textContent = '❌ Select a file first'; return; }
+
+      const grade = document.getElementById('xlsx-grade').value;
+      const section = document.getElementById('xlsx-section').value;
+      statusEl.textContent = '⏳ Reading file...';
+
+      const ab = await fileInput.files[0].arrayBuffer();
+      const wb = XLSX.read(ab, {type:'array'});
+      const quarterMap = {'SCIENCE _Q1':1, 'SCIENCE _Q2':2, 'SCIENCE _Q3':3, 'SCIENCE _Q4':4};
+      let totalSaved = 0;
+
+      for (const [sheetName, q] of Object.entries(quarterMap)) {
+        if (!wb.SheetNames.includes(sheetName)) continue;
+        const ws = wb.Sheets[sheetName];
+        statusEl.textContent = `⏳ Processing ${sheetName}...`;
+
+        // Read HPS from row 10 (0-indexed row 9)
+        const wwHighest = [];
+        for(let c=5;c<=14;c++) { const cell = ws[XLSX.utils.encode_cell({r:9,c})]; wwHighest.push(cell ? parseFloat(cell.v)||0 : 0); }
+        const ptHighest = [];
+        for(let c=18;c<=27;c++) { const cell = ws[XLSX.utils.encode_cell({r:9,c})]; ptHighest.push(cell ? parseFloat(cell.v)||0 : 0); }
+        const qaHighestCell = ws[XLSX.utils.encode_cell({r:9,c:31})];
+        const qaHighest = qaHighestCell ? parseFloat(qaHighestCell.v)||0 : 0;
+
+        // Read students (rows 12+ until empty, row 11 = 'MALE', skip separator rows)
+        const records = [];
+        let currentGender = 'M';
+        for(let r=10; r<120; r++) {
+          const nameCell = ws[XLSX.utils.encode_cell({r,c:1})];
+          const numCell = ws[XLSX.utils.encode_cell({r,c:0})];
+          const name = nameCell ? String(nameCell.v||'').trim() : '';
+
+          if (name.toUpperCase().includes('FEMALE')) { currentGender = 'F'; continue; }
+          if (name.toUpperCase().includes('MALE') || name === 'HIGHEST POSSIBLE SCORE' || !name) continue;
+          if (!numCell || !numCell.v) continue; // skip rows without a number
+
+          const wwScores = [];
+          for(let c=5;c<=14;c++) { const cell = ws[XLSX.utils.encode_cell({r,c})]; wwScores.push(cell ? parseFloat(cell.v)||0 : 0); }
+          const ptScores = [];
+          for(let c=18;c<=27;c++) { const cell = ws[XLSX.utils.encode_cell({r,c})]; ptScores.push(cell ? parseFloat(cell.v)||0 : 0); }
+          const qaCell = ws[XLSX.utils.encode_cell({r,c:31})];
+
+          records.push({
+            student_name: name, grade_level: grade, section, quarter: q,
+            gender: currentGender,
+            ww_scores: wwScores, pt_scores: ptScores,
+            qa_score: qaCell ? parseFloat(qaCell.v)||0 : 0,
+            ww_highest: wwHighest, pt_highest: ptHighest, qa_highest: qaHighest
+          });
+        }
+
+        if (records.length) {
+          const res = await fetch('xlsx_records_api.php', {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({action:'save', records})
+          });
+          const data = await res.json();
+          totalSaved += data.saved || 0;
+        }
+      }
+
+      statusEl.textContent = `✅ Imported ${totalSaved} records across Q1-Q4`;
+      setTimeout(() => {
+        document.getElementById('xlsx-import-modal')?.remove();
+        loadEClassRecords();
+      }, 1500);
+    }
+
+    function addEClassStudent() {
+      const name = prompt('Enter student name:');
+      if (!name || !name.trim()) return;
+      const gender = prompt('Gender (M/F):', 'M') || 'M';
+      const grade = document.getElementById('eclass-q-grade').value;
+      const section = document.getElementById('eclass-q-section').value;
+
+      fetch('xlsx_records_api.php', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          action: 'save_single', student_name: name.trim(), grade_level: grade,
+          section, quarter: eclassQuarter, gender: gender.toUpperCase(),
+          ww_scores: [0,0,0,0,0,0,0,0,0,0], pt_scores: [0,0,0,0,0,0,0,0,0,0],
+          qa_score: 0, ww_highest: [10,10,10,10,10,10,10,10,10,10],
+          pt_highest: [10,10,10,10,10,10,10,10,10,10], qa_highest: 50
+        })
+      }).then(r => r.json()).then(() => loadEClassRecords());
+    }
+
+    function exportEClassXLSX() {
+      if (!eclassData.length) { alert('No data to export. Load records first.'); return; }
+      const grade = document.getElementById('eclass-q-grade').value;
+      const section = document.getElementById('eclass-q-section').value;
+
+      const wb = XLSX.utils.book_new();
+      const headers = ['#','Name','Gender',
+        'WW1','WW2','WW3','WW4','WW5','WW6','WW7','WW8','WW9','WW10','WW Total','WW PS','WW WS',
+        'PT1','PT2','PT3','PT4','PT5','PT6','PT7','PT8','PT9','PT10','PT Total','PT PS','PT WS',
+        'QA','QA PS','QA WS','Initial Grade','Transmuted Grade'];
+
+      const rows = [headers];
+      eclassData.forEach((r, i) => {
+        const ww = r.ww_scores || [];
+        const pt = r.pt_scores || [];
+        rows.push([i+1, r.student_name, r.gender,
+          ...ww.slice(0,10), r.ww_total, r.ww_ps, r.ww_ws,
+          ...pt.slice(0,10), r.pt_total, r.pt_ps, r.pt_ws,
+          r.qa_score, r.qa_ps, r.qa_ws, r.initial_grade, r.transmuted_grade]);
+      });
+
+      const ws = XLSX.utils.aoa_to_sheet(rows);
+      XLSX.utils.book_append_sheet(wb, ws, `G${grade}S${section}_Q${eclassQuarter}`);
+      XLSX.writeFile(wb, `EClass_G${grade}_S${section}_Q${eclassQuarter}.xlsx`);
+    }
+
+    function exportRecordsCSV() {
+      const grade = document.getElementById('records-grade-filter').value;
+      let csv = 'Name,Grade,Recitations,Points,Initial Grade,Transmuted Grade,Level\n';
+      state.students.filter(s => grade==='all' || s.grade===grade).forEach(s => {
+        csv += `"${s.name}","${s.grade}",${s.recitations||0},${s.totalScore||0},0,0,"N/A"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `ilikesci_records_${grade}_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+    }
+
+    function exportRecordsJSON() {
+      const grade = document.getElementById('records-grade-filter').value;
+      const formData = new FormData();
+      formData.append('action', 'export');
+      formData.append('format', 'json');
+      formData.append('grade', grade);
+      formData.append('dataType', 'students');
+      formData.append('stateData', JSON.stringify(state));
+      fetch('file_manager.php', { method: 'POST', body: formData })
+        .then(r => r.json())
+        .then(data => { alert(data.status === 'success' ? 'JSON exported!' : 'Failed: ' + data.message); })
+        .catch(err => alert('Export error: ' + err.message));
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ILikeSci - Students</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <nav class="top-nav">
+      <div class="top-nav-left">
+        <div class="brand-small">
+          <i class="fa-solid fa-atom pulse text-primary"></i>
+          <span class="hide-mobile">ILikeSci</span>
+        </div>
+      </div>
+      <div class="top-nav-center">
+        <button class="nav-tab" data-view="learn" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="hide-mobile">Learn</span>
+        </button>
+        <button class="nav-tab" data-view="practice" onclick="window.location.href='assessment.html'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span class="hide-mobile">Practice</span>
+        </button>
+        <button class="nav-tab" data-view="leaderboard" onclick="window.location.href='scoreboard.html'">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hide-mobile">Leaderboard</span>
+        </button>
+      </div>
+      <div class="top-nav-right">
+        <div class="user-avatar-small" onclick="window.location.href='profile.html'"></div>
+        <button class="btn-icon" onclick="app.toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" onclick="app.handleLogout()" title="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="content-area">
+      <section id="view-students" class="view-section active">
+        <h1>Student Management</h1>
+        <p class="subtitle">Manage student roster, sections, and class assignments.</p>
+
+        <!-- Filters -->
+        <div class="filter-bar glass-card" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+          <div style="position:relative;flex:2;min-width:180px;">
+            <i class="fa-solid fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;"></i>
+            <input type="text" id="student-search" class="form-control" placeholder="Search students..." style="padding-left:34px;" oninput="app.renderStudents()">
+          </div>
+          <select id="grade-filter" class="form-control" style="flex:1; min-width:120px;" onchange="app.renderStudents()">
+            <option value="all">All Grades</option>
+            <option value="3">Grade 3</option>
+            <option value="4">Grade 4</option>
+            <option value="5">Grade 5</option>
+            <option value="6">Grade 6</option>
+          </select>
+          <select id="section-filter" class="form-control" style="flex:1; min-width:120px;" onchange="app.renderStudents()">
+            <option value="all">All Sections</option>
+            <option value="A">Section A</option>
+            <option value="B">Section B</option>
+            <option value="C">Section C</option>
+            <option value="D">Section D</option>
+          </select>
+          <select id="student-sort" class="form-control" style="flex:1; min-width:120px;" onchange="app.renderStudents()">
+            <option value="name">Sort by Name</option>
+            <option value="grade">Sort by Grade</option>
+            <option value="points">Sort by Points</option>
+            <option value="recitations">Sort by Recitations</option>
+          </select>
+          <button class="btn-icon" id="student-sort-dir" onclick="toggleStudentSortDir()" title="Toggle Ascending/Descending" style="font-size:16px;">
+            <i class="fa-solid fa-arrow-down-a-z" id="student-sort-dir-icon"></i>
+          </button>
+          <button class="btn btn-secondary" onclick="app.openTVDisplay()" title="TV Display"><i class="fa-solid fa-display"></i> <span class="hide-mobile">TV</span></button>
+          <button class="btn btn-primary" onclick="app.toggleAddStudent()"><i class="fa-solid fa-plus"></i> Add Student</button>
+        </div>
+
+        <!-- Add Student Form -->
+        <div id="add-student-form" class="glass-card hidden mt-20">
+          <h3><i class="fa-solid fa-user-plus text-primary"></i> Add New Student</h3>
+          <div class="form-group mt-10">
+            <label>Full Name</label>
+            <input type="text" id="student-name" placeholder="e.g. Juan Dela Cruz" class="form-control">
+          </div>
+          <div style="display:flex; gap:12px; margin-top:12px;">
+            <div class="form-group" style="flex:1;">
+              <label>Grade Level</label>
+              <select id="student-grade" class="form-control">
+                <option value="3">Grade 3</option>
+                <option value="4">Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+              </select>
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>Section</label>
+              <select id="student-section" class="form-control">
+                <option value="A">Section A</option>
+                <option value="B">Section B</option>
+                <option value="C">Section C</option>
+                <option value="D">Section D</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; margin-top:16px;">
+            <button class="btn btn-success" onclick="app.addStudent()"><i class="fa-solid fa-check"></i> Save</button>
+            <button class="btn btn-secondary" onclick="app.toggleAddStudent()"><i class="fa-solid fa-xmark"></i> Cancel</button>
+          </div>
+        </div>
+
+        <!-- Students Grid -->
+        <div class="student-list mt-20" id="students-container">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <script>
+    let studentSortAsc = true;
+    function toggleStudentSortDir() {
+      studentSortAsc = !studentSortAsc;
+      document.getElementById('student-sort-dir-icon').className = studentSortAsc
+        ? 'fa-solid fa-arrow-down-a-z'
+        : 'fa-solid fa-arrow-up-z-a';
+      app.renderStudents();
+    }
+    window.getStudentSortDir = () => studentSortAsc;
+  </script>
+  <script src="app.js"></script>
+  <script src="mobile-optimizations.js"></script>
+</body>
+</html>
