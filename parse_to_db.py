@@ -22,7 +22,7 @@ db = pymysql.connect(
 )
 cursor = db.cursor()
 
-txt_dir = r"c:\Games\xampp\htdocs\ILikeSci\extracted_texts_q1_science"
+txt_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "extracted_texts_q1_science")
 txt_files = glob.glob(os.path.join(txt_dir, "*.txt"))
 
 for filepath in txt_files:

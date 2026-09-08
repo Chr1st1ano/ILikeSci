@@ -115,21 +115,93 @@
 
         <!-- Simulations Tab -->
         <div id="tab-simulations" class="tab-content hidden">
-          <div class="media-grid mt-20">
-            <div class="glass-card media-card"><div class="media-icon bg-plant"><i class="fa-solid fa-atom"></i></div><h3>Build an Atom</h3><p>Interactive chemistry simulation of atoms.</p><button class="btn btn-primary btn-sm mt-10" onclick="showSimulation('https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en.html', 'Build an Atom')"><i class="fa-solid fa-play"></i> Run Simulation</button></div>
-            <div class="glass-card media-card"><div class="media-icon bg-machine"><i class="fa-solid fa-person-skating"></i></div><h3>Energy Skate Park</h3><p>Physics simulation on conservation of energy.</p><button class="btn btn-primary btn-sm mt-10" onclick="showSimulation('https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_en.html', 'Energy Skate Park')"><i class="fa-solid fa-play"></i> Run Simulation</button></div>
-            <div class="glass-card media-card"><div class="media-icon bg-weather"><i class="fa-solid fa-water"></i></div><h3>States of Matter</h3><p>Observe atoms in solid, liquid, and gas.</p><button class="btn btn-primary btn-sm mt-10" onclick="showSimulation('https://phet.colorado.edu/sims/html/states-of-matter-basics/latest/states-of-matter-basics_en.html', 'States of Matter')"><i class="fa-solid fa-play"></i> Run Simulation</button></div>
+          <div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <h2 style="font-size:1.2rem; font-weight:700;"><i class="fa-solid fa-flask-vial text-primary"></i> Interactive Science Laboratory (100% Offline)</h2>
+              <p class="subtitle" style="font-size:0.85rem; margin:0;">Real-time 60fps physics, chemistry, biology & Earth science laboratory simulations</p>
+            </div>
+            <span class="badge" style="background:rgba(16,185,129,0.2); color:#10b981; border:1px solid rgba(16,185,129,0.3); font-size:12px; font-weight:700;"><i class="fa-solid fa-bolt"></i> Low-End Hardware Optimized</span>
+          </div>
+
+          <div class="media-grid mt-10">
+            <!-- Lab 1: Plant Growth & Photosynthesis -->
+            <div class="glass-card media-card" style="border-color:rgba(16,185,129,0.4);">
+              <div class="media-icon" style="background:linear-gradient(135deg, #10b981, #047857);"><i class="fa-solid fa-seedling"></i></div>
+              <h3>Photosynthesis & Plant Growth</h3>
+              <p>Interactive Sunlight, Water, and CO₂ controls with real-time growth, oxygen emissions, and cell view.</p>
+              <div style="display:flex; gap:8px; margin-top:12px;">
+                <button class="btn btn-success btn-sm flex-1" onclick="SciSimulations.openLab('photosynthesis')"><i class="fa-solid fa-play"></i> Launch Lab</button>
+              </div>
+            </div>
+
+            <!-- Lab 2: Simple Machines -->
+            <div class="glass-card media-card" style="border-color:rgba(59,130,246,0.4);">
+              <div class="media-icon bg-machine"><i class="fa-solid fa-gear"></i></div>
+              <h3>Simple Machines Playground</h3>
+              <p>Interactive Levers (Classes 1-3), Inclined Planes (Ramps), and Pulleys with Mechanical Advantage calculations.</p>
+              <div style="display:flex; gap:8px; margin-top:12px;">
+                <button class="btn btn-primary btn-sm flex-1" onclick="SciSimulations.openLab('machines')"><i class="fa-solid fa-play"></i> Launch Lab</button>
+              </div>
+            </div>
+
+            <!-- Lab 3: States of Matter -->
+            <div class="glass-card media-card" style="border-color:rgba(245,158,11,0.4);">
+              <div class="media-icon bg-weather"><i class="fa-solid fa-atom"></i></div>
+              <h3>States of Matter & Molecules</h3>
+              <p>Observe Solid, Liquid, and Gas molecular kinetic motion with thermal burner and freeze controls.</p>
+              <div style="display:flex; gap:8px; margin-top:12px;">
+                <button class="btn btn-primary btn-sm flex-1" onclick="SciSimulations.openLab('matter')"><i class="fa-solid fa-play"></i> Launch Lab</button>
+              </div>
+            </div>
+
+            <!-- Lab 4: Water Cycle & Weather -->
+            <div class="glass-card media-card" style="border-color:rgba(6,182,212,0.4);">
+              <div class="media-icon" style="background:linear-gradient(135deg, #06b6d4, #0284c7);"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+              <h3>Water Cycle & Weather Lab</h3>
+              <p>Evaporation, cloud condensation, precipitation rainfall, and runoff with thermal energy dial.</p>
+              <div style="display:flex; gap:8px; margin-top:12px;">
+                <button class="btn btn-primary btn-sm flex-1" onclick="SciSimulations.openLab('water')"><i class="fa-solid fa-play"></i> Launch Lab</button>
+              </div>
+            </div>
+
+            <!-- Lab 5: Electric Circuits -->
+            <div class="glass-card media-card" style="border-color:rgba(139,92,246,0.4);">
+              <div class="media-icon" style="background:linear-gradient(135deg, #8b5cf6, #6d28d9);"><i class="fa-solid fa-bolt"></i></div>
+              <h3>Electric Circuit Explorer</h3>
+              <p>Battery, switch, resistor, and lightbulb circuit builder with real-time electron flow and Ohm's Law.</p>
+              <div style="display:flex; gap:8px; margin-top:12px;">
+                <button class="btn btn-primary btn-sm flex-1" onclick="SciSimulations.openLab('circuits')"><i class="fa-solid fa-play"></i> Launch Lab</button>
+              </div>
+            </div>
+
+            <!-- PhET Fallback: Build an Atom -->
+            <div class="glass-card media-card">
+              <div class="media-icon bg-plant"><i class="fa-solid fa-circle-nodes"></i></div>
+              <h3>Build an Atom (PhET)</h3>
+              <p>Supplementary PhET chemistry simulation of atomic structure.</p>
+              <button class="btn btn-secondary btn-sm mt-10" onclick="showSimulation('https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en.html', 'Build an Atom')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open PhET</button>
+            </div>
           </div>
         </div>
 
-        <!-- Audio Tab -->
+        <!-- Audio & Songs Tab -->
         <div id="tab-audio" class="tab-content hidden">
-          <div class="media-grid mt-20">
-            <div class="glass-card media-card"><div class="media-icon bg-audio"><i class="fa-solid fa-music"></i></div><h3>You Are My Sunshine</h3><p>Science-themed song for engaging students.</p><button class="btn btn-primary btn-sm mt-10" onclick="playAudio('sunshine.mp3')"><i class="fa-solid fa-play"></i> Play</button></div>
-            <div class="glass-card media-card"><div class="media-icon bg-audio"><i class="fa-solid fa-music"></i></div><h3>Photosynthesis Song</h3><p>Learn about photosynthesis through music.</p><button class="btn btn-primary btn-sm mt-10" onclick="playAudio('photosynthesis-song.mp3')"><i class="fa-solid fa-play"></i> Play</button></div>
-            <div class="glass-card media-card"><div class="media-icon bg-audio"><i class="fa-solid fa-music"></i></div><h3>Water Cycle Song</h3><p>Sing along to learn about the water cycle.</p><button class="btn btn-primary btn-sm mt-10" onclick="playAudio('water-cycle-song.mp3')"><i class="fa-solid fa-play"></i> Play</button></div>
+          <div class="audio-filter-bar mb-20" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; background:rgba(255,255,255,0.03); padding:12px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.08);">
+            <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted); margin-right:6px;"><i class="fa-solid fa-filter"></i> Curriculum Filter:</span>
+            <button class="btn btn-sm audio-filter-btn active" data-grade="all" onclick="filterAudioByGrade('all')"><i class="fa-solid fa-layer-group"></i> All Curriculum (16)</button>
+            <button class="btn btn-sm audio-filter-btn" data-grade="3" onclick="filterAudioByGrade('3')"><i class="fa-solid fa-seedling"></i> Grade 3</button>
+            <button class="btn btn-sm audio-filter-btn" data-grade="4" onclick="filterAudioByGrade('4')"><i class="fa-solid fa-sun"></i> Grade 4</button>
+            <button class="btn btn-sm audio-filter-btn" data-grade="5" onclick="filterAudioByGrade('5')"><i class="fa-solid fa-bolt"></i> Grade 5</button>
+            <button class="btn btn-sm audio-filter-btn" data-grade="6" onclick="filterAudioByGrade('6')"><i class="fa-solid fa-volcano"></i> Grade 6</button>
+            <button class="btn btn-sm audio-filter-btn" data-grade="theme" onclick="filterAudioByGrade('theme')"><i class="fa-solid fa-star"></i> Anthem & Warmups</button>
           </div>
-          <div id="uploaded-audio-grid" class="media-grid mt-20"></div>
+
+          <div id="curriculum-audio-grid" class="media-grid mt-10"></div>
+
+          <div class="mt-30">
+            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:12px;"><i class="fa-solid fa-cloud-arrow-up text-primary"></i> Uploaded Audio & Custom Recordings</h3>
+            <div id="uploaded-audio-grid" class="media-grid"></div>
+          </div>
         </div>
 
         <!-- Pictures Tab -->
@@ -192,22 +264,82 @@
       </div>
     </div>
 
-    <!-- Audio Player Modal -->
+    <!-- Audio & MIDI Player Modal -->
     <div id="audio-modal" class="video-modal hidden">
-      <div class="video-modal-content">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-          <h2 id="audio-title">Audio Player</h2>
-          <div style="display:flex; gap:12px;">
+      <div class="video-modal-content" style="max-width:850px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; gap:12px;">
+          <div>
+            <div style="display:flex; gap:8px; align-items:center; margin-bottom:6px; flex-wrap:wrap;">
+              <span id="audio-grade-badge" style="background:rgba(67,97,238,0.25); color:#4cc9f0; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700;">Grade 4</span>
+              <span id="audio-topic-badge" style="background:rgba(6,214,160,0.25); color:#06d6a0; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700;">Photosynthesis</span>
+              <span id="audio-format-badge" style="background:rgba(240,147,251,0.25); color:#f093fb; padding:2px 8px; border-radius:6px; font-size:0.75rem; font-weight:700;"><i class="fa-solid fa-music"></i> MIDI Synthesizer</span>
+            </div>
+            <h2 id="audio-title" style="font-size:1.4rem; font-weight:800;">Audio Player</h2>
+          </div>
+          <div style="display:flex; gap:10px; flex-shrink:0;">
             <button class="btn btn-secondary btn-sm" onclick="showAudioOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
             <button class="btn btn-secondary btn-sm" onclick="closeAudioModal()"><i class="fa-solid fa-xmark"></i> Close</button>
           </div>
         </div>
-        <audio id="audio-player" width="100%" controls style="width:100%;">
-          Your browser does not support audio.
-        </audio>
-        <div class="mt-20">
-          <h3>Lyrics / Notes</h3>
-          <p id="audio-lyrics" style="margin-top:10px; line-height:1.6;"></p>
+
+        <!-- MIDI Synthesizer Console -->
+        <div id="midi-player-console" class="glass-card" style="padding:16px; margin-bottom:16px; background:rgba(15,23,42,0.6); border:1px solid rgba(67,97,238,0.25);">
+          <!-- Realtime Visualizer Canvas -->
+          <div style="position:relative; width:100%; height:90px; background:#0b0f19; border-radius:10px; overflow:hidden; margin-bottom:14px; border:1px solid rgba(255,255,255,0.08);">
+            <canvas id="midi-visualizer-canvas" style="width:100%; height:100%; display:block;"></canvas>
+            <div id="midi-status-overlay" style="position:absolute; top:8px; right:10px; font-size:0.75rem; color:#4cc9f0; font-weight:700; background:rgba(0,0,0,0.5); padding:2px 6px; border-radius:4px;">
+              <i class="fa-solid fa-bolt"></i> Offline Web Audio Synth
+            </div>
+          </div>
+
+          <!-- Timeline Scrubber & Time Display -->
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <span id="midi-time-curr" style="font-family:monospace; font-size:0.9rem; font-weight:700; color:var(--text); min-width:44px;">00:00</span>
+            <input type="range" id="midi-scrub" min="0" max="100" value="0" step="0.1" style="flex:1; cursor:pointer;" oninput="onMidiScrub(this.value)">
+            <span id="midi-time-total" style="font-family:monospace; font-size:0.9rem; font-weight:700; color:var(--text-muted); min-width:44px;">00:00</span>
+          </div>
+
+          <!-- Controls Row -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button id="midi-play-btn" class="btn btn-primary btn-sm" onclick="toggleMidiPlay()"><i class="fa-solid fa-play"></i> Play</button>
+              <button id="midi-stop-btn" class="btn btn-secondary btn-sm" onclick="stopMidi()"><i class="fa-solid fa-stop"></i> Stop</button>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:0.8rem; color:var(--text-muted);"><i class="fa-solid fa-gauge-high"></i> Speed:</span>
+                <select id="midi-speed-select" class="form-control form-control-sm" style="padding:4px 8px; font-size:0.8rem; background:rgba(255,255,255,0.08); color:var(--text); border:1px solid rgba(255,255,255,0.15); border-radius:6px;" onchange="onMidiSpeedChange(this.value)">
+                  <option value="0.75">0.75x (Slow)</option>
+                  <option value="1.0" selected>1.0x (Normal)</option>
+                  <option value="1.25">1.25x (Fast)</option>
+                  <option value="1.5">1.5x (Speedy)</option>
+                </select>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:0.8rem; color:var(--text-muted);"><i class="fa-solid fa-volume-high"></i></span>
+                <input type="range" id="midi-volume" min="0" max="1" step="0.05" value="0.85" style="width:70px; cursor:pointer;" oninput="onMidiVolumeChange(this.value)">
+              </div>
+
+              <button id="midi-download-btn" class="btn btn-secondary btn-sm" onclick="downloadCurrentMidi()"><i class="fa-solid fa-download"></i> .MID</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Standard Audio Tag (for MP3 / WAV uploads) -->
+        <div id="standard-audio-container" class="hidden" style="margin-bottom:16px;">
+          <audio id="audio-player" width="100%" controls style="width:100%;">
+            Your browser does not support audio.
+          </audio>
+        </div>
+
+        <!-- Lyrics & Learning Notes -->
+        <div class="glass-card" style="padding:16px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h3 style="font-size:1rem; font-weight:700;"><i class="fa-solid fa-book-open-reader text-primary"></i> Curriculum Lyrics & Learning Concepts</h3>
+          </div>
+          <p id="audio-lyrics" style="line-height:1.7; white-space:pre-line; color:var(--text); font-size:0.95rem; margin:0;"></p>
         </div>
       </div>
     </div>
@@ -246,7 +378,7 @@
       </div>
     </div>
 
-    <!-- Simulation Modal -->
+    <!-- Simulation Modal (PhET External) -->
     <div id="simulation-modal" class="video-modal hidden">
       <div class="video-modal-content" style="max-width: 95%; height: 90vh;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
@@ -257,6 +389,36 @@
           </div>
         </div>
         <iframe id="simulation-frame" style="width:100%; height: calc(100% - 60px); border:none; border-radius:10px;" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <!-- Native Offline Interactive Science Laboratory Modal -->
+    <div id="native-lab-modal" class="video-modal hidden">
+      <div class="video-modal-content" style="max-width: 1100px; max-height: 92vh; overflow-y: auto; background: var(--bg-card);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">
+          <h2 id="native-lab-title" style="font-size:1.3rem; font-weight:800; color:var(--text-main); margin:0;">
+            <i class="fa-solid fa-flask-vial text-primary"></i> Interactive Science Laboratory
+          </h2>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-secondary btn-sm" onclick="app.showGameOnTV(document.getElementById('native-lab-title').textContent, '<div style=\'text-align:center;padding:40px;\'><h2>🔬 Live Science Lab Active</h2><p style=\'font-size:24px;margin-top:20px;\'>Experimenting on Teacher Screen</p></div>')" title="Broadcast to TV Display">
+              <i class="fa-solid fa-display"></i> Show on TV
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="SciSimulations.closeLab()"><i class="fa-solid fa-xmark"></i> Close</button>
+          </div>
+        </div>
+
+        <div class="sim-lab-layout">
+          <!-- Left: Canvas Viewport -->
+          <div class="sim-canvas-viewport">
+            <canvas id="native-lab-canvas" width="680" height="460"></canvas>
+          </div>
+
+          <!-- Right: Controls & Teacher Oral Recitation Prompt -->
+          <div>
+            <div id="native-lab-controls" class="glass-card" style="padding:16px;"></div>
+            <div id="native-lab-challenge" class="mt-10"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -401,16 +563,45 @@
           justify-content: center;
         }
       }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      .audio-filter-btn {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text-muted);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 6px 14px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
       }
+      .audio-filter-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: var(--text);
+      }
+      .audio-filter-btn.active {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+        box-shadow: 0 2px 8px rgba(67, 97, 238, 0.4);
+      }
+      .audio-card-badges {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+      }
+      .audio-tag {
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 6px;
+      }
+      .audio-tag-g3 { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+      .audio-tag-g4 { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+      .audio-tag-g5 { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+      .audio-tag-g6 { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+      .audio-tag-theme { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+      .audio-tag-midi { background: rgba(240, 147, 251, 0.2); color: #f093fb; }
     </style>
 
     <script>
@@ -461,19 +652,261 @@
       };
 
       const audioFiles = {
+        // Grade 3 Curriculum
+        'living_things_song.mid': {
+          title: 'Living Things & Basic Needs Song',
+          grade: '3',
+          quarter: 'Q1',
+          topic: 'Living Things & Needs',
+          icon: 'fa-seedling',
+          bpm: 120,
+          duration: '0:24',
+          isMidi: true,
+          summary: 'Living organisms needing food, water, air, habitat, movement, and growth.',
+          lyrics: 'Living things need food and air,\nWater from the stream so clear,\nPlants can grow and reach the sun,\nAnimals move, jump, and run!\nAll living things grow and thrive!'
+        },
+        'matter_states_song.mid': {
+          title: 'States of Matter (Solid, Liquid, Gas)',
+          grade: '3',
+          quarter: 'Q1',
+          topic: 'States of Matter',
+          icon: 'fa-cube',
+          bpm: 132,
+          duration: '0:26',
+          isMidi: true,
+          summary: 'Rigid solids, flowing liquids, and high-energy expansive gas molecules.',
+          lyrics: 'Solids hold their rigid shape!\nLiquids take the glass\'s mold!\nGas particles fly and bounce untamed,\nThree great states of matter named!'
+        },
+        'five_senses_song.mid': {
+          title: 'The Five Senses Exploration Melody',
+          grade: '3',
+          quarter: 'Q1',
+          topic: 'Five Senses',
+          icon: 'fa-eye',
+          bpm: 116,
+          duration: '0:24',
+          isMidi: true,
+          summary: 'Sight, hearing, smell, taste, and touch discovering the world.',
+          lyrics: 'Sight to see the colors bright,\nEars to hear the birds in flight,\nNose to smell the flowers sweet,\nTongue to taste the treats we eat,\nSkin to touch and feel each day,\nFive great senses lead the way!'
+        },
+        // Grade 4 Curriculum
+        'photosynthesis_song.mid': {
+          title: 'Photosynthesis & Chlorophyll Song',
+          grade: '4',
+          quarter: 'Q1',
+          topic: 'Photosynthesis',
+          icon: 'fa-leaf',
+          bpm: 126,
+          duration: '0:22',
+          isMidi: true,
+          summary: 'Chlorophyll trapping sunlight to transform water and CO2 into glucose and oxygen.',
+          lyrics: 'Photosynthesis! Making food from light!\nChlorophyll is green, shining in the sight!\nWater from the roots, carbon from the air,\nSunlight gives the power, oxygen to share!\nSugar, oxygen, life for you and me!'
+        },
+        'water_cycle_song.mid': {
+          title: 'Water Cycle & Weather Melody',
+          grade: '4',
+          quarter: 'Q2',
+          topic: 'Water Cycle',
+          icon: 'fa-cloud-showers-heavy',
+          bpm: 124,
+          duration: '0:21',
+          isMidi: true,
+          summary: 'Continuous cycle of evaporation, condensation, precipitation, and collection.',
+          lyrics: 'Evaporation rises to the sky,\nCondensation forms the clouds up high,\nPrecipitation falling like the rain,\nCollection in the ocean once again!\nRound and round the water cycle goes!'
+        },
+        'force_and_machines_song.mid': {
+          title: 'Forces & Simple Machines Anthem',
+          grade: '4',
+          quarter: 'Q3',
+          topic: 'Simple Machines',
+          icon: 'fa-gears',
+          bpm: 138,
+          duration: '0:18',
+          isMidi: true,
+          summary: 'Forces, pushes, pulls, levers, pulleys, and inclined planes reducing mechanical effort.',
+          lyrics: 'Push and pull, that is force in hand!\nLevers, pulleys moving cross the land!\nRamps and inclined planes will lift the load,\nSimple machines make an easier road!'
+        },
+        'sun_and_earth_song.mid': {
+          title: 'Earth Rotation, Sun & Seasons Symphony',
+          grade: '4',
+          quarter: 'Q4',
+          topic: 'Earth & Sun',
+          icon: 'fa-sun',
+          bpm: 118,
+          duration: '0:18',
+          isMidi: true,
+          summary: 'Earth\'s 24-hour axial rotation, daylight cycles, orbital path, and four seasons.',
+          lyrics: 'Earth turns round upon its tilted line,\nTwenty-four hours makes the day so fine,\nRevolving round the sun through all four seasons,\nScience gives us all the wondrous reasons!'
+        },
+        // Grade 5 Curriculum
+        'electricity_circuits_song.mid': {
+          title: 'Electricity & Circuits Pulse',
+          grade: '5',
+          quarter: 'Q3',
+          topic: 'Electricity & Circuits',
+          icon: 'fa-bolt',
+          bpm: 135,
+          duration: '0:18',
+          isMidi: true,
+          summary: 'Electron flow, complete circuits, switches, conductors, and electrical safety.',
+          lyrics: 'Electrons flowing through the wire,\nLighting up the bulb with power,\nClosed circuit flows, open circuit stops,\nConductors let the energy rock!'
+        },
+        'human_body_song.mid': {
+          title: 'Human Body Systems Harmony',
+          grade: '5',
+          quarter: 'Q2',
+          topic: 'Human Body Systems',
+          icon: 'fa-heart-pulse',
+          bpm: 112,
+          duration: '0:18',
+          isMidi: true,
+          summary: 'Heart circulation, lung respiration, digestion, and musculoskeletal movement.',
+          lyrics: 'Heart is pumping, beating strong,\nLungs take oxygen all day long,\nStomach digests every meal,\nBones and muscles how we feel!'
+        },
+        'solar_system_song.mid': {
+          title: 'Solar System Planetary Journey',
+          grade: '5',
+          quarter: 'Q4',
+          topic: 'Solar System',
+          icon: 'fa-earth-americas',
+          bpm: 120,
+          duration: '0:18',
+          isMidi: true,
+          summary: 'The eight planets and Sun in our cosmic celestial neighborhood.',
+          lyrics: 'Mercury, Venus, Earth and Mars,\nJupiter and Saturn beneath the stars,\nUranus, Neptune in the dark,\nThe Sun lights up our solar park!'
+        },
+        // Grade 6 Curriculum
+        'mixtures_solutions_song.mid': {
+          title: 'Mixtures & Solutions Chemistry',
+          grade: '6',
+          quarter: 'Q1',
+          topic: 'Mixtures & Solutions',
+          icon: 'fa-vial',
+          bpm: 125,
+          duration: '0:17',
+          isMidi: true,
+          summary: 'Solute dissolving in solvent, homogeneous solutions and separation methods.',
+          lyrics: 'Solute dissolves inside the glass,\nHomogeneous solution class!\nHeterogeneous mixes stay apart,\nFilter and evaporate with art!'
+        },
+        'vertebrates_invertebrates_song.mid': {
+          title: 'Vertebrates & Animal Kingdom Theme',
+          grade: '6',
+          quarter: 'Q2',
+          topic: 'Vertebrates & Taxonomy',
+          icon: 'fa-paw',
+          bpm: 130,
+          duration: '0:17',
+          isMidi: true,
+          summary: 'Vertebrates with spinal columns (mammals, birds, reptiles, fish) vs invertebrates.',
+          lyrics: 'Mammals, birds, and fish that glide,\nBackbones straight and strong inside,\nInsects, worms without a spine,\nAnimal kingdom so divine!'
+        },
+        'motion_and_energy_song.mid': {
+          title: 'Speed, Motion & Newton Energy',
+          grade: '6',
+          quarter: 'Q3',
+          topic: 'Motion & Newton Laws',
+          icon: 'fa-gauge-high',
+          bpm: 142,
+          duration: '0:15',
+          isMidi: true,
+          summary: 'Velocity, speed calculation (d/t), inertia, acceleration, and Newton\'s laws.',
+          lyrics: 'Distance over time is speed,\nAcceleration takes the lead!\nNewton\'s laws of action-force,\nKeep the object on its course!'
+        },
+        'volcanoes_and_earth_song.mid': {
+          title: 'Volcanoes & Earth Geology',
+          grade: '6',
+          quarter: 'Q4',
+          topic: 'Volcanoes & Earth',
+          icon: 'fa-volcano',
+          bpm: 114,
+          duration: '0:18',
+          isMidi: true,
+          summary: 'Magma chambers, volcanic eruptions, tectonic plate collisions, and geological layers.',
+          lyrics: 'Magma rising from the deep,\nVolcanoes waking from their sleep,\nTectonic plates in motion slide,\nEarth reshapes far and wide!'
+        },
+        // Theme & Warmups
+        'ilikesci_theme.mid': {
+          title: 'ILikeSci Science Explorer Anthem',
+          grade: 'All',
+          quarter: 'Theme',
+          topic: 'Science Explorer Theme',
+          icon: 'fa-atom',
+          bpm: 130,
+          duration: '0:25',
+          isMidi: true,
+          summary: 'Official ILikeSci flagship theme inspiring curiosity and science excellence.',
+          lyrics: 'Explore the wonder, discover the light,\nScience makes the future bright!\nCuriosity in every mind,\nThe greatest wonders we will find!\nILikeSci leading the way!'
+        },
         'sunshine.mp3': {
-          title: 'You Are My Sunshine',
+          title: 'You Are My Sunshine (Classroom Warmup)',
+          grade: 'All',
+          quarter: 'Warmup',
+          topic: 'Classroom Energizer',
+          icon: 'fa-sun',
+          bpm: 110,
+          duration: '2:15',
+          isMidi: false,
+          summary: 'Beloved classic energizer song for classroom morning routines and science enthusiasm.',
           lyrics: 'You are my sunshine, my only sunshine\nYou make me happy when skies are gray\nYou\'ll never know dear, how much I love you\nPlease don\'t take my sunshine away'
-        },
-        'photosynthesis-song.mp3': {
-          title: 'Photosynthesis Song',
-          lyrics: 'Photosynthesis, making food from light\nChlorophyll catches the rays so bright\nCarbon dioxide from the air\nOxygen released everywhere!'
-        },
-        'water-cycle-song.mp3': {
-          title: 'Water Cycle Song',
-          lyrics: 'Evaporation, condensation too\nPrecipitation falls for me and you\nThe water cycle goes round and round\nKeeping life on the ground!'
         }
       };
+
+      let currentAudioGradeFilter = 'all';
+
+      function filterAudioByGrade(grade) {
+        currentAudioGradeFilter = grade;
+        document.querySelectorAll('.audio-filter-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.grade === grade);
+        });
+        renderCurriculumAudioGrid();
+      }
+
+      function renderCurriculumAudioGrid() {
+        const grid = document.getElementById('curriculum-audio-grid');
+        if (!grid) return;
+
+        const entries = Object.entries(audioFiles).filter(([key, song]) => {
+          if (currentAudioGradeFilter === 'all') return true;
+          if (currentAudioGradeFilter === 'theme') return song.grade === 'All';
+          return song.grade === currentAudioGradeFilter;
+        });
+
+        if (entries.length === 0) {
+          grid.innerHTML = `<div class="glass-card" style="grid-column:1/-1; text-align:center; padding:30px;"><p style="color:var(--text-muted);">No songs found for Grade ${currentAudioGradeFilter}.</p></div>`;
+          return;
+        }
+
+        grid.innerHTML = entries.map(([fileKey, song]) => {
+          const isMidi = song.isMidi || fileKey.endsWith('.mid') || fileKey.endsWith('.midi');
+          const gradeClass = song.grade === '3' ? 'audio-tag-g3' : song.grade === '4' ? 'audio-tag-g4' : song.grade === '5' ? 'audio-tag-g5' : song.grade === '6' ? 'audio-tag-g6' : 'audio-tag-theme';
+          const gradeLabel = song.grade === 'All' ? song.quarter : `Grade ${song.grade} • ${song.quarter}`;
+
+          return `
+            <div class="glass-card media-card">
+              <div class="audio-card-badges">
+                <span class="audio-tag ${gradeClass}">${gradeLabel}</span>
+                <span class="audio-tag audio-tag-midi"><i class="${isMidi ? 'fa-solid fa-music' : 'fa-solid fa-file-audio'}"></i> ${isMidi ? 'MIDI' : 'MP3'}</span>
+                ${song.bpm ? `<span class="audio-tag" style="background:rgba(255,255,255,0.08); color:var(--text-muted);">${song.bpm} BPM</span>` : ''}
+              </div>
+              <div class="media-icon bg-audio" style="margin-bottom:12px;">
+                <i class="fa-solid ${song.icon || 'fa-music'}"></i>
+              </div>
+              <h3 style="font-size:1.05rem; line-height:1.3; margin-bottom:6px;">${escapeHtml(song.title)}</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4; margin-bottom:12px;">${escapeHtml(song.summary || song.topic)}</p>
+              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <button class="btn btn-primary btn-sm" onclick="playAudio('${fileKey}')">
+                  <i class="fa-solid fa-play"></i> ${isMidi ? 'Play MIDI' : 'Play Song'}
+                </button>
+                ${isMidi ? `
+                  <a href="audio/${fileKey}" download class="btn btn-secondary btn-sm" title="Download .MID file">
+                    <i class="fa-solid fa-download"></i>
+                  </a>
+                ` : ''}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
 
       const uploadTabConfig = {
         local: {
@@ -492,8 +925,8 @@
         audio: {
           label: 'Audio & Songs',
           heading: 'Add Audio & Songs',
-          help: 'Upload one or many audio files directly from this page.',
-          accept: 'audio/*',
+          help: 'Upload one or many audio/MIDI files (.mid, .mp3, .wav) directly from this page.',
+          accept: 'audio/*,.mid,.midi',
           iconClass: 'fa-solid fa-music',
           iconBg: 'bg-audio',
           actionIcon: 'fa-solid fa-play',
@@ -704,7 +1137,7 @@
         const fileName = file.name.toLowerCase();
 
         if (tabName === 'local') return file.type.startsWith('video/') || /\.(mp4|webm|ogg|mov|m4v)$/i.test(fileName);
-        if (tabName === 'audio') return file.type.startsWith('audio/') || /\.(mp3|wav|ogg|m4a|aac)$/i.test(fileName);
+        if (tabName === 'audio') return file.type.startsWith('audio/') || /\.(mp3|wav|ogg|m4a|aac|mid|midi)$/i.test(fileName);
         if (tabName === 'pictures') return file.type.startsWith('image/') || /\.(png|jpg|jpeg|gif|webp|bmp|svg)$/i.test(fileName);
         if (tabName === 'pdfs') return file.type === 'application/pdf' || /\.pdf$/i.test(fileName);
         if (tabName === 'ppts') return file.type.includes('presentation') || file.type.includes('powerpoint') || /\.(pptx|ppt)$/i.test(fileName);
@@ -949,16 +1382,156 @@
         }
       }
 
-      function playAudio(audioFile) {
+      let activeVisualizerHandle = null;
+
+      async function playAudio(audioFile) {
         currentAudioFile = audioFile;
-        const audioData = audioFiles[audioFile];
-        document.getElementById('audio-title').textContent = audioData.title;
-        document.getElementById('audio-lyrics').textContent = audioData.lyrics;
-        setCurrentAudioSource(`audio/${audioFile}`);
-        const player = document.getElementById('audio-player');
-        player.src = currentAudioSource;
-        player.play();
-        document.getElementById('audio-modal').classList.remove('hidden');
+        const songData = audioFiles[audioFile] || {
+          title: formatDisplayName(audioFile),
+          grade: 'All',
+          quarter: 'Audio',
+          topic: 'Science Audio',
+          isMidi: audioFile.endsWith('.mid') || audioFile.endsWith('.midi'),
+          lyrics: 'Curriculum audio track for science education.'
+        };
+
+        const isMidi = songData.isMidi || audioFile.endsWith('.mid') || audioFile.endsWith('.midi');
+
+        // Update modal header and badges
+        document.getElementById('audio-title').textContent = songData.title;
+        document.getElementById('audio-lyrics').textContent = songData.lyrics || songData.summary || '';
+        
+        const gradeBadge = document.getElementById('audio-grade-badge');
+        if (gradeBadge) gradeBadge.textContent = songData.grade === 'All' ? songData.quarter : `Grade ${songData.grade} • ${songData.quarter}`;
+
+        const topicBadge = document.getElementById('audio-topic-badge');
+        if (topicBadge) topicBadge.textContent = songData.topic || 'Science';
+
+        const formatBadge = document.getElementById('audio-format-badge');
+        if (formatBadge) formatBadge.innerHTML = isMidi ? '<i class="fa-solid fa-music"></i> Offline Web Audio Synth' : '<i class="fa-solid fa-file-audio"></i> Standard Audio';
+
+        const midiConsole = document.getElementById('midi-player-console');
+        const standardContainer = document.getElementById('standard-audio-container');
+        const modal = document.getElementById('audio-modal');
+
+        if (isMidi && window.midiPlayer) {
+          if (standardContainer) standardContainer.classList.add('hidden');
+          if (midiConsole) midiConsole.classList.remove('hidden');
+
+          const audioTag = document.getElementById('audio-player');
+          if (audioTag) { audioTag.pause(); audioTag.src = ''; }
+
+          setCurrentAudioSource(`audio/${audioFile}`);
+          modal.classList.remove('hidden');
+
+          try {
+            await window.midiPlayer.load(`audio/${audioFile}`);
+            
+            const canvas = document.getElementById('midi-visualizer-canvas');
+            if (activeVisualizerHandle) activeVisualizerHandle.stop();
+            if (canvas) {
+              activeVisualizerHandle = window.midiPlayer.attachVisualizer(canvas);
+            }
+
+            window.midiPlayer.onProgress = (curr, total, pct) => {
+              const currEl = document.getElementById('midi-time-curr');
+              const totalEl = document.getElementById('midi-time-total');
+              const scrubEl = document.getElementById('midi-scrub');
+              if (currEl) currEl.textContent = formatMidiTime(curr);
+              if (totalEl) totalEl.textContent = formatMidiTime(total);
+              if (scrubEl && !scrubEl.dataset.dragging) scrubEl.value = pct;
+            };
+
+            window.midiPlayer.onEnded = () => {
+              updateMidiPlayButton(false);
+            };
+
+            window.midiPlayer.play();
+            updateMidiPlayButton(true);
+
+          } catch (err) {
+            console.error('Failed to load MIDI file:', err);
+            alert('Could not synthesize MIDI file: ' + err.message);
+          }
+        } else {
+          if (window.midiPlayer) window.midiPlayer.stop();
+          if (midiConsole) midiConsole.classList.add('hidden');
+          if (standardContainer) standardContainer.classList.remove('hidden');
+
+          setCurrentAudioSource(`audio/${audioFile}`);
+          const player = document.getElementById('audio-player');
+          player.src = currentAudioSource;
+          player.play().catch(e => console.log('Autoplay handled:', e));
+          modal.classList.remove('hidden');
+        }
+      }
+
+      function formatMidiTime(sec) {
+        if (!sec || isNaN(sec)) return '00:00';
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      }
+
+      function toggleMidiPlay() {
+        if (!window.midiPlayer) return;
+        if (window.midiPlayer.isPlaying) {
+          window.midiPlayer.pause();
+          updateMidiPlayButton(false);
+        } else {
+          window.midiPlayer.resume();
+          updateMidiPlayButton(true);
+        }
+      }
+
+      function stopMidi() {
+        if (window.midiPlayer) {
+          window.midiPlayer.stop();
+          updateMidiPlayButton(false);
+          const scrubEl = document.getElementById('midi-scrub');
+          if (scrubEl) scrubEl.value = 0;
+          const currEl = document.getElementById('midi-time-curr');
+          if (currEl) currEl.textContent = '00:00';
+        }
+      }
+
+      function onMidiScrub(pct) {
+        if (!window.midiPlayer || !window.midiPlayer.midiData) return;
+        const total = window.midiPlayer.midiData.duration;
+        const targetSec = (pct / 100) * total;
+        window.midiPlayer.seek(targetSec);
+      }
+
+      function onMidiSpeedChange(val) {
+        if (window.midiPlayer) {
+          window.midiPlayer.setPlaybackRate(parseFloat(val));
+        }
+      }
+
+      function onMidiVolumeChange(val) {
+        if (window.midiPlayer) {
+          window.midiPlayer.setVolume(parseFloat(val));
+        }
+      }
+
+      function updateMidiPlayButton(isPlaying) {
+        const btn = document.getElementById('midi-play-btn');
+        if (!btn) return;
+        if (isPlaying) {
+          btn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+        } else {
+          btn.innerHTML = '<i class="fa-solid fa-play"></i> Play';
+        }
+      }
+
+      function downloadCurrentMidi() {
+        if (!currentAudioFile) return;
+        const a = document.createElement('a');
+        a.href = currentAudioSource || `audio/${currentAudioFile}`;
+        a.download = currentAudioFile;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
       }
 
       async function playUploadedAudio(fileId) {
@@ -972,32 +1545,100 @@
         }
 
         currentAudioFile = item.name;
+        const isMidi = item.name.toLowerCase().endsWith('.mid') || item.name.toLowerCase().endsWith('.midi');
+        const modal = document.getElementById('audio-modal');
+
         document.getElementById('audio-title').textContent = formatDisplayName(item.name);
         document.getElementById('audio-lyrics').textContent = `Uploaded audio file • ${formatFileSize(item.size)}`;
-        setCurrentAudioSource(URL.createObjectURL(record.blob));
-        const player = document.getElementById('audio-player');
-        player.src = currentAudioSource;
-        player.play();
-        document.getElementById('audio-modal').classList.remove('hidden');
+
+        const gradeBadge = document.getElementById('audio-grade-badge');
+        if (gradeBadge) gradeBadge.textContent = 'Uploaded Audio';
+
+        const topicBadge = document.getElementById('audio-topic-badge');
+        if (topicBadge) topicBadge.textContent = isMidi ? 'Custom MIDI' : 'Audio Track';
+
+        const formatBadge = document.getElementById('audio-format-badge');
+        if (formatBadge) formatBadge.innerHTML = isMidi ? '<i class="fa-solid fa-music"></i> Offline Web Audio Synth' : '<i class="fa-solid fa-file-audio"></i> Standard Audio';
+
+        const midiConsole = document.getElementById('midi-player-console');
+        const standardContainer = document.getElementById('standard-audio-container');
+
+        if (isMidi && window.midiPlayer) {
+          if (standardContainer) standardContainer.classList.add('hidden');
+          if (midiConsole) midiConsole.classList.remove('hidden');
+
+          const audioTag = document.getElementById('audio-player');
+          if (audioTag) { audioTag.pause(); audioTag.src = ''; }
+
+          modal.classList.remove('hidden');
+          try {
+            await window.midiPlayer.load(record.blob);
+            const canvas = document.getElementById('midi-visualizer-canvas');
+            if (activeVisualizerHandle) activeVisualizerHandle.stop();
+            if (canvas) {
+              activeVisualizerHandle = window.midiPlayer.attachVisualizer(canvas);
+            }
+            window.midiPlayer.onProgress = (curr, total, pct) => {
+              const currEl = document.getElementById('midi-time-curr');
+              const totalEl = document.getElementById('midi-time-total');
+              const scrubEl = document.getElementById('midi-scrub');
+              if (currEl) currEl.textContent = formatMidiTime(curr);
+              if (totalEl) totalEl.textContent = formatMidiTime(total);
+              if (scrubEl && !scrubEl.dataset.dragging) scrubEl.value = pct;
+            };
+            window.midiPlayer.onEnded = () => updateMidiPlayButton(false);
+            window.midiPlayer.play();
+            updateMidiPlayButton(true);
+          } catch (err) {
+            alert('Failed to synthesize uploaded MIDI: ' + err.message);
+          }
+        } else {
+          if (window.midiPlayer) window.midiPlayer.stop();
+          if (midiConsole) midiConsole.classList.add('hidden');
+          if (standardContainer) standardContainer.classList.remove('hidden');
+
+          setCurrentAudioSource(URL.createObjectURL(record.blob));
+          const player = document.getElementById('audio-player');
+          player.src = currentAudioSource;
+          player.play();
+          modal.classList.remove('hidden');
+        }
       }
 
       function closeAudioModal() {
+        if (window.midiPlayer) window.midiPlayer.stop();
+        if (activeVisualizerHandle) {
+          activeVisualizerHandle.stop();
+          activeVisualizerHandle = null;
+        }
         const player = document.getElementById('audio-player');
-        player.pause();
-        player.src = '';
+        if (player) {
+          player.pause();
+          player.src = '';
+        }
         document.getElementById('audio-modal').classList.add('hidden');
       }
 
       function showAudioOnTV() {
-        if (!currentAudioSource) return;
+        if (!currentAudioSource && (!window.midiPlayer || !window.midiPlayer.isPlaying)) return;
 
         const title = document.getElementById('audio-title').textContent;
         const notes = document.getElementById('audio-lyrics').textContent;
         const notesHtml = escapeHtml(notes).replace(/\n/g, '<br>');
         app.showGameOnTV(title, `
-          <div>
-            <audio src="${currentAudioSource}" controls autoplay style="width:100%; margin-top:20px;"></audio>
-            <p style="font-size:24px; margin-top:20px; white-space:pre-line;">${notesHtml}</p>
+          <div style="text-align:center; padding:20px;">
+            <div style="font-size:72px; margin-bottom:20px; color:#4cc9f0;"><i class="fa-solid fa-music"></i></div>
+            <h2 style="font-size:32px; font-weight:800; margin-bottom:15px; color:#fff;">${title}</h2>
+            <div style="background:rgba(255,255,255,0.06); padding:24px; border-radius:16px; max-width:800px; margin:0 auto; border:1px solid rgba(255,255,255,0.1);">
+              <p style="font-size:24px; line-height:1.8; white-space:pre-line; color:#edf2f4;">${notesHtml}</p>
+            </div>
+            ${currentAudioSource && !currentAudioSource.endsWith('.mid') && !currentAudioSource.endsWith('.midi') ? `
+              <audio src="${currentAudioSource}" controls autoplay style="width:80%; max-width:600px; margin-top:24px;"></audio>
+            ` : `
+              <div style="margin-top:20px; font-size:18px; color:#4cc9f0; font-weight:600;">
+                <i class="fa-solid fa-bolt"></i> Synthesizing live from Teacher's device via Web Audio
+              </div>
+            `}
           </div>
         `);
       }
@@ -1204,8 +1845,11 @@
 
       updateUploadControls('youtube');
       renderUploadedMedia();
+      renderCurriculumAudioGrid();
     </script>
   </div>
+  <script src="midi_player.js"></script>
+  <script src="simulations.js"></script>
   <script src="app.js"></script>
   <script src="mobile-optimizations.js"></script>
 </body>

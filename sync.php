@@ -3,11 +3,11 @@ require 'db.php';
 header("Content-Type: application/json");
 
 // Handle CORS Preflight
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
 
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 if ($method === 'POST') {
     // Save backup (Cloud Backup)
@@ -20,20 +20,28 @@ if ($method === 'POST') {
     }
     
     $jsonString = json_encode($data['state']);
+    $now = date('Y-m-d H:i:s');
     
-    $stmt = $pdo->prepare("REPLACE INTO backups (id, state_json, last_updated) VALUES (1, :state, NOW())");
+    $stmt = $pdo->prepare("REPLACE INTO backups (id, state_json, last_updated) VALUES (1, :state, :now)");
     
-    if ($stmt->execute([':state' => $jsonString])) {
+    if ($stmt->execute([':state' => $jsonString, ':now' => $now])) {
         // --- Populate Relational Tables ---
         try {
             $pdo->beginTransaction();
             
             // 1. Sync Students safely without triggering ON DELETE CASCADE unnecessarily
             $studentIds = [];
-            $stmtStudent = $pdo->prepare("INSERT INTO students (id, name, grade, section, recitations, total_score, photo) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name=VALUES(name), grade=VALUES(grade), section=VALUES(section), recitations=VALUES(recitations), total_score=VALUES(total_score), photo=VALUES(photo)");
-            foreach ($data['state']['students'] as $student) {
-                $studentIds[] = $student['id'];
-                $stmtStudent->execute([$student['id'], $student['name'], $student['grade'], $student['section'] ?? 'A', $student['recitations'], $student['totalScore'], $student['photo'] ?? null]);
+            if (is_sqlite()) {
+                $stmtStudent = $pdo->prepare("INSERT INTO students (id, name, grade, section, recitations, total_score, photo) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET name=excluded.name, grade=excluded.grade, section=excluded.section, recitations=excluded.recitations, total_score=excluded.total_score, photo=excluded.photo");
+            } else {
+                $stmtStudent = $pdo->prepare("INSERT INTO students (id, name, grade, section, recitations, total_score, photo) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name=VALUES(name), grade=VALUES(grade), section=VALUES(section), recitations=VALUES(recitations), total_score=VALUES(total_score), photo=VALUES(photo)");
+            }
+
+            if (!empty($data['state']['students']) && is_array($data['state']['students'])) {
+                foreach ($data['state']['students'] as $student) {
+                    $studentIds[] = $student['id'];
+                    $stmtStudent->execute([$student['id'], $student['name'], $student['grade'], $student['section'] ?? 'A', $student['recitations'] ?? 0, $student['totalScore'] ?? 0, $student['photo'] ?? null]);
+                }
             }
 
             // Remove students that were deleted from the frontend state
@@ -41,38 +49,47 @@ if ($method === 'POST') {
                 $inQuery = implode(',', array_fill(0, count($studentIds), '?'));
                 $stmtDelete = $pdo->prepare("DELETE FROM students WHERE id NOT IN ($inQuery)");
                 $stmtDelete->execute($studentIds);
-            } else {
-                $pdo->exec("DELETE FROM students");
             }
 
-            // Clear topics and questions (safe to wipe as they have no cascading foreign keys)
+            // Clear topics and questions
             $pdo->exec("DELETE FROM topics");
             $pdo->exec("DELETE FROM questions");
 
             // 2. Sync Topics
-            $stmtTopic = $pdo->prepare("INSERT INTO topics (grade, topic_name) VALUES (?, ?)");
-            foreach ($data['state']['topics'] as $grade => $topicsList) {
-                foreach ($topicsList as $topic) {
-                    $stmtTopic->execute([$grade, $topic]);
+            if (!empty($data['state']['topics']) && is_array($data['state']['topics'])) {
+                $stmtTopic = $pdo->prepare("INSERT INTO topics (grade, topic_name) VALUES (?, ?)");
+                foreach ($data['state']['topics'] as $grade => $topicsList) {
+                    if (is_array($topicsList)) {
+                        foreach ($topicsList as $topic) {
+                            $stmtTopic->execute([$grade, $topic]);
+                        }
+                    }
                 }
             }
 
             // 3. Sync Questions
-            $stmtQuestion = $pdo->prepare("INSERT INTO questions (grade, topic, difficulty, question_text) VALUES (?, ?, ?, ?)");
-            foreach ($data['state']['questions'] as $q) {
-                $stmtQuestion->execute([$q['grade'], $q['topic'], $q['difficulty'], $q['text']]);
+            if (!empty($data['state']['questions']) && is_array($data['state']['questions'])) {
+                $stmtQuestion = $pdo->prepare("INSERT INTO questions (grade, topic, difficulty, question_text) VALUES (?, ?, ?, ?)");
+                foreach ($data['state']['questions'] as $q) {
+                    $stmtQuestion->execute([$q['grade'], $q['topic'], $q['difficulty'], $q['text'] ?? ($q['question_text'] ?? '')]);
+                }
             }
 
             // 4. Sync Multimedia Files (if provided)
             if (isset($data['multimedia']) && is_array($data['multimedia'])) {
-                $stmtMedia = $pdo->prepare("INSERT INTO multimedia_files (id, category, name, type, size, data) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE data=VALUES(data)");
+                if (is_sqlite()) {
+                    $stmtMedia = $pdo->prepare("INSERT INTO multimedia_files (id, category, name, type, size, data) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET data=excluded.data");
+                } else {
+                    $stmtMedia = $pdo->prepare("INSERT INTO multimedia_files (id, category, name, type, size, data) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE data=VALUES(data)");
+                }
                 foreach ($data['multimedia'] as $media) {
                     $stmtMedia->execute([$media['id'], $media['category'], $media['name'], $media['type'], $media['size'], $media['data']]);
                 }
             }
 
             $pdo->commit();
-            echo json_encode(["status" => "success", "message" => "State backed up to MySQL and relational tables synced successfully!"]);
+            $engineName = is_sqlite() ? 'SQLite' : 'MySQL';
+            echo json_encode(["status" => "success", "message" => "State backed up to $engineName and relational tables synced successfully!"]);
         } catch (Exception $e) {
             $pdo->rollBack();
             echo json_encode(["status" => "error", "message" => "Backup saved, but failed to sync relational tables: " . $e->getMessage()]);

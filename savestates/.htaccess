@@ -1,0 +1,12 @@
+# Prevent execution of any executable script files in upload/state directory
+<FilesMatch "(?i)\.(php|php[0-9]|phtml|pl|py|cgi|asp|aspx|exe|sh|bat|cmd)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>

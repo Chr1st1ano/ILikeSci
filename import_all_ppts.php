@@ -4,18 +4,33 @@
  * Scans directories for all .pptx files and processes them into database & high-res slide images.
  */
 
-require 'c:/Games/xampp/htdocs/ILikeSci/db.php';
+require_once __DIR__ . '/db.php';
 
 $uploadBaseDir = __DIR__ . '/uploads/pptx/';
 $slidesBaseDir = __DIR__ . '/uploads/pptx/slides/';
 if (!is_dir($uploadBaseDir)) mkdir($uploadBaseDir, 0777, true);
 if (!is_dir($slidesBaseDir)) mkdir($slidesBaseDir, 0777, true);
 
-// Find Python executable
-$pythonCmd = 'C:\Users\08oyo\AppData\Local\Python\bin\python.exe';
-if (!file_exists($pythonCmd)) {
-    $pythonCmd = 'python';
+// Find working Python executable
+$pythonCmd = '';
+$pythonCandidates = [
+    'C:\Users\08oyo\AppData\Local\Python\pythoncore-3.14-64\python.exe',
+    'C:\Users\08oyo\AppData\Local\Python\bin\python.exe',
+    'python',
+    'py',
+    'python3',
+    'C:\Games\Python3.14\python.exe'
+];
+foreach ($pythonCandidates as $cand) {
+    if (file_exists($cand) || in_array($cand, ['python', 'py', 'python3'])) {
+        $testOut = @shell_exec(escapeshellarg($cand) . " --version 2>&1");
+        if ($testOut && stripos($testOut, 'python') !== false) {
+            $pythonCmd = $cand;
+            break;
+        }
+    }
 }
+if (!$pythonCmd) $pythonCmd = 'python';
 
 echo "=== Starting Bulk PPTX Import ===\n";
 echo "Using Python: $pythonCmd\n\n";

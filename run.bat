@@ -12,19 +12,47 @@ echo.
 
 :: 1. Check for Python
 echo [1/4] Checking Python installation...
-py --version >nul 2>&1
-if %errorlevel% neq 0 (
-    echo [ERROR] Python is not installed or not in PATH.
-    echo Please install Python from python.org to use the Content Generator.
-    pause
-    exit /b
+set PYTHON_BIN=
+
+:: Check if standard python works (not the dummy Windows Store redirector)
+python --version >nul 2>&1
+if %errorlevel% equ 0 (
+    set PYTHON_BIN=python
+    goto found_python
 )
-echo Python found!
+
+:: Check if py launcher works
+py --version >nul 2>&1
+if %errorlevel% equ 0 (
+    set PYTHON_BIN=py
+    goto found_python
+)
+
+:: Check known local user Python installations
+if exist "%LOCALAPPDATA%\Python\pythoncore-3.14-64\python.exe" (
+    set "PYTHON_BIN=%LOCALAPPDATA%\Python\pythoncore-3.14-64\python.exe"
+    goto found_python
+)
+
+for /d %%D in ("%LOCALAPPDATA%\Programs\Python\Python3*") do (
+    if exist "%%D\python.exe" (
+        set "PYTHON_BIN=%%D\python.exe"
+        goto found_python
+    )
+)
+
+echo [ERROR] Working Python executable not found.
+echo Please install Python from python.org to use the Content Generator.
+pause
+exit /b
+
+:found_python
+echo [OK] Working Python found: %PYTHON_BIN%
 
 :: 2. Install Dependencies
 echo.
 echo [2/4] Installing Python dependencies (Science Tools)...
-py -m pip install mysql-connector-python python-docx --quiet
+"%PYTHON_BIN%" -m pip install mysql-connector-python python-docx --quiet
 if %errorlevel% neq 0 (
     echo [WARNING] Could not install dependencies automatically.
     echo Make sure you have an internet connection.
@@ -57,7 +85,7 @@ set /p choice="Do you want to import questions from Curriculums folder now? (Y/N
 if /i "%choice%"=="Y" (
     echo.
     echo Scanning Curriculums folder...
-    py curriculum_importer.py
+    "%PYTHON_BIN%" curriculum_importer.py
     echo Import finished!
     pause
 )

@@ -1,0 +1,38 @@
+{
+    "students": [
+        {
+            "id": 1,
+            "name": "Alex Brown",
+            "grade": "3",
+            "recitations": 7,
+            "totalScore": 19,
+            "_prof": 90
+        },
+        {
+            "id": 2,
+            "name": "Maria Garcia",
+            "grade": "4",
+            "recitations": 3,
+            "totalScore": 9,
+            "_prof": 100
+        },
+        {
+            "id": 3,
+            "name": "James Smith",
+            "grade": "5",
+            "recitations": 1,
+            "totalScore": 5,
+            "_prof": 100
+        },
+        {
+            "id": 4,
+            "name": "Linda Johnson",
+            "grade": "6",
+            "recitations": 4,
+            "totalScore": 18,
+            "_prof": 100
+        }
+    ],
+    "exportDate": "2026-05-17 10:32:38",
+    "exportGrade": "all"
+}

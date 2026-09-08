@@ -12,8 +12,9 @@ except ImportError:
     install("PyPDF2")
     import PyPDF2
 
-pdf_dir = r"c:\Games\xampp\htdocs\ILikeSci\Curriculums\GRADE 4- QUARTER 1\Quarter 1\Science"
-output_dir = r"c:\Games\xampp\htdocs\ILikeSci\extracted_texts_q1_science"
+base_dir = os.path.dirname(os.path.abspath(__file__))
+pdf_dir = os.path.join(base_dir, "Curriculums", "GRADE 4- QUARTER 1", "Quarter 1", "Science")
+output_dir = os.path.join(base_dir, "extracted_texts_q1_science")
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)

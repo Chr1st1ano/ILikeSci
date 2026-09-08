@@ -2517,3 +2517,317 @@ body.light-mode .hamburger-item.active { background: rgba(59,130,246,0.12); colo
     border: 1px solid #ccc;
   }
 }
+
+/* =========================================================
+   INTERACTIVE SIMULATION LABS & CANVAS VIEWPORT STYLES
+   ========================================================= */
+.sim-lab-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .sim-lab-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sim-canvas-viewport {
+  background: #0f172a;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.sim-canvas-viewport canvas {
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  display: block;
+}
+
+.sim-control-group {
+  margin-bottom: 12px;
+}
+
+.sim-control-group label {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  color: var(--text-main);
+}
+
+.sim-val {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.sim-slider {
+  accent-color: var(--primary);
+  width: 100%;
+  cursor: pointer;
+}
+
+.sim-stat-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 14px;
+}
+
+.sim-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.metric-label {
+  color: var(--text-muted);
+}
+
+.metric-val {
+  font-weight: 700;
+}
+
+.sim-progress-track {
+  width: 110px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 8px;
+}
+
+.sim-progress-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.sim-challenge-card {
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 14px;
+}
+
+.sim-challenge-card h4 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sim-challenge-card p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+.sim-answer-hint {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+}
+
+.sim-tab-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* 4 PICS 1 WORD LETTER TILES */
+.tile-slots-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.letter-slot {
+  width: 52px;
+  height: 58px;
+  background: rgba(30, 41, 59, 0.9);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.letter-slot:hover {
+  transform: translateY(-2px);
+  border-color: #60a5fa;
+}
+
+.letter-slot.filled {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border-color: #93c5fd;
+  animation: popIn 0.2s ease-out;
+}
+
+.letter-keyboard-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.letter-key-btn {
+  height: 48px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.letter-key-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
+.letter-key-btn.used {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* SCOREBOARD QUICK POINT BUTTONS */
+.score-btn-group {
+  display: flex;
+  gap: 4px;
+}
+
+.btn-point-quick {
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+  color: #fff;
+}
+
+.btn-point-quick:hover {
+  transform: translateY(-1px);
+}
+
+.btn-point-plus1 { background: #10b981; }
+.btn-point-plus3 { background: #3b82f6; }
+.btn-point-plus5 { background: #8b5cf6; }
+.btn-point-minus1 { background: rgba(239, 68, 68, 0.7); }
+
+/* FLASH QUIZ MULTIPLE CHOICE CARDS */
+.choice-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  .choice-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.choice-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.choice-card:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.choice-card.correct {
+  background: rgba(16, 185, 129, 0.25) !important;
+  border-color: #10b981 !important;
+  color: #6ee7b7 !important;
+}
+
+.choice-card.wrong {
+  background: rgba(239, 68, 68, 0.25) !important;
+  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+}
+
+.choice-letter {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.flash-timer-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.flash-timer-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #f59e0b, #ef4444);
+  width: 100%;
+  transition: width 1s linear;
+}
+

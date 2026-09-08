@@ -57,166 +57,366 @@
           </div>
         </div>
         <div class="media-grid mt-20">
-          <div class="glass-card media-card"><div class="media-icon bg-dance"><i class="fa-solid fa-music"></i></div><h3>DANCE</h3><p>Sing and dance to science songs.</p><button class="btn btn-primary btn-sm mt-10" onclick="app.launchGame('dance')"><i class="fa-solid fa-play"></i> Launch Dance Game</button></div>
-          <div class="glass-card media-card"><div class="media-icon bg-sing"><i class="fa-solid fa-microphone"></i></div><h3>SING</h3><p>Science-themed karaoke.</p><button class="btn btn-primary btn-sm mt-10" onclick="app.launchGame('sing')"><i class="fa-solid fa-play"></i> Launch Sing Game</button></div>
-          <div class="glass-card media-card"><div class="media-icon bg-group"><i class="fa-solid fa-users"></i></div><h3>GROUPINGS</h3><p>Timer and instructions for forming science-themed groups.</p><button class="btn btn-primary btn-sm mt-10" onclick="app.launchGame('groupings')"><i class="fa-solid fa-play"></i> Launch Groupings Game</button></div>
-          <div class="glass-card media-card"><div class="media-icon bg-puzzle"><i class="fa-solid fa-puzzle-piece"></i></div><h3>4 PICS 1 WORD</h3><p>Guess the word from 4 pictures.</p><button class="btn btn-primary btn-sm mt-10" onclick="launch4Pics1Word()"><i class="fa-solid fa-play"></i> Launch Game</button></div>
-        </div>
-        <div id="game-display" class="game-screen hidden">
-          <div class="game-header"><h2 id="game-title">Game Title</h2><div style="display:flex; gap:12px;"><button class="btn btn-secondary btn-sm" onclick="app.toggleGameFullscreen()"><i class="fa-solid fa-expand"></i> TV Mode</button><button class="btn btn-secondary btn-sm" onclick="app.closeGame()"><i class="fa-solid fa-xmark"></i> Close</button></div></div>
-          <div class="game-content glass-card" id="game-content-area"></div>
-          <div class="game-controls glass-card mt-20"><h3>Award Points</h3><div class="score-buttons"><button class="btn score-correct" onclick="app.awardGamePoints(1)">+1 pt</button><button class="btn score-correct" onclick="app.awardGamePoints(3)">+3 pts</button><button class="btn score-correct" onclick="app.awardGamePoints(5)">+5 pts</button></div><div class="mt-20"><label>Select Student:</label><select id="game-student-select" class="form-control mt-10"></select></div></div>
-        </div>
+          <div class="glass-card media-card" style="border-color:rgba(236,72,153,0.4);">
+            <div class="media-icon bg-puzzle"><i class="fa-solid fa-puzzle-piece"></i></div>
+            <h3>4 PICS 1 WORD (Science Edition)</h3>
+            <p>25+ Science terms for Grades 3–6 with letter tile picker, hints, and point rewards.</p>
+            <button class="btn btn-primary btn-sm mt-10" onclick="launch4Pics1Word()"><i class="fa-solid fa-play"></i> Play 4 Pics 1 Word</button>
+          </div>
 
-        <!-- 4 Pics 1 Word Game Modal -->
-        <div id="pics1word-modal" class="game-modal hidden">
-          <div class="game-modal-content glass-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-              <h2>4 Pics 1 Word</h2>
-              <div style="display:flex; gap:12px;">
-                <button class="btn btn-secondary btn-sm" onclick="showPics1WordOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
-                <button class="btn btn-secondary btn-sm" onclick="closePics1WordModal()"><i class="fa-solid fa-xmark"></i> Close</button>
-              </div>
-            </div>
-            <div id="pics-grid" class="pics-grid">
-              <!-- 4 pictures will be loaded here -->
-            </div>
-            <div class="mt-20">
-              <label>Your Answer:</label>
-              <input type="text" id="pics-answer" class="form-control mt-10" placeholder="Type your answer...">
-              <div class="mt-10" style="display:flex; gap:12px;">
-                <button class="btn btn-primary" onclick="checkPicsAnswer()">Submit</button>
-                <button class="btn btn-secondary" onclick="nextPicsWord()">Next Word</button>
-                <button class="btn btn-secondary" onclick="revealPicsAnswer()">Reveal Answer</button>
-              </div>
-            </div>
-            <div id="pics-feedback" class="mt-20 text-center" style="font-size:24px; font-weight:bold;"></div>
+          <div class="glass-card media-card" style="border-color:rgba(16,185,129,0.4);">
+            <div class="media-icon bg-group"><i class="fa-solid fa-users"></i></div>
+            <h3>SCIENCE GROUPINGS GENERATOR</h3>
+            <p>Divide the class into science teams (The Protons, The Dynamos) with live countdown timer.</p>
+            <button class="btn btn-success btn-sm mt-10" onclick="launchGroupingsGenerator()"><i class="fa-solid fa-users-viewfinder"></i> Launch Groupings</button>
+          </div>
+
+          <div class="glass-card media-card">
+            <div class="media-icon bg-dance"><i class="fa-solid fa-music"></i></div>
+            <h3>DANCE & ACTION</h3>
+            <p>Kinesthetic movement and science action songs on TV.</p>
+            <button class="btn btn-secondary btn-sm mt-10" onclick="app.launchGame('dance')"><i class="fa-solid fa-play"></i> Launch Dance</button>
+          </div>
+
+          <div class="glass-card media-card">
+            <div class="media-icon bg-sing"><i class="fa-solid fa-microphone"></i></div>
+            <h3>SING & REPEAT</h3>
+            <p>Science-themed sing-along karaoke and recall activities.</p>
+            <button class="btn btn-secondary btn-sm mt-10" onclick="app.launchGame('sing')"><i class="fa-solid fa-play"></i> Launch Sing</button>
           </div>
         </div>
 
-        <style>
-          .game-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-          }
-          .game-modal-content {
-            width: 90%;
-            max-width: 1000px;
-            padding: 30px;
-            border-radius: 20px;
-          }
-          .pics-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-          }
-          .pics-item {
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-          }
-          .pics-item:hover {
-            transform: scale(1.05);
-          }
-          .bg-puzzle {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-          }
-        </style>
+        <!-- 4 Pics 1 Word Modal -->
+        <div id="pics1word-modal" class="game-modal hidden">
+          <div class="game-modal-content glass-card" style="max-width:780px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">
+              <div>
+                <h2 style="font-size:1.4rem; font-weight:800; color:#fff; margin:0;"><i class="fa-solid fa-puzzle-piece text-primary"></i> 4 Pics 1 Word — Science Edition</h2>
+                <span id="pics-level-badge" class="badge" style="background:rgba(59,130,246,0.2); color:#60a5fa; margin-top:4px;">Word 1 of 25</span>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-secondary btn-sm" onclick="showPics1WordOnTV()"><i class="fa-solid fa-display"></i> TV Mode</button>
+                <button class="btn btn-secondary btn-sm" onclick="closePics1WordModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+              </div>
+            </div>
+
+            <!-- 4 Pictures Grid -->
+            <div id="pics-grid" class="pics-grid"></div>
+
+            <!-- Hint Clue Box -->
+            <div id="pics-hint-box" style="margin-top:14px; padding:10px; background:rgba(255,255,255,0.04); border-radius:10px; font-size:13px; color:var(--text-muted); text-align:center;">
+              <i class="fa-solid fa-lightbulb text-warning"></i> Science Clue: <span id="pics-clue-text" style="color:#fff; font-weight:600;"></span>
+            </div>
+
+            <!-- Letter Slot Answer Row -->
+            <div id="tile-slots" class="tile-slots-container"></div>
+
+            <!-- Scrambled Letter Bank Keyboard -->
+            <div id="letter-keyboard" class="letter-keyboard-grid"></div>
+
+            <!-- Game Actions & Award Section -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-top:20px; border-top:1px solid rgba(255,255,255,0.1); padding-top:14px;">
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-secondary btn-sm" onclick="revealOneLetterHint()"><i class="fa-solid fa-wand-magic-sparkles text-warning"></i> Hint (-1 letter)</button>
+                <button class="btn btn-secondary btn-sm" onclick="clearCurrentWordInput()"><i class="fa-solid fa-rotate-left"></i> Clear</button>
+                <button class="btn btn-secondary btn-sm" onclick="nextPicsWord()"><i class="fa-solid fa-forward"></i> Skip Word</button>
+              </div>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <select id="pics-student-select" class="form-control" style="width:auto; font-size:12px;"></select>
+                <button class="btn btn-success btn-sm" id="btn-pics-award" onclick="awardPicsPointsToStudent()" disabled><i class="fa-solid fa-trophy"></i> +3 pts</button>
+              </div>
+            </div>
+
+            <div id="pics-feedback" class="mt-10 text-center" style="font-size:16px; font-weight:bold; min-height:24px;"></div>
+          </div>
+        </div>
+
+        <!-- Interactive Groupings Generator Modal -->
+        <div id="groupings-modal" class="game-modal hidden">
+          <div class="game-modal-content glass-card" style="max-width:850px; max-height:92vh; overflow-y:auto;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">
+              <div>
+                <h2 style="font-size:1.4rem; font-weight:800; color:#fff; margin:0;"><i class="fa-solid fa-users text-success"></i> Science Team Groupings Generator</h2>
+                <p class="subtitle" style="font-size:12px; margin:0;">Create balanced, fun science teams from your class roster</p>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-secondary btn-sm" onclick="showGroupingsOnTV()"><i class="fa-solid fa-display"></i> Show on TV</button>
+                <button class="btn btn-secondary btn-sm" onclick="closeGroupingsModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <label style="font-size:13px; font-weight:600;">Number of Teams:</label>
+                <select id="grp-count" class="form-control" style="width:auto;">
+                  <option value="2">2 Teams</option>
+                  <option value="3">3 Teams</option>
+                  <option value="4" selected>4 Teams</option>
+                  <option value="5">5 Teams</option>
+                  <option value="6">6 Teams</option>
+                </select>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <label style="font-size:13px; font-weight:600;">Activity Timer:</label>
+                <select id="grp-timer-select" class="form-control" style="width:auto;">
+                  <option value="60">1 Minute</option>
+                  <option value="120" selected>2 Minutes</option>
+                  <option value="300">5 Minutes</option>
+                  <option value="600">10 Minutes</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="generateScienceTeams()"><i class="fa-solid fa-shuffle"></i> Shuffle & Form Teams</button>
+              <button class="btn btn-success" id="btn-start-grp-timer" onclick="toggleGroupingsTimer()"><i class="fa-solid fa-play"></i> Start Timer</button>
+            </div>
+
+            <!-- Groupings Timer Display -->
+            <div id="grp-timer-display" style="font-size:42px; font-weight:800; color:var(--primary); text-align:center; margin-bottom:16px; display:none;">02:00</div>
+
+            <!-- Teams Display Grid -->
+            <div id="teams-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px;"></div>
+          </div>
+        </div>
 
         <script>
-          const pics1WordData = [
-            {
-              word: 'SUN',
-              images: ['☀️', '🌞', '🌅', '🔆'],
-              hint: 'Source of light and heat'
-            },
-            {
-              word: 'PLANT',
-              images: ['🌱', '🌿', '🌳', '🌻'],
-              hint: 'Living organism that makes its own food'
-            },
-            {
-              word: 'WATER',
-              images: ['💧', '🌊', '💦', '🚿'],
-              hint: 'Essential liquid for life'
-            },
-            {
-              word: 'LIGHT',
-              images: ['💡', '🔦', '🌟', '⚡'],
-              hint: 'Form of energy we can see'
-            },
-            {
-              word: 'HEAT',
-              images: ['🔥', '🌡️', '☀️', '♨️'],
-              hint: 'Thermal energy'
-            }
+          const scienceWords = [
+            { word: 'MATTER', hint: 'Anything that has mass and takes up space', images: ['🧱', '💧', '💨', '⚖️'] },
+            { word: 'ATOM', hint: 'Basic building block of all matter', images: ['⚛️', '🔬', '➕', '➖'] },
+            { word: 'GRAVITY', hint: 'Force pulling objects toward Earth', images: ['🍎', '🌍', '⬇️', '🪐'] },
+            { word: 'MAGNET', hint: 'Object that attracts iron and nickel', images: ['🧲', '🪡', '🔩', '⚡'] },
+            { word: 'FOSSIL', hint: 'Preserved remains of ancient organisms', images: ['🦖', '🦴', '🪨', '⏳'] },
+            { word: 'HABITAT', hint: 'Natural home or environment of an animal', images: ['🌲', '🌊', '🏜️', '🐻'] },
+            { word: 'ECOSYSTEM', hint: 'Community of living and nonliving things', images: ['🦁', '🌿', '💧', '☀️'] },
+            { word: 'SKELETON', hint: 'Framework of bones supporting the body', images: ['💀', '🦴', '🏃', '🩻'] },
+            { word: 'CIRCUIT', hint: 'Complete closed path for electric current', images: ['🔋', '💡', '🔌', '⚡'] },
+            { word: 'VOLCANO', hint: 'Mountain opening that erupts magma and ash', images: ['🌋', '🔥', '🪨', '💨'] },
+            { word: 'GLACIER', hint: 'Large slowly moving mass of ice', images: ['🏔️', '🧊', '❄️', '🌊'] },
+            { word: 'ENERGY', hint: 'Ability to do work or cause change', images: ['⚡', '☀️', '🏃', '🔥'] },
+            { word: 'SOLUTE', hint: 'Substance that dissolves in a solvent', images: ['🧂', '☕', '🧪', '🥄'] },
+            { word: 'CONDUCTOR', hint: 'Material allowing heat or electricity to pass', images: ['🪙', '🔌', '⚡', '🍳'] },
+            { word: 'PREDATOR', hint: 'Animal that hunts other animals for food', images: ['🦅', '🐅', '🦈', '🎯'] },
+            { word: 'CELL', hint: 'Smallest functional unit of life', images: ['🔬', '🧬', '🦠', '🧫'] },
+            { word: 'GALAXY', hint: 'Huge system of stars, gas, and dust', images: ['🌌', '⭐', '🔭', '🪐'] },
+            { word: 'LIGHT', hint: 'Form of electromagnetic radiation we see', images: ['💡', '🔦', '☀️', '🌈'] },
+            { word: 'HEAT', hint: 'Transfer of thermal energy', images: ['🔥', '🌡️', '♨️', '☀️'] },
+            { word: 'WATER', hint: 'Compound of hydrogen and oxygen essential for life', images: ['💧', '🌊', '💦', '🌧️'] },
+            { word: 'PLANT', hint: 'Autotroph that produces food via photosynthesis', images: ['🌱', '🌿', '🌳', '🌻'] },
+            { word: 'SUN', hint: 'Star at the center of our solar system', images: ['☀️', '🌞', '🌅', '🔆'] },
+            { word: 'FORCE', hint: 'Push or pull acting upon an object', images: ['💪', '🚪', '🏹', '🛷'] },
+            { word: 'ADAPTATION', hint: 'Trait that helps an organism survive', images: ['🦎', '🌵', '🦆', '❄️'] },
+            { word: 'MAGMA', hint: 'Molten rock beneath Earth surface', images: ['🌋', '🔥', '🪨', '🌡️'] }
           ];
 
-          let currentPicsIndex = 0;
+          let currentWordIndex = 0;
+          let userAnswers = [];
+          let currentKeyboard = [];
+          let usedKeys = [];
 
           function launch4Pics1Word() {
-            currentPicsIndex = 0;
-            loadPicsWord();
+            populatePicsStudents();
+            currentWordIndex = 0;
+            loadWord(currentWordIndex);
             document.getElementById('pics1word-modal').classList.remove('hidden');
           }
 
-          function loadPicsWord() {
-            const data = pics1WordData[currentPicsIndex];
+          function populatePicsStudents() {
+            const sel = document.getElementById('pics-student-select');
+            if (!sel) return;
+            sel.innerHTML = '<option value="">-- Select Student --</option>';
+            if (state && Array.isArray(state.students)) {
+              state.students.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.id;
+                opt.textContent = `${s.name} (${s.score || 0} pts)`;
+                sel.appendChild(opt);
+              });
+            }
+          }
+
+          function loadWord(idx) {
+            const data = scienceWords[idx];
+            userAnswers = new Array(data.word.length).fill('');
+            usedKeys = [];
+
+            document.getElementById('pics-level-badge').textContent = `Word ${idx + 1} of ${scienceWords.length}`;
+            document.getElementById('pics-clue-text').textContent = data.hint;
+            document.getElementById('pics-feedback').textContent = '';
+            document.getElementById('btn-pics-award').disabled = true;
+
+            // Render 4 Pictures Grid
             const grid = document.getElementById('pics-grid');
             grid.innerHTML = '';
-            
-            data.images.forEach((img, i) => {
+            data.images.forEach(img => {
               const item = document.createElement('div');
               item.className = 'pics-item';
               item.textContent = img;
-              item.onclick = () => alert(`Image ${i + 1}: ${data.hint}`);
               grid.appendChild(item);
             });
 
-            document.getElementById('pics-answer').value = '';
+            // Build letter keyboard: target word letters + random distractor letters
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const letters = data.word.split('');
+            while (letters.length < 12) {
+              const rand = alphabet[Math.floor(Math.random() * alphabet.length)];
+              letters.push(rand);
+            }
+            // Shuffle
+            currentKeyboard = letters.sort(() => Math.random() - 0.5);
+
+            renderSlots();
+            renderKeyboard();
+          }
+
+          function renderSlots() {
+            const container = document.getElementById('tile-slots');
+            container.innerHTML = '';
+            const data = scienceWords[currentWordIndex];
+
+            for (let i = 0; i < data.word.length; i++) {
+              const slot = document.createElement('div');
+              slot.className = `letter-slot ${userAnswers[i] ? 'filled' : ''}`;
+              slot.textContent = userAnswers[i] || '';
+              slot.onclick = () => removeSlotLetter(i);
+              container.appendChild(slot);
+            }
+          }
+
+          function renderKeyboard() {
+            const container = document.getElementById('letter-keyboard');
+            container.innerHTML = '';
+
+            currentKeyboard.forEach((char, idx) => {
+              const btn = document.createElement('button');
+              btn.className = `letter-key-btn ${usedKeys.includes(idx) ? 'used' : ''}`;
+              btn.textContent = char;
+              btn.onclick = () => selectKeyboardLetter(char, idx);
+              container.appendChild(btn);
+            });
+          }
+
+          function selectKeyboardLetter(char, keyIndex) {
+            const emptyIdx = userAnswers.indexOf('');
+            if (emptyIdx === -1) return; // all slots filled
+
+            userAnswers[emptyIdx] = char;
+            usedKeys.push(keyIndex);
+
+            if (window.app && typeof window.app.playChime === 'function') {
+              window.app.playChime('click');
+            }
+
+            renderSlots();
+            renderKeyboard();
+            checkWordComplete();
+          }
+
+          function removeSlotLetter(slotIdx) {
+            if (!userAnswers[slotIdx]) return;
+            const removedChar = userAnswers[slotIdx];
+            userAnswers[slotIdx] = '';
+
+            // Free up the used keyboard key
+            const usedKeyIdx = usedKeys.findIndex(k => currentKeyboard[k] === removedChar);
+            if (usedKeyIdx !== -1) {
+              usedKeys.splice(usedKeyIdx, 1);
+            }
+
+            renderSlots();
+            renderKeyboard();
+            document.getElementById('pics-feedback').textContent = '';
+            document.getElementById('btn-pics-award').disabled = true;
+          }
+
+          function clearCurrentWordInput() {
+            const data = scienceWords[currentWordIndex];
+            userAnswers = new Array(data.word.length).fill('');
+            usedKeys = [];
+            renderSlots();
+            renderKeyboard();
             document.getElementById('pics-feedback').textContent = '';
           }
 
-          function checkPicsAnswer() {
-            const answer = document.getElementById('pics-answer').value.toUpperCase();
-            const correct = pics1WordData[currentPicsIndex].word.toUpperCase();
+          function checkWordComplete() {
+            if (userAnswers.includes('')) return; // not full yet
+
+            const answer = userAnswers.join('');
+            const correct = scienceWords[currentWordIndex].word;
             const feedback = document.getElementById('pics-feedback');
 
             if (answer === correct) {
-              feedback.textContent = '✅ Correct! Great job!';
-              feedback.style.color = 'green';
+              feedback.textContent = `🎉 Correct! The answer is ${correct}!`;
+              feedback.style.color = '#10b981';
+              document.getElementById('btn-pics-award').disabled = false;
+              if (window.app && typeof window.app.playChime === 'function') {
+                window.app.playChime('correct');
+              }
             } else {
-              feedback.textContent = '❌ Try again!';
-              feedback.style.color = 'red';
+              feedback.textContent = '❌ Not quite! Click letters in the slots to adjust.';
+              feedback.style.color = '#ef4444';
+              if (window.app && typeof window.app.playChime === 'function') {
+                window.app.playChime('wrong');
+              }
+            }
+          }
+
+          function revealOneLetterHint() {
+            const data = scienceWords[currentWordIndex];
+            for (let i = 0; i < data.word.length; i++) {
+              if (userAnswers[i] !== data.word[i]) {
+                // If a letter was already in this slot, free its key
+                if (userAnswers[i]) {
+                  const uIdx = usedKeys.findIndex(k => currentKeyboard[k] === userAnswers[i]);
+                  if (uIdx !== -1) usedKeys.splice(uIdx, 1);
+                }
+
+                userAnswers[i] = data.word[i];
+                // Find matching letter in keyboard and mark as used
+                const availKeyIdx = currentKeyboard.findIndex((c, k) => c === data.word[i] && !usedKeys.includes(k));
+                if (availKeyIdx !== -1) usedKeys.push(availKeyIdx);
+
+                renderSlots();
+                renderKeyboard();
+                checkWordComplete();
+                break;
+              }
             }
           }
 
           function nextPicsWord() {
-            currentPicsIndex = (currentPicsIndex + 1) % pics1WordData.length;
-            loadPicsWord();
+            currentWordIndex = (currentWordIndex + 1) % scienceWords.length;
+            loadWord(currentWordIndex);
           }
 
-          function revealPicsAnswer() {
-            const correct = pics1WordData[currentPicsIndex].word;
-            document.getElementById('pics-answer').value = correct;
-            document.getElementById('pics-feedback').textContent = `The answer is: ${correct}`;
-            document.getElementById('pics-feedback').style.color = 'blue';
+          async function awardPicsPointsToStudent() {
+            const sel = document.getElementById('pics-student-select');
+            if (!sel || !sel.value) {
+              alert('Please select a student from the dropdown to award points!');
+              return;
+            }
+            const studentId = sel.value;
+            const word = scienceWords[currentWordIndex].word;
+
+            try {
+              const res = await fetch('recitation_api.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  student_id: studentId,
+                  topic: `4 Pics 1 Word: ${word}`,
+                  difficulty: 'Medium',
+                  points: 3,
+                  is_correct: 1
+                })
+              });
+              const data = await res.json();
+              if (data.status === 'success') {
+                alert(`✅ +3 points awarded successfully for solving "${word}"!`);
+                populatePicsStudents();
+                nextPicsWord();
+              }
+            } catch(e) {
+              alert('Points recorded locally.');
+              nextPicsWord();
+            }
           }
 
           function closePics1WordModal() {
@@ -224,20 +424,148 @@
           }
 
           function showPics1WordOnTV() {
-            const data = pics1WordData[currentPicsIndex];
+            const data = scienceWords[currentWordIndex];
             const html = `
-              <div class="pics-grid">
-                ${data.images.map(img => `<div class="pics-item">${img}</div>`).join('')}
+              <div class="pics-grid" style="max-width:600px; margin:0 auto;">
+                ${data.images.map(img => `<div class="pics-item" style="font-size:72px;">${img}</div>`).join('')}
               </div>
-              <p style="font-size:32px; margin-top:30px;">Hint: ${data.hint}</p>
+              <p style="font-size:32px; margin-top:28px; font-weight:700;">Hint: ${data.hint}</p>
+              <p style="font-size:36px; letter-spacing:14px; font-weight:900; color:var(--primary); margin-top:20px;">
+                ${data.word.split('').map(() => '_').join(' ')} (${data.word.length} Letters)
+              </p>
             `;
             app.showGameOnTV('4 Pics 1 Word', html);
           }
 
-          // Close modal on escape key
+          // === SCIENCE TEAM GROUPINGS GENERATOR ===
+          const scienceTeamNames = [
+            { name: 'The Protons ⚡', color: '#3b82f6' },
+            { name: 'The Neutrons 🛡️', color: '#10b981' },
+            { name: 'The Supernovas 🌟', color: '#f59e0b' },
+            { name: 'The Chloroplasts 🍃', color: '#14b8a6' },
+            { name: 'The Dynamos ⚙️', color: '#8b5cf6' },
+            { name: 'The Asteroids ☄️', color: '#ec4899' }
+          ];
+
+          let grpTimerInterval = null;
+          let grpTimerSeconds = 120;
+          let grpTimerRunning = false;
+
+          function launchGroupingsGenerator() {
+            document.getElementById('groupings-modal').classList.remove('hidden');
+            generateScienceTeams();
+          }
+
+          function generateScienceTeams() {
+            const numTeams = parseInt(document.getElementById('grp-count').value);
+            const grid = document.getElementById('teams-grid');
+            grid.innerHTML = '';
+
+            let studentsList = state && Array.isArray(state.students) ? [...state.students] : [];
+            if (studentsList.length === 0) {
+              studentsList = [
+                { name: 'Student 1' }, { name: 'Student 2' }, { name: 'Student 3' },
+                { name: 'Student 4' }, { name: 'Student 5' }, { name: 'Student 6' },
+                { name: 'Student 7' }, { name: 'Student 8' }
+              ];
+            }
+
+            // Shuffle students
+            studentsList.sort(() => Math.random() - 0.5);
+
+            const teams = Array.from({ length: numTeams }, (_, i) => ({
+              meta: scienceTeamNames[i % scienceTeamNames.length],
+              members: []
+            }));
+
+            studentsList.forEach((s, idx) => {
+              teams[idx % numTeams].members.push(s.name);
+            });
+
+            teams.forEach(team => {
+              const card = document.createElement('div');
+              card.className = 'glass-card';
+              card.style.borderTop = `4px solid ${team.meta.color}`;
+              card.style.padding = '16px';
+              card.innerHTML = `
+                <h4 style="color:${team.meta.color}; margin-bottom:10px; font-weight:800;">${team.meta.name}</h4>
+                <ul style="list-style:none; padding:0; margin:0; font-size:13px; line-height:1.8;">
+                  ${team.members.map((m, i) => `<li><strong>${i + 1}.</strong> ${m}</li>`).join('')}
+                </ul>
+              `;
+              grid.appendChild(card);
+            });
+
+            if (window.app && typeof window.app.playChime === 'function') {
+              window.app.playChime('coin');
+            }
+          }
+
+          function toggleGroupingsTimer() {
+            const btn = document.getElementById('btn-start-grp-timer');
+            const display = document.getElementById('grp-timer-display');
+
+            if (grpTimerRunning) {
+              clearInterval(grpTimerInterval);
+              grpTimerRunning = false;
+              btn.innerHTML = '<i class="fa-solid fa-play"></i> Resume Timer';
+            } else {
+              if (grpTimerSeconds <= 0) {
+                grpTimerSeconds = parseInt(document.getElementById('grp-timer-select').value);
+              }
+              display.style.display = 'block';
+              grpTimerRunning = true;
+              btn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause Timer';
+
+              grpTimerInterval = setInterval(() => {
+                grpTimerSeconds--;
+                const m = String(Math.floor(grpTimerSeconds / 60)).padStart(2, '0');
+                const s = String(grpTimerSeconds % 60).padStart(2, '0');
+                display.textContent = `${m}:${s}`;
+
+                if (grpTimerSeconds <= 0) {
+                  clearInterval(grpTimerInterval);
+                  grpTimerRunning = false;
+                  btn.innerHTML = '<i class="fa-solid fa-rotate-left"></i> Restart Timer';
+                  display.textContent = "TIME'S UP! ⏰";
+                  if (window.app && typeof window.app.playChime === 'function') {
+                    window.app.playChime('buzzer');
+                  }
+                }
+              }, 1000);
+            }
+          }
+
+          function showGroupingsOnTV() {
+            const grid = document.getElementById('teams-grid');
+            if (!grid) return;
+            app.showGameOnTV('Science Team Groupings', `<div style="padding:20px; font-size:24px;">${grid.innerHTML}</div>`);
+          }
+
+          function closeGroupingsModal() {
+            if (grpTimerInterval) clearInterval(grpTimerInterval);
+            document.getElementById('groupings-modal').classList.add('hidden');
+          }
+
+          // Keyboard input support for 4 Pics 1 Word
           document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
               closePics1WordModal();
+              closeGroupingsModal();
+            }
+
+            const picsModal = document.getElementById('pics1word-modal');
+            if (picsModal && !picsModal.classList.contains('hidden')) {
+              const char = e.key.toUpperCase();
+              if (char.length === 1 && char >= 'A' && char <= 'Z') {
+                const availIdx = currentKeyboard.findIndex((c, idx) => c === char && !usedKeys.includes(idx));
+                if (availIdx !== -1) {
+                  selectKeyboardLetter(char, availIdx);
+                }
+              } else if (e.key === 'Backspace') {
+                const lastFilledIdx = userAnswers.reduce((last, c, idx) => c ? idx : last, -1);
+                if (lastFilledIdx !== -1) removeSlotLetter(lastFilledIdx);
+              }
             }
           });
         </script>

@@ -1,0 +1,1028 @@
+<?php
+/**
+ * ILikeSci — Official MATATAG / DepEd "Matter and Materials" Curriculum Seeder
+ * Populates all 16 curriculum units across Grades 3 to 6:
+ * - Grade 3 (Term 1 & Term 3): 3 Units
+ * - Grade 4 (Term 1): 5 Units
+ * - Grade 5 (Term 1): 4 Units
+ * - Grade 6 (Term 1): 4 Units
+ * Total: 16 Curriculum Lessons, 80 Detailed Presentation Slides, 80+ Tiered Questions.
+ * Compatible with both XAMPP MySQL and SQLite fallback.
+ */
+
+if (php_sapi_name() !== 'cli') {
+    header('Content-Type: text/html; charset=utf-8');
+}
+
+require_once __DIR__ . '/db.php';
+
+// Complete 16 Matter and Materials Curriculum Units
+$matterUnits = [
+    // === GRADE 3 ===
+    [
+        'grade' => '3',
+        'quarter' => '1',
+        'lesson_number' => '1',
+        'topic' => 'Properties and Uses of Materials',
+        'objectives' => [
+            'Identify different materials used in common everyday objects (wood, metal, plastic, glass, fabric, rubber).',
+            'Describe observable physical properties including hardness, flexibility, texture, and absorbency.',
+            'Match everyday materials with their practical functions and explain why specific materials are chosen.'
+        ],
+        'content' => "Materials are substances used to make objects. Everyday items are made from materials like wood, metal, plastic, glass, paper, fabric, and rubber.\n\nEach material has distinct physical properties. Hard materials like iron and hardwood resist scratching. Flexible materials like rubber and silicone bend easily without breaking. Absorbent materials like cotton and sponges soak up liquids, while waterproof materials like plastic and glass repel water.\n\nChoosing the right material depends on its purpose. For example, cooking pots are made of metal because metal conducts heat and does not melt easily, while the handles are made of plastic or wood to protect our hands from burns.",
+        'slides' => [
+            [
+                'title' => 'Properties and Uses of Materials',
+                'content' => "Grade 3 — Term 1 Science\n\nDiscover how the properties of wood, metal, plastic, glass, and rubber shape our everyday world.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Common Materials Around Us',
+                'content' => "Look around your classroom and home:\n• Wood: Desks, doors, and pencils (sturdy, natural)\n• Metal: Nails, spoons, and coins (hard, shiny, strong)\n• Plastic: Bottles, rulers, and lunchboxes (lightweight, waterproof)\n• Glass: Windows, mirrors, and spectacles (transparent, smooth)\n• Fabric & Rubber: Clothes, tires, and erasers (soft, flexible, elastic)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Observing Physical Properties',
+                'content' => "How can we describe materials?\n1. Hardness: Can it resist scratching? (Diamond vs Chalk)\n2. Flexibility: Can it bend without breaking? (Rubber vs Ceramic)\n3. Absorbency: Can it soak up water? (Sponge vs Plastic wrap)\n4. Transparency: Can light pass through it? (Clear glass vs Wood)",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Observe color and texture\nStep 2: Test flexibility by gentle bending\nStep 3: Test absorbency with water droplet\nStep 4: Record findings in science notebook"
+            ],
+            [
+                'title' => 'Matching Materials to Their Purpose',
+                'content' => "Why are cooking pots made of metal while their handles are made of plastic or wood?\n\n• Metal conducts heat quickly to cook food evenly.\n• Plastic and wood are thermal insulators that stay cool, preventing burns when lifting the pot!",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Classroom Quick Check',
+                'content' => "Which material would be the best choice for making a rain umbrella?\nA) Cotton fabric\nB) Waterproof plastic\nC) Thick cardboard\nD) Heavy iron\n\nCorrect Answer: B (Waterproof plastic keeps rain out and is lightweight!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Easy', 'text' => 'What property makes rubber ideal for bicycle tires and rubber bands? | A: Flexibility and elasticity B: Transparency C: Fragility D: High absorbency', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Easy', 'text' => 'Which material is transparent and allows sunlight into our classrooms through windows? | A: Wood B: Clear Glass C: Steel D: Clay', 'correct' => 'B'],
+            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Medium', 'text' => 'Why are cooking pans made of metal while their handles are covered with plastic or wood? | A: To make the pan heavier B: Metal conducts heat while plastic/wood insulates to prevent burns C: Plastic cooks food faster D: Wood conducts electricity', 'correct' => 'B'],
+            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Medium', 'text' => 'If water spills on a wooden floor, why is a cotton mop used instead of a plastic bag? | A: Cotton is absorbent and holds liquid B: Plastic absorbs water faster C: Cotton is harder than wood D: Plastic damages the mop handle', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Hard', 'text' => 'A toy designer wants to create a safe floating bathtub toy for toddlers. Which material is best and why? | A: Glass because it is shiny B: Lightweight waterproof plastic or rubber because it floats and will not shatter C: Heavy iron because it is sturdy D: Paper because it is soft', 'correct' => 'B']
+        ]
+    ],
+    [
+        'grade' => '3',
+        'quarter' => '1',
+        'lesson_number' => '2',
+        'topic' => 'Changes in Materials and Environmental Responsibility',
+        'objectives' => [
+            'Describe physical changes in materials when bent, pressed, hammered, or cut.',
+            'Observe and describe the effects of heating and cooling on common substances.',
+            'Practice the 5Rs of waste management (Reduce, Reuse, Recycle, Repair, Refuse) to care for the environment.'
+        ],
+        'content' => "Materials can change in size, shape, or state without forming new substances. Cutting paper, bending a wire, pressing clay, or hammering an aluminum can changes how they look, but the material remains the same.\n\nHeating and cooling cause noticeable changes. Heat melts solid ice into liquid water and softens candle wax. Cooling water in a freezer turns it back into solid ice.\n\nImproper disposal of materials pollutes the land, rivers, and oceans. Practicing the 5Rs—Reduce waste, Reuse containers, Recycle paper and plastics, Repair broken items, and Refuse single-use plastics—keeps our community clean and protects wildlife.",
+        'slides' => [
+            [
+                'title' => 'Changes in Materials & Environmental Care',
+                'content' => "Grade 3 — Term 1 Science\n\nLearn how materials change shape, size, and state, and how we can protect our surroundings.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Physical Actions on Materials',
+                'content' => "How can we change materials without creating new substances?\n• Bending: Soft metal wire or rubber bends easily\n• Pressing: Modeling clay changes shape under finger pressure\n• Hammering: Flattening metal sheets or soda cans\n• Cutting: Scissors slicing paper or cloth into smaller pieces",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Temperature: Heating and Cooling',
+                'content' => "Thermal changes in everyday life:\n• Heating ice: Solid ice melts into liquid water\n• Heating wax: Solid candle wax softens and turns into liquid\n• Cooling water: Liquid water freezes into solid ice at 0°C\n• Cooling wax: Liquid wax hardens back into a solid block",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Place ice cube in sun\nStep 2: Observe melting into water\nStep 3: Place water in freezer\nStep 4: Observe refreezing into ice"
+            ],
+            [
+                'title' => 'The 5Rs of Environmental Responsibility',
+                'content' => "Protecting our community and planet:\n1. Reduce: Use less disposable packaging\n2. Reuse: Refill water bottles and jars\n3. Recycle: Turn paper and plastic into new goods\n4. Repair: Fix broken school bags and shoes\n5. Refuse: Say no to single-use plastic bags and straws",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Quick Quiz: Protecting Our Planet',
+                'content' => "Which action shows the \"Reuse\" practice of the 5Rs?\nA) Throwing old plastic bottles into the river\nB) Turning an old glass peanut butter jar into a pencil holder\nC) Burning dried leaves and plastic wrappers\nD) Buying a new plastic bag every day\n\nCorrect Answer: B (Repurposing containers gives them new life!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '3', 'topic' => 'Changes in Materials and Environmental Responsibility', 'difficulty' => 'Easy', 'text' => 'What phase change happens when solid ice is left under the warm sun? | A: Freezing B: Melting C: Condensation D: Sublimation', 'correct' => 'B'],
+            ['grade' => '3', 'topic' => 'Changes in Materials and Environmental Responsibility', 'difficulty' => 'Easy', 'text' => 'Which of the 5Rs means converting waste materials into new useful products? | A: Refuse B: Repair C: Recycle D: Reduce', 'correct' => 'C'],
+            ['grade' => '3', 'topic' => 'Changes in Materials and Environmental Responsibility', 'difficulty' => 'Medium', 'text' => 'When you fold a sheet of paper into an origami bird, what type of change took place? | A: Chemical change B: Physical change in shape C: Burning change D: Melting change', 'correct' => 'B'],
+            ['grade' => '3', 'topic' => 'Changes in Materials and Environmental Responsibility', 'difficulty' => 'Medium', 'text' => 'How does repairing a broken desk rather than discarding it benefit the school environment? | A: It creates more waste B: It conserves wood resources and reduces landfill waste C: It produces toxic gases D: It increases school expenses', 'correct' => 'B'],
+            ['grade' => '3', 'topic' => 'Changes in Materials and Environmental Responsibility', 'difficulty' => 'Hard', 'text' => 'Contrast pressing modeling clay versus dropping a glass mirror. What explains why one bends safely while the other shatters? | A: Clay is malleable while glass is brittle B: Glass is flexible while clay is hard C: Both produce new chemical substances D: Clay dissolves in air', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '3',
+        'quarter' => '3',
+        'lesson_number' => '1',
+        'topic' => 'Earth Materials and Their Uses',
+        'objectives' => [
+            'Identify common Earth materials such as soil, rocks, sand, water, and minerals.',
+            'Compare the characteristics of different soil types (clay, sand, loam).',
+            'Explain how living things rely on Earth materials for food, shelter, and construction.'
+        ],
+        'content' => "The Earth provides natural materials that support all living things. These include rocks, minerals, water, and different types of soil.\n\nSoil is formed from broken rocks and decayed plant and animal matter. Sand has large, gritty particles that drain water quickly. Clay has tiny, sticky particles that hold a lot of water. Loam is a balanced mixture of sand, clay, and rich organic humus, making it the best soil for growing crops and garden plants.\n\nRocks and minerals are quarried for building roads, houses, bridges, and tools. Water from rivers and underground springs provides drinking water and nourishes agricultural crops.",
+        'slides' => [
+            [
+                'title' => 'Earth Materials and Their Uses',
+                'content' => "Grade 3 — Term 3 Science\n\nDiscover the natural resources beneath our feet: rocks, minerals, water, and fertile soil.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Earth\'s Natural Treasures',
+                'content' => "Our planet provides essential raw materials:\n• Rocks & Minerals: Basalt, limestone, granite, quartz\n• Soil: The loose upper layer of Earth\'s surface\n• Water: Streams, rivers, lakes, and aquifers\n• Fossil Fuels & Ores: Energy and metals",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Comparing the Three Main Soil Types',
+                'content' => "Characteristics of soils:\n• Sand: Large, rough, gritty particles; water drains very quickly\n• Clay: Very fine, smooth particles; holds lots of water and becomes sticky\n• Loam: Balanced mix of sand, silt, clay, and rich organic humus; holds moisture while draining well",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Feel soil texture with fingers\nStep 2: Pour 100mL water over each soil\nStep 3: Measure drainage time\nStep 4: Check organic plant growth"
+            ],
+            [
+                'title' => 'Practical Uses in Society',
+                'content' => "How we use Earth materials:\n• Construction: Gravel, sand, and cement build roads, bridges, and school buildings\n• Agriculture: Loam soil grows rice, corn, fruits, and vegetables\n• Ceramics: Clay is molded and baked into bricks, flowerpots, and roof tiles\n• Daily Life: Natural water sustains health and sanitation",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Quick Quiz: The Best Soil',
+                'content' => "Which soil type is dark, nutrient-rich, and best for planting vegetables in school gardens?\nA) Pure dry sand\nB) Sticky dense clay\nC) Rich organic loam\nD) Crushed volcanic rock\n\nCorrect Answer: C (Loam holds the right balance of water, air, and nutrients!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '3', 'topic' => 'Earth Materials and Their Uses', 'difficulty' => 'Easy', 'text' => 'Which type of soil contains rich humus and is ideal for growing vegetables? | A: Loam soil B: Coarse gravel C: Pure beach sand D: Hard dry clay', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Earth Materials and Their Uses', 'difficulty' => 'Easy', 'text' => 'Which Earth material is molded and baked to make pottery, flowerpots, and bricks? | A: Clay B: Sand C: Basalt D: Gravel', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Earth Materials and Their Uses', 'difficulty' => 'Medium', 'text' => 'Why does pure sandy soil struggle to support healthy leafy vegetable crops? | A: It holds too much water and drowns roots B: It drains water and minerals away too quickly C: It contains too much organic humus D: It is too sticky for roots', 'correct' => 'B'],
+            ['grade' => '3', 'topic' => 'Earth Materials and Their Uses', 'difficulty' => 'Medium', 'text' => 'What is the role of decayed plants and animals (humus) in healthy garden soil? | A: It adds essential nutrients and helps retain moisture B: It makes soil turn into solid rock C: It repels earthworms D: It prevents water absorption', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Earth Materials and Their Uses', 'difficulty' => 'Hard', 'text' => 'How does soil erosion by heavy rain harm both farmers and downstream river ecosystems? | A: It improves plant growth downstream B: It strips away fertile topsoil and pollutes rivers with muddy silt C: It turns river water into drinking water D: It hardens rock formations', 'correct' => 'B']
+        ]
+    ],
+
+    // === GRADE 4 ===
+    [
+        'grade' => '4',
+        'quarter' => '1',
+        'lesson_number' => '1',
+        'topic' => 'Physical Properties of Materials',
+        'objectives' => [
+            'Classify materials based on whether they absorb water, float or sink, and conduct heat or electricity.',
+            'Relate density to the floating and sinking behavior of materials in liquids.',
+            'Identify conductors and insulators of heat and electricity in household items.'
+        ],
+        'content' => "Materials possess distinct physical properties that can be observed and measured without altering their chemical makeup.\n\nDensity determines whether an object floats or sinks: objects with lower density than water float (wood, cork, oil), while objects denser than water sink (iron nails, stones). Porous materials like sponges and cotton towels absorb water into internal pores, whereas non-porous materials like plastics and metals shed water.\n\nThermal and electrical conductivity are vital properties: metals like copper and aluminum are good conductors that transfer heat and electricity quickly. Insulators like rubber, wood, and plastic resist the flow of heat and electric current, keeping us safe.",
+        'slides' => [
+            [
+                'title' => 'Physical Properties of Materials',
+                'content' => "Grade 4 — Term 1 Science\n\nExplore density, floating vs sinking, absorbency, and thermal and electrical conductivity.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Floating vs Sinking: Density Explained',
+                'content' => "Why does a giant steel ship float while a small iron nail sinks?\n\n• Density is mass divided by volume (d = m/V).\n• Water has a density of 1.0 g/cm³.\n• Objects denser than water sink (iron: 7.8 g/cm³).\n• Ships have hollow hulls filled with air, making their average density lower than water!",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Absorbency and Porosity',
+                'content' => "Porous vs Non-porous materials:\n• Absorbent: Cotton, paper towels, sponge (have tiny pores that draw water in by capillary action)\n• Non-absorbent: Glass, plastic wrap, aluminum foil (smooth, sealed surfaces that repel water)\n• Application: Diapers and bandages use absorbent fibers, while raincoats use non-porous vinyl.",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Submerge sponge in water\nStep 2: Measure absorbed water mass\nStep 3: Submerge plastic sheet\nStep 4: Compare water retention"
+            ],
+            [
+                'title' => 'Conductors vs Insulators',
+                'content' => "Managing Heat and Electricity:\n• Electrical Conductors: Copper, silver, aluminum, brass (electrons move freely)\n• Electrical Insulators: Rubber, plastic, dry wood, glass (block electric flow)\n• Thermal Conductors: Aluminum pots heat food fast\n• Thermal Insulators: Styrofoam and silicone prevent heat transfer",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Classroom Investigation Check',
+                'content' => "Why are power cords wrapped in rubber or plastic coating?\nA) To make the cord look colorful\nB) Because rubber is an electrical insulator that protects users from electric shocks\nC) To make electricity travel faster\nD) Because plastic generates electrical current\n\nCorrect Answer: B (Insulation ensures safety!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Physical Properties of Materials', 'difficulty' => 'Easy', 'text' => 'What happens to an iron nail dropped into a basin of water? | A: It floats on top B: It dissolves instantly C: It sinks to the bottom because it is denser than water D: It turns into water vapor', 'correct' => 'C'],
+            ['grade' => '4', 'topic' => 'Physical Properties of Materials', 'difficulty' => 'Easy', 'text' => 'Which of the following materials is a good conductor of electricity? | A: Copper wire B: Rubber band C: Dry wooden stick D: Plastic straw', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Physical Properties of Materials', 'difficulty' => 'Medium', 'text' => 'Why do electricians wear thick rubber boots and handle tools with rubber-coated grips? | A: Rubber is an insulator that prevents electric current from traveling through the body B: Rubber conducts heat quickly C: Rubber makes tools heavier D: Rubber attracts static electricity', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Physical Properties of Materials', 'difficulty' => 'Medium', 'text' => 'Why does an unpeeled orange float in water, while a peeled orange sinks? | A: The peel contains tiny trapped air pockets that reduce overall density B: The peeled orange absorbs too much water C: The peel is made of heavy metal D: Peeling adds extra mass to the orange', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Physical Properties of Materials', 'difficulty' => 'Hard', 'text' => 'To design a thermal container that keeps cold milk cold for 6 hours, which layer arrangement is most effective? | A: Single layer of iron B: Inner food-grade lining surrounded by thick insulating foam and plastic C: Transparent thin glass only D: Wet paper towels wrapped in foil', 'correct' => 'B']
+        ]
+    ],
+    [
+        'grade' => '4',
+        'quarter' => '1',
+        'lesson_number' => '2',
+        'topic' => 'Chemical Properties of Materials',
+        'objectives' => [
+            'Describe chemical properties of materials such as flammability, reactivity with oxygen (rusting), and biodegradability.',
+            'Differentiate biodegradable materials from non-biodegradable materials based on decomposition.',
+            'Identify chemical warning symbols and safety precautions when handling reactive or hazardous substances.'
+        ],
+        'content' => "Chemical properties describe a material's potential to undergo chemical reactions and transform into new substances.\n\nFlammability is the ability of a material to burn in the presence of oxygen, such as dry wood, paper, and kerosene. Rusting (corrosion) occurs when iron reacts with moisture and oxygen over time to produce iron oxide (rust).\n\nBiodegradability refers to whether natural microorganisms can decompose materials into harmless organic matter. Banana peels and leaves biodegrade within weeks, while synthetic plastics and Styrofoam persist in landfills and oceans for centuries.\n\nChemical hazard pictograms warn against flammable, corrosive, toxic, and explosive hazards on chemical containers.",
+        'slides' => [
+            [
+                'title' => 'Chemical Properties of Materials',
+                'content' => "Grade 4 — Term 1 Science\n\nInvestigate flammability, rusting, biodegradability, and safe handling of reactive materials.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Flammability & Reactivity with Oxygen',
+                'content' => "Key Chemical Behaviors:\n• Flammability: How easily a substance ignites and burns (e.g., alcohol, dry wood, paper, gasoline)\n• Corrosion & Rusting: Iron combines with oxygen and moisture to form reddish-brown iron oxide\n• Oxidation weakens metal structures over time!",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Biodegradable vs Non-Biodegradable',
+                'content' => "Decomposition by natural microorganisms:\n• Biodegradable: Fruit peelings (2 weeks), paper (2 months), cotton (5 months) — breakdown into organic soil nutrients\n• Non-Biodegradable: Aluminum cans (200 years), plastic bottles (450 years), Styrofoam (never breaks down fully, turns into microplastics)",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Bury organic peel in soil\nStep 2: Bury plastic wrapper beside it\nStep 3: Check after 4 weeks\nStep 4: Record decomposition rates"
+            ],
+            [
+                'title' => 'Chemical Safety & Warning Labels',
+                'content' => "Reading hazard symbols:\n• Flame symbol: Highly flammable; keep away from heat sources\n• Skull and crossbones: Toxic/poisonous if swallowed or inhaled\n• Corrosive symbol: Causes burns to skin and eyes; wear gloves\n• Exclamation mark: Harmful irritant",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Quick Quiz: Preventing Rust',
+                'content' => "Why are iron fences, gates, and bicycle frames painted?\nA) Only to make them look shiny\nB) Paint creates a barrier that blocks moisture and oxygen from touching the iron\nC) Paint makes the iron lighter\nD) Paint causes iron to turn into copper\n\nCorrect Answer: B (Airtight barrier prevents chemical rusting!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Chemical Properties of Materials', 'difficulty' => 'Easy', 'text' => 'What two natural substances cause an exposed iron nail to rust? | A: Oxygen and moisture (water) B: Nitrogen and sunlight C: Carbon dioxide and dry heat D: Pure sand and oil', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Chemical Properties of Materials', 'difficulty' => 'Easy', 'text' => 'Which of the following is a biodegradable material? | A: Banana peel B: Plastic soda bottle C: Styrofoam cup D: Glass marble', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Chemical Properties of Materials', 'difficulty' => 'Medium', 'text' => 'Why must kerosene, alcohol, and spray paint be stored in a cool place away from open flames? | A: They have high flammability and ignite easily B: They freeze at room temperature C: They attract termites D: They dissolve plastic containers', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Chemical Properties of Materials', 'difficulty' => 'Medium', 'text' => 'How does painting an iron window grill prevent it from rusting over years of monsoon rains? | A: Paint blocks oxygen and rainwater from reaching the iron metal B: Paint makes iron absorb water faster C: Paint cools the iron D: Paint turns iron into aluminum', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Chemical Properties of Materials', 'difficulty' => 'Hard', 'text' => 'Why does non-biodegradable plastic packaging cause greater ecological harm in ocean ecosystems than fallen organic leaves? | A: Plastics persist for hundreds of years, fragment into toxic microplastics, and are ingested by marine life B: Plastics dissolve into water quickly C: Plastics sink and form new islands D: Organic leaves emit dangerous nuclear radiation', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '4',
+        'quarter' => '1',
+        'lesson_number' => '3',
+        'topic' => 'Effect of Temperature on Materials',
+        'objectives' => [
+            'Explain how changes in temperature alter the physical state, volume, and shape of materials.',
+            'Describe phase changes including melting, freezing, evaporation, condensation, and sublimation.',
+            'Relate thermal expansion and contraction to real-life applications like thermometers and bridges.'
+        ],
+        'content' => "Temperature measures the average thermal kinetic energy of particles in a material. Adding heat speeds up particles and pushes them apart, causing thermal expansion. Removing heat slows particles down and brings them closer, causing thermal contraction.\n\nPhase changes occur at specific temperatures: heating solid ice turns it into liquid water (melting); boiling liquid water creates water vapor (evaporation); cooling water vapor turns it back to liquid (condensation); freezing liquid turns it into solid ice.\n\nSublimation is the direct change from solid to gas without becoming a liquid (e.g., mothballs or dry ice).\n\nEngineers leave expansion joints in concrete bridges and railway tracks so materials can expand on hot days without buckling or cracking.",
+        'slides' => [
+            [
+                'title' => 'Effect of Temperature on Materials',
+                'content' => "Grade 4 — Term 1 Science\n\nDiscover how heat transforms solids, liquids, and gases and causes materials to expand and contract.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Thermal Expansion & Contraction',
+                'content' => "What happens to atoms when heated?\n• Adding heat: Particles gain kinetic energy, vibrate faster, and spread apart (Expansion)\n• Removing heat: Particles lose energy, move closer together (Contraction)\n• Thermometers work on expansion: heating the bulb expands the liquid up the tube!",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Five Key Phase Changes',
+                'content' => "Transitions between states:\n1. Melting: Solid -> Liquid (Ice to water at 0°C)\n2. Freezing: Liquid -> Solid (Water to ice at 0°C)\n3. Evaporation: Liquid -> Gas (Water boiling to steam at 100°C)\n4. Condensation: Gas -> Liquid (Steam cooling into water droplets)\n5. Sublimation: Solid -> Gas directly (Dry ice, naphthalene balls)",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Solid (particles vibrate in place)\nStep 2: Add heat -> Melting\nStep 3: Liquid (particles flow)\nStep 4: Add heat -> Evaporation (gas freely expands)"
+            ],
+            [
+                'title' => 'Engineering for Heat: Expansion Joints',
+                'content' => "Why are there small gaps in bridges, railway tracks, and highway roads?\n\n• On hot sunny days, steel and concrete expand.\n• Without expansion joints, railway tracks would bend and buckle dangerously!\n• The gaps give materials room to expand safely.",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Classroom Thinking Challenge',
+                'content' => "Why do water droplets form on the outside of a cold glass of iced water on a warm day?\nA) The water leaked through the solid glass\nB) Invisible water vapor in the warm air cooled down upon touching the cold glass and condensed\nC) The glass melted slightly\nD) The cold generated water from glass molecules\n\nCorrect Answer: B (Condensation of water vapor from the surrounding air!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Effect of Temperature on Materials', 'difficulty' => 'Easy', 'text' => 'What phase change occurs when liquid water is cooled below 0°C in a refrigerator? | A: Melting B: Freezing (solidification) C: Boiling D: Sublimation', 'correct' => 'B'],
+            ['grade' => '4', 'topic' => 'Effect of Temperature on Materials', 'difficulty' => 'Easy', 'text' => 'What happens to the volume of most materials when they are heated? | A: They expand and take up more space B: They shrink into nothing C: They lose all mass D: They turn into stone', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Effect of Temperature on Materials', 'difficulty' => 'Medium', 'text' => 'Why do civil engineers leave expansion joints between concrete sections on bridges and highways? | A: To reduce construction costs B: To allow concrete to expand on hot sunny days without buckling or cracking C: To let rainwater drain underneath D: To make cars drive slower', 'correct' => 'B'],
+            ['grade' => '4', 'topic' => 'Effect of Temperature on Materials', 'difficulty' => 'Medium', 'text' => 'If a metal lid on a glass jam jar is stuck tightly, why does running warm water over the metal lid help loosen it? | A: The metal expands faster and more noticeably than glass when heated B: Glass expands faster than metal C: Hot water dissolves the metal D: Hot water glues the lid tight', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Effect of Temperature on Materials', 'difficulty' => 'Hard', 'text' => 'Explain the direct transition known as sublimation and identify two everyday substances that undergo it. | A: Direct change from solid to gas without melting into liquid; seen in dry ice (solid CO2) and mothballs (naphthalene) B: Change from liquid to gas only C: Rapid freezing of hot water D: Melting of metal at ultra-high temperatures', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '4',
+        'quarter' => '1',
+        'lesson_number' => '4',
+        'topic' => 'Physical and Chemical Changes',
+        'objectives' => [
+            'Distinguish between physical changes (reversible, no new substance) and chemical changes (irreversible, new substance formed).',
+            'Identify evidence of chemical change: release of gas, color change, temperature change, light emission, or formation of a precipitate.',
+            'Classify common household and kitchen processes as physical or chemical changes.'
+        ],
+        'content' => "A physical change alters only the physical appearance, size, shape, or state of matter, while the chemical identity stays identical. Examples: chopping wood, shredding paper, melting ice, dissolving sugar in water.\n\nA chemical change occurs when bonds break and atoms rearrange to form entirely new chemical substances with different properties. Examples: burning firewood to ash, baking a cake, souring milk, rusting iron.\n\nKey indicators of a chemical change include: bubbling/gas production, unexpected color change, temperature change (becoming hot or cold without external heating), light emission, or odor change.",
+        'slides' => [
+            [
+                'title' => 'Physical and Chemical Changes',
+                'content' => "Grade 4 — Term 1 Science\n\nLearn to spot the crucial difference between changes in appearance and the birth of new substances.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Physical Change: Same Identity',
+                'content' => "Characteristics of Physical Change:\n• Alters only size, shape, or state\n• No new substance is created\n• Often easily reversible\n• Examples: Cutting paper, melting butter, dissolving salt in water, crushing an aluminum can",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Chemical Change: New Substances Formed',
+                'content' => "Characteristics of Chemical Change:\n• Chemical bonds break and new bonds form\n• New substance has completely different properties\n• Difficult or impossible to reverse\n• Examples: Burning wood (produces ash and smoke), rusting nails, baking a cake, milk souring",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Sign 1: Gas bubbles formed (effervescence)\nSign 2: Unexpected color shift\nSign 3: Heat/Light produced\nSign 4: Odor released\nSign 5: Solid precipitate formed"
+            ],
+            [
+                'title' => 'Kitchen Science Comparison',
+                'content' => "Spot the difference in the kitchen:\n• Dissolving sugar in hot water -> Physical Change (sugar can be recovered by boiling water away)\n• Caramelizing sugar into brown syrup -> Chemical Change (heat breaks sugar molecules into caramel)\n• Freezing fruit juice -> Physical Change\n• Cooking an egg -> Chemical Change (proteins denature permanently)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Check for Understanding',
+                'content' => "When vinegar is mixed with baking soda, rapid fizzing bubbles appear and the beaker cools down. What happened?\nA) A physical change where vinegar boiled\nB) A chemical change because carbon dioxide gas was created by a reaction\nC) The baking soda simply melted\nD) No change took place\n\nCorrect Answer: B (Gas bubbles and temperature drop prove a chemical reaction!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Physical and Chemical Changes', 'difficulty' => 'Easy', 'text' => 'Which of the following is an example of a physical change? | A: Tearing a piece of paper into small pieces B: Burning paper to gray ash C: Rusting of an iron nail D: Souring of fresh milk', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Physical and Chemical Changes', 'difficulty' => 'Easy', 'text' => 'Which observation is a definitive sign of a chemical change? | A: Change in size only B: Formation of a new substance with gas release or color change C: Change in shape by bending D: Freezing into a solid', 'correct' => 'B'],
+            ['grade' => '4', 'topic' => 'Physical and Chemical Changes', 'difficulty' => 'Medium', 'text' => 'How can you prove that dissolving salt in water is a physical change rather than a chemical change? | A: By evaporating all the water away to leave the identical salt crystals behind B: By tasting the liquid C: By freezing the water D: By adding vinegar to it', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Physical and Chemical Changes', 'difficulty' => 'Medium', 'text' => 'Why is baking a cake in an oven classified as a chemical change? | A: The ingredients change color, trap gas, and chemically transform into a new structure that cannot be separated back into raw eggs and flour B: It can be frozen back into batter C: It only changes shape D: No heat is involved', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Physical and Chemical Changes', 'difficulty' => 'Hard', 'text' => 'Contrast carving a wooden log into a chair versus burning that same wooden log in a campfire. | A: Carving changes macroscopic shape (physical); burning breaks chemical cellulose bonds producing ash, CO2, and heat permanently (chemical) B: Carving is chemical, burning is physical C: Both are reversible changes D: Both produce carbon ash', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '4',
+        'quarter' => '1',
+        'lesson_number' => '5',
+        'topic' => 'Responsible Use and Management of Materials',
+        'objectives' => [
+            'Practice safe handling, storage, and disposal of toxic, flammable, and corrosive household chemicals.',
+            'Apply 4-way waste segregation (biodegradable, non-biodegradable, recyclable, hazardous) in school and home.',
+            'Advocate for sustainable consumption, zero-waste initiatives, and environmental stewardship.'
+        ],
+        'content' => "Modern life utilizes diverse chemical products (bleach, pesticides, detergents, batteries, paints). Using them safely protects human health and the natural environment.\n\nSafety rules: Keep chemicals in their original labeled containers, store out of reach of young children, wear gloves and face masks when handling irritants, and never mix household cleaners like bleach and ammonia.\n\nWaste segregation: Separate wet organic waste (food scraps for composting) from dry recyclables (paper, plastic, glass bottles) and hazardous household waste (spent batteries, expired medicines, fluorescent bulbs).\n\nPracticing environmental stewardship keeps Philippine communities clean, prevents flooding caused by plastic-clogged drainage canals, and protects marine biodiversity.",
+        'slides' => [
+            [
+                'title' => 'Responsible Use & Management of Materials',
+                'content' => "Grade 4 — Term 1 Science\n\nSafety protocols for household chemicals, 4-way waste segregation, and community sustainability.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Hazardous Household Chemicals',
+                'content' => "Common chemicals requiring care:\n• Bleach & Disinfectants: Strong oxidizers; irritate skin and lungs\n• Pesticides & Insect Sprays: Toxic chemicals; avoid inhalation\n• Paints, Thinner, & Gasoline: Highly flammable volatile compounds\n• Spent Batteries & Fluorescent Bulbs: Contain heavy metals (mercury, lead, cadmium)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Core Safety Rules for Chemical Use',
+                'content' => "Always follow these safety steps:\n1. Keep in original containers with clear labels\n2. Never mix bleach with ammonia or acids (releases lethal chloramine gas!)\n3. Store in locked cabinets away from food and children\n4. Wear protective rubber gloves and open windows for ventilation",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Read label warnings\nStep 2: Wear protective mask & gloves\nStep 3: Use exact recommended amount\nStep 4: Dispose of container properly"
+            ],
+            [
+                'title' => '4-Way Waste Segregation at School',
+                'content' => "Sorting waste properly:\n• Green Bin (Biodegradable): Food scraps, fruit peelings, dried leaves -> Composting\n• Blue Bin (Recyclables): Paper, cardboard, PET bottles, tin cans -> Recycling plants\n• Black Bin (Residual Waste): Styrofoam, soiled wrappers -> Sanitary landfills\n• Red/Yellow Bin (Special Hazardous): Batteries, aerosol cans, expired medicines",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Quick Quiz: Safety in the Home',
+                'content' => "Why should household cleaning chemicals never be transferred into empty soft drink bottles?\nA) It makes the chemicals lose their cleaning power\nB) Someone might mistake the chemical for a beverage and drink it, causing severe poisoning\nC) Soft drink bottles make chemicals freeze\nD) Plastic makes bleach evaporate immediately\n\nCorrect Answer: B (Accidental ingestion prevention is critical!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Responsible Use and Management of Materials', 'difficulty' => 'Easy', 'text' => 'Why must household cleaning chemicals always remain stored in their original labeled containers? | A: To prevent accidental poisoning by mistaking them for food or drink B: To look nicer on the shelf C: Because new containers make them evaporate D: To increase their weight', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Responsible Use and Management of Materials', 'difficulty' => 'Easy', 'text' => 'Where should spent flashlight batteries and fluorescent lamps be disposed of? | A: In ordinary classroom paper bins B: In special hazardous waste collection bins C: Thrown into rivers D: Burned in the garden', 'correct' => 'B'],
+            ['grade' => '4', 'topic' => 'Responsible Use and Management of Materials', 'difficulty' => 'Medium', 'text' => 'Why is it extremely dangerous to mix household bleach with toilet cleaning acids or ammonia? | A: It causes a violent chemical reaction that releases toxic, suffocating gases B: It creates solid sugar C: It makes water freeze D: It neutralizes dirt instantly without fumes', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Responsible Use and Management of Materials', 'difficulty' => 'Medium', 'text' => 'How does proper waste segregation in Philippine barangays directly prevent urban street flooding during typhoons? | A: It prevents plastic wrappers and non-biodegradables from clogging drainage pipes and pumping stations B: It stops rain from falling C: It absorbs all floodwaters D: It lowers ocean levels', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Responsible Use and Management of Materials', 'difficulty' => 'Hard', 'text' => 'Design an action plan for Central Elementary School to achieve zero single-use plastic waste in the school canteen. | A: Require reusable tumblers and food containers, replace plastic wrappers with banana leaves/paper, and compost organic scraps B: Burn all canteen plastics behind the school C: Dump plastic waste into the nearest creek D: Ban all food and water', 'correct' => 'A']
+        ]
+    ],
+
+    // === GRADE 5 ===
+    [
+        'grade' => '5',
+        'quarter' => '1',
+        'lesson_number' => '1',
+        'topic' => 'Properties of Matter',
+        'objectives' => [
+            'Differentiate intensive properties (density, boiling point, hardness) from extensive properties (mass, volume, length).',
+            'Measure and calculate mass, volume, and density (d = m/V) using laboratory instruments.',
+            'Explain why intensive properties are essential for identifying unknown materials and substances.'
+        ],
+        'content' => "Matter is defined by physical and chemical properties that can be quantified and compared.\n\nExtensive properties depend on the amount of matter in a sample. Examples include mass (grams), volume (milliliters/cubic centimeters), and length. If you double the amount of water, its mass and volume double.\n\nIntensive properties do NOT depend on the amount of matter. Examples include density, boiling point, melting point, color, and electrical conductivity. 1 drop of pure water and 1 gallon of pure water both have a density of 1.0 g/cm³ and boil at 100°C at sea level.\n\nCalculating density (d = mass / volume) allows scientists to identify unknown minerals and materials accurately.",
+        'slides' => [
+            [
+                'title' => 'Properties of Matter',
+                'content' => "Grade 5 — Term 1 Science\n\nMaster the distinction between extensive and intensive properties and calculate density (d = m/V).",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Extensive vs Intensive Properties',
+                'content' => "Comparing the two property classes:\n• Extensive Properties: Depend on sample size\n  - Mass (g, kg)\n  - Volume (mL, cm³)\n  - Length & Total Energy\n• Intensive Properties: Independent of sample size\n  - Density (1.0 g/cm³ for water)\n  - Boiling point (100°C for water)\n  - Color, Odor, Hardness, and Conductivity",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Density Formula in Practice',
+                'content' => "Formula: d = m / V (Density = Mass ÷ Volume)\n\n• Mass is measured using a beam balance or electronic digital scale (grams).\n• Volume is measured using a graduated cylinder via liquid displacement:\n  V_object = V_final - V_initial\n• Units: g/cm³ (for solids) or g/mL (for liquids).",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Weigh sample on digital scale (m)\nStep 2: Fill graduated cylinder to 50mL\nStep 3: Submerge object, record new level (V)\nStep 4: Divide mass by volume (d = m/V)"
+            ],
+            [
+                'title' => 'Laboratory Mystery: Real Gold vs Pyrite',
+                'content' => "How can density identify \"Fool's Gold\"?\n\n• Sample Mass: 38.6 g, Volume: 2.0 mL\n• Calculated Density: 38.6 / 2.0 = 19.3 g/cm³\n• Pure Gold density is exactly 19.3 g/cm³.\n• Iron Pyrite (Fool's Gold) density is only 5.0 g/cm³.\n• Conclusion: The sample is genuine pure gold!",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Classroom Calculation Check',
+                'content' => "A rock has a mass of 120 grams and displaces 40 mL of water. What is its density?\nA) 3.0 g/cm³\nB) 0.33 g/cm³\nC) 4,800 g/cm³\nD) 80 g/cm³\n\nCorrect Answer: A (120 g / 40 mL = 3.0 g/cm³)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '5', 'topic' => 'Properties of Matter', 'difficulty' => 'Easy', 'text' => 'Which of the following is an intensive property that does NOT change when sample size changes? | A: Mass B: Volume C: Density D: Length', 'correct' => 'C'],
+            ['grade' => '5', 'topic' => 'Properties of Matter', 'difficulty' => 'Easy', 'text' => 'What laboratory instrument is used to accurately measure liquid volume and displaced solid volume? | A: Spring scale B: Graduated cylinder C: Meter stick D: Barometer', 'correct' => 'B'],
+            ['grade' => '5', 'topic' => 'Properties of Matter', 'difficulty' => 'Medium', 'text' => 'A metal cube has a mass of 150 grams and a volume of 30 cm³. What is its density? | A: 5.0 g/cm³ B: 0.2 g/cm³ C: 4,500 g/cm³ D: 180 g/cm³', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Properties of Matter', 'difficulty' => 'Medium', 'text' => 'Why does a 1-liter bottle of pure water have the exact same density as a 10-milliliter test tube of pure water? | A: Density is an intensive property defined by the ratio of mass to volume, which remains constant B: Water has no mass C: Smaller samples always have higher volume D: Temperature changes density to zero', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Properties of Matter', 'difficulty' => 'Hard', 'text' => 'A jeweler tests a crown with a mass of 965g and displaced volume of 65mL. Is it pure gold (d = 19.3 g/cm³)? | A: No, its density is 14.85 g/cm³, meaning it is mixed with less dense metals like copper B: Yes, 965 is larger than 19.3 C: Yes, all heavy items are gold D: Cannot be calculated', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '5',
+        'quarter' => '1',
+        'lesson_number' => '2',
+        'topic' => 'States of Matter',
+        'objectives' => [
+            'Describe the Kinetic Molecular Theory of matter (particle arrangement, motion, and attraction).',
+            'Compare the physical and molecular properties of solids, liquids, and gases.',
+            'Explain the fourth state of matter (plasma) and where it is found in the cosmos.'
+        ],
+        'content' => "All matter is made of tiny, constantly moving particles (atoms and molecules). The kinetic energy of these particles determines the state of matter.\n\nIn solids, particles are packed tightly in fixed, orderly arrangements; they vibrate in place and have strong intermolecular attractions, giving solids definite shape and volume.\n\nIn liquids, particles have more energy, slide past one another fluidly, and have moderate attraction; liquids have definite volume but take the shape of their container.\n\nIn gases, particles possess high kinetic energy, fly freely at high speeds, and have negligible attraction; gases expand to fill the entire volume and shape of their container.\n\nPlasma is an ionized gas of free electrons and positive ions formed at ultra-high temperatures. It is found in stars, lightning bolts, auroras, and neon lights, making it the most abundant state of matter in the universe.",
+        'slides' => [
+            [
+                'title' => 'States of Matter & Molecular Physics',
+                'content' => "Grade 5 — Term 1 Science\n\nExamine matter at the particulate level: solids, liquids, gases, and high-energy plasma.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Kinetic Molecular Theory (KMT)',
+                'content' => "Fundamental Principles of KMT:\n1. All matter consists of extremely tiny particles (atoms/molecules)\n2. Particles are in constant, random motion\n3. Higher temperature = Higher average kinetic energy and velocity\n4. Attractive forces hold particles together unless overcome by heat",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Solid vs Liquid vs Gas at Particle Level',
+                'content' => "Comparative Particle Matrix:\n• Solid: Rigid lattice, tightly packed, vibrates in place, definite shape and volume\n• Liquid: Close together, free to slide past one another, definite volume, takes container shape\n• Gas: Far apart, high-speed chaotic collisions, no definite shape, no definite volume (compressible)",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Solid: Low energy, locked lattice\nLiquid: Medium energy, sliding particles\nGas: High energy, high velocity collisions\nPlasma: Extreme energy, stripped ions & electrons"
+            ],
+            [
+                'title' => 'Plasma — The Fourth State of Matter',
+                'content' => "Beyond gas lies Plasma:\n• When gas is heated to super-high temperatures, electrons are stripped away from nuclei\n• Consists of positively charged ions and free electrons\n• Conducts electricity and responds strongly to magnetic fields\n• Found in: The Sun and stars (99% of visible universe), lightning bolts, neon signs, and auroras",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Thinking Challenge: Tire Pressure',
+                'content' => "Why does automobile tire pressure increase significantly after driving for hours on a hot asphalt highway?\nA) More air entered the tire from the road\nB) Heat increased the kinetic energy of air molecules inside, causing more frequent, forceful collisions against tire walls\nC) The rubber contracted into a smaller size\nD) The tire absorbed water vapor\n\nCorrect Answer: B (Higher temperature increases gas pressure!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '5', 'topic' => 'States of Matter', 'difficulty' => 'Easy', 'text' => 'In which state of matter do particles possess the lowest kinetic energy and vibrate in fixed positions? | A: Solid B: Liquid C: Gas D: Plasma', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'States of Matter', 'difficulty' => 'Easy', 'text' => 'What is the most abundant state of matter in the visible universe, found in stars and lightning? | A: Solid B: Liquid C: Plasma D: Gas', 'correct' => 'C'],
+            ['grade' => '5', 'topic' => 'States of Matter', 'difficulty' => 'Medium', 'text' => 'Why can gases be compressed into much smaller storage cylinders, whereas liquids and solids cannot? | A: Gases have vast empty spaces between moving molecules that can be squeezed together B: Gas particles are softer C: Solids have no mass D: Liquids turn into plasma when squeezed', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'States of Matter', 'difficulty' => 'Medium', 'text' => 'According to Kinetic Molecular Theory, what happens to water molecules when liquid water is heated to boiling? | A: Molecules gain kinetic energy and overcome attractive forces to escape as water vapor gas B: Molecules freeze into place C: Molecules disappear D: Molecules stop moving', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'States of Matter', 'difficulty' => 'Hard', 'text' => 'Describe how a neon sign produces bright glowing light using the properties of plasma. | A: High electric voltage ionizes neon gas into plasma, exciting electrons that emit light photons as they return to lower energy states B: Neon catches fire in air C: Neon melts into a glowing liquid D: Neon absorbs heat from the room', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '5',
+        'quarter' => '1',
+        'lesson_number' => '3',
+        'topic' => 'Changes in Matter',
+        'objectives' => [
+            'Classify changes in matter as endothermic (heat-absorbing) or exothermic (heat-releasing).',
+            'Explain energy transfers during phase changes (melting, vaporization, condensation, freezing).',
+            'Investigate everyday chemical changes such as cellular respiration, digestion, and combustion.'
+        ],
+        'content' => "Changes in matter are accompanied by energy transformations. Heat energy flows between substances and their surroundings.\n\nEndothermic changes absorb heat from the surroundings. When ice melts or water boils, particles absorb thermal energy to break intermolecular attractions. As a result, the immediate surroundings feel cooler.\n\nExothermic changes release heat into the surroundings. When water freezes or water vapor condenses, particles release thermal energy to lock into place. Combustion (burning wood or gas) releases enormous amounts of thermal energy and light.\n\nBiological systems rely on continuous changes in matter: our digestive system breaks food into glucose molecules, which our cells burn with oxygen during cellular respiration to release metabolic energy (ATP).",
+        'slides' => [
+            [
+                'title' => 'Changes in Matter & Energy Transfers',
+                'content' => "Grade 5 — Term 1 Science\n\nTrack heat energy flow: endothermic (absorbing heat) vs exothermic (releasing heat).",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Endothermic vs Exothermic Reactions',
+                'content' => "Direction of Thermal Energy Flow:\n• Endothermic (Heat Enters):\n  - System absorbs heat from surroundings\n  - Surroundings feel COLD\n  - Examples: Ice melting, water boiling, cold packs, photosynthesis\n• Exothermic (Heat Exits):\n  - System releases heat to surroundings\n  - Surroundings feel HOT\n  - Examples: Fire burning, fireworks, hand warmers, freezing",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Phase Changes & Latent Heat',
+                'content' => "Thermal shifts during phase transitions:\n• Melting & Boiling are ENDOTHERMIC: Heat energy breaks particle bonds\n• Freezing & Condensation are EXOTHERMIC: Heat energy is released as bonds form\n• While changing state, temperature stays constant at the plateau point!",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Solid (-10°C) -> Add heat -> Melts at 0°C\nLiquid (0°C to 100°C) -> Add heat -> Boils at 100°C\nGas (>100°C) -> Freely expanding vapor"
+            ],
+            [
+                'title' => 'Biological Energy Changes: Cellular Respiration',
+                'content' => "Energy in living cells:\nGlucose (C6H12O6) + 6O2 -> 6CO2 + 6H2O + Energy (ATP)\n\n• Chemical transformation in mitochondria\n• Exothermic biological reaction providing body warmth and muscular movement",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Quick Quiz: Cold Rubbing Alcohol',
+                'content' => "When you apply rubbing alcohol to your skin, why does your arm immediately feel cold?\nA) Alcohol freezes on your skin\nB) Alcohol absorbs heat from your skin as it rapidly evaporates (an endothermic change for the liquid)\nC) Alcohol turns into ice\nD) Alcohol chemically reacts to produce cold acid\n\nCorrect Answer: B (Evaporative cooling absorbs your body heat!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '5', 'topic' => 'Changes in Matter', 'difficulty' => 'Easy', 'text' => 'What type of reaction releases heat into the surrounding environment, making it feel hot? | A: Exothermic reaction B: Endothermic reaction C: Nuclear fusion only D: Photosynthesis', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Changes in Matter', 'difficulty' => 'Easy', 'text' => 'Is the melting of an ice cube an endothermic or exothermic process for the ice? | A: Endothermic, because the ice absorbs heat from surroundings B: Exothermic, because it makes things cold C: Neither D: Both simultaneously', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Changes in Matter', 'difficulty' => 'Medium', 'text' => 'Why does your skin feel cold when rubbing alcohol evaporates quickly from your hand? | A: The evaporating alcohol absorbs thermal energy from your skin to break liquid bonds B: The alcohol enters your bloodstream instantly C: Alcohol freezes skin cells D: Alcohol creates a chemical chill', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Changes in Matter', 'difficulty' => 'Medium', 'text' => 'During cellular respiration, human cells combine glucose with oxygen. What form of energy is produced? | A: ATP metabolic energy and heat B: Nuclear radiation C: Light only D: Cold energy', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Changes in Matter', 'difficulty' => 'Hard', 'text' => 'Why does steam at 100°C produce significantly more dangerous burns than liquid boiling water at 100°C? | A: Steam releases substantial additional latent heat of condensation upon turning back to liquid on skin B: Steam is hotter than 100°C C: Steam contains acid D: Boiling water has no heat', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '5',
+        'quarter' => '1',
+        'lesson_number' => '4',
+        'topic' => 'Scientific Investigation of Matter',
+        'objectives' => [
+            'Formulate testable hypotheses, identify independent, dependent, and controlled variables.',
+            'Design and conduct a fair test investigation on the physical and chemical properties of matter.',
+            'Collect quantitative experimental data, construct data tables, and draw valid conclusions.'
+        ],
+        'content' => "Science advances through systematic inquiry. The scientific method provides a structured approach: Problem -> Hypothesis -> Controlled Experiment -> Data Collection -> Analysis -> Conclusion.\n\nA fair test requires controlling variables:\n- Independent Variable (IV): the single condition the scientist deliberately changes (e.g., water temperature).\n- Dependent Variable (DV): the observable outcome that is measured (e.g., time taken for sugar to dissolve).\n- Controlled Variables (CV): all other factors kept strictly identical (volume of water, amount of sugar, stirring speed).\n\nReplicating trials (running at least 3 trials) ensures results are reliable, objective, and reproducible.",
+        'slides' => [
+            [
+                'title' => 'Scientific Investigation of Matter',
+                'content' => "Grade 5 — Term 1 Science\n\nLearn the scientific method: formulating hypotheses, controlling variables, and analyzing fair tests.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Scientific Method Steps',
+                'content' => "Systematic Inquiry Cycle:\n1. Question / Problem: What are we investigating?\n2. Hypothesis: Testable \"If... then... because...\" prediction\n3. Controlled Experiment: Designing the fair test\n4. Data Gathering: Quantitative measurements (numbers) and qualitative notes (observations)\n5. Analysis & Conclusion: Does evidence support the hypothesis?",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Variables in a Fair Test',
+                'content' => "Understanding the three variable types:\n• Independent Variable (IV): The ONE factor you change (e.g., Water Temperature: 20°C, 50°C, 80°C)\n• Dependent Variable (DV): What you measure (e.g., Dissolving time in seconds)\n• Controlled Variables (CV): Kept EXACTLY equal (volume of water, mass of solute, stirring rate)",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Set up 3 identical beakers\nStep 2: Add 100mL water at 20°C, 50°C, 80°C\nStep 3: Add 10g sugar simultaneously\nStep 4: Time until complete dissolution"
+            ],
+            [
+                'title' => 'Data Tables, Replications, & Graphs',
+                'content' => "Why run 3 experimental trials?\n\n• Human error and slight timing variations happen.\n• Calculating the average of Trials 1, 2, and 3 produces trustworthy scientific data:\n  Average = (T1 + T2 + T3) / 3\n• Plotting temperature vs time reveals the inverse dissolving curve.",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Quick Quiz: Variable Identification',
+                'content' => "In an experiment testing which brand of paper towel absorbs the most water, what is the Independent Variable?\nA) The volume of water absorbed\nB) The brand of paper towel used\nC) The temperature of the room\nD) The size of the measuring cup\n\nCorrect Answer: B (The brand is the single factor deliberately tested and changed!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '5', 'topic' => 'Scientific Investigation of Matter', 'difficulty' => 'Easy', 'text' => 'In a scientific experiment, what is the variable that the investigator deliberately changes? | A: Independent Variable B: Dependent Variable C: Controlled Constant D: Random Variable', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Scientific Investigation of Matter', 'difficulty' => 'Easy', 'text' => 'Why must all variables except the independent variable be kept strictly identical in a fair test? | A: To ensure that any observed changes are solely caused by the independent variable B: To save laboratory equipment C: To make the test faster D: To avoid taking measurements', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Scientific Investigation of Matter', 'difficulty' => 'Medium', 'text' => 'A student tests whether salt dissolves faster in hot water than cold water. Identify the dependent variable. | A: The temperature of the water B: The time required for the salt to completely dissolve C: The brand of salt D: The size of the spoon', 'correct' => 'B'],
+            ['grade' => '5', 'topic' => 'Scientific Investigation of Matter', 'difficulty' => 'Medium', 'text' => 'Why do scientists perform multiple experimental trials (e.g. 3 trials) rather than relying on a single test? | A: To reduce experimental error and calculate a dependable scientific average B: Because equipment fails C: To use up chemicals D: To change hypotheses halfway', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Scientific Investigation of Matter', 'difficulty' => 'Hard', 'text' => 'A team hypothesizes that adding salt raises water\'s boiling point. Outline the variables and fair test protocol. | A: IV: Salt concentration; DV: Measured boiling temperature; CV: 100mL water volume, identical beaker, same burner intensity, 3 trials per concentration B: IV: Water volume; DV: Salt brand C: Change thermometer type every trial D: Boil water without measuring temperature', 'correct' => 'A']
+        ]
+    ],
+
+    // === GRADE 6 ===
+    [
+        'grade' => '6',
+        'quarter' => '1',
+        'lesson_number' => '1',
+        'topic' => 'Changes in Matter',
+        'objectives' => [
+            'Describe factors affecting the rate of changes in matter (temperature, surface area, concentration, catalysts).',
+            'Explain the Law of Conservation of Mass in both open and closed systems.',
+            'Analyze natural biochemical decay, fermentation, and rust formation processes.'
+        ],
+        'content' => "The rate at which matter undergoes physical and chemical transformations depends on specific kinetic factors:\n- Temperature: Higher temperatures increase particle collisions and reaction speed.\n- Surface Area: Crushing a solid into powder exposes more particles to reactants, speeding up the reaction.\n- Concentration: More reactant particles in a given volume increases the frequency of collisions.\n- Catalysts: Substances like enzymes that accelerate reactions without being consumed.\n\nThe Law of Conservation of Mass states that matter can neither be created nor destroyed in any physical or chemical change. The total mass of reactants always equals the total mass of products.\n\nIn open systems, gases (like carbon dioxide from vinegar and baking soda) escape into the air, making it seem like mass was lost. In a sealed closed container, the measured mass remains exactly identical before and after the reaction.",
+        'slides' => [
+            [
+                'title' => 'Changes in Matter: Reaction Kinetics',
+                'content' => "Grade 6 — Term 1 Science\n\nExplore factors controlling reaction rates and master the Law of Conservation of Mass.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Four Factors Affecting Reaction Rates',
+                'content' => "How to speed up or slow down changes in matter:\n1. Temperature: Heat increases molecular speed and collision frequency\n2. Surface Area: Powder reacts faster than solid blocks\n3. Concentration: More reactant molecules per volume = more collisions\n4. Catalysts: Biological enzymes or chemical agents that lower activation energy",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Law of Conservation of Mass',
+                'content' => "Fundamental Law of Chemistry:\nMass of Reactants = Mass of Products\n\n• Atoms are neither created nor destroyed during chemical reactions; they are merely rearranged.\n• In open systems: Gases escape into atmosphere, appearing to lose mass.\n• In closed systems: Sealed mass before reaction = sealed mass after reaction!",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Weigh flask with vinegar + balloon with baking soda\nStep 2: Tip balloon to start reaction\nStep 3: Gas inflates balloon inside closed system\nStep 4: Re-weigh: Mass remains exactly unchanged!"
+            ],
+            [
+                'title' => 'Everyday Biochemical Changes',
+                'content' => "Real-world reactions in action:\n• Fermentation: Yeast converts sugar into alcohol and CO2 gas (makes bread dough rise!)\n• Food Spoilage: Bacterial enzymes oxidize organic food molecules\n• Refrigeration: Lowers temperature to dramatically slow decay reaction rates",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Quick Quiz: Fireplace Mass Mystery',
+                'content' => "A 10kg wooden log burns down to 500g of ash in a fireplace. Has mass been destroyed?\nA) Yes, 9.5kg of matter was permanently destroyed\nB) No, 9.5kg of mass escaped as carbon dioxide gas, water vapor, and smoke into the atmosphere\nC) The fire absorbed the mass\nD) Ash is denser than wood\n\nCorrect Answer: B (Conservation of Mass applies; gas escaped into the open system!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '6', 'topic' => 'Changes in Matter', 'difficulty' => 'Easy', 'text' => 'According to the Law of Conservation of Mass, what happens to the total mass of matter during a chemical reaction? | A: It remains constant and conserved B: It decreases by 50% C: It increases exponentially D: It disappears completely', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Changes in Matter', 'difficulty' => 'Easy', 'text' => 'Which form of an effervescent antacid tablet dissolves and reacts fastest in water? | A: Crushed fine powder B: Whole solid tablet C: Half tablet D: Coarse chunk', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Changes in Matter', 'difficulty' => 'Medium', 'text' => 'Why does food spoil significantly faster on a hot tropical kitchen counter than inside a refrigerator? | A: High temperature increases the rate of enzymatic and microbial chemical decomposition reactions B: Refrigerator destroys bacteria instantly C: Light dissolves food molecules D: Heat adds extra mass to food', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Changes in Matter', 'difficulty' => 'Medium', 'text' => 'When vinegar reacts with baking soda in an open glass beaker, the scale reading drops. Why? | A: Carbon dioxide gas escaped into the open air B: Mass was destroyed C: The acid dissolved the scale D: Liquid turned into solid ice', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Changes in Matter', 'difficulty' => 'Hard', 'text' => 'How can you experimentally verify the Law of Conservation of Mass for a gas-producing reaction? | A: Perform the reaction inside a tightly sealed container (closed system) like a flask with a stretched balloon, weighing before and after B: Perform the reaction outside in wind C: Measure volume instead of mass D: Burn the substances openly', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '6',
+        'quarter' => '1',
+        'lesson_number' => '2',
+        'topic' => 'Physical and Chemical Changes',
+        'objectives' => [
+            'Compare physical and chemical changes at the atomic, molecular, and energetic levels.',
+            'Identify reactants, products, and energy transformations in chemical reactions.',
+            'Evaluate how understanding physical and chemical changes enables food preservation and material protection.'
+        ],
+        'content' => "At the microscopic scale, physical changes rearrange molecules without altering their intramolecular chemical bonds. Liquid water and ice are both composed of H2O molecules.\n\nChemical reactions break chemical bonds between reactant atoms and form new bonds to create products with completely novel chemical formulas and properties:\nReactants -> Products\n\nEnergy is involved in bond reorganization: breaking bonds requires energy input, while creating new bonds releases energy.\n\nHuman civilization applies these principles: canning and pickling alter acidity to prevent chemical decay; galvanizing iron coats it with zinc to sacrifice-protect it against oxidation; refining crude oil uses fractional distillation (physical separation) followed by catalytic cracking (chemical change).",
+        'slides' => [
+            [
+                'title' => 'Physical & Chemical Changes: Deep Dive',
+                'content' => "Grade 6 — Term 1 Science\n\nExamine atomic rearrangements, chemical equations, and industrial applications.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Atomic Realities: Bonds & Molecules',
+                'content' => "What happens to atoms?\n• Physical Change: Molecules stay intact; only spacing and orientation shift (e.g., Ice -> Water -> Steam is still H2O)\n• Chemical Change: Covalent or ionic bonds break; atoms recombine into new molecular structures with unique formulas:\nCH4 + 2O2 -> CO2 + 2H2O + Heat",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Reactants, Products, & Energy Shifts',
+                'content' => "Key Anatomy of a Reaction:\n• Reactants: Starting chemical compounds on the left\n• Products: Newly formed chemical compounds on the right\n• Activation Energy: Minimum energy required to trigger reaction\n• Bond breaking = Energy absorbed\n• Bond formation = Energy released",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Reactants collide with sufficient energy\nStep 2: Old chemical bonds break\nStep 3: Atoms rearrange\nStep 4: New bonds form into Products"
+            ],
+            [
+                'title' => 'Industrial & Everyday Technologies',
+                'content' => "Harnessing changes in materials:\n• Galvanization: Coating steel with zinc prevents oxidation\n• Pickling & Canning: Acidity denatures bacterial enzymes chemically\n• Water Desalination: Physical evaporation followed by condensation produces drinking water\n• Polymerization: Chemical bonding creates synthetic fibers and medical polymers",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Quick Quiz: Molecular Recognition',
+                'content' => "Which event involves breaking and forming chemical bonds to produce a completely new substance?\nA) Melting a block of copper metal into liquid copper\nB) Dissolving salt in warm water\nC) The combustion of gasoline in a car engine producing CO2 and H2O\nD) Shredding paper into fine confetti\n\nCorrect Answer: C (Combustion is a profound chemical reaction!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '6', 'topic' => 'Physical and Chemical Changes', 'difficulty' => 'Easy', 'text' => 'In a chemical reaction equation, what are the starting substances on the left side called? | A: Reactants B: Products C: Catalysts D: Solutes', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Physical and Chemical Changes', 'difficulty' => 'Easy', 'text' => 'Which of the following processes represents an irreversible chemical change? | A: Dissolving sugar in iced tea B: Melting an ice cube C: Rusting of an iron ship hull D: Cutting a piece of fabric', 'correct' => 'C'],
+            ['grade' => '6', 'topic' => 'Physical and Chemical Changes', 'difficulty' => 'Medium', 'text' => 'How does the process of pickling vegetables in vinegar (acetic acid) chemically prevent bacterial decay? | A: Low pH creates an acidic environment that chemically deactivates bacterial enzymes B: Vinegar freezes the vegetables C: Vinegar removes all water D: Vinegar turns vegetables into plastic', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Physical and Chemical Changes', 'difficulty' => 'Medium', 'text' => 'Why is galvanizing (coating iron with a layer of zinc) effective at preventing rust? | A: Zinc reacts preferentially with oxygen and shields the underlying iron from water and air B: Zinc dissolves iron C: Zinc attracts water D: Zinc turns iron into gold', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Physical and Chemical Changes', 'difficulty' => 'Hard', 'text' => 'Contrast fractional distillation of crude oil with catalytic cracking in petroleum refining. | A: Distillation is a physical separation based on boiling points; cracking is a chemical change breaking long hydrocarbon chains into smaller fuels B: Both are physical C: Both are chemical D: Distillation creates new molecules', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '6',
+        'quarter' => '1',
+        'lesson_number' => '3',
+        'topic' => 'Mixtures and Solutions',
+        'objectives' => [
+            'Differentiate homogeneous mixtures (solutions) from heterogeneous mixtures (suspensions and colloids).',
+            'Identify the components of a solution: solute and solvent.',
+            'Explain factors affecting solubility and demonstrate the Tyndall Effect.'
+        ],
+        'content' => "A mixture consists of two or more substances physically combined in any proportion where each substance retains its individual chemical identity.\n\nHeterogeneous mixtures have non-uniform composition and visible distinct phases (e.g., fruit salad, oil and water, muddy water).\n\nHomogeneous mixtures (solutions) have a completely uniform appearance throughout. The substance that dissolves is the solute; the dissolving medium is the solvent (water is called the 'universal solvent').\n\nColloids have intermediate particle sizes that do not settle out and scatter beams of light (Tyndall Effect), such as milk, mayonnaise, and fog. Suspensions have large particles that eventually settle to the bottom if left undisturbed, such as calamine lotion or river sediment.\n\nSolubility factors: Solutes dissolve faster with heating (for solids), stirring (agitation), and crushing (reducing particle size).",
+        'slides' => [
+            [
+                'title' => 'Mixtures and Solutions',
+                'content' => "Grade 6 — Term 1 Science\n\nClassify matter: homogeneous solutions, heterogeneous mixtures, colloids, and suspensions.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Heterogeneous vs Homogeneous',
+                'content' => "The Big Division:\n• Heterogeneous: Non-uniform; visible separate phases\n  - Examples: Halo-halo, oil and vinegar, granite, salad\n• Homogeneous (Solutions): Uniform throughout; single visible phase\n  - Solute: Substance dissolved (lesser amount, e.g., salt, sugar)\n  - Solvent: Dissolving medium (greater amount, e.g., water, alcohol)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Spectrum: Solution, Colloid, Suspension',
+                'content' => "Particle Size Comparison:\n• Solution (<1 nm): Salt water, air, brass (never settles, clear)\n• Colloid (1–1000 nm): Milk, gelatin, fog, mayonnaise (does not settle, cloudy)\n• Suspension (>1000 nm): Muddy water, calamine, cough syrup (settles upon standing, must shake before use)",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Shine flashlight through water (invisible beam)\nStep 2: Shine flashlight through salt solution (invisible beam)\nStep 3: Shine flashlight through diluted milk (bright beam!)\nStep 4: Confirm Tyndall Effect in colloid"
+            ],
+            [
+                'title' => 'Factors Affecting Rate of Dissolving',
+                'content' => "How to speed up solid solute dissolution:\n1. Temperature: Increases molecular kinetic collisions\n2. Agitation (Stirring): Brings fresh solvent molecules into contact with solute\n3. Surface Area (Crushing): Exposes more solute particles to solvent",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Quick Quiz: The Tyndall Effect',
+                'content' => "A teacher shines a laser pointer through two beakers. In Beaker A, the beam is invisible. In Beaker B, the beam glows brightly through the liquid. What are Beakers A and B?\nA) Beaker A is a colloid; Beaker B is a true solution\nB) Beaker A is a true solution; Beaker B is a colloid showing the Tyndall Effect\nC) Both are suspensions\nD) Both are pure water\n\nCorrect Answer: B (Colloidal particles scatter light beams!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '6', 'topic' => 'Mixtures and Solutions', 'difficulty' => 'Easy', 'text' => 'In a sugar-water solution, what do we call the sugar and what do we call the water? | A: Sugar is the solute; Water is the solvent B: Sugar is solvent; Water is solute C: Both are solutes D: Both are suspensions', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Mixtures and Solutions', 'difficulty' => 'Easy', 'text' => 'Which of the following is considered a homogeneous mixture? | A: Freshly brewed clear tea B: Fruit salad C: Oil and water mixture D: Sand in water', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Mixtures and Solutions', 'difficulty' => 'Medium', 'text' => 'What is the Tyndall Effect, and how does it differentiate a true solution from a colloid? | A: The scattering of light beams by colloidal particles, which does not happen in true solutions B: The settling of heavy solids C: The evaporation of liquids D: The change in temperature', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Mixtures and Solutions', 'difficulty' => 'Medium', 'text' => 'Why does a powdered sugar crystal dissolve much faster in hot tea than an equal mass rock candy crystal in iced tea? | A: Higher temperature increases kinetic collisions and powdered sugar has far greater surface area B: Hot tea has less volume C: Rock candy is insoluble in water D: Cold tea repels sugar molecules', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Mixtures and Solutions', 'difficulty' => 'Hard', 'text' => 'Classify human blood: why is it considered both a solution, a colloid, and a suspension? | A: Blood plasma is a solution of dissolved salts/glucose, contains colloidal albumin proteins, and suspends red/white blood cells that settle if centrifuged B: Blood is purely a solid C: Blood has no water D: Blood cannot be separated', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '6',
+        'quarter' => '1',
+        'lesson_number' => '4',
+        'topic' => 'Separation of Mixtures',
+        'objectives' => [
+            'Explain principles behind physical separation methods: filtration, decantation, evaporation, magnetic separation, sieving, and distillation.',
+            'Select and execute appropriate separation techniques based on the physical properties of mixture components.',
+            'Apply separation processes to municipal water purification and scrap metal recycling.'
+        ],
+        'content' => "Because substances in a mixture are only physically combined, they can be separated back into pure components using differences in their physical properties (particle size, density, boiling point, magnetic attraction).\n\nTechniques:\n- Decantation: Pouring off a less dense liquid layer from a settled denser sediment or immiscible liquid (e.g., oil from water).\n- Filtration: Passing a mixture through a porous barrier (filter paper) to trap insoluble solid residue while liquid filtrate passes through.\n- Evaporation: Heating a solution until the liquid solvent vaporizes into air, leaving solid solute crystals behind (e.g., harvesting sea salt).\n- Magnetic Separation: Using magnets to extract magnetic materials (iron, nickel, cobalt) from non-magnetic mixtures (e.g., scrap metal sorting).\n- Sieving & Winnowing: Separating particles by size using a mesh screen, or by density using wind currents (e.g., separating rice grain from chaff).\n- Distillation: Vaporizing a liquid and condensing its vapor back into pure liquid in a separate container, separating liquids with different boiling points or purifying freshwater from saltwater.\n\nReal-world applications: Water treatment plants use screening, sedimentation, filtration, and chlorination to provide safe drinking water to cities.",
+        'slides' => [
+            [
+                'title' => 'Separation of Mixtures',
+                'content' => "Grade 6 — Term 1 Science\n\nTechniques for purifying matter: filtration, evaporation, decantation, distillation, and magnetic separation.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Common Separation Techniques',
+                'content' => "Exploiting physical differences:\n• Decantation: Pouring off top liquid from settled sediment (density difference)\n• Filtration: Using filter paper to trap solid residue from liquid filtrate (particle size)\n• Evaporation: Heating solution to leave dry solute behind (boiling point difference)\n• Magnetic Separation: Pulling out iron/steel with magnets (magnetic attraction)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Distillation: Collecting the Solvent',
+                'content' => "How simple distillation works:\n1. Boiling flask heats saltwater solution\n2. Water vapor rises, leaving salt behind\n3. Steam passes through water-cooled condenser\n4. Pure condensed liquid water drips into receiving flask\n• Used to desalinate ocean water and produce distilled water!",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Heat saltwater to boiling (100°C)\nStep 2: Steam travels into Liebig condenser\nStep 3: Cold water cools steam back to liquid\nStep 4: Collect pure distilled freshwater"
+            ],
+            [
+                'title' => 'Municipal Water Treatment Plants',
+                'content' => "How river water becomes safe tap water:\n• Coagulation & Flocculation: Alum binds dirt particles together\n• Sedimentation: Heavy flocs settle to tank floor\n• Sand/Charcoal Filtration: Traps microscopic suspended particles\n• Chlorination: Kills harmful bacteria and pathogens",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Classroom Separation Challenge',
+                'content' => "How would you separate a mixture of sand, salt, and iron filings?\nA) Heat it until everything burns\nB) 1: Magnet extracts iron; 2: Add water to dissolve salt; 3: Filter out sand; 4: Evaporate water to recover salt\nC) Throw it away\nD) Freeze it into ice\n\nCorrect Answer: B (A logical 4-step physical separation protocol!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '6', 'topic' => 'Separation of Mixtures', 'difficulty' => 'Easy', 'text' => 'Which separation method is used to harvest solid sea salt from ocean seawater? | A: Evaporation B: Magnetic separation C: Decantation D: Freezing', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Separation of Mixtures', 'difficulty' => 'Easy', 'text' => 'How can scrap metal recycling facilities quickly separate iron cans from aluminum cans? | A: By using large industrial electromagnets B: By melting all cans C: By hand picking D: By floating them in water', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Separation of Mixtures', 'difficulty' => 'Medium', 'text' => 'What is the main difference between evaporation and simple distillation of saltwater? | A: Evaporation loses water vapor to the air; distillation condenses and collects the pure water B: Distillation produces toxic gas C: Evaporation requires zero heat D: Distillation only works on solids', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Separation of Mixtures', 'difficulty' => 'Medium', 'text' => 'Explain why pouring muddy water through filter paper leaves clean filtrate while the mud stays on top. | A: Mud particles are larger than the microscopic pores in filter paper, while water molecules pass through B: Paper dissolves mud C: Paper is magnetic D: Mud turns into air', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Separation of Mixtures', 'difficulty' => 'Hard', 'text' => 'Formulate a 4-step protocol to completely separate a dry mixture of iron filings, table salt, sawdust, and small pebbles without destroying any component. | A: 1: Magnet removes iron; 2: Sieve removes pebbles; 3: Add water so sawdust floats (skim off); 4: Filter sand and evaporate saltwater to get pure salt B: Burn the mixture C: Dissolve everything in acid D: Throw into ocean', 'correct' => 'A']
+        ]
+    ]
+];
+
+echo "<h2>🧪 Seeding Matter and Materials Curriculum across Grades 3 to 6...</h2>\n";
+
+try {
+    // 1. Ensure topics table exists
+    $pdo->exec("CREATE TABLE IF NOT EXISTS topics (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        grade VARCHAR(10) NOT NULL,
+        topic_name VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+} catch (Exception $e) {
+    // SQLite syntax fallback
+    $pdo->exec("CREATE TABLE IF NOT EXISTS topics (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        grade TEXT NOT NULL,
+        topic_name TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )");
+}
+
+$lessonsInserted = 0;
+$slidesInserted = 0;
+$questionsInserted = 0;
+$topicsRegistered = 0;
+
+foreach ($matterUnits as $unit) {
+    $grade = $unit['grade'];
+    $quarter = $unit['quarter'];
+    $lessonNum = $unit['lesson_number'];
+    $topic = $unit['topic'];
+    $content = $unit['content'];
+    $objectives = json_encode($unit['objectives'], JSON_UNESCAPED_UNICODE);
+    $questionsJson = json_encode($unit['questions'], JSON_UNESCAPED_UNICODE);
+
+    // 1. Check if curriculum lesson exists, update or insert
+    $stmtCheck = $pdo->prepare("SELECT id FROM curriculum_lessons WHERE grade = ? AND quarter = ? AND topic = ?");
+    $stmtCheck->execute([$grade, $quarter, $topic]);
+    $existingId = $stmtCheck->fetchColumn();
+
+    if ($existingId) {
+        $lessonId = $existingId;
+        $stmtUpd = $pdo->prepare("UPDATE curriculum_lessons SET content = ?, objectives = ?, questions = ?, lesson_number = ? WHERE id = ?");
+        $stmtUpd->execute([$content, $objectives, $questionsJson, $lessonNum, $lessonId]);
+    } else {
+        $stmtIns = $pdo->prepare("INSERT INTO curriculum_lessons (grade, quarter, lesson_number, topic, content, objectives, questions) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmtIns->execute([$grade, $quarter, $lessonNum, $topic, $content, $objectives, $questionsJson]);
+        $lessonId = $pdo->lastInsertId();
+        $lessonsInserted++;
+    }
+
+    // 2. Register Topic in topics table if not exists
+    $stmtTCheck = $pdo->prepare("SELECT COUNT(*) FROM topics WHERE grade = ? AND topic_name = ?");
+    $stmtTCheck->execute([$grade, $topic]);
+    if ($stmtTCheck->fetchColumn() == 0) {
+        $stmtTIns = $pdo->prepare("INSERT INTO topics (grade, topic_name) VALUES (?, ?)");
+        $stmtTIns->execute([$grade, $topic]);
+        $topicsRegistered++;
+    }
+
+    // 3. Clear and Insert lesson slides
+    $pdo->prepare("DELETE FROM lesson_slides WHERE curriculum_lesson_id = ?")->execute([$lessonId]);
+    $stmtSlide = $pdo->prepare("INSERT INTO lesson_slides (curriculum_lesson_id, slide_number, title, content, slide_type, media_type, media_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    foreach ($unit['slides'] as $sIdx => $s) {
+        $stmtSlide->execute([
+            $lessonId,
+            $sIdx + 1,
+            $s['title'],
+            $s['content'],
+            $s['slide_type'],
+            $s['media_type'] ?? null,
+            $s['media_url'] ?? null
+        ]);
+        $slidesInserted++;
+    }
+
+    // 4. Seed Questions into questions table (without duplicating)
+    $stmtQCheck = $pdo->prepare("SELECT COUNT(*) FROM questions WHERE grade = ? AND topic = ? AND question_text = ?");
+    $stmtQIns = $pdo->prepare("INSERT INTO questions (grade, topic, difficulty, question_text) VALUES (?, ?, ?, ?)");
+    foreach ($unit['questions'] as $q) {
+        $stmtQCheck->execute([$q['grade'], $q['topic'], $q['text']]);
+        if ($stmtQCheck->fetchColumn() == 0) {
+            $stmtQIns->execute([$q['grade'], $q['topic'], $q['difficulty'], $q['text']]);
+            $questionsInserted++;
+        }
+    }
+}
+
+echo "<p>✅ <strong>Matter & Materials Curriculum Seeding Complete!</strong></p>\n";
+echo "<ul>\n";
+echo "<li>Curriculum Lessons Processed: " . count($matterUnits) . " (16 units across Grades 3 to 6)</li>\n";
+echo "<li>Interactive Lesson Slides Populated: $slidesInserted (5 slides per unit)</li>\n";
+echo "<li>Question Bank Recitations Seeded: $questionsInserted</li>\n";
+echo "<li>Topic Registry Entries Added: $topicsRegistered</li>\n";
+echo "</ul>\n";
+
+if (php_sapi_name() === 'cli') {
+    echo "Summary:\n";
+    echo "- 16 Matter & Materials Lessons active across Grades 3-6\n";
+    echo "- $slidesInserted Lesson Slides seeded\n";
+    echo "- $questionsInserted Questions added to bank\n";
+    echo "- Database: " . (defined('DB_ENGINE') ? DB_ENGINE : 'Connected') . "\n";
+}
+?>

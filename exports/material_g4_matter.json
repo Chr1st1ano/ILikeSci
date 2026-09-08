@@ -1,0 +1,378 @@
+{
+    "title": "DepEd Science MATATAG Curriculum — Grade 4 Matter and Materials",
+    "grade": "4",
+    "customLessons": [
+        {
+            "title": "Physical Properties of Materials",
+            "grade": "4",
+            "quarter": "1",
+            "lesson_number": "1",
+            "objectives": [
+                "Classify materials based on whether they absorb water, float or sink, and conduct heat or electricity.",
+                "Relate density to the floating and sinking behavior of materials in liquids.",
+                "Identify conductors and insulators of heat and electricity in household items."
+            ],
+            "content": "Materials possess distinct physical properties that can be observed and measured without altering their chemical makeup.\n\nDensity determines whether an object floats or sinks: objects with lower density than water float (wood, cork, oil), while objects denser than water sink (iron nails, stones). Porous materials like sponges and cotton towels absorb water into internal pores, whereas non-porous materials like plastics and metals shed water.\n\nThermal and electrical conductivity are vital properties: metals like copper and aluminum are good conductors that transfer heat and electricity quickly. Insulators like rubber, wood, and plastic resist the flow of heat and electric current, keeping us safe.",
+            "slides": [
+                {
+                    "title": "Physical Properties of Materials",
+                    "content": "Grade 4 — Term 1 Science\n\nExplore density, floating vs sinking, absorbency, and thermal and electrical conductivity.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Floating vs Sinking: Density Explained",
+                    "content": "Why does a giant steel ship float while a small iron nail sinks?\n\n• Density is mass divided by volume (d = m\/V).\n• Water has a density of 1.0 g\/cm³.\n• Objects denser than water sink (iron: 7.8 g\/cm³).\n• Ships have hollow hulls filled with air, making their average density lower than water!",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Absorbency and Porosity",
+                    "content": "Porous vs Non-porous materials:\n• Absorbent: Cotton, paper towels, sponge (have tiny pores that draw water in by capillary action)\n• Non-absorbent: Glass, plastic wrap, aluminum foil (smooth, sealed surfaces that repel water)\n• Application: Diapers and bandages use absorbent fibers, while raincoats use non-porous vinyl.",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Submerge sponge in water\nStep 2: Measure absorbed water mass\nStep 3: Submerge plastic sheet\nStep 4: Compare water retention"
+                },
+                {
+                    "title": "Conductors vs Insulators",
+                    "content": "Managing Heat and Electricity:\n• Electrical Conductors: Copper, silver, aluminum, brass (electrons move freely)\n• Electrical Insulators: Rubber, plastic, dry wood, glass (block electric flow)\n• Thermal Conductors: Aluminum pots heat food fast\n• Thermal Insulators: Styrofoam and silicone prevent heat transfer",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Classroom Investigation Check",
+                    "content": "Why are power cords wrapped in rubber or plastic coating?\nA) To make the cord look colorful\nB) Because rubber is an electrical insulator that protects users from electric shocks\nC) To make electricity travel faster\nD) Because plastic generates electrical current\n\nCorrect Answer: B (Insulation ensures safety!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Chemical Properties of Materials",
+            "grade": "4",
+            "quarter": "1",
+            "lesson_number": "2",
+            "objectives": [
+                "Describe chemical properties of materials such as flammability, reactivity with oxygen (rusting), and biodegradability.",
+                "Differentiate biodegradable materials from non-biodegradable materials based on decomposition.",
+                "Identify chemical warning symbols and safety precautions when handling reactive or hazardous substances."
+            ],
+            "content": "Chemical properties describe a material's potential to undergo chemical reactions and transform into new substances.\n\nFlammability is the ability of a material to burn in the presence of oxygen, such as dry wood, paper, and kerosene. Rusting (corrosion) occurs when iron reacts with moisture and oxygen over time to produce iron oxide (rust).\n\nBiodegradability refers to whether natural microorganisms can decompose materials into harmless organic matter. Banana peels and leaves biodegrade within weeks, while synthetic plastics and Styrofoam persist in landfills and oceans for centuries.\n\nChemical hazard pictograms warn against flammable, corrosive, toxic, and explosive hazards on chemical containers.",
+            "slides": [
+                {
+                    "title": "Chemical Properties of Materials",
+                    "content": "Grade 4 — Term 1 Science\n\nInvestigate flammability, rusting, biodegradability, and safe handling of reactive materials.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Flammability & Reactivity with Oxygen",
+                    "content": "Key Chemical Behaviors:\n• Flammability: How easily a substance ignites and burns (e.g., alcohol, dry wood, paper, gasoline)\n• Corrosion & Rusting: Iron combines with oxygen and moisture to form reddish-brown iron oxide\n• Oxidation weakens metal structures over time!",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Biodegradable vs Non-Biodegradable",
+                    "content": "Decomposition by natural microorganisms:\n• Biodegradable: Fruit peelings (2 weeks), paper (2 months), cotton (5 months) — breakdown into organic soil nutrients\n• Non-Biodegradable: Aluminum cans (200 years), plastic bottles (450 years), Styrofoam (never breaks down fully, turns into microplastics)",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Bury organic peel in soil\nStep 2: Bury plastic wrapper beside it\nStep 3: Check after 4 weeks\nStep 4: Record decomposition rates"
+                },
+                {
+                    "title": "Chemical Safety & Warning Labels",
+                    "content": "Reading hazard symbols:\n• Flame symbol: Highly flammable; keep away from heat sources\n• Skull and crossbones: Toxic\/poisonous if swallowed or inhaled\n• Corrosive symbol: Causes burns to skin and eyes; wear gloves\n• Exclamation mark: Harmful irritant",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Quick Quiz: Preventing Rust",
+                    "content": "Why are iron fences, gates, and bicycle frames painted?\nA) Only to make them look shiny\nB) Paint creates a barrier that blocks moisture and oxygen from touching the iron\nC) Paint makes the iron lighter\nD) Paint causes iron to turn into copper\n\nCorrect Answer: B (Airtight barrier prevents chemical rusting!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Effect of Temperature on Materials",
+            "grade": "4",
+            "quarter": "1",
+            "lesson_number": "3",
+            "objectives": [
+                "Explain how changes in temperature alter the physical state, volume, and shape of materials.",
+                "Describe phase changes including melting, freezing, evaporation, condensation, and sublimation.",
+                "Relate thermal expansion and contraction to real-life applications like thermometers and bridges."
+            ],
+            "content": "Temperature measures the average thermal kinetic energy of particles in a material. Adding heat speeds up particles and pushes them apart, causing thermal expansion. Removing heat slows particles down and brings them closer, causing thermal contraction.\n\nPhase changes occur at specific temperatures: heating solid ice turns it into liquid water (melting); boiling liquid water creates water vapor (evaporation); cooling water vapor turns it back to liquid (condensation); freezing liquid turns it into solid ice.\n\nSublimation is the direct change from solid to gas without becoming a liquid (e.g., mothballs or dry ice).\n\nEngineers leave expansion joints in concrete bridges and railway tracks so materials can expand on hot days without buckling or cracking.",
+            "slides": [
+                {
+                    "title": "Effect of Temperature on Materials",
+                    "content": "Grade 4 — Term 1 Science\n\nDiscover how heat transforms solids, liquids, and gases and causes materials to expand and contract.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Thermal Expansion & Contraction",
+                    "content": "What happens to atoms when heated?\n• Adding heat: Particles gain kinetic energy, vibrate faster, and spread apart (Expansion)\n• Removing heat: Particles lose energy, move closer together (Contraction)\n• Thermometers work on expansion: heating the bulb expands the liquid up the tube!",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The Five Key Phase Changes",
+                    "content": "Transitions between states:\n1. Melting: Solid -> Liquid (Ice to water at 0°C)\n2. Freezing: Liquid -> Solid (Water to ice at 0°C)\n3. Evaporation: Liquid -> Gas (Water boiling to steam at 100°C)\n4. Condensation: Gas -> Liquid (Steam cooling into water droplets)\n5. Sublimation: Solid -> Gas directly (Dry ice, naphthalene balls)",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Solid (particles vibrate in place)\nStep 2: Add heat -> Melting\nStep 3: Liquid (particles flow)\nStep 4: Add heat -> Evaporation (gas freely expands)"
+                },
+                {
+                    "title": "Engineering for Heat: Expansion Joints",
+                    "content": "Why are there small gaps in bridges, railway tracks, and highway roads?\n\n• On hot sunny days, steel and concrete expand.\n• Without expansion joints, railway tracks would bend and buckle dangerously!\n• The gaps give materials room to expand safely.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Classroom Thinking Challenge",
+                    "content": "Why do water droplets form on the outside of a cold glass of iced water on a warm day?\nA) The water leaked through the solid glass\nB) Invisible water vapor in the warm air cooled down upon touching the cold glass and condensed\nC) The glass melted slightly\nD) The cold generated water from glass molecules\n\nCorrect Answer: B (Condensation of water vapor from the surrounding air!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Physical and Chemical Changes",
+            "grade": "4",
+            "quarter": "1",
+            "lesson_number": "4",
+            "objectives": [
+                "Distinguish between physical changes (reversible, no new substance) and chemical changes (irreversible, new substance formed).",
+                "Identify evidence of chemical change: release of gas, color change, temperature change, light emission, or formation of a precipitate.",
+                "Classify common household and kitchen processes as physical or chemical changes."
+            ],
+            "content": "A physical change alters only the physical appearance, size, shape, or state of matter, while the chemical identity stays identical. Examples: chopping wood, shredding paper, melting ice, dissolving sugar in water.\n\nA chemical change occurs when bonds break and atoms rearrange to form entirely new chemical substances with different properties. Examples: burning firewood to ash, baking a cake, souring milk, rusting iron.\n\nKey indicators of a chemical change include: bubbling\/gas production, unexpected color change, temperature change (becoming hot or cold without external heating), light emission, or odor change.",
+            "slides": [
+                {
+                    "title": "Physical and Chemical Changes",
+                    "content": "Grade 4 — Term 1 Science\n\nLearn to spot the crucial difference between changes in appearance and the birth of new substances.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Physical Change: Same Identity",
+                    "content": "Characteristics of Physical Change:\n• Alters only size, shape, or state\n• No new substance is created\n• Often easily reversible\n• Examples: Cutting paper, melting butter, dissolving salt in water, crushing an aluminum can",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Chemical Change: New Substances Formed",
+                    "content": "Characteristics of Chemical Change:\n• Chemical bonds break and new bonds form\n• New substance has completely different properties\n• Difficult or impossible to reverse\n• Examples: Burning wood (produces ash and smoke), rusting nails, baking a cake, milk souring",
+                    "mediaType": "step",
+                    "mediaUrl": "Sign 1: Gas bubbles formed (effervescence)\nSign 2: Unexpected color shift\nSign 3: Heat\/Light produced\nSign 4: Odor released\nSign 5: Solid precipitate formed"
+                },
+                {
+                    "title": "Kitchen Science Comparison",
+                    "content": "Spot the difference in the kitchen:\n• Dissolving sugar in hot water -> Physical Change (sugar can be recovered by boiling water away)\n• Caramelizing sugar into brown syrup -> Chemical Change (heat breaks sugar molecules into caramel)\n• Freezing fruit juice -> Physical Change\n• Cooking an egg -> Chemical Change (proteins denature permanently)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Check for Understanding",
+                    "content": "When vinegar is mixed with baking soda, rapid fizzing bubbles appear and the beaker cools down. What happened?\nA) A physical change where vinegar boiled\nB) A chemical change because carbon dioxide gas was created by a reaction\nC) The baking soda simply melted\nD) No change took place\n\nCorrect Answer: B (Gas bubbles and temperature drop prove a chemical reaction!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Responsible Use and Management of Materials",
+            "grade": "4",
+            "quarter": "1",
+            "lesson_number": "5",
+            "objectives": [
+                "Practice safe handling, storage, and disposal of toxic, flammable, and corrosive household chemicals.",
+                "Apply 4-way waste segregation (biodegradable, non-biodegradable, recyclable, hazardous) in school and home.",
+                "Advocate for sustainable consumption, zero-waste initiatives, and environmental stewardship."
+            ],
+            "content": "Modern life utilizes diverse chemical products (bleach, pesticides, detergents, batteries, paints). Using them safely protects human health and the natural environment.\n\nSafety rules: Keep chemicals in their original labeled containers, store out of reach of young children, wear gloves and face masks when handling irritants, and never mix household cleaners like bleach and ammonia.\n\nWaste segregation: Separate wet organic waste (food scraps for composting) from dry recyclables (paper, plastic, glass bottles) and hazardous household waste (spent batteries, expired medicines, fluorescent bulbs).\n\nPracticing environmental stewardship keeps Philippine communities clean, prevents flooding caused by plastic-clogged drainage canals, and protects marine biodiversity.",
+            "slides": [
+                {
+                    "title": "Responsible Use & Management of Materials",
+                    "content": "Grade 4 — Term 1 Science\n\nSafety protocols for household chemicals, 4-way waste segregation, and community sustainability.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Hazardous Household Chemicals",
+                    "content": "Common chemicals requiring care:\n• Bleach & Disinfectants: Strong oxidizers; irritate skin and lungs\n• Pesticides & Insect Sprays: Toxic chemicals; avoid inhalation\n• Paints, Thinner, & Gasoline: Highly flammable volatile compounds\n• Spent Batteries & Fluorescent Bulbs: Contain heavy metals (mercury, lead, cadmium)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Core Safety Rules for Chemical Use",
+                    "content": "Always follow these safety steps:\n1. Keep in original containers with clear labels\n2. Never mix bleach with ammonia or acids (releases lethal chloramine gas!)\n3. Store in locked cabinets away from food and children\n4. Wear protective rubber gloves and open windows for ventilation",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Read label warnings\nStep 2: Wear protective mask & gloves\nStep 3: Use exact recommended amount\nStep 4: Dispose of container properly"
+                },
+                {
+                    "title": "4-Way Waste Segregation at School",
+                    "content": "Sorting waste properly:\n• Green Bin (Biodegradable): Food scraps, fruit peelings, dried leaves -> Composting\n• Blue Bin (Recyclables): Paper, cardboard, PET bottles, tin cans -> Recycling plants\n• Black Bin (Residual Waste): Styrofoam, soiled wrappers -> Sanitary landfills\n• Red\/Yellow Bin (Special Hazardous): Batteries, aerosol cans, expired medicines",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Quick Quiz: Safety in the Home",
+                    "content": "Why should household cleaning chemicals never be transferred into empty soft drink bottles?\nA) It makes the chemicals lose their cleaning power\nB) Someone might mistake the chemical for a beverage and drink it, causing severe poisoning\nC) Soft drink bottles make chemicals freeze\nD) Plastic makes bleach evaporate immediately\n\nCorrect Answer: B (Accidental ingestion prevention is critical!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        }
+    ],
+    "questions": [
+        {
+            "grade": "4",
+            "topic": "Physical Properties of Materials",
+            "difficulty": "Easy",
+            "text": "What happens to an iron nail dropped into a basin of water? | A: It floats on top B: It dissolves instantly C: It sinks to the bottom because it is denser than water D: It turns into water vapor"
+        },
+        {
+            "grade": "4",
+            "topic": "Physical Properties of Materials",
+            "difficulty": "Easy",
+            "text": "Which of the following materials is a good conductor of electricity? | A: Copper wire B: Rubber band C: Dry wooden stick D: Plastic straw"
+        },
+        {
+            "grade": "4",
+            "topic": "Physical Properties of Materials",
+            "difficulty": "Medium",
+            "text": "Why do electricians wear thick rubber boots and handle tools with rubber-coated grips? | A: Rubber is an insulator that prevents electric current from traveling through the body B: Rubber conducts heat quickly C: Rubber makes tools heavier D: Rubber attracts static electricity"
+        },
+        {
+            "grade": "4",
+            "topic": "Physical Properties of Materials",
+            "difficulty": "Medium",
+            "text": "Why does an unpeeled orange float in water, while a peeled orange sinks? | A: The peel contains tiny trapped air pockets that reduce overall density B: The peeled orange absorbs too much water C: The peel is made of heavy metal D: Peeling adds extra mass to the orange"
+        },
+        {
+            "grade": "4",
+            "topic": "Physical Properties of Materials",
+            "difficulty": "Hard",
+            "text": "To design a thermal container that keeps cold milk cold for 6 hours, which layer arrangement is most effective? | A: Single layer of iron B: Inner food-grade lining surrounded by thick insulating foam and plastic C: Transparent thin glass only D: Wet paper towels wrapped in foil"
+        },
+        {
+            "grade": "4",
+            "topic": "Chemical Properties of Materials",
+            "difficulty": "Easy",
+            "text": "What two natural substances cause an exposed iron nail to rust? | A: Oxygen and moisture (water) B: Nitrogen and sunlight C: Carbon dioxide and dry heat D: Pure sand and oil"
+        },
+        {
+            "grade": "4",
+            "topic": "Chemical Properties of Materials",
+            "difficulty": "Easy",
+            "text": "Which of the following is a biodegradable material? | A: Banana peel B: Plastic soda bottle C: Styrofoam cup D: Glass marble"
+        },
+        {
+            "grade": "4",
+            "topic": "Chemical Properties of Materials",
+            "difficulty": "Medium",
+            "text": "Why must kerosene, alcohol, and spray paint be stored in a cool place away from open flames? | A: They have high flammability and ignite easily B: They freeze at room temperature C: They attract termites D: They dissolve plastic containers"
+        },
+        {
+            "grade": "4",
+            "topic": "Chemical Properties of Materials",
+            "difficulty": "Medium",
+            "text": "How does painting an iron window grill prevent it from rusting over years of monsoon rains? | A: Paint blocks oxygen and rainwater from reaching the iron metal B: Paint makes iron absorb water faster C: Paint cools the iron D: Paint turns iron into aluminum"
+        },
+        {
+            "grade": "4",
+            "topic": "Chemical Properties of Materials",
+            "difficulty": "Hard",
+            "text": "Why does non-biodegradable plastic packaging cause greater ecological harm in ocean ecosystems than fallen organic leaves? | A: Plastics persist for hundreds of years, fragment into toxic microplastics, and are ingested by marine life B: Plastics dissolve into water quickly C: Plastics sink and form new islands D: Organic leaves emit dangerous nuclear radiation"
+        },
+        {
+            "grade": "4",
+            "topic": "Effect of Temperature on Materials",
+            "difficulty": "Easy",
+            "text": "What phase change occurs when liquid water is cooled below 0°C in a refrigerator? | A: Melting B: Freezing (solidification) C: Boiling D: Sublimation"
+        },
+        {
+            "grade": "4",
+            "topic": "Effect of Temperature on Materials",
+            "difficulty": "Easy",
+            "text": "What happens to the volume of most materials when they are heated? | A: They expand and take up more space B: They shrink into nothing C: They lose all mass D: They turn into stone"
+        },
+        {
+            "grade": "4",
+            "topic": "Effect of Temperature on Materials",
+            "difficulty": "Medium",
+            "text": "Why do civil engineers leave expansion joints between concrete sections on bridges and highways? | A: To reduce construction costs B: To allow concrete to expand on hot sunny days without buckling or cracking C: To let rainwater drain underneath D: To make cars drive slower"
+        },
+        {
+            "grade": "4",
+            "topic": "Effect of Temperature on Materials",
+            "difficulty": "Medium",
+            "text": "If a metal lid on a glass jam jar is stuck tightly, why does running warm water over the metal lid help loosen it? | A: The metal expands faster and more noticeably than glass when heated B: Glass expands faster than metal C: Hot water dissolves the metal D: Hot water glues the lid tight"
+        },
+        {
+            "grade": "4",
+            "topic": "Effect of Temperature on Materials",
+            "difficulty": "Hard",
+            "text": "Explain the direct transition known as sublimation and identify two everyday substances that undergo it. | A: Direct change from solid to gas without melting into liquid; seen in dry ice (solid CO2) and mothballs (naphthalene) B: Change from liquid to gas only C: Rapid freezing of hot water D: Melting of metal at ultra-high temperatures"
+        },
+        {
+            "grade": "4",
+            "topic": "Physical and Chemical Changes",
+            "difficulty": "Easy",
+            "text": "Which of the following is an example of a physical change? | A: Tearing a piece of paper into small pieces B: Burning paper to gray ash C: Rusting of an iron nail D: Souring of fresh milk"
+        },
+        {
+            "grade": "4",
+            "topic": "Physical and Chemical Changes",
+            "difficulty": "Easy",
+            "text": "Which observation is a definitive sign of a chemical change? | A: Change in size only B: Formation of a new substance with gas release or color change C: Change in shape by bending D: Freezing into a solid"
+        },
+        {
+            "grade": "4",
+            "topic": "Physical and Chemical Changes",
+            "difficulty": "Medium",
+            "text": "How can you prove that dissolving salt in water is a physical change rather than a chemical change? | A: By evaporating all the water away to leave the identical salt crystals behind B: By tasting the liquid C: By freezing the water D: By adding vinegar to it"
+        },
+        {
+            "grade": "4",
+            "topic": "Physical and Chemical Changes",
+            "difficulty": "Medium",
+            "text": "Why is baking a cake in an oven classified as a chemical change? | A: The ingredients change color, trap gas, and chemically transform into a new structure that cannot be separated back into raw eggs and flour B: It can be frozen back into batter C: It only changes shape D: No heat is involved"
+        },
+        {
+            "grade": "4",
+            "topic": "Physical and Chemical Changes",
+            "difficulty": "Hard",
+            "text": "Contrast carving a wooden log into a chair versus burning that same wooden log in a campfire. | A: Carving changes macroscopic shape (physical); burning breaks chemical cellulose bonds producing ash, CO2, and heat permanently (chemical) B: Carving is chemical, burning is physical C: Both are reversible changes D: Both produce carbon ash"
+        },
+        {
+            "grade": "4",
+            "topic": "Responsible Use and Management of Materials",
+            "difficulty": "Easy",
+            "text": "Why must household cleaning chemicals always remain stored in their original labeled containers? | A: To prevent accidental poisoning by mistaking them for food or drink B: To look nicer on the shelf C: Because new containers make them evaporate D: To increase their weight"
+        },
+        {
+            "grade": "4",
+            "topic": "Responsible Use and Management of Materials",
+            "difficulty": "Easy",
+            "text": "Where should spent flashlight batteries and fluorescent lamps be disposed of? | A: In ordinary classroom paper bins B: In special hazardous waste collection bins C: Thrown into rivers D: Burned in the garden"
+        },
+        {
+            "grade": "4",
+            "topic": "Responsible Use and Management of Materials",
+            "difficulty": "Medium",
+            "text": "Why is it extremely dangerous to mix household bleach with toilet cleaning acids or ammonia? | A: It causes a violent chemical reaction that releases toxic, suffocating gases B: It creates solid sugar C: It makes water freeze D: It neutralizes dirt instantly without fumes"
+        },
+        {
+            "grade": "4",
+            "topic": "Responsible Use and Management of Materials",
+            "difficulty": "Medium",
+            "text": "How does proper waste segregation in Philippine barangays directly prevent urban street flooding during typhoons? | A: It prevents plastic wrappers and non-biodegradables from clogging drainage pipes and pumping stations B: It stops rain from falling C: It absorbs all floodwaters D: It lowers ocean levels"
+        },
+        {
+            "grade": "4",
+            "topic": "Responsible Use and Management of Materials",
+            "difficulty": "Hard",
+            "text": "Design an action plan for Central Elementary School to achieve zero single-use plastic waste in the school canteen. | A: Require reusable tumblers and food containers, replace plastic wrappers with banana leaves\/paper, and compost organic scraps B: Burn all canteen plastics behind the school C: Dump plastic waste into the nearest creek D: Ban all food and water"
+        }
+    ]
+}

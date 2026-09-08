@@ -1,0 +1,452 @@
+{
+    "title": "DepEd Science MATATAG Curriculum — Grade 3 Life Science",
+    "grade": "3",
+    "customLessons": [
+        {
+            "title": "Scientific Inquiry in Life Science",
+            "grade": "3",
+            "quarter": "1",
+            "lesson_number": "1",
+            "objectives": [
+                "Formulate questions and make scientific observations of living organisms using the five senses and hand lenses.",
+                "Record qualitative and quantitative observations of plants and small animals in an inquiry journal.",
+                "Differentiate living organisms from non-living objects through guided classroom investigations."
+            ],
+            "content": "Life Science is the systematic study of living things, including plants, animals, and microorganisms. Biologists use scientific inquiry to understand how living organisms survive, grow, and interact with the world around them.\n\nScientific inquiry begins with curious questions and careful observations. Using scientific tools like magnifying hand lenses, measuring rulers, and inquiry journals, young scientists observe details like leaf vein patterns, insect legs, and root structures without harming the specimens.\n\nObservations are classified as qualitative (descriptions using words like green, fuzzy, or fragrant) and quantitative (measurements using numbers like 5 leaves or 12 centimeters tall).",
+            "slides": [
+                {
+                    "title": "Scientific Inquiry in Life Science",
+                    "content": "Grade 3 — Term 1 Life Science\n\nBecome a young biologist: Discover how scientists observe, question, and investigate the living world.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Tools of the Young Biologist",
+                    "content": "Essential tools for studying living organisms:\n• Hand Lens \/ Magnifying Glass: Enlarge leaf veins, insect antennae, and soil microbes\n• Metric Ruler & Tape: Measure plant height and leaf width accurately\n• Science Inquiry Journal: Sketch specimens and log daily growth\n• Ethical Care: Always observe living creatures gently and return them safely to nature!",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Qualitative vs Quantitative Observations",
+                    "content": "Two Ways to Record Science Data:\n• Qualitative: Describing observable qualities using senses\n  - 'The caterpillar is bright green, smooth, and moves slowly'\n• Quantitative: Describing measurable quantities with numbers\n  - 'The caterpillar is 4 cm long and weighs 2 grams'",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Choose a plant leaf or small insect\nStep 2: Note color, texture, and smell (Qualitative)\nStep 3: Measure length in millimeters with a ruler (Quantitative)\nStep 4: Record findings neatly in your science notebook"
+                },
+                {
+                    "title": "Field Study: Philippine Wildlife",
+                    "content": "How Filipino naturalists study nature:\n• Observing Philippine sunbirds pollinating banana blossoms\n• Counting egg clusters of tree frogs during monsoon rains\n• Identifying native flowering orchids in national parks",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Classroom Inquiry Check",
+                    "content": "A pupil writes: 'The garden sunflower has 18 bright yellow petals.' Which part is a quantitative observation?\nA) 'Bright yellow'\nB) 'Garden sunflower'\nC) '18 petals'\nD) 'Smells sweet'\n\nCorrect Answer: C ('18 petals' uses a countable number!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Characteristics and Life Processes of Living Things",
+            "grade": "3",
+            "quarter": "1",
+            "lesson_number": "2",
+            "objectives": [
+                "Identify the fundamental characteristics of living things (growth, movement, nutrition, respiration, excretion, response to stimuli, reproduction).",
+                "Compare life processes in plants and animals.",
+                "Explain how living organisms respond to changes in their immediate environment."
+            ],
+            "content": "All living things share fundamental characteristics that set them apart from non-living matter: they grow, move, consume nutrients, breathe, excrete waste, respond to stimuli, and reproduce.\n\nPlants make their own food through sunlight and show tropisms (growing toward light or gravity). Animals actively move from place to place using legs, wings, or fins to find food and shelter.\n\nLiving things respond to external stimuli: a mimosa plant (Makahiya) folds its leaves when touched; animals seek shade when it gets too hot; earthworms burrow into moist soil when exposed to bright sunlight.",
+            "slides": [
+                {
+                    "title": "Characteristics of Living Things",
+                    "content": "Grade 3 — Term 1 Life Science\n\nLearn the 7 life processes that define living organisms on planet Earth.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The 7 Signs of Life",
+                    "content": "Every living organism performs these processes:\n1. Movement: Active locomotion or slow plant bending\n2. Respiration: Exchanging gases to release energy\n3. Sensitivity: Responding to environmental stimuli\n4. Growth: Increasing in size and developing complexity\n5. Reproduction: Producing offspring to continue the species\n6. Excretion: Eliminating cellular waste products\n7. Nutrition: Absorbing or making food nutrients",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Plants vs Animals in Action",
+                    "content": "Comparing Life Processes:\n• Feeding: Plants synthesize food via photosynthesis; animals ingest food\n• Movement: Animals walk, fly, or swim; plants turn leaves toward the Sun (phototropism)\n• Breathing: Animals inhale oxygen through lungs\/gills; plants exchange gases via leaf stomata",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Place a potted bean plant near a window\nStep 2: Observe stem bending toward sunlight\nStep 3: Touch a Makahiya leaf and watch it fold\nStep 4: Conclude: Plants actively respond to stimuli!"
+                },
+                {
+                    "title": "Sensitivity: Responding to Stimuli",
+                    "content": "How living things react to keep safe:\n• Makahiya plant folds its leaves when touched to deter herbivores\n• Dogs pant and drink water when overheated\n• Earthworms burrow deeper into soil when sunlight hits their skin",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Living vs Non-Living Quiz",
+                    "content": "A toy robot can walk, speak words, and uses battery power. Why is it still considered non-living?\nA) It is too small\nB) It cannot grow, reproduce, or possess living cells\nC) It has bright plastic colors\nD) It moves on wheels\n\nCorrect Answer: B (Non-living objects do not grow, heal, or reproduce!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Basic Needs of Living Things",
+            "grade": "3",
+            "quarter": "2",
+            "lesson_number": "1",
+            "objectives": [
+                "Identify the basic survival needs of plants and animals: water, food\/nutrients, air, sunlight, and shelter\/space.",
+                "Describe what happens when living organisms are deprived of one or more basic needs.",
+                "Relate basic needs to the welfare and care of household pets, farm animals, and crops."
+            ],
+            "content": "All living organisms require essential resources from their environment to survive and thrive.\n\nPlants require sunlight, water, carbon dioxide from the air, soil nutrients (nitrogen, phosphorus, potassium), and space to spread their roots and leaves.\n\nAnimals require clean water, nutritious food, oxygen to breathe, and safe shelter to protect themselves from predators and harsh weather.\n\nDepriving an organism of its basic needs leads to stunted growth, wilting, disease, or death. Caring for pets, farm animals, and trees requires providing these necessities consistently.",
+            "slides": [
+                {
+                    "title": "Basic Needs of Living Things",
+                    "content": "Grade 3 — Term 2 Life Science\n\nExplore the essential resources that keep all plants, animals, and humans alive.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "What Green Plants Need",
+                    "content": "Five essentials for plant life:\n1. Sunlight: Energy source for food production\n2. Water: Carries minerals and maintains turgor pressure\n3. Carbon Dioxide: Carbon building block for glucose\n4. Soil Nutrients: Essential minerals (N-P-K) for cell growth\n5. Space: Adequate room for roots and spreading branches",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "What Animals Need to Survive",
+                    "content": "Four essentials for animal life:\n1. Nutritious Food: Energy for muscles, growth, and body warmth\n2. Clean Water: Solvent for blood, cooling, and digestion\n3. Oxygen Gas: Required for cellular respiration\n4. Safe Shelter & Space: Protection from heavy rains, heat, and predators",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Check your pet's water bowl daily\nStep 2: Provide nutritious age-appropriate food\nStep 3: Ensure dry, ventilated sleeping shelter\nStep 4: Allow exercise space for healthy development"
+                },
+                {
+                    "title": "Deprivation: What Happens When Needs Are Missing?",
+                    "content": "Effects of lacking basic needs:\n• No water: Plant leaves wilt, lose cell pressure, and dry out\n• No sunlight: Plant leaves turn pale yellow and cannot produce food\n• No food: Animals lose weight, become weak, and succumb to illness",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Basic Needs Check Quiz",
+                    "content": "What vital gas in the air do dogs, birds, fish, and humans breathe in to stay alive?\nA) Carbon dioxide\nB) Oxygen\nC) Helium\nD) Nitrogen only\n\nCorrect Answer: B (Oxygen gas is required by animals for respiration!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Structure and Function of Organisms",
+            "grade": "3",
+            "quarter": "2",
+            "lesson_number": "2",
+            "objectives": [
+                "Identify the external body parts of common animals and explain their functions.",
+                "Identify the major vegetative and reproductive organs of flowering plants and their functions.",
+                "Relate specialized anatomical structures to specific survival tasks."
+            ],
+            "content": "Living things have specialized body parts called structures, and each structure performs a specific job called a function.\n\nIn plants: Roots anchor the plant and absorb water from soil; stems support branches and transport sap; leaves capture sunlight for photosynthesis; flowers enable reproduction; fruits protect seeds.\n\nIn animals: Eyes, ears, and noses detect predators and food; legs, wings, and fins enable locomotion; claws, beaks, and teeth gather and process food; fur and scales provide protection.\n\nSpecialized structures match survival needs: ducks have webbed feet for paddling; eagles have hooked talons for catching fish; cacti have needle-like spines to reduce water loss.",
+            "slides": [
+                {
+                    "title": "Structure and Function of Organisms",
+                    "content": "Grade 3 — Term 2 Life Science\n\nDiscover how specialized body parts help plants and animals survive and succeed.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Plant Structures & Their Functions",
+                    "content": "The 5 Major Organs of Plants:\n• Roots: Anchor plant into soil; absorb water and dissolved minerals\n• Stem: Supports aerial branches and transports fluids between roots and leaves\n• Leaves: The solar food factories performing photosynthesis\n• Flowers: Colorful structures attracting pollinators for reproduction\n• Fruits & Seeds: Protect developing seeds and aid dispersal",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Animal Structures: Movement & Feeding",
+                    "content": "Matching form to function:\n• Fins & Streamlined Body (Fish): Slicing through water with minimal drag\n• Webbed Feet (Ducks): Paddle-like surface for swimming\n• Sharp Curved Talons (Eagles): Grasping and holding slippery fish\n• Grinding Molars (Carabao): Crushing tough grass fibers",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Look at the feet of a bird\nStep 2: Are they webbed, clawed, or grasping?\nStep 3: Webbed = Swimming; Talons = Hunting; Claws = Perching\nStep 4: Structure always reveals function!"
+                },
+                {
+                    "title": "Protective Structures",
+                    "content": "Defensive body armor in nature:\n• Turtles: Hard bony carapace shields soft internal organs\n• Cacti: Needle-sharp spines deter thirsty desert herbivores\n• Porcupines: Modified sharp quills detach to injure attacking predators",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Organ Function Quiz",
+                    "content": "Which plant structure is primarily responsible for absorbing water and dissolved minerals from the soil?\nA) Flowers\nB) Leaves\nC) Roots\nD) Bark\n\nCorrect Answer: C (Roots anchor and absorb water\/nutrients!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Interactions Among Living Things and Their Environment",
+            "grade": "3",
+            "quarter": "2",
+            "lesson_number": "3",
+            "objectives": [
+                "Identify cooperative relationships where living things help one another (mutualism).",
+                "Explain the oxygen and carbon dioxide gas exchange between plants and animals.",
+                "Describe how living things interact with non-living environmental elements."
+            ],
+            "content": "No organism lives in isolation. Living things constantly interact with other living things (biotic factors) and non-living surroundings (abiotic factors).\n\nPlants and animals depend on each other: plants release oxygen that animals breathe, while animals exhale carbon dioxide that plants use to make food.\n\nPollination is a key interaction: bees, butterflies, and sunbirds drink flower nectar and simultaneously carry pollen between blossoms, allowing plants to form fruits and seeds.\n\nAnimals use non-living materials for habitat: birds build nests with twigs on tree branches; earthworms aerate soil; fish swim in river water.",
+            "slides": [
+                {
+                    "title": "Interactions in the Environment",
+                    "content": "Grade 3 — Term 2 Life Science\n\nDiscover the web of life: How plants, animals, and non-living elements depend on each other.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The Oxygen-Carbon Dioxide Partnership",
+                    "content": "Nature's Perfect Balance:\n• Plants take in Carbon Dioxide (CO2) exhaled by animals and release fresh Oxygen (O2)\n• Animals inhale Oxygen (O2) and exhale Carbon Dioxide (CO2)\n• Together, plants and animals maintain clean, breathable air on Earth!",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Pollination: A Win-Win Friendship",
+                    "content": "Mutual cooperation in nature:\n• Flowers provide sweet nectar as food for bees, butterflies, and sunbirds\n• Pollinators dust pollen grains across their bodies and carry it to neighboring flowers\n• Result: The plant successfully produces delicious fruits and fertile seeds!",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Bee visits flower for nectar\nStep 2: Sticky pollen coats bee's legs\nStep 3: Bee flies to next flower\nStep 4: Pollination enables seed and fruit development"
+                },
+                {
+                    "title": "Living Things Using Non-Living Resources",
+                    "content": "Biotic organisms utilizing abiotic nature:\n• Birds collect mud, grass, and twigs to construct sturdy nests\n• Earthworms burrow through soil, creating aeration tunnels that help roots breathe\n• Mudfish burrow into moist lakebed mud to survive summer dry spells",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Ecosystem Interaction Quiz",
+                    "content": "What gas do plants release during the day that humans and animals need to inhale?\nA) Smoke\nB) Carbon dioxide\nC) Oxygen\nD) Helium\n\nCorrect Answer: C (Plants produce life-giving oxygen during photosynthesis!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Environmental Stewardship and Conservation",
+            "grade": "3",
+            "quarter": "2",
+            "lesson_number": "4",
+            "objectives": [
+                "Explain the importance of protecting Philippine plant and animal habitats (forests, rivers, mangroves).",
+                "Identify harmful human activities that endanger local ecosystems.",
+                "Practice concrete conservation actions: waste segregation, tree planting, and wildlife protection."
+            ],
+            "content": "Environmental stewardship means taking responsibility to care for, protect, and preserve the natural world for present and future generations.\n\nPhilippine ecosystems (coral reefs, tropical rainforests, mangrove swamps) are home to unique biodiversity like the Philippine Eagle, Tarsier, and Tamaraw.\n\nDestructive human actions—cutting down forests (deforestation), dumping trash in rivers, and blasting reefs—destroy homes of living things and lead to species endangerment.\n\nEvery student can be an environmental steward: planting native trees, conserving water, avoiding plastic waste, participating in river cleanups, and respecting wild animals.",
+            "slides": [
+                {
+                    "title": "Environmental Stewardship & Conservation",
+                    "content": "Grade 3 — Term 2 Life Science\n\nProtecting Philippine biodiversity: Caring for our forests, rivers, mangroves, and wildlife.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Philippine Biodiversity Treasures",
+                    "content": "Unique organisms found only in the Philippines (Endemic):\n• Philippine Eagle: Magnificent apex predator of Sierra Madre rainforests\n• Philippine Tarsier: Tiny nocturnal primate of Bohol\n• Tamaraw: Rare dwarf wild buffalo of Mindoro\n• Dugong (Sea Cow): Gentle marine herbivore of Palawan seagrass beds",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Threats to Wildlife Habitats",
+                    "content": "Human impacts threatening nature:\n• Deforestation: Cutting trees leaves birds and primates homeless\n• River & Ocean Plastic Pollution: Sea turtles ingest plastic bags mistaking them for jellyfish\n• Siltation: Soil runoff smothers living coral reefs",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Sort waste into 4 bins at school\nStep 2: Plant native tree seedlings in the garden\nStep 3: Turn off taps to save freshwater\nStep 4: Spread the word to family and neighbors!"
+                },
+                {
+                    "title": "Why Mangrove Forests Are Superheroes",
+                    "content": "Coastal guardians of our islands:\n• Roots act as safe nursery schools for baby fish, crabs, and shrimp\n• Dense thickets break typhoon waves and protect coastal communities from storm surges\n• Traps sediment to prevent ocean muddying",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Stewardship Challenge Quiz",
+                    "content": "Which action represents responsible environmental stewardship?\nA) Burning plastic garbage in the backyard\nB) Planting native mangrove and tree seedlings along riverbanks\nC) Keeping wild endangered tarsiers as indoor pets\nD) Dumping detergent soap directly into rivers\n\nCorrect Answer: B (Tree planting restores habitats and stabilizes soil!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        }
+    ],
+    "questions": [
+        {
+            "grade": "3",
+            "topic": "Scientific Inquiry in Life Science",
+            "difficulty": "Easy",
+            "text": "What science tool helps young biologists enlarge small insect legs and leaf veins? | A: Hand lens (magnifying glass) B: Flashlight C: Thermometer D: Compass"
+        },
+        {
+            "grade": "3",
+            "topic": "Scientific Inquiry in Life Science",
+            "difficulty": "Easy",
+            "text": "Which of the following is an example of a living organism? | A: River pebble B: Earthworm C: Plastic bottle D: Rubber eraser"
+        },
+        {
+            "grade": "3",
+            "topic": "Scientific Inquiry in Life Science",
+            "difficulty": "Medium",
+            "text": "A student writes: \"The caterpillar is soft and measures 4 centimeters long.\" Which part is quantitative? | A: \"4 centimeters long\" B: \"The caterpillar\" C: \"soft\" D: None of the above"
+        },
+        {
+            "grade": "3",
+            "topic": "Scientific Inquiry in Life Science",
+            "difficulty": "Medium",
+            "text": "Why should pupils observe outdoor insects gently without stepping on or injuring them? | A: Living organisms play vital ecological roles and must be respected B: Insects break glass C: Tools get dirty D: Hand lenses stop working"
+        },
+        {
+            "grade": "3",
+            "topic": "Scientific Inquiry in Life Science",
+            "difficulty": "Hard",
+            "text": "How can a student prove scientifically that a mung bean seed is alive while a brown pebble is non-living? | A: Plant both in moist soil; the seed absorbs water, germinates, and grows into a plant, while the pebble shows zero growth B: Weigh both on a balance C: Paint both green D: Drop both into water"
+        },
+        {
+            "grade": "3",
+            "topic": "Characteristics and Life Processes of Living Things",
+            "difficulty": "Easy",
+            "text": "What happens to the leaves of the Makahiya (touch-me-not) plant when gently touched? | A: They fold closed rapidly B: They fall off immediately C: They turn into flowers D: They catch fire"
+        },
+        {
+            "grade": "3",
+            "topic": "Characteristics and Life Processes of Living Things",
+            "difficulty": "Easy",
+            "text": "Which of the following life processes ensures that a species of animal does not go extinct? | A: Reproduction B: Sleeping C: Walking D: Running"
+        },
+        {
+            "grade": "3",
+            "topic": "Characteristics and Life Processes of Living Things",
+            "difficulty": "Medium",
+            "text": "Why do potted green plants placed near a classroom window slowly bend toward the glass? | A: Stems grow toward sunlight to maximize photosynthesis (phototropism) B: Stems try to break the glass C: Wind pushes them inside D: Roots dislike darkness"
+        },
+        {
+            "grade": "3",
+            "topic": "Characteristics and Life Processes of Living Things",
+            "difficulty": "Medium",
+            "text": "How does an animal's movement differ from a plant's movement? | A: Most animals can travel from place to place, while plants move by slow growth and bending B: Plants run fast C: Animals never move D: Both move identically"
+        },
+        {
+            "grade": "3",
+            "topic": "Characteristics and Life Processes of Living Things",
+            "difficulty": "Hard",
+            "text": "A car consumes gasoline, releases exhaust gas, and moves fast. Explain why a car is classified as non-living. | A: It cannot grow, cannot reproduce, lacks biological cells, and requires human construction B: It is made of metal C: It is painted red D: It has rubber tires"
+        },
+        {
+            "grade": "3",
+            "topic": "Basic Needs of Living Things",
+            "difficulty": "Easy",
+            "text": "What invisible gas in ambient air do animals and humans need to breathe in? | A: Oxygen B: Carbon dioxide C: Smoke D: Steam"
+        },
+        {
+            "grade": "3",
+            "topic": "Basic Needs of Living Things",
+            "difficulty": "Easy",
+            "text": "Which primary energy source do green plants need to manufacture their food? | A: Sunlight B: Moonlight C: Wind D: Sound"
+        },
+        {
+            "grade": "3",
+            "topic": "Basic Needs of Living Things",
+            "difficulty": "Medium",
+            "text": "What happens to a healthy potted plant kept in a dark cupboard without water for two weeks? | A: It will turn yellow, wilt, and die from lack of light and moisture B: It will produce flowers C: It will turn into plastic D: It grows faster"
+        },
+        {
+            "grade": "3",
+            "topic": "Basic Needs of Living Things",
+            "difficulty": "Medium",
+            "text": "Why must fish tanks and aquariums have an electric aerator pump? | A: The pump dissolves essential oxygen gas into the water for fish gills to breathe B: To heat water to boiling C: To turn water into soda D: To feed the fish automatically"
+        },
+        {
+            "grade": "3",
+            "topic": "Basic Needs of Living Things",
+            "difficulty": "Hard",
+            "text": "Why does crowding 50 tomato seedlings into one small flowerpot cause weak, spindly growth even with daily watering? | A: The seedlings compete intensely for limited root space, soil minerals, and sunlight B: Tomato seeds dislike water C: Soil turns to rock D: Roots generate too much heat"
+        },
+        {
+            "grade": "3",
+            "topic": "Structure and Function of Organisms",
+            "difficulty": "Easy",
+            "text": "Which plant structure absorbs water and minerals from the ground? | A: Roots B: Leaves C: Flowers D: Fruits"
+        },
+        {
+            "grade": "3",
+            "topic": "Structure and Function of Organisms",
+            "difficulty": "Easy",
+            "text": "What specialized body structure enables fish to extract oxygen from water? | A: Gills B: Lungs C: Skin only D: Fins"
+        },
+        {
+            "grade": "3",
+            "topic": "Structure and Function of Organisms",
+            "difficulty": "Medium",
+            "text": "Why do ducks have webbed feet while chickens have slender clawed toes? | A: Webbed feet act like paddles for swimming, while chicken claws scratch soil for seeds B: Ducks cannot walk C: Chickens swim faster D: Chickens have no bones"
+        },
+        {
+            "grade": "3",
+            "topic": "Structure and Function of Organisms",
+            "difficulty": "Medium",
+            "text": "What is the primary function of the colorful petals on gumamela and mango flowers? | A: Attract pollinating insects like bees and butterflies B: Absorb soil water C: Make seeds directly D: Protect stems from wind"
+        },
+        {
+            "grade": "3",
+            "topic": "Structure and Function of Organisms",
+            "difficulty": "Hard",
+            "text": "Contrast the needle-like spines of a desert cactus with the broad flat leaves of a tropical banana plant. | A: Cactus spines minimize surface area to prevent moisture loss in dry heat; banana leaves maximize sunlight capture in moist rainforests B: Cactus spines make fruit C: Banana leaves are made of stone D: Both are identical"
+        },
+        {
+            "grade": "3",
+            "topic": "Interactions Among Living Things and Their Environment",
+            "difficulty": "Easy",
+            "text": "What essential gas do plants release into the air that animals breathe? | A: Oxygen B: Carbon dioxide C: Helium D: Hydrogen"
+        },
+        {
+            "grade": "3",
+            "topic": "Interactions Among Living Things and Their Environment",
+            "difficulty": "Easy",
+            "text": "How do butterflies and honeybees help flowering fruit trees? | A: By carrying pollen between flowers so fruits can grow B: By eating all the leaves C: By making the tree colder D: By blocking sunlight"
+        },
+        {
+            "grade": "3",
+            "topic": "Interactions Among Living Things and Their Environment",
+            "difficulty": "Medium",
+            "text": "How do burrowing earthworms improve soil for garden vegetables? | A: Their tunneling aerates soil and allows water to reach roots easily B: They eat the plant roots C: They turn soil into stone D: They dry out the garden"
+        },
+        {
+            "grade": "3",
+            "topic": "Interactions Among Living Things and Their Environment",
+            "difficulty": "Medium",
+            "text": "What would happen to animals in a community if all green plants were removed? | A: Herbivores would starve, oxygen levels would drop, and animal life would collapse B: Animals would thrive better C: Rocks would produce food D: It would have no effect"
+        },
+        {
+            "grade": "3",
+            "topic": "Interactions Among Living Things and Their Environment",
+            "difficulty": "Hard",
+            "text": "Explain the relationship between clownfish and sea anemones on coral reefs. | A: Clownfish gets protection among stinging tentacles (immune to sting), while it cleans the anemone and lures food (Mutualism) B: Clownfish eats the anemone C: Anemone kills clownfish D: Parasitism"
+        },
+        {
+            "grade": "3",
+            "topic": "Environmental Stewardship and Conservation",
+            "difficulty": "Easy",
+            "text": "What is the national bird of the Philippines that lives in dense mountain rainforests? | A: Philippine Eagle B: Maya C: Pigeon D: Ostrich"
+        },
+        {
+            "grade": "3",
+            "topic": "Environmental Stewardship and Conservation",
+            "difficulty": "Easy",
+            "text": "What do we call the act of planting new trees to replace destroyed forests? | A: Reforestation B: Mining C: Deforestation D: Harvesting"
+        },
+        {
+            "grade": "3",
+            "topic": "Environmental Stewardship and Conservation",
+            "difficulty": "Medium",
+            "text": "Why are mangrove forests along coastlines vital for protecting Philippine villages? | A: Their tangled roots break storm waves and prevent shoreline erosion during typhoons B: They make beaches sandy C: They stop rain from falling D: They produce electricity"
+        },
+        {
+            "grade": "3",
+            "topic": "Environmental Stewardship and Conservation",
+            "difficulty": "Medium",
+            "text": "How does throwing plastic bags into a river miles inland endanger sea turtles in the ocean? | A: Plastic floats out to sea where sea turtles mistake it for jellyfish and choke B: Plastic dissolves into salt C: Plastic makes water cold D: Turtles eat plastic intentionally"
+        },
+        {
+            "grade": "3",
+            "topic": "Environmental Stewardship and Conservation",
+            "difficulty": "Hard",
+            "text": "Design an action project for Grade 3 pupils to restore a degraded creek bank beside their school. | A: Clean up plastic wrappers, plant bamboo and native shrubs to anchor soil, and post educational no-littering signs B: Dump concrete waste into creek C: Pour bleach into water D: Cut remaining bushes"
+        }
+    ]
+}

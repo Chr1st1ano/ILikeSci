@@ -2,12 +2,13 @@
 require 'db.php';
 header("Content-Type: application/json");
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     echo json_encode(['status' => 'error', 'message' => 'POST required']);
     exit;
 }
 
-$input = json_decode(file_get_contents('php://input'), true);
+$raw = file_get_contents('php://input');
+$input = json_decode($raw, true) ?: $_POST;
 $username = strtolower(trim($input['username'] ?? ''));
 $password = $input['password'] ?? '';
 $firstName = trim($input['first_name'] ?? '');

@@ -1,0 +1,230 @@
+{
+    "title": "DepEd Science MATATAG Curriculum — Grade 3 Matter and Materials",
+    "grade": "3",
+    "customLessons": [
+        {
+            "title": "Properties and Uses of Materials",
+            "grade": "3",
+            "quarter": "1",
+            "lesson_number": "1",
+            "objectives": [
+                "Identify different materials used in common everyday objects (wood, metal, plastic, glass, fabric, rubber).",
+                "Describe observable physical properties including hardness, flexibility, texture, and absorbency.",
+                "Match everyday materials with their practical functions and explain why specific materials are chosen."
+            ],
+            "content": "Materials are substances used to make objects. Everyday items are made from materials like wood, metal, plastic, glass, paper, fabric, and rubber.\n\nEach material has distinct physical properties. Hard materials like iron and hardwood resist scratching. Flexible materials like rubber and silicone bend easily without breaking. Absorbent materials like cotton and sponges soak up liquids, while waterproof materials like plastic and glass repel water.\n\nChoosing the right material depends on its purpose. For example, cooking pots are made of metal because metal conducts heat and does not melt easily, while the handles are made of plastic or wood to protect our hands from burns.",
+            "slides": [
+                {
+                    "title": "Properties and Uses of Materials",
+                    "content": "Grade 3 — Term 1 Science\n\nDiscover how the properties of wood, metal, plastic, glass, and rubber shape our everyday world.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Common Materials Around Us",
+                    "content": "Look around your classroom and home:\n• Wood: Desks, doors, and pencils (sturdy, natural)\n• Metal: Nails, spoons, and coins (hard, shiny, strong)\n• Plastic: Bottles, rulers, and lunchboxes (lightweight, waterproof)\n• Glass: Windows, mirrors, and spectacles (transparent, smooth)\n• Fabric & Rubber: Clothes, tires, and erasers (soft, flexible, elastic)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Observing Physical Properties",
+                    "content": "How can we describe materials?\n1. Hardness: Can it resist scratching? (Diamond vs Chalk)\n2. Flexibility: Can it bend without breaking? (Rubber vs Ceramic)\n3. Absorbency: Can it soak up water? (Sponge vs Plastic wrap)\n4. Transparency: Can light pass through it? (Clear glass vs Wood)",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Observe color and texture\nStep 2: Test flexibility by gentle bending\nStep 3: Test absorbency with water droplet\nStep 4: Record findings in science notebook"
+                },
+                {
+                    "title": "Matching Materials to Their Purpose",
+                    "content": "Why are cooking pots made of metal while their handles are made of plastic or wood?\n\n• Metal conducts heat quickly to cook food evenly.\n• Plastic and wood are thermal insulators that stay cool, preventing burns when lifting the pot!",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Classroom Quick Check",
+                    "content": "Which material would be the best choice for making a rain umbrella?\nA) Cotton fabric\nB) Waterproof plastic\nC) Thick cardboard\nD) Heavy iron\n\nCorrect Answer: B (Waterproof plastic keeps rain out and is lightweight!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Changes in Materials and Environmental Responsibility",
+            "grade": "3",
+            "quarter": "1",
+            "lesson_number": "2",
+            "objectives": [
+                "Describe physical changes in materials when bent, pressed, hammered, or cut.",
+                "Observe and describe the effects of heating and cooling on common substances.",
+                "Practice the 5Rs of waste management (Reduce, Reuse, Recycle, Repair, Refuse) to care for the environment."
+            ],
+            "content": "Materials can change in size, shape, or state without forming new substances. Cutting paper, bending a wire, pressing clay, or hammering an aluminum can changes how they look, but the material remains the same.\n\nHeating and cooling cause noticeable changes. Heat melts solid ice into liquid water and softens candle wax. Cooling water in a freezer turns it back into solid ice.\n\nImproper disposal of materials pollutes the land, rivers, and oceans. Practicing the 5Rs—Reduce waste, Reuse containers, Recycle paper and plastics, Repair broken items, and Refuse single-use plastics—keeps our community clean and protects wildlife.",
+            "slides": [
+                {
+                    "title": "Changes in Materials & Environmental Care",
+                    "content": "Grade 3 — Term 1 Science\n\nLearn how materials change shape, size, and state, and how we can protect our surroundings.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Physical Actions on Materials",
+                    "content": "How can we change materials without creating new substances?\n• Bending: Soft metal wire or rubber bends easily\n• Pressing: Modeling clay changes shape under finger pressure\n• Hammering: Flattening metal sheets or soda cans\n• Cutting: Scissors slicing paper or cloth into smaller pieces",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Temperature: Heating and Cooling",
+                    "content": "Thermal changes in everyday life:\n• Heating ice: Solid ice melts into liquid water\n• Heating wax: Solid candle wax softens and turns into liquid\n• Cooling water: Liquid water freezes into solid ice at 0°C\n• Cooling wax: Liquid wax hardens back into a solid block",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Place ice cube in sun\nStep 2: Observe melting into water\nStep 3: Place water in freezer\nStep 4: Observe refreezing into ice"
+                },
+                {
+                    "title": "The 5Rs of Environmental Responsibility",
+                    "content": "Protecting our community and planet:\n1. Reduce: Use less disposable packaging\n2. Reuse: Refill water bottles and jars\n3. Recycle: Turn paper and plastic into new goods\n4. Repair: Fix broken school bags and shoes\n5. Refuse: Say no to single-use plastic bags and straws",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Quick Quiz: Protecting Our Planet",
+                    "content": "Which action shows the \"Reuse\" practice of the 5Rs?\nA) Throwing old plastic bottles into the river\nB) Turning an old glass peanut butter jar into a pencil holder\nC) Burning dried leaves and plastic wrappers\nD) Buying a new plastic bag every day\n\nCorrect Answer: B (Repurposing containers gives them new life!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Earth Materials and Their Uses",
+            "grade": "3",
+            "quarter": "3",
+            "lesson_number": "1",
+            "objectives": [
+                "Identify common Earth materials such as soil, rocks, sand, water, and minerals.",
+                "Compare the characteristics of different soil types (clay, sand, loam).",
+                "Explain how living things rely on Earth materials for food, shelter, and construction."
+            ],
+            "content": "The Earth provides natural materials that support all living things. These include rocks, minerals, water, and different types of soil.\n\nSoil is formed from broken rocks and decayed plant and animal matter. Sand has large, gritty particles that drain water quickly. Clay has tiny, sticky particles that hold a lot of water. Loam is a balanced mixture of sand, clay, and rich organic humus, making it the best soil for growing crops and garden plants.\n\nRocks and minerals are quarried for building roads, houses, bridges, and tools. Water from rivers and underground springs provides drinking water and nourishes agricultural crops.",
+            "slides": [
+                {
+                    "title": "Earth Materials and Their Uses",
+                    "content": "Grade 3 — Term 3 Science\n\nDiscover the natural resources beneath our feet: rocks, minerals, water, and fertile soil.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Earth's Natural Treasures",
+                    "content": "Our planet provides essential raw materials:\n• Rocks & Minerals: Basalt, limestone, granite, quartz\n• Soil: The loose upper layer of Earth\\'s surface\n• Water: Streams, rivers, lakes, and aquifers\n• Fossil Fuels & Ores: Energy and metals",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Comparing the Three Main Soil Types",
+                    "content": "Characteristics of soils:\n• Sand: Large, rough, gritty particles; water drains very quickly\n• Clay: Very fine, smooth particles; holds lots of water and becomes sticky\n• Loam: Balanced mix of sand, silt, clay, and rich organic humus; holds moisture while draining well",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Feel soil texture with fingers\nStep 2: Pour 100mL water over each soil\nStep 3: Measure drainage time\nStep 4: Check organic plant growth"
+                },
+                {
+                    "title": "Practical Uses in Society",
+                    "content": "How we use Earth materials:\n• Construction: Gravel, sand, and cement build roads, bridges, and school buildings\n• Agriculture: Loam soil grows rice, corn, fruits, and vegetables\n• Ceramics: Clay is molded and baked into bricks, flowerpots, and roof tiles\n• Daily Life: Natural water sustains health and sanitation",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Quick Quiz: The Best Soil",
+                    "content": "Which soil type is dark, nutrient-rich, and best for planting vegetables in school gardens?\nA) Pure dry sand\nB) Sticky dense clay\nC) Rich organic loam\nD) Crushed volcanic rock\n\nCorrect Answer: C (Loam holds the right balance of water, air, and nutrients!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        }
+    ],
+    "questions": [
+        {
+            "grade": "3",
+            "topic": "Properties and Uses of Materials",
+            "difficulty": "Easy",
+            "text": "What property makes rubber ideal for bicycle tires and rubber bands? | A: Flexibility and elasticity B: Transparency C: Fragility D: High absorbency"
+        },
+        {
+            "grade": "3",
+            "topic": "Properties and Uses of Materials",
+            "difficulty": "Easy",
+            "text": "Which material is transparent and allows sunlight into our classrooms through windows? | A: Wood B: Clear Glass C: Steel D: Clay"
+        },
+        {
+            "grade": "3",
+            "topic": "Properties and Uses of Materials",
+            "difficulty": "Medium",
+            "text": "Why are cooking pans made of metal while their handles are covered with plastic or wood? | A: To make the pan heavier B: Metal conducts heat while plastic\/wood insulates to prevent burns C: Plastic cooks food faster D: Wood conducts electricity"
+        },
+        {
+            "grade": "3",
+            "topic": "Properties and Uses of Materials",
+            "difficulty": "Medium",
+            "text": "If water spills on a wooden floor, why is a cotton mop used instead of a plastic bag? | A: Cotton is absorbent and holds liquid B: Plastic absorbs water faster C: Cotton is harder than wood D: Plastic damages the mop handle"
+        },
+        {
+            "grade": "3",
+            "topic": "Properties and Uses of Materials",
+            "difficulty": "Hard",
+            "text": "A toy designer wants to create a safe floating bathtub toy for toddlers. Which material is best and why? | A: Glass because it is shiny B: Lightweight waterproof plastic or rubber because it floats and will not shatter C: Heavy iron because it is sturdy D: Paper because it is soft"
+        },
+        {
+            "grade": "3",
+            "topic": "Changes in Materials and Environmental Responsibility",
+            "difficulty": "Easy",
+            "text": "What phase change happens when solid ice is left under the warm sun? | A: Freezing B: Melting C: Condensation D: Sublimation"
+        },
+        {
+            "grade": "3",
+            "topic": "Changes in Materials and Environmental Responsibility",
+            "difficulty": "Easy",
+            "text": "Which of the 5Rs means converting waste materials into new useful products? | A: Refuse B: Repair C: Recycle D: Reduce"
+        },
+        {
+            "grade": "3",
+            "topic": "Changes in Materials and Environmental Responsibility",
+            "difficulty": "Medium",
+            "text": "When you fold a sheet of paper into an origami bird, what type of change took place? | A: Chemical change B: Physical change in shape C: Burning change D: Melting change"
+        },
+        {
+            "grade": "3",
+            "topic": "Changes in Materials and Environmental Responsibility",
+            "difficulty": "Medium",
+            "text": "How does repairing a broken desk rather than discarding it benefit the school environment? | A: It creates more waste B: It conserves wood resources and reduces landfill waste C: It produces toxic gases D: It increases school expenses"
+        },
+        {
+            "grade": "3",
+            "topic": "Changes in Materials and Environmental Responsibility",
+            "difficulty": "Hard",
+            "text": "Contrast pressing modeling clay versus dropping a glass mirror. What explains why one bends safely while the other shatters? | A: Clay is malleable while glass is brittle B: Glass is flexible while clay is hard C: Both produce new chemical substances D: Clay dissolves in air"
+        },
+        {
+            "grade": "3",
+            "topic": "Earth Materials and Their Uses",
+            "difficulty": "Easy",
+            "text": "Which type of soil contains rich humus and is ideal for growing vegetables? | A: Loam soil B: Coarse gravel C: Pure beach sand D: Hard dry clay"
+        },
+        {
+            "grade": "3",
+            "topic": "Earth Materials and Their Uses",
+            "difficulty": "Easy",
+            "text": "Which Earth material is molded and baked to make pottery, flowerpots, and bricks? | A: Clay B: Sand C: Basalt D: Gravel"
+        },
+        {
+            "grade": "3",
+            "topic": "Earth Materials and Their Uses",
+            "difficulty": "Medium",
+            "text": "Why does pure sandy soil struggle to support healthy leafy vegetable crops? | A: It holds too much water and drowns roots B: It drains water and minerals away too quickly C: It contains too much organic humus D: It is too sticky for roots"
+        },
+        {
+            "grade": "3",
+            "topic": "Earth Materials and Their Uses",
+            "difficulty": "Medium",
+            "text": "What is the role of decayed plants and animals (humus) in healthy garden soil? | A: It adds essential nutrients and helps retain moisture B: It makes soil turn into solid rock C: It repels earthworms D: It prevents water absorption"
+        },
+        {
+            "grade": "3",
+            "topic": "Earth Materials and Their Uses",
+            "difficulty": "Hard",
+            "text": "How does soil erosion by heavy rain harm both farmers and downstream river ecosystems? | A: It improves plant growth downstream B: It strips away fertile topsoil and pollutes rivers with muddy silt C: It turns river water into drinking water D: It hardens rock formations"
+        }
+    ]
+}

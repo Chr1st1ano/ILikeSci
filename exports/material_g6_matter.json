@@ -1,0 +1,304 @@
+{
+    "title": "DepEd Science MATATAG Curriculum — Grade 6 Matter and Materials",
+    "grade": "6",
+    "customLessons": [
+        {
+            "title": "Changes in Matter",
+            "grade": "6",
+            "quarter": "1",
+            "lesson_number": "1",
+            "objectives": [
+                "Describe factors affecting the rate of changes in matter (temperature, surface area, concentration, catalysts).",
+                "Explain the Law of Conservation of Mass in both open and closed systems.",
+                "Analyze natural biochemical decay, fermentation, and rust formation processes."
+            ],
+            "content": "The rate at which matter undergoes physical and chemical transformations depends on specific kinetic factors:\n- Temperature: Higher temperatures increase particle collisions and reaction speed.\n- Surface Area: Crushing a solid into powder exposes more particles to reactants, speeding up the reaction.\n- Concentration: More reactant particles in a given volume increases the frequency of collisions.\n- Catalysts: Substances like enzymes that accelerate reactions without being consumed.\n\nThe Law of Conservation of Mass states that matter can neither be created nor destroyed in any physical or chemical change. The total mass of reactants always equals the total mass of products.\n\nIn open systems, gases (like carbon dioxide from vinegar and baking soda) escape into the air, making it seem like mass was lost. In a sealed closed container, the measured mass remains exactly identical before and after the reaction.",
+            "slides": [
+                {
+                    "title": "Changes in Matter: Reaction Kinetics",
+                    "content": "Grade 6 — Term 1 Science\n\nExplore factors controlling reaction rates and master the Law of Conservation of Mass.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Four Factors Affecting Reaction Rates",
+                    "content": "How to speed up or slow down changes in matter:\n1. Temperature: Heat increases molecular speed and collision frequency\n2. Surface Area: Powder reacts faster than solid blocks\n3. Concentration: More reactant molecules per volume = more collisions\n4. Catalysts: Biological enzymes or chemical agents that lower activation energy",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The Law of Conservation of Mass",
+                    "content": "Fundamental Law of Chemistry:\nMass of Reactants = Mass of Products\n\n• Atoms are neither created nor destroyed during chemical reactions; they are merely rearranged.\n• In open systems: Gases escape into atmosphere, appearing to lose mass.\n• In closed systems: Sealed mass before reaction = sealed mass after reaction!",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Weigh flask with vinegar + balloon with baking soda\nStep 2: Tip balloon to start reaction\nStep 3: Gas inflates balloon inside closed system\nStep 4: Re-weigh: Mass remains exactly unchanged!"
+                },
+                {
+                    "title": "Everyday Biochemical Changes",
+                    "content": "Real-world reactions in action:\n• Fermentation: Yeast converts sugar into alcohol and CO2 gas (makes bread dough rise!)\n• Food Spoilage: Bacterial enzymes oxidize organic food molecules\n• Refrigeration: Lowers temperature to dramatically slow decay reaction rates",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Quick Quiz: Fireplace Mass Mystery",
+                    "content": "A 10kg wooden log burns down to 500g of ash in a fireplace. Has mass been destroyed?\nA) Yes, 9.5kg of matter was permanently destroyed\nB) No, 9.5kg of mass escaped as carbon dioxide gas, water vapor, and smoke into the atmosphere\nC) The fire absorbed the mass\nD) Ash is denser than wood\n\nCorrect Answer: B (Conservation of Mass applies; gas escaped into the open system!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Physical and Chemical Changes",
+            "grade": "6",
+            "quarter": "1",
+            "lesson_number": "2",
+            "objectives": [
+                "Compare physical and chemical changes at the atomic, molecular, and energetic levels.",
+                "Identify reactants, products, and energy transformations in chemical reactions.",
+                "Evaluate how understanding physical and chemical changes enables food preservation and material protection."
+            ],
+            "content": "At the microscopic scale, physical changes rearrange molecules without altering their intramolecular chemical bonds. Liquid water and ice are both composed of H2O molecules.\n\nChemical reactions break chemical bonds between reactant atoms and form new bonds to create products with completely novel chemical formulas and properties:\nReactants -> Products\n\nEnergy is involved in bond reorganization: breaking bonds requires energy input, while creating new bonds releases energy.\n\nHuman civilization applies these principles: canning and pickling alter acidity to prevent chemical decay; galvanizing iron coats it with zinc to sacrifice-protect it against oxidation; refining crude oil uses fractional distillation (physical separation) followed by catalytic cracking (chemical change).",
+            "slides": [
+                {
+                    "title": "Physical & Chemical Changes: Deep Dive",
+                    "content": "Grade 6 — Term 1 Science\n\nExamine atomic rearrangements, chemical equations, and industrial applications.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Atomic Realities: Bonds & Molecules",
+                    "content": "What happens to atoms?\n• Physical Change: Molecules stay intact; only spacing and orientation shift (e.g., Ice -> Water -> Steam is still H2O)\n• Chemical Change: Covalent or ionic bonds break; atoms recombine into new molecular structures with unique formulas:\nCH4 + 2O2 -> CO2 + 2H2O + Heat",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Reactants, Products, & Energy Shifts",
+                    "content": "Key Anatomy of a Reaction:\n• Reactants: Starting chemical compounds on the left\n• Products: Newly formed chemical compounds on the right\n• Activation Energy: Minimum energy required to trigger reaction\n• Bond breaking = Energy absorbed\n• Bond formation = Energy released",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Reactants collide with sufficient energy\nStep 2: Old chemical bonds break\nStep 3: Atoms rearrange\nStep 4: New bonds form into Products"
+                },
+                {
+                    "title": "Industrial & Everyday Technologies",
+                    "content": "Harnessing changes in materials:\n• Galvanization: Coating steel with zinc prevents oxidation\n• Pickling & Canning: Acidity denatures bacterial enzymes chemically\n• Water Desalination: Physical evaporation followed by condensation produces drinking water\n• Polymerization: Chemical bonding creates synthetic fibers and medical polymers",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Quick Quiz: Molecular Recognition",
+                    "content": "Which event involves breaking and forming chemical bonds to produce a completely new substance?\nA) Melting a block of copper metal into liquid copper\nB) Dissolving salt in warm water\nC) The combustion of gasoline in a car engine producing CO2 and H2O\nD) Shredding paper into fine confetti\n\nCorrect Answer: C (Combustion is a profound chemical reaction!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Mixtures and Solutions",
+            "grade": "6",
+            "quarter": "1",
+            "lesson_number": "3",
+            "objectives": [
+                "Differentiate homogeneous mixtures (solutions) from heterogeneous mixtures (suspensions and colloids).",
+                "Identify the components of a solution: solute and solvent.",
+                "Explain factors affecting solubility and demonstrate the Tyndall Effect."
+            ],
+            "content": "A mixture consists of two or more substances physically combined in any proportion where each substance retains its individual chemical identity.\n\nHeterogeneous mixtures have non-uniform composition and visible distinct phases (e.g., fruit salad, oil and water, muddy water).\n\nHomogeneous mixtures (solutions) have a completely uniform appearance throughout. The substance that dissolves is the solute; the dissolving medium is the solvent (water is called the 'universal solvent').\n\nColloids have intermediate particle sizes that do not settle out and scatter beams of light (Tyndall Effect), such as milk, mayonnaise, and fog. Suspensions have large particles that eventually settle to the bottom if left undisturbed, such as calamine lotion or river sediment.\n\nSolubility factors: Solutes dissolve faster with heating (for solids), stirring (agitation), and crushing (reducing particle size).",
+            "slides": [
+                {
+                    "title": "Mixtures and Solutions",
+                    "content": "Grade 6 — Term 1 Science\n\nClassify matter: homogeneous solutions, heterogeneous mixtures, colloids, and suspensions.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Heterogeneous vs Homogeneous",
+                    "content": "The Big Division:\n• Heterogeneous: Non-uniform; visible separate phases\n  - Examples: Halo-halo, oil and vinegar, granite, salad\n• Homogeneous (Solutions): Uniform throughout; single visible phase\n  - Solute: Substance dissolved (lesser amount, e.g., salt, sugar)\n  - Solvent: Dissolving medium (greater amount, e.g., water, alcohol)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The Spectrum: Solution, Colloid, Suspension",
+                    "content": "Particle Size Comparison:\n• Solution (<1 nm): Salt water, air, brass (never settles, clear)\n• Colloid (1–1000 nm): Milk, gelatin, fog, mayonnaise (does not settle, cloudy)\n• Suspension (>1000 nm): Muddy water, calamine, cough syrup (settles upon standing, must shake before use)",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Shine flashlight through water (invisible beam)\nStep 2: Shine flashlight through salt solution (invisible beam)\nStep 3: Shine flashlight through diluted milk (bright beam!)\nStep 4: Confirm Tyndall Effect in colloid"
+                },
+                {
+                    "title": "Factors Affecting Rate of Dissolving",
+                    "content": "How to speed up solid solute dissolution:\n1. Temperature: Increases molecular kinetic collisions\n2. Agitation (Stirring): Brings fresh solvent molecules into contact with solute\n3. Surface Area (Crushing): Exposes more solute particles to solvent",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Quick Quiz: The Tyndall Effect",
+                    "content": "A teacher shines a laser pointer through two beakers. In Beaker A, the beam is invisible. In Beaker B, the beam glows brightly through the liquid. What are Beakers A and B?\nA) Beaker A is a colloid; Beaker B is a true solution\nB) Beaker A is a true solution; Beaker B is a colloid showing the Tyndall Effect\nC) Both are suspensions\nD) Both are pure water\n\nCorrect Answer: B (Colloidal particles scatter light beams!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Separation of Mixtures",
+            "grade": "6",
+            "quarter": "1",
+            "lesson_number": "4",
+            "objectives": [
+                "Explain principles behind physical separation methods: filtration, decantation, evaporation, magnetic separation, sieving, and distillation.",
+                "Select and execute appropriate separation techniques based on the physical properties of mixture components.",
+                "Apply separation processes to municipal water purification and scrap metal recycling."
+            ],
+            "content": "Because substances in a mixture are only physically combined, they can be separated back into pure components using differences in their physical properties (particle size, density, boiling point, magnetic attraction).\n\nTechniques:\n- Decantation: Pouring off a less dense liquid layer from a settled denser sediment or immiscible liquid (e.g., oil from water).\n- Filtration: Passing a mixture through a porous barrier (filter paper) to trap insoluble solid residue while liquid filtrate passes through.\n- Evaporation: Heating a solution until the liquid solvent vaporizes into air, leaving solid solute crystals behind (e.g., harvesting sea salt).\n- Magnetic Separation: Using magnets to extract magnetic materials (iron, nickel, cobalt) from non-magnetic mixtures (e.g., scrap metal sorting).\n- Sieving & Winnowing: Separating particles by size using a mesh screen, or by density using wind currents (e.g., separating rice grain from chaff).\n- Distillation: Vaporizing a liquid and condensing its vapor back into pure liquid in a separate container, separating liquids with different boiling points or purifying freshwater from saltwater.\n\nReal-world applications: Water treatment plants use screening, sedimentation, filtration, and chlorination to provide safe drinking water to cities.",
+            "slides": [
+                {
+                    "title": "Separation of Mixtures",
+                    "content": "Grade 6 — Term 1 Science\n\nTechniques for purifying matter: filtration, evaporation, decantation, distillation, and magnetic separation.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Common Separation Techniques",
+                    "content": "Exploiting physical differences:\n• Decantation: Pouring off top liquid from settled sediment (density difference)\n• Filtration: Using filter paper to trap solid residue from liquid filtrate (particle size)\n• Evaporation: Heating solution to leave dry solute behind (boiling point difference)\n• Magnetic Separation: Pulling out iron\/steel with magnets (magnetic attraction)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Distillation: Collecting the Solvent",
+                    "content": "How simple distillation works:\n1. Boiling flask heats saltwater solution\n2. Water vapor rises, leaving salt behind\n3. Steam passes through water-cooled condenser\n4. Pure condensed liquid water drips into receiving flask\n• Used to desalinate ocean water and produce distilled water!",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Heat saltwater to boiling (100°C)\nStep 2: Steam travels into Liebig condenser\nStep 3: Cold water cools steam back to liquid\nStep 4: Collect pure distilled freshwater"
+                },
+                {
+                    "title": "Municipal Water Treatment Plants",
+                    "content": "How river water becomes safe tap water:\n• Coagulation & Flocculation: Alum binds dirt particles together\n• Sedimentation: Heavy flocs settle to tank floor\n• Sand\/Charcoal Filtration: Traps microscopic suspended particles\n• Chlorination: Kills harmful bacteria and pathogens",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Classroom Separation Challenge",
+                    "content": "How would you separate a mixture of sand, salt, and iron filings?\nA) Heat it until everything burns\nB) 1: Magnet extracts iron; 2: Add water to dissolve salt; 3: Filter out sand; 4: Evaporate water to recover salt\nC) Throw it away\nD) Freeze it into ice\n\nCorrect Answer: B (A logical 4-step physical separation protocol!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        }
+    ],
+    "questions": [
+        {
+            "grade": "6",
+            "topic": "Changes in Matter",
+            "difficulty": "Easy",
+            "text": "According to the Law of Conservation of Mass, what happens to the total mass of matter during a chemical reaction? | A: It remains constant and conserved B: It decreases by 50% C: It increases exponentially D: It disappears completely"
+        },
+        {
+            "grade": "6",
+            "topic": "Changes in Matter",
+            "difficulty": "Easy",
+            "text": "Which form of an effervescent antacid tablet dissolves and reacts fastest in water? | A: Crushed fine powder B: Whole solid tablet C: Half tablet D: Coarse chunk"
+        },
+        {
+            "grade": "6",
+            "topic": "Changes in Matter",
+            "difficulty": "Medium",
+            "text": "Why does food spoil significantly faster on a hot tropical kitchen counter than inside a refrigerator? | A: High temperature increases the rate of enzymatic and microbial chemical decomposition reactions B: Refrigerator destroys bacteria instantly C: Light dissolves food molecules D: Heat adds extra mass to food"
+        },
+        {
+            "grade": "6",
+            "topic": "Changes in Matter",
+            "difficulty": "Medium",
+            "text": "When vinegar reacts with baking soda in an open glass beaker, the scale reading drops. Why? | A: Carbon dioxide gas escaped into the open air B: Mass was destroyed C: The acid dissolved the scale D: Liquid turned into solid ice"
+        },
+        {
+            "grade": "6",
+            "topic": "Changes in Matter",
+            "difficulty": "Hard",
+            "text": "How can you experimentally verify the Law of Conservation of Mass for a gas-producing reaction? | A: Perform the reaction inside a tightly sealed container (closed system) like a flask with a stretched balloon, weighing before and after B: Perform the reaction outside in wind C: Measure volume instead of mass D: Burn the substances openly"
+        },
+        {
+            "grade": "6",
+            "topic": "Physical and Chemical Changes",
+            "difficulty": "Easy",
+            "text": "In a chemical reaction equation, what are the starting substances on the left side called? | A: Reactants B: Products C: Catalysts D: Solutes"
+        },
+        {
+            "grade": "6",
+            "topic": "Physical and Chemical Changes",
+            "difficulty": "Easy",
+            "text": "Which of the following processes represents an irreversible chemical change? | A: Dissolving sugar in iced tea B: Melting an ice cube C: Rusting of an iron ship hull D: Cutting a piece of fabric"
+        },
+        {
+            "grade": "6",
+            "topic": "Physical and Chemical Changes",
+            "difficulty": "Medium",
+            "text": "How does the process of pickling vegetables in vinegar (acetic acid) chemically prevent bacterial decay? | A: Low pH creates an acidic environment that chemically deactivates bacterial enzymes B: Vinegar freezes the vegetables C: Vinegar removes all water D: Vinegar turns vegetables into plastic"
+        },
+        {
+            "grade": "6",
+            "topic": "Physical and Chemical Changes",
+            "difficulty": "Medium",
+            "text": "Why is galvanizing (coating iron with a layer of zinc) effective at preventing rust? | A: Zinc reacts preferentially with oxygen and shields the underlying iron from water and air B: Zinc dissolves iron C: Zinc attracts water D: Zinc turns iron into gold"
+        },
+        {
+            "grade": "6",
+            "topic": "Physical and Chemical Changes",
+            "difficulty": "Hard",
+            "text": "Contrast fractional distillation of crude oil with catalytic cracking in petroleum refining. | A: Distillation is a physical separation based on boiling points; cracking is a chemical change breaking long hydrocarbon chains into smaller fuels B: Both are physical C: Both are chemical D: Distillation creates new molecules"
+        },
+        {
+            "grade": "6",
+            "topic": "Mixtures and Solutions",
+            "difficulty": "Easy",
+            "text": "In a sugar-water solution, what do we call the sugar and what do we call the water? | A: Sugar is the solute; Water is the solvent B: Sugar is solvent; Water is solute C: Both are solutes D: Both are suspensions"
+        },
+        {
+            "grade": "6",
+            "topic": "Mixtures and Solutions",
+            "difficulty": "Easy",
+            "text": "Which of the following is considered a homogeneous mixture? | A: Freshly brewed clear tea B: Fruit salad C: Oil and water mixture D: Sand in water"
+        },
+        {
+            "grade": "6",
+            "topic": "Mixtures and Solutions",
+            "difficulty": "Medium",
+            "text": "What is the Tyndall Effect, and how does it differentiate a true solution from a colloid? | A: The scattering of light beams by colloidal particles, which does not happen in true solutions B: The settling of heavy solids C: The evaporation of liquids D: The change in temperature"
+        },
+        {
+            "grade": "6",
+            "topic": "Mixtures and Solutions",
+            "difficulty": "Medium",
+            "text": "Why does a powdered sugar crystal dissolve much faster in hot tea than an equal mass rock candy crystal in iced tea? | A: Higher temperature increases kinetic collisions and powdered sugar has far greater surface area B: Hot tea has less volume C: Rock candy is insoluble in water D: Cold tea repels sugar molecules"
+        },
+        {
+            "grade": "6",
+            "topic": "Mixtures and Solutions",
+            "difficulty": "Hard",
+            "text": "Classify human blood: why is it considered both a solution, a colloid, and a suspension? | A: Blood plasma is a solution of dissolved salts\/glucose, contains colloidal albumin proteins, and suspends red\/white blood cells that settle if centrifuged B: Blood is purely a solid C: Blood has no water D: Blood cannot be separated"
+        },
+        {
+            "grade": "6",
+            "topic": "Separation of Mixtures",
+            "difficulty": "Easy",
+            "text": "Which separation method is used to harvest solid sea salt from ocean seawater? | A: Evaporation B: Magnetic separation C: Decantation D: Freezing"
+        },
+        {
+            "grade": "6",
+            "topic": "Separation of Mixtures",
+            "difficulty": "Easy",
+            "text": "How can scrap metal recycling facilities quickly separate iron cans from aluminum cans? | A: By using large industrial electromagnets B: By melting all cans C: By hand picking D: By floating them in water"
+        },
+        {
+            "grade": "6",
+            "topic": "Separation of Mixtures",
+            "difficulty": "Medium",
+            "text": "What is the main difference between evaporation and simple distillation of saltwater? | A: Evaporation loses water vapor to the air; distillation condenses and collects the pure water B: Distillation produces toxic gas C: Evaporation requires zero heat D: Distillation only works on solids"
+        },
+        {
+            "grade": "6",
+            "topic": "Separation of Mixtures",
+            "difficulty": "Medium",
+            "text": "Explain why pouring muddy water through filter paper leaves clean filtrate while the mud stays on top. | A: Mud particles are larger than the microscopic pores in filter paper, while water molecules pass through B: Paper dissolves mud C: Paper is magnetic D: Mud turns into air"
+        },
+        {
+            "grade": "6",
+            "topic": "Separation of Mixtures",
+            "difficulty": "Hard",
+            "text": "Formulate a 4-step protocol to completely separate a dry mixture of iron filings, table salt, sawdust, and small pebbles without destroying any component. | A: 1: Magnet removes iron; 2: Sieve removes pebbles; 3: Add water so sawdust floats (skim off); 4: Filter sand and evaporate saltwater to get pure salt B: Burn the mixture C: Dissolve everything in acid D: Throw into ocean"
+        }
+    ]
+}

@@ -82,37 +82,68 @@ function computeGrades(&$record) {
     $record['transmuted_grade'] = $transmuted;
 }
 
-$method = $_SERVER['REQUEST_METHOD'];
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') { exit(0); }
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 // Ensure table exists
 try {
-    $pdo->exec("CREATE TABLE IF NOT EXISTS student_grades (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        student_name VARCHAR(100) NOT NULL,
-        grade_level VARCHAR(10) NOT NULL DEFAULT '4',
-        section VARCHAR(10) NOT NULL DEFAULT 'A',
-        quarter INT NOT NULL DEFAULT 1,
-        gender VARCHAR(10) DEFAULT 'M',
-        ww_scores JSON DEFAULT NULL,
-        ww_total DECIMAL(8,2) DEFAULT 0,
-        ww_ps DECIMAL(8,2) DEFAULT 0,
-        ww_ws DECIMAL(8,2) DEFAULT 0,
-        pt_scores JSON DEFAULT NULL,
-        pt_total DECIMAL(8,2) DEFAULT 0,
-        pt_ps DECIMAL(8,2) DEFAULT 0,
-        pt_ws DECIMAL(8,2) DEFAULT 0,
-        qa_score DECIMAL(8,2) DEFAULT 0,
-        qa_ps DECIMAL(8,2) DEFAULT 0,
-        qa_ws DECIMAL(8,2) DEFAULT 0,
-        initial_grade DECIMAL(8,2) DEFAULT 0,
-        transmuted_grade INT DEFAULT 0,
-        ww_highest JSON DEFAULT NULL,
-        pt_highest JSON DEFAULT NULL,
-        qa_highest DECIMAL(8,2) DEFAULT 0,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        UNIQUE KEY unique_student_quarter (student_name, grade_level, section, quarter)
-    )");
+    if (is_sqlite()) {
+        $pdo->exec("CREATE TABLE IF NOT EXISTS student_grades (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            student_name TEXT NOT NULL,
+            grade_level TEXT NOT NULL DEFAULT '4',
+            section TEXT NOT NULL DEFAULT 'A',
+            quarter INTEGER NOT NULL DEFAULT 1,
+            gender TEXT DEFAULT 'M',
+            ww_scores TEXT,
+            ww_total REAL DEFAULT 0,
+            ww_ps REAL DEFAULT 0,
+            ww_ws REAL DEFAULT 0,
+            pt_scores TEXT,
+            pt_total REAL DEFAULT 0,
+            pt_ps REAL DEFAULT 0,
+            pt_ws REAL DEFAULT 0,
+            qa_score REAL DEFAULT 0,
+            qa_ps REAL DEFAULT 0,
+            qa_ws REAL DEFAULT 0,
+            initial_grade REAL DEFAULT 0,
+            transmuted_grade INTEGER DEFAULT 0,
+            ww_highest TEXT,
+            pt_highest TEXT,
+            qa_highest REAL DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(student_name, grade_level, section, quarter)
+        )");
+    } else {
+        $pdo->exec("CREATE TABLE IF NOT EXISTS student_grades (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            student_name VARCHAR(100) NOT NULL,
+            grade_level VARCHAR(10) NOT NULL DEFAULT '4',
+            section VARCHAR(10) NOT NULL DEFAULT 'A',
+            quarter INT NOT NULL DEFAULT 1,
+            gender VARCHAR(10) DEFAULT 'M',
+            ww_scores JSON DEFAULT NULL,
+            ww_total DECIMAL(8,2) DEFAULT 0,
+            ww_ps DECIMAL(8,2) DEFAULT 0,
+            ww_ws DECIMAL(8,2) DEFAULT 0,
+            pt_scores JSON DEFAULT NULL,
+            pt_total DECIMAL(8,2) DEFAULT 0,
+            pt_ps DECIMAL(8,2) DEFAULT 0,
+            pt_ws DECIMAL(8,2) DEFAULT 0,
+            qa_score DECIMAL(8,2) DEFAULT 0,
+            qa_ps DECIMAL(8,2) DEFAULT 0,
+            qa_ws DECIMAL(8,2) DEFAULT 0,
+            initial_grade DECIMAL(8,2) DEFAULT 0,
+            transmuted_grade INT DEFAULT 0,
+            ww_highest JSON DEFAULT NULL,
+            pt_highest JSON DEFAULT NULL,
+            qa_highest DECIMAL(8,2) DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            UNIQUE KEY unique_student_quarter (student_name, grade_level, section, quarter)
+        )");
+    }
 } catch (Exception $e) {
     // table may already exist
 }
@@ -165,8 +196,32 @@ if ($method === 'POST') {
     if (isset($_FILES['xlsx'])) {
         $action = 'import_xlsx';
     } else {
-        $input = json_decode(file_get_contents('php://input'), true);
+        $rawInput = file_get_contents('php://input');
+        $input = json_decode($rawInput, true);
+        if (!$input && !empty($_POST)) {
+            $input = $_POST;
+        }
         $action = $input['action'] ?? '';
+    }
+
+    if ($action === 'calculate') {
+        $data = $input['data'] ?? $input;
+        $record = [
+            'ww_scores' => is_string($data['ww_scores'] ?? '') ? $data['ww_scores'] : json_encode($data['ww_scores'] ?? []),
+            'pt_scores' => is_string($data['pt_scores'] ?? '') ? $data['pt_scores'] : json_encode($data['pt_scores'] ?? []),
+            'qa_score' => floatval($data['qa_score'] ?? 0),
+            'ww_highest' => is_string($data['ww_highest'] ?? '') ? $data['ww_highest'] : json_encode($data['ww_highest'] ?? []),
+            'pt_highest' => is_string($data['pt_highest'] ?? '') ? $data['pt_highest'] : json_encode($data['pt_highest'] ?? []),
+            'qa_highest' => floatval($data['qa_highest'] ?? 0)
+        ];
+        computeGrades($record);
+        echo json_encode([
+            'status' => 'success',
+            'initial_grade' => $record['initial_grade'],
+            'transmuted_grade' => $record['transmuted_grade'],
+            'breakdown' => $record
+        ]);
+        exit;
     }
 
     if ($action === 'save_single') {
@@ -199,15 +254,28 @@ if ($method === 'POST') {
         ];
         computeGrades($record);
 
-        $stmt = $pdo->prepare("INSERT INTO student_grades 
-            (student_name, grade_level, section, quarter, gender, ww_scores, ww_total, ww_ps, ww_ws, pt_scores, pt_total, pt_ps, pt_ws, qa_score, qa_ps, qa_ws, initial_grade, transmuted_grade, ww_highest, pt_highest, qa_highest)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-            ON DUPLICATE KEY UPDATE
-            gender=VALUES(gender), ww_scores=VALUES(ww_scores), ww_total=VALUES(ww_total), ww_ps=VALUES(ww_ps), ww_ws=VALUES(ww_ws),
-            pt_scores=VALUES(pt_scores), pt_total=VALUES(pt_total), pt_ps=VALUES(pt_ps), pt_ws=VALUES(pt_ws),
-            qa_score=VALUES(qa_score), qa_ps=VALUES(qa_ps), qa_ws=VALUES(qa_ws),
-            initial_grade=VALUES(initial_grade), transmuted_grade=VALUES(transmuted_grade),
-            ww_highest=VALUES(ww_highest), pt_highest=VALUES(pt_highest), qa_highest=VALUES(qa_highest)");
+        if (is_sqlite()) {
+            $stmt = $pdo->prepare("INSERT INTO student_grades 
+                (student_name, grade_level, section, quarter, gender, ww_scores, ww_total, ww_ps, ww_ws, pt_scores, pt_total, pt_ps, pt_ws, qa_score, qa_ps, qa_ws, initial_grade, transmuted_grade, ww_highest, pt_highest, qa_highest)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                ON CONFLICT(student_name, grade_level, section, quarter) DO UPDATE SET
+                gender=excluded.gender, ww_scores=excluded.ww_scores, ww_total=excluded.ww_total, ww_ps=excluded.ww_ps, ww_ws=excluded.ww_ws,
+                pt_scores=excluded.pt_scores, pt_total=excluded.pt_total, pt_ps=excluded.pt_ps, pt_ws=excluded.pt_ws,
+                qa_score=excluded.qa_score, qa_ps=excluded.qa_ps, qa_ws=excluded.qa_ws,
+                initial_grade=excluded.initial_grade, transmuted_grade=excluded.transmuted_grade,
+                ww_highest=excluded.ww_highest, pt_highest=excluded.pt_highest, qa_highest=excluded.qa_highest,
+                updated_at=CURRENT_TIMESTAMP");
+        } else {
+            $stmt = $pdo->prepare("INSERT INTO student_grades 
+                (student_name, grade_level, section, quarter, gender, ww_scores, ww_total, ww_ps, ww_ws, pt_scores, pt_total, pt_ps, pt_ws, qa_score, qa_ps, qa_ws, initial_grade, transmuted_grade, ww_highest, pt_highest, qa_highest)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                ON DUPLICATE KEY UPDATE
+                gender=VALUES(gender), ww_scores=VALUES(ww_scores), ww_total=VALUES(ww_total), ww_ps=VALUES(ww_ps), ww_ws=VALUES(ww_ws),
+                pt_scores=VALUES(pt_scores), pt_total=VALUES(pt_total), pt_ps=VALUES(pt_ps), pt_ws=VALUES(pt_ws),
+                qa_score=VALUES(qa_score), qa_ps=VALUES(qa_ps), qa_ws=VALUES(qa_ws),
+                initial_grade=VALUES(initial_grade), transmuted_grade=VALUES(transmuted_grade),
+                ww_highest=VALUES(ww_highest), pt_highest=VALUES(pt_highest), qa_highest=VALUES(qa_highest)");
+        }
         
         $stmt->execute([
             $name, $gradeLevel, $section, $quarter, $gender,
@@ -250,15 +318,28 @@ if ($method === 'POST') {
             computeGrades($record);
 
             try {
-                $stmt = $pdo->prepare("INSERT INTO student_grades 
-                    (student_name, grade_level, section, quarter, gender, ww_scores, ww_total, ww_ps, ww_ws, pt_scores, pt_total, pt_ps, pt_ws, qa_score, qa_ps, qa_ws, initial_grade, transmuted_grade, ww_highest, pt_highest, qa_highest)
-                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-                    ON DUPLICATE KEY UPDATE
-                    gender=VALUES(gender), ww_scores=VALUES(ww_scores), ww_total=VALUES(ww_total), ww_ps=VALUES(ww_ps), ww_ws=VALUES(ww_ws),
-                    pt_scores=VALUES(pt_scores), pt_total=VALUES(pt_total), pt_ps=VALUES(pt_ps), pt_ws=VALUES(pt_ws),
-                    qa_score=VALUES(qa_score), qa_ps=VALUES(qa_ps), qa_ws=VALUES(qa_ws),
-                    initial_grade=VALUES(initial_grade), transmuted_grade=VALUES(transmuted_grade),
-                    ww_highest=VALUES(ww_highest), pt_highest=VALUES(pt_highest), qa_highest=VALUES(qa_highest)");
+                if (is_sqlite()) {
+                    $stmt = $pdo->prepare("INSERT INTO student_grades 
+                        (student_name, grade_level, section, quarter, gender, ww_scores, ww_total, ww_ps, ww_ws, pt_scores, pt_total, pt_ps, pt_ws, qa_score, qa_ps, qa_ws, initial_grade, transmuted_grade, ww_highest, pt_highest, qa_highest)
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                        ON CONFLICT(student_name, grade_level, section, quarter) DO UPDATE SET
+                        gender=excluded.gender, ww_scores=excluded.ww_scores, ww_total=excluded.ww_total, ww_ps=excluded.ww_ps, ww_ws=excluded.ww_ws,
+                        pt_scores=excluded.pt_scores, pt_total=excluded.pt_total, pt_ps=excluded.pt_ps, pt_ws=excluded.pt_ws,
+                        qa_score=excluded.qa_score, qa_ps=excluded.qa_ps, qa_ws=excluded.qa_ws,
+                        initial_grade=excluded.initial_grade, transmuted_grade=excluded.transmuted_grade,
+                        ww_highest=excluded.ww_highest, pt_highest=excluded.pt_highest, qa_highest=excluded.qa_highest,
+                        updated_at=CURRENT_TIMESTAMP");
+                } else {
+                    $stmt = $pdo->prepare("INSERT INTO student_grades 
+                        (student_name, grade_level, section, quarter, gender, ww_scores, ww_total, ww_ps, ww_ws, pt_scores, pt_total, pt_ps, pt_ws, qa_score, qa_ps, qa_ws, initial_grade, transmuted_grade, ww_highest, pt_highest, qa_highest)
+                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                        ON DUPLICATE KEY UPDATE
+                        gender=VALUES(gender), ww_scores=VALUES(ww_scores), ww_total=VALUES(ww_total), ww_ps=VALUES(ww_ps), ww_ws=VALUES(ww_ws),
+                        pt_scores=VALUES(pt_scores), pt_total=VALUES(pt_total), pt_ps=VALUES(pt_ps), pt_ws=VALUES(pt_ws),
+                        qa_score=VALUES(qa_score), qa_ps=VALUES(qa_ps), qa_ws=VALUES(qa_ws),
+                        initial_grade=VALUES(initial_grade), transmuted_grade=VALUES(transmuted_grade),
+                        ww_highest=VALUES(ww_highest), pt_highest=VALUES(pt_highest), qa_highest=VALUES(qa_highest)");
+                }
                 
                 $stmt->execute([
                     $name, $gradeLevel, $section, $quarter, $gender,

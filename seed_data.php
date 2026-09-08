@@ -80,10 +80,22 @@ $studentsBase = [
 ];
 
 $topicsByGrade = [
-    '3' => ['Living Things', 'Matter', 'Five Senses'],
-    '4' => ['Properties of Materials', 'Plant and Animal Systems', 'Force and Movement', 'Weather and Sun'],
-    '5' => ['States of Matter', 'Human Reproduction', 'Electricity and Circuits', 'Solar System'],
-    '6' => ['Mixtures and Solutions', 'Vertebrates and Invertebrates', 'Patterns of Motion', 'Volcanoes and Seasons']
+    '3' => [
+        'Scientific Inquiry in Life Science', 'Characteristics and Life Processes of Living Things', 'Basic Needs of Living Things', 'Structure and Function of Organisms', 'Interactions Among Living Things and Their Environment', 'Environmental Stewardship and Conservation',
+        'Properties and Uses of Materials', 'Changes in Materials and Environmental Responsibility', 'Earth Materials and Their Uses'
+    ],
+    '4' => [
+        'Systems in Animals and Plants', 'Plant and Animal Habitats', 'Life Cycles of Plants and Animals', 'Animals and the Food They Eat', 'Food Chains', 'Water and Living Things', 'Soil and Plant Growth',
+        'Physical Properties of Materials', 'Chemical Properties of Materials', 'Effect of Temperature on Materials', 'Physical and Chemical Changes', 'Responsible Use and Management of Materials'
+    ],
+    '5' => [
+        'Human Body Systems (Digestive, Respiratory, Reproductive System)', 'Classification and Reproduction of Living Things', 'Life Cycles of Living Things', 'Plant and Animal Adaptations',
+        'Properties of Matter', 'States of Matter', 'Changes in Matter', 'Scientific Investigation of Matter'
+    ],
+    '6' => [
+        'Human Body Systems (Circulatory and Nervous Systems)', 'Reproduction in Plants', 'Vertebrates and Invertebrates', 'Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)',
+        'Changes in Matter', 'Physical and Chemical Changes', 'Mixtures and Solutions', 'Separation of Mixtures'
+    ]
 ];
 
 $diffMap = [
@@ -92,13 +104,22 @@ $diffMap = [
     'Hard' => 5
 ];
 
+function clearTable($pdo, $table) {
+    if (is_sqlite()) {
+        $pdo->exec("DELETE FROM $table");
+        @$pdo->exec("DELETE FROM sqlite_sequence WHERE name = '$table'");
+    } else {
+        $pdo->exec("SET FOREIGN_KEY_CHECKS=0");
+        $pdo->exec("TRUNCATE TABLE $table");
+        $pdo->exec("SET FOREIGN_KEY_CHECKS=1");
+    }
+}
+
 try {
     echo "<h2>🌱 Seeding ILikeSci Database...</h2>";
 
     // 1. Seed curriculum_lessons
-    $pdo->exec("SET FOREIGN_KEY_CHECKS=0");
-    $pdo->exec("TRUNCATE TABLE curriculum_lessons");
-    $pdo->exec("SET FOREIGN_KEY_CHECKS=1");
+    clearTable($pdo, 'curriculum_lessons');
 
     $stmtLesson = $pdo->prepare("INSERT INTO curriculum_lessons (grade, quarter, lesson_number, topic, content, objectives) VALUES (?, ?, ?, ?, ?, ?)");
     $lessonCounter = [];
@@ -115,19 +136,21 @@ try {
     echo "<p>✅ Seeded " . count($lessonsData) . " curriculum lessons (Grades 3-6)</p>";
 
     // 2. Seed questions (without duplicating)
-    $stmtQ = $pdo->prepare("INSERT INTO questions (grade, topic, difficulty, question_text) SELECT ?, ?, ?, ? FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM questions WHERE grade = ? AND topic = ? AND question_text = ?)");
+    $stmtQCheck = $pdo->prepare("SELECT COUNT(*) FROM questions WHERE grade = ? AND topic = ? AND question_text = ?");
+    $stmtQInsert = $pdo->prepare("INSERT INTO questions (grade, topic, difficulty, question_text) VALUES (?, ?, ?, ?)");
     $qCount = 0;
     foreach ($questionsData as $q) {
-        $stmtQ->execute([$q[0], $q[1], $q[2], $q[3], $q[0], $q[1], $q[3]]);
-        $qCount += $stmtQ->rowCount();
+        $stmtQCheck->execute([$q[0], $q[1], $q[3]]);
+        if ($stmtQCheck->fetchColumn() == 0) {
+            $stmtQInsert->execute([$q[0], $q[1], $q[2], $q[3]]);
+            $qCount++;
+        }
     }
     echo "<p>✅ Seeded $qCount questions (Grades 3-6)</p>";
 
     // 3. Seed students & recitation records
-    $pdo->exec("SET FOREIGN_KEY_CHECKS=0");
-    $pdo->exec("TRUNCATE TABLE recitation_records");
-    $pdo->exec("TRUNCATE TABLE students");
-    $pdo->exec("SET FOREIGN_KEY_CHECKS=1");
+    clearTable($pdo, 'recitation_records');
+    clearTable($pdo, 'students');
 
     $stmtStudent = $pdo->prepare("INSERT INTO students (id, name, grade, section, recitations, total_score) VALUES (?, ?, ?, ?, ?, ?)");
     $stmtRecitation = $pdo->prepare("INSERT INTO recitation_records (student_id, topic, difficulty, points, is_correct, created_at) VALUES (?, ?, ?, ?, ?, ?)");
@@ -186,9 +209,7 @@ try {
     echo "<p>✅ Seeded $totalRecitationsCount realistic recitation records for analysis & E-Class grading</p>";
 
     // 4. Seed student_grades
-    $pdo->exec("SET FOREIGN_KEY_CHECKS=0");
-    $pdo->exec("TRUNCATE TABLE student_grades");
-    $pdo->exec("SET FOREIGN_KEY_CHECKS=1");
+    clearTable($pdo, 'student_grades');
 
     $stmtGrade = $pdo->prepare("INSERT INTO student_grades (student_name, grade_level, section, quarter, gender, ww_scores, ww_total, ww_ps, ww_ws, pt_scores, pt_total, pt_ps, pt_ws, qa_score, qa_ps, qa_ws, initial_grade, transmuted_grade, ww_highest, pt_highest, qa_highest) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -250,7 +271,11 @@ try {
             $seededGradesCount++;
         }
     }
-    echo "<p>✅ Seeded $seededGradesCount student grade entries (Q1) into student_grades table</p>";
+    // 5. Seed Official MATATAG Matter and Materials Curriculum & Presentation Slides
+    require_once __DIR__ . '/seed_matter_materials.php';
+
+    // 6. Seed Official MATATAG Life Science Curriculum & Presentation Slides
+    require_once __DIR__ . '/seed_life_science.php';
 
     echo "<h3>🎉 Database seeded successfully!</h3>";
     echo "<p><a href='index.html'>Go to Dashboard →</a></p>";

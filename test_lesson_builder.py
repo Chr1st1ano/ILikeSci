@@ -3,9 +3,26 @@ import json
 import sys
 import io
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', line_buffering=True)
 
-API_URL = "http://localhost/ILikeSci/lessons_api.php"
+CANDIDATE_URLS = [
+    "http://127.0.0.1:8000/lessons_api.php",
+    "http://localhost/ILikeSci/lessons_api.php",
+    "http://localhost:8000/lessons_api.php"
+]
+
+def find_working_api_url():
+    for url in CANDIDATE_URLS:
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'TestRunner'})
+            with urllib.request.urlopen(req, timeout=1.5) as resp:
+                if resp.status == 200:
+                    return url
+        except Exception:
+            continue
+    return CANDIDATE_URLS[0]
+
+API_URL = find_working_api_url()
 
 def post_json(data):
     req = urllib.request.Request(

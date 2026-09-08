@@ -1,0 +1,304 @@
+{
+    "title": "DepEd Science MATATAG Curriculum — Grade 5 Matter and Materials",
+    "grade": "5",
+    "customLessons": [
+        {
+            "title": "Properties of Matter",
+            "grade": "5",
+            "quarter": "1",
+            "lesson_number": "1",
+            "objectives": [
+                "Differentiate intensive properties (density, boiling point, hardness) from extensive properties (mass, volume, length).",
+                "Measure and calculate mass, volume, and density (d = m\/V) using laboratory instruments.",
+                "Explain why intensive properties are essential for identifying unknown materials and substances."
+            ],
+            "content": "Matter is defined by physical and chemical properties that can be quantified and compared.\n\nExtensive properties depend on the amount of matter in a sample. Examples include mass (grams), volume (milliliters\/cubic centimeters), and length. If you double the amount of water, its mass and volume double.\n\nIntensive properties do NOT depend on the amount of matter. Examples include density, boiling point, melting point, color, and electrical conductivity. 1 drop of pure water and 1 gallon of pure water both have a density of 1.0 g\/cm³ and boil at 100°C at sea level.\n\nCalculating density (d = mass \/ volume) allows scientists to identify unknown minerals and materials accurately.",
+            "slides": [
+                {
+                    "title": "Properties of Matter",
+                    "content": "Grade 5 — Term 1 Science\n\nMaster the distinction between extensive and intensive properties and calculate density (d = m\/V).",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Extensive vs Intensive Properties",
+                    "content": "Comparing the two property classes:\n• Extensive Properties: Depend on sample size\n  - Mass (g, kg)\n  - Volume (mL, cm³)\n  - Length & Total Energy\n• Intensive Properties: Independent of sample size\n  - Density (1.0 g\/cm³ for water)\n  - Boiling point (100°C for water)\n  - Color, Odor, Hardness, and Conductivity",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The Density Formula in Practice",
+                    "content": "Formula: d = m \/ V (Density = Mass ÷ Volume)\n\n• Mass is measured using a beam balance or electronic digital scale (grams).\n• Volume is measured using a graduated cylinder via liquid displacement:\n  V_object = V_final - V_initial\n• Units: g\/cm³ (for solids) or g\/mL (for liquids).",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Weigh sample on digital scale (m)\nStep 2: Fill graduated cylinder to 50mL\nStep 3: Submerge object, record new level (V)\nStep 4: Divide mass by volume (d = m\/V)"
+                },
+                {
+                    "title": "Laboratory Mystery: Real Gold vs Pyrite",
+                    "content": "How can density identify \"Fool's Gold\"?\n\n• Sample Mass: 38.6 g, Volume: 2.0 mL\n• Calculated Density: 38.6 \/ 2.0 = 19.3 g\/cm³\n• Pure Gold density is exactly 19.3 g\/cm³.\n• Iron Pyrite (Fool's Gold) density is only 5.0 g\/cm³.\n• Conclusion: The sample is genuine pure gold!",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Classroom Calculation Check",
+                    "content": "A rock has a mass of 120 grams and displaces 40 mL of water. What is its density?\nA) 3.0 g\/cm³\nB) 0.33 g\/cm³\nC) 4,800 g\/cm³\nD) 80 g\/cm³\n\nCorrect Answer: A (120 g \/ 40 mL = 3.0 g\/cm³)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "States of Matter",
+            "grade": "5",
+            "quarter": "1",
+            "lesson_number": "2",
+            "objectives": [
+                "Describe the Kinetic Molecular Theory of matter (particle arrangement, motion, and attraction).",
+                "Compare the physical and molecular properties of solids, liquids, and gases.",
+                "Explain the fourth state of matter (plasma) and where it is found in the cosmos."
+            ],
+            "content": "All matter is made of tiny, constantly moving particles (atoms and molecules). The kinetic energy of these particles determines the state of matter.\n\nIn solids, particles are packed tightly in fixed, orderly arrangements; they vibrate in place and have strong intermolecular attractions, giving solids definite shape and volume.\n\nIn liquids, particles have more energy, slide past one another fluidly, and have moderate attraction; liquids have definite volume but take the shape of their container.\n\nIn gases, particles possess high kinetic energy, fly freely at high speeds, and have negligible attraction; gases expand to fill the entire volume and shape of their container.\n\nPlasma is an ionized gas of free electrons and positive ions formed at ultra-high temperatures. It is found in stars, lightning bolts, auroras, and neon lights, making it the most abundant state of matter in the universe.",
+            "slides": [
+                {
+                    "title": "States of Matter & Molecular Physics",
+                    "content": "Grade 5 — Term 1 Science\n\nExamine matter at the particulate level: solids, liquids, gases, and high-energy plasma.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Kinetic Molecular Theory (KMT)",
+                    "content": "Fundamental Principles of KMT:\n1. All matter consists of extremely tiny particles (atoms\/molecules)\n2. Particles are in constant, random motion\n3. Higher temperature = Higher average kinetic energy and velocity\n4. Attractive forces hold particles together unless overcome by heat",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Solid vs Liquid vs Gas at Particle Level",
+                    "content": "Comparative Particle Matrix:\n• Solid: Rigid lattice, tightly packed, vibrates in place, definite shape and volume\n• Liquid: Close together, free to slide past one another, definite volume, takes container shape\n• Gas: Far apart, high-speed chaotic collisions, no definite shape, no definite volume (compressible)",
+                    "mediaType": "step",
+                    "mediaUrl": "Solid: Low energy, locked lattice\nLiquid: Medium energy, sliding particles\nGas: High energy, high velocity collisions\nPlasma: Extreme energy, stripped ions & electrons"
+                },
+                {
+                    "title": "Plasma — The Fourth State of Matter",
+                    "content": "Beyond gas lies Plasma:\n• When gas is heated to super-high temperatures, electrons are stripped away from nuclei\n• Consists of positively charged ions and free electrons\n• Conducts electricity and responds strongly to magnetic fields\n• Found in: The Sun and stars (99% of visible universe), lightning bolts, neon signs, and auroras",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Thinking Challenge: Tire Pressure",
+                    "content": "Why does automobile tire pressure increase significantly after driving for hours on a hot asphalt highway?\nA) More air entered the tire from the road\nB) Heat increased the kinetic energy of air molecules inside, causing more frequent, forceful collisions against tire walls\nC) The rubber contracted into a smaller size\nD) The tire absorbed water vapor\n\nCorrect Answer: B (Higher temperature increases gas pressure!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Changes in Matter",
+            "grade": "5",
+            "quarter": "1",
+            "lesson_number": "3",
+            "objectives": [
+                "Classify changes in matter as endothermic (heat-absorbing) or exothermic (heat-releasing).",
+                "Explain energy transfers during phase changes (melting, vaporization, condensation, freezing).",
+                "Investigate everyday chemical changes such as cellular respiration, digestion, and combustion."
+            ],
+            "content": "Changes in matter are accompanied by energy transformations. Heat energy flows between substances and their surroundings.\n\nEndothermic changes absorb heat from the surroundings. When ice melts or water boils, particles absorb thermal energy to break intermolecular attractions. As a result, the immediate surroundings feel cooler.\n\nExothermic changes release heat into the surroundings. When water freezes or water vapor condenses, particles release thermal energy to lock into place. Combustion (burning wood or gas) releases enormous amounts of thermal energy and light.\n\nBiological systems rely on continuous changes in matter: our digestive system breaks food into glucose molecules, which our cells burn with oxygen during cellular respiration to release metabolic energy (ATP).",
+            "slides": [
+                {
+                    "title": "Changes in Matter & Energy Transfers",
+                    "content": "Grade 5 — Term 1 Science\n\nTrack heat energy flow: endothermic (absorbing heat) vs exothermic (releasing heat).",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Endothermic vs Exothermic Reactions",
+                    "content": "Direction of Thermal Energy Flow:\n• Endothermic (Heat Enters):\n  - System absorbs heat from surroundings\n  - Surroundings feel COLD\n  - Examples: Ice melting, water boiling, cold packs, photosynthesis\n• Exothermic (Heat Exits):\n  - System releases heat to surroundings\n  - Surroundings feel HOT\n  - Examples: Fire burning, fireworks, hand warmers, freezing",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Phase Changes & Latent Heat",
+                    "content": "Thermal shifts during phase transitions:\n• Melting & Boiling are ENDOTHERMIC: Heat energy breaks particle bonds\n• Freezing & Condensation are EXOTHERMIC: Heat energy is released as bonds form\n• While changing state, temperature stays constant at the plateau point!",
+                    "mediaType": "step",
+                    "mediaUrl": "Solid (-10°C) -> Add heat -> Melts at 0°C\nLiquid (0°C to 100°C) -> Add heat -> Boils at 100°C\nGas (>100°C) -> Freely expanding vapor"
+                },
+                {
+                    "title": "Biological Energy Changes: Cellular Respiration",
+                    "content": "Energy in living cells:\nGlucose (C6H12O6) + 6O2 -> 6CO2 + 6H2O + Energy (ATP)\n\n• Chemical transformation in mitochondria\n• Exothermic biological reaction providing body warmth and muscular movement",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Quick Quiz: Cold Rubbing Alcohol",
+                    "content": "When you apply rubbing alcohol to your skin, why does your arm immediately feel cold?\nA) Alcohol freezes on your skin\nB) Alcohol absorbs heat from your skin as it rapidly evaporates (an endothermic change for the liquid)\nC) Alcohol turns into ice\nD) Alcohol chemically reacts to produce cold acid\n\nCorrect Answer: B (Evaporative cooling absorbs your body heat!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Scientific Investigation of Matter",
+            "grade": "5",
+            "quarter": "1",
+            "lesson_number": "4",
+            "objectives": [
+                "Formulate testable hypotheses, identify independent, dependent, and controlled variables.",
+                "Design and conduct a fair test investigation on the physical and chemical properties of matter.",
+                "Collect quantitative experimental data, construct data tables, and draw valid conclusions."
+            ],
+            "content": "Science advances through systematic inquiry. The scientific method provides a structured approach: Problem -> Hypothesis -> Controlled Experiment -> Data Collection -> Analysis -> Conclusion.\n\nA fair test requires controlling variables:\n- Independent Variable (IV): the single condition the scientist deliberately changes (e.g., water temperature).\n- Dependent Variable (DV): the observable outcome that is measured (e.g., time taken for sugar to dissolve).\n- Controlled Variables (CV): all other factors kept strictly identical (volume of water, amount of sugar, stirring speed).\n\nReplicating trials (running at least 3 trials) ensures results are reliable, objective, and reproducible.",
+            "slides": [
+                {
+                    "title": "Scientific Investigation of Matter",
+                    "content": "Grade 5 — Term 1 Science\n\nLearn the scientific method: formulating hypotheses, controlling variables, and analyzing fair tests.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The Scientific Method Steps",
+                    "content": "Systematic Inquiry Cycle:\n1. Question \/ Problem: What are we investigating?\n2. Hypothesis: Testable \"If... then... because...\" prediction\n3. Controlled Experiment: Designing the fair test\n4. Data Gathering: Quantitative measurements (numbers) and qualitative notes (observations)\n5. Analysis & Conclusion: Does evidence support the hypothesis?",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Variables in a Fair Test",
+                    "content": "Understanding the three variable types:\n• Independent Variable (IV): The ONE factor you change (e.g., Water Temperature: 20°C, 50°C, 80°C)\n• Dependent Variable (DV): What you measure (e.g., Dissolving time in seconds)\n• Controlled Variables (CV): Kept EXACTLY equal (volume of water, mass of solute, stirring rate)",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Set up 3 identical beakers\nStep 2: Add 100mL water at 20°C, 50°C, 80°C\nStep 3: Add 10g sugar simultaneously\nStep 4: Time until complete dissolution"
+                },
+                {
+                    "title": "Data Tables, Replications, & Graphs",
+                    "content": "Why run 3 experimental trials?\n\n• Human error and slight timing variations happen.\n• Calculating the average of Trials 1, 2, and 3 produces trustworthy scientific data:\n  Average = (T1 + T2 + T3) \/ 3\n• Plotting temperature vs time reveals the inverse dissolving curve.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Quick Quiz: Variable Identification",
+                    "content": "In an experiment testing which brand of paper towel absorbs the most water, what is the Independent Variable?\nA) The volume of water absorbed\nB) The brand of paper towel used\nC) The temperature of the room\nD) The size of the measuring cup\n\nCorrect Answer: B (The brand is the single factor deliberately tested and changed!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        }
+    ],
+    "questions": [
+        {
+            "grade": "5",
+            "topic": "Properties of Matter",
+            "difficulty": "Easy",
+            "text": "Which of the following is an intensive property that does NOT change when sample size changes? | A: Mass B: Volume C: Density D: Length"
+        },
+        {
+            "grade": "5",
+            "topic": "Properties of Matter",
+            "difficulty": "Easy",
+            "text": "What laboratory instrument is used to accurately measure liquid volume and displaced solid volume? | A: Spring scale B: Graduated cylinder C: Meter stick D: Barometer"
+        },
+        {
+            "grade": "5",
+            "topic": "Properties of Matter",
+            "difficulty": "Medium",
+            "text": "A metal cube has a mass of 150 grams and a volume of 30 cm³. What is its density? | A: 5.0 g\/cm³ B: 0.2 g\/cm³ C: 4,500 g\/cm³ D: 180 g\/cm³"
+        },
+        {
+            "grade": "5",
+            "topic": "Properties of Matter",
+            "difficulty": "Medium",
+            "text": "Why does a 1-liter bottle of pure water have the exact same density as a 10-milliliter test tube of pure water? | A: Density is an intensive property defined by the ratio of mass to volume, which remains constant B: Water has no mass C: Smaller samples always have higher volume D: Temperature changes density to zero"
+        },
+        {
+            "grade": "5",
+            "topic": "Properties of Matter",
+            "difficulty": "Hard",
+            "text": "A jeweler tests a crown with a mass of 965g and displaced volume of 65mL. Is it pure gold (d = 19.3 g\/cm³)? | A: No, its density is 14.85 g\/cm³, meaning it is mixed with less dense metals like copper B: Yes, 965 is larger than 19.3 C: Yes, all heavy items are gold D: Cannot be calculated"
+        },
+        {
+            "grade": "5",
+            "topic": "States of Matter",
+            "difficulty": "Easy",
+            "text": "In which state of matter do particles possess the lowest kinetic energy and vibrate in fixed positions? | A: Solid B: Liquid C: Gas D: Plasma"
+        },
+        {
+            "grade": "5",
+            "topic": "States of Matter",
+            "difficulty": "Easy",
+            "text": "What is the most abundant state of matter in the visible universe, found in stars and lightning? | A: Solid B: Liquid C: Plasma D: Gas"
+        },
+        {
+            "grade": "5",
+            "topic": "States of Matter",
+            "difficulty": "Medium",
+            "text": "Why can gases be compressed into much smaller storage cylinders, whereas liquids and solids cannot? | A: Gases have vast empty spaces between moving molecules that can be squeezed together B: Gas particles are softer C: Solids have no mass D: Liquids turn into plasma when squeezed"
+        },
+        {
+            "grade": "5",
+            "topic": "States of Matter",
+            "difficulty": "Medium",
+            "text": "According to Kinetic Molecular Theory, what happens to water molecules when liquid water is heated to boiling? | A: Molecules gain kinetic energy and overcome attractive forces to escape as water vapor gas B: Molecules freeze into place C: Molecules disappear D: Molecules stop moving"
+        },
+        {
+            "grade": "5",
+            "topic": "States of Matter",
+            "difficulty": "Hard",
+            "text": "Describe how a neon sign produces bright glowing light using the properties of plasma. | A: High electric voltage ionizes neon gas into plasma, exciting electrons that emit light photons as they return to lower energy states B: Neon catches fire in air C: Neon melts into a glowing liquid D: Neon absorbs heat from the room"
+        },
+        {
+            "grade": "5",
+            "topic": "Changes in Matter",
+            "difficulty": "Easy",
+            "text": "What type of reaction releases heat into the surrounding environment, making it feel hot? | A: Exothermic reaction B: Endothermic reaction C: Nuclear fusion only D: Photosynthesis"
+        },
+        {
+            "grade": "5",
+            "topic": "Changes in Matter",
+            "difficulty": "Easy",
+            "text": "Is the melting of an ice cube an endothermic or exothermic process for the ice? | A: Endothermic, because the ice absorbs heat from surroundings B: Exothermic, because it makes things cold C: Neither D: Both simultaneously"
+        },
+        {
+            "grade": "5",
+            "topic": "Changes in Matter",
+            "difficulty": "Medium",
+            "text": "Why does your skin feel cold when rubbing alcohol evaporates quickly from your hand? | A: The evaporating alcohol absorbs thermal energy from your skin to break liquid bonds B: The alcohol enters your bloodstream instantly C: Alcohol freezes skin cells D: Alcohol creates a chemical chill"
+        },
+        {
+            "grade": "5",
+            "topic": "Changes in Matter",
+            "difficulty": "Medium",
+            "text": "During cellular respiration, human cells combine glucose with oxygen. What form of energy is produced? | A: ATP metabolic energy and heat B: Nuclear radiation C: Light only D: Cold energy"
+        },
+        {
+            "grade": "5",
+            "topic": "Changes in Matter",
+            "difficulty": "Hard",
+            "text": "Why does steam at 100°C produce significantly more dangerous burns than liquid boiling water at 100°C? | A: Steam releases substantial additional latent heat of condensation upon turning back to liquid on skin B: Steam is hotter than 100°C C: Steam contains acid D: Boiling water has no heat"
+        },
+        {
+            "grade": "5",
+            "topic": "Scientific Investigation of Matter",
+            "difficulty": "Easy",
+            "text": "In a scientific experiment, what is the variable that the investigator deliberately changes? | A: Independent Variable B: Dependent Variable C: Controlled Constant D: Random Variable"
+        },
+        {
+            "grade": "5",
+            "topic": "Scientific Investigation of Matter",
+            "difficulty": "Easy",
+            "text": "Why must all variables except the independent variable be kept strictly identical in a fair test? | A: To ensure that any observed changes are solely caused by the independent variable B: To save laboratory equipment C: To make the test faster D: To avoid taking measurements"
+        },
+        {
+            "grade": "5",
+            "topic": "Scientific Investigation of Matter",
+            "difficulty": "Medium",
+            "text": "A student tests whether salt dissolves faster in hot water than cold water. Identify the dependent variable. | A: The temperature of the water B: The time required for the salt to completely dissolve C: The brand of salt D: The size of the spoon"
+        },
+        {
+            "grade": "5",
+            "topic": "Scientific Investigation of Matter",
+            "difficulty": "Medium",
+            "text": "Why do scientists perform multiple experimental trials (e.g. 3 trials) rather than relying on a single test? | A: To reduce experimental error and calculate a dependable scientific average B: Because equipment fails C: To use up chemicals D: To change hypotheses halfway"
+        },
+        {
+            "grade": "5",
+            "topic": "Scientific Investigation of Matter",
+            "difficulty": "Hard",
+            "text": "A team hypothesizes that adding salt raises water's boiling point. Outline the variables and fair test protocol. | A: IV: Salt concentration; DV: Measured boiling temperature; CV: 100mL water volume, identical beaker, same burner intensity, 3 trials per concentration B: IV: Water volume; DV: Salt brand C: Change thermometer type every trial D: Boil water without measuring temperature"
+        }
+    ]
+}

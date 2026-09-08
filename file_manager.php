@@ -8,11 +8,11 @@ $exportDir = __DIR__ . '/exports';
 if (!file_exists($saveDir)) mkdir($saveDir, 0777, true);
 if (!file_exists($exportDir)) mkdir($exportDir, 0777, true);
 
-$method = $_SERVER['REQUEST_METHOD'];
-
-if ($method === 'OPTIONS') {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
+
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 // ========== GET: List files or download ==========
 if ($method === 'GET') {
@@ -172,8 +172,15 @@ if ($method === 'POST') {
         $file = $_FILES['file'];
         $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
+        $allowedExts = ['json', 'csv', 'xlsx', 'xls', 'pdf', 'docx', 'doc', 'pptx', 'ppt', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'mp3', 'wav', 'ogg', 'mid', 'midi', 'mp4', 'webm', 'txt'];
+        if (!in_array($ext, $allowedExts)) {
+            echo json_encode(['status' => 'error', 'message' => 'File type not allowed for security reasons.']);
+            exit;
+        }
+
         // Save a copy to savestates
-        $importCopy = "import_" . date('Ymd_His') . "_" . $file['name'];
+        $cleanBase = preg_replace('/[^a-zA-Z0-9._-]/', '_', $file['name']);
+        $importCopy = "import_" . date('Ymd_His') . "_" . $cleanBase;
         copy($file['tmp_name'], $saveDir . '/' . $importCopy);
 
         if ($ext === 'json') {
@@ -208,7 +215,7 @@ if ($method === 'POST') {
         }
         else {
             // For PDF, PPTX, DOCX, images, videos — save to savestates and return path
-            $savedName = date('Ymd_His') . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file['name']);
+            $savedName = date('Ymd_His') . '_' . $cleanBase;
             move_uploaded_file($file['tmp_name'], $saveDir . '/' . $savedName);
             echo json_encode([
                 'status' => 'success',
@@ -228,9 +235,20 @@ if ($method === 'POST') {
             exit;
         }
         $file = $_FILES['file'];
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        $allowedMedia = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'mp3', 'wav', 'ogg', 'mid', 'midi', 'mp4', 'webm', 'pdf'];
+        if (!in_array($ext, $allowedMedia)) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid media file extension']);
+            exit;
+        }
+
         $grade = $_POST['grade'] ?? 'all';
-        $category = $_POST['category'] ?? 'general';
-        $savedName = date('Ymd_His') . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file['name']);
+        $category = preg_replace('/[^a-zA-Z0-9_-]/', '', $_POST['category'] ?? 'general');
+        if (empty($category)) $category = 'general';
+
+        $cleanBase = preg_replace('/[^a-zA-Z0-9._-]/', '_', $file['name']);
+        $savedName = date('Ymd_His') . '_' . $cleanBase;
         
         $targetDir = $saveDir . '/' . $category;
         if (!file_exists($targetDir)) mkdir($targetDir, 0777, true);

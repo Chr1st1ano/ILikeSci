@@ -1,0 +1,42 @@
+{
+    "students": [
+        {
+            "id": 1,
+            "name": "Alex Brown",
+            "grade": "3",
+            "recitations": 2,
+            "totalScore": 4
+        },
+        {
+            "id": 2,
+            "name": "Maria Garcia",
+            "grade": "4",
+            "recitations": 3,
+            "totalScore": 9
+        },
+        {
+            "id": 3,
+            "name": "James Smith",
+            "grade": "5",
+            "recitations": 1,
+            "totalScore": 5
+        },
+        {
+            "id": 4,
+            "name": "Linda Johnson",
+            "grade": "6",
+            "recitations": 4,
+            "totalScore": 18
+        },
+        {
+            "id": 1778976962571,
+            "name": "Test Student OYO",
+            "grade": "4",
+            "recitations": 0,
+            "totalScore": 0,
+            "photo": null
+        }
+    ],
+    "exportDate": "2026-05-17 02:48:55",
+    "exportGrade": "all"
+}

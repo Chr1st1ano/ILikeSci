@@ -190,7 +190,7 @@
     }
 
     @keyframes slideIn {
-      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      from { opacity: 0.9; transform: scale(0.98) translateY(6px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
@@ -425,6 +425,99 @@
       animation: spin 0.8s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* === ANNOTATION & LASER POINTER TOOLBAR === */
+    .presenter-tools-bar {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      background: rgba(26, 26, 46, 0.95);
+      border: 1px solid rgba(67, 97, 238, 0.3);
+      backdrop-filter: blur(15px);
+      border-radius: 12px;
+      padding: 6px 10px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      z-index: 500;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+    .tool-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    .tool-btn:hover {
+      background: rgba(67, 97, 238, 0.2);
+      color: #fff;
+    }
+    .tool-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent-glow);
+    }
+    .annotation-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .annotation-canvas.active-draw {
+      pointer-events: auto;
+      cursor: crosshair;
+    }
+    .laser-dot {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: #ef4444;
+      border-radius: 50%;
+      box-shadow: 0 0 15px #ef4444, 0 0 30px #ef4444;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 25;
+      display: none;
+    }
+
+    /* QUICK QUIZ MODAL */
+    .presenter-quiz-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .presenter-quiz-box {
+      width: 90%;
+      max-width: 650px;
+      background: var(--bg-card);
+      border: 1px solid rgba(67, 97, 238, 0.4);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -445,21 +538,32 @@
         <i class="fa-solid fa-file-image" id="mode-toggle-icon"></i>
         <span id="mode-toggle-text">Visual Mode</span>
       </button>
+      <button onclick="launchPresenterQuickQuiz()" style="background:rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.4);color:#60a5fa;" title="Quick Class Quiz (Q)">
+        <i class="fa-solid fa-bolt"></i>
+        <span>Quiz (Q)</span>
+      </button>
       <button onclick="toggleRecitationDrawer()" style="background:rgba(6,214,160,0.15);border-color:rgba(6,214,160,0.4);color:#06d6a0;" title="Live Recitation (R)">
         <i class="fa-solid fa-hand-sparkles"></i>
-        <span>Recitation</span>
+        <span>Recitation (R)</span>
       </button>
-      <button onclick="toggleSidebar()">
+      <button onclick="readCurrentSlideAloud()" style="background:rgba(236,72,153,0.15);border-color:rgba(236,72,153,0.4);color:#f472b6;" title="Read Aloud via Speech (V)">
+        <i class="fa-solid fa-volume-high"></i>
+        <span>Read (V)</span>
+      </button>
+      <button onclick="toggleSidebar()" title="Toggle Slides Sidebar (S)">
         <i class="fa-solid fa-bars"></i>
         <span>Slides</span>
       </button>
-      <button onclick="toggleFullscreen()">
+      <button onclick="toggleFullscreen()" title="Fullscreen (F)">
         <i class="fa-solid fa-expand"></i>
         <span>Fullscreen</span>
       </button>
       <button onclick="presenterAIExplain()" style="background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.3);" title="AI Explain (E)">
         <i class="fa-solid fa-robot"></i>
         <span>Explain</span>
+      </button>
+      <button onclick="toggleShortcutsModal()" style="background:rgba(255,255,255,0.08);" title="Keyboard Shortcuts (?)">
+        <i class="fa-solid fa-keyboard"></i>
       </button>
       <button onclick="window.location.href='lessons.html'" style="border-color: rgba(255,100,100,0.3);">
         <i class="fa-solid fa-xmark"></i>
@@ -473,8 +577,8 @@
     <!-- Sidebar -->
     <div class="slide-sidebar" id="slide-sidebar"></div>
 
-    <!-- Slide Canvas -->
-    <div class="slide-canvas-area">
+    <!-- Slide Canvas Area -->
+    <div class="slide-canvas-area" id="slide-canvas-area">
       <button class="nav-arrow prev" id="btn-prev" onclick="prevSlide()">
         <i class="fa-solid fa-chevron-left"></i>
       </button>
@@ -484,6 +588,19 @@
           <div class="loading-spinner"></div>
           <p style="color: var(--text-muted);">Loading presentation...</p>
         </div>
+      </div>
+
+      <!-- Annotation Drawing & Laser Canvas Overlay -->
+      <canvas id="annotation-canvas" class="annotation-canvas"></canvas>
+      <div id="laser-dot" class="laser-dot"></div>
+
+      <!-- Floating Annotation Tools Bar -->
+      <div class="presenter-tools-bar">
+        <button class="tool-btn active" id="btn-tool-cursor" onclick="setPresenterTool('cursor')" title="Cursor Mode"><i class="fa-solid fa-arrow-pointer"></i></button>
+        <button class="tool-btn" id="btn-tool-laser" onclick="setPresenterTool('laser')" title="Laser Pointer (L)"><i class="fa-solid fa-bullseye" style="color:#ef4444;"></i></button>
+        <button class="tool-btn" id="btn-tool-pen" onclick="setPresenterTool('pen')" title="Highlighter Pen (P)"><i class="fa-solid fa-highlighter" style="color:#fbbf24;"></i></button>
+        <button class="tool-btn" id="btn-tool-clear" onclick="clearPresenterAnnotations()" title="Clear Annotations (C)"><i class="fa-solid fa-eraser"></i></button>
+        <button class="tool-btn" id="btn-tool-zoom" onclick="toggleSlideZoom()" title="Projector Zoom (Z)"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
       </div>
 
       <button class="nav-arrow next" id="btn-next" onclick="nextSlide()">
@@ -963,6 +1080,326 @@
       if (!document.fullscreenElement) document.body.classList.remove('fullscreen-mode');
     });
 
+    // Audio Synthesizer for Presenter
+    let presenterAudioCtx = null;
+    function playPresenterChime(type) {
+      try {
+        if (!presenterAudioCtx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) presenterAudioCtx = new AudioCtx();
+        }
+        if (presenterAudioCtx && presenterAudioCtx.state === 'suspended') {
+          presenterAudioCtx.resume();
+        }
+        if (!presenterAudioCtx) return;
+        const now = presenterAudioCtx.currentTime;
+
+        if (type === 'correct') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+            const osc = presenterAudioCtx.createOscillator();
+            const gain = presenterAudioCtx.createGain();
+            osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+            gain.gain.setValueAtTime(0.2, now + idx * 0.07);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.3);
+            osc.connect(gain);
+            gain.connect(presenterAudioCtx.destination);
+            osc.start(now + idx * 0.07);
+            osc.stop(now + idx * 0.07 + 0.32);
+          });
+        } else if (type === 'slide') {
+          const osc = presenterAudioCtx.createOscillator();
+          const gain = presenterAudioCtx.createGain();
+          osc.frequency.setValueAtTime(600, now);
+          osc.frequency.exponentialRampToValueAtTime(300, now + 0.05);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+          osc.connect(gain);
+          gain.connect(presenterAudioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.07);
+        } else if (type === 'pass') {
+          const osc = presenterAudioCtx.createOscillator();
+          const gain = presenterAudioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(160, now);
+          osc.frequency.linearRampToValueAtTime(120, now + 0.2);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+          osc.connect(gain);
+          gain.connect(presenterAudioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.26);
+        }
+      } catch(e) {}
+    }
+
+    // === ANNOTATION & LASER POINTER LOGIC ===
+    let currentTool = 'cursor'; // 'cursor' | 'laser' | 'pen'
+    let isDrawing = false;
+    let annotCanvas = null;
+    let annotCtx = null;
+    let isZoomed = false;
+
+    function initAnnotations() {
+      annotCanvas = document.getElementById('annotation-canvas');
+      if (!annotCanvas) return;
+      annotCtx = annotCanvas.getContext('2d');
+      resizeAnnotationCanvas();
+      window.addEventListener('resize', resizeAnnotationCanvas);
+
+      const area = document.getElementById('slide-canvas-area');
+      const laserDot = document.getElementById('laser-dot');
+
+      area.addEventListener('mousemove', (e) => {
+        if (currentTool === 'laser') {
+          laserDot.style.display = 'block';
+          laserDot.style.left = `${e.clientX}px`;
+          laserDot.style.top = `${e.clientY}px`;
+        } else {
+          laserDot.style.display = 'none';
+        }
+
+        if (currentTool === 'pen' && isDrawing) {
+          const rect = annotCanvas.getBoundingClientRect();
+          annotCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+          annotCtx.stroke();
+        }
+      });
+
+      annotCanvas.addEventListener('mousedown', (e) => {
+        if (currentTool === 'pen') {
+          isDrawing = true;
+          const rect = annotCanvas.getBoundingClientRect();
+          annotCtx.beginPath();
+          annotCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+      });
+
+      window.addEventListener('mouseup', () => { isDrawing = false; });
+
+      // Touch support
+      annotCanvas.addEventListener('touchstart', (e) => {
+        if (currentTool === 'pen' && e.touches.length > 0) {
+          isDrawing = true;
+          const rect = annotCanvas.getBoundingClientRect();
+          annotCtx.beginPath();
+          annotCtx.moveTo(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+        }
+      }, { passive: true });
+
+      annotCanvas.addEventListener('touchmove', (e) => {
+        if (currentTool === 'pen' && isDrawing && e.touches.length > 0) {
+          const rect = annotCanvas.getBoundingClientRect();
+          annotCtx.lineTo(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+          annotCtx.stroke();
+        }
+      }, { passive: true });
+    }
+
+    function resizeAnnotationCanvas() {
+      if (!annotCanvas) return;
+      annotCanvas.width = annotCanvas.clientWidth;
+      annotCanvas.height = annotCanvas.clientHeight;
+      if (annotCtx) {
+        annotCtx.strokeStyle = 'rgba(251, 191, 36, 0.85)';
+        annotCtx.lineWidth = 5;
+        annotCtx.lineCap = 'round';
+        annotCtx.lineJoin = 'round';
+      }
+    }
+
+    function setPresenterTool(tool) {
+      currentTool = tool;
+      document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-tool-${tool}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const annotCanvas = document.getElementById('annotation-canvas');
+      const laserDot = document.getElementById('laser-dot');
+
+      if (tool === 'pen') {
+        annotCanvas.classList.add('active-draw');
+        laserDot.style.display = 'none';
+        showToast('✏️ Highlighter Pen Active');
+      } else if (tool === 'laser') {
+        annotCanvas.classList.remove('active-draw');
+        laserDot.style.display = 'block';
+        showToast('🔴 Laser Pointer Active');
+      } else {
+        annotCanvas.classList.remove('active-draw');
+        laserDot.style.display = 'none';
+      }
+    }
+
+    function clearPresenterAnnotations() {
+      if (annotCanvas && annotCtx) {
+        annotCtx.clearRect(0, 0, annotCanvas.width, annotCanvas.height);
+        showToast('🧹 Annotations Cleared');
+      }
+    }
+
+    function toggleSlideZoom() {
+      isZoomed = !isZoomed;
+      const canvas = document.getElementById('slide-canvas');
+      if (isZoomed) {
+        canvas.style.transform = 'scale(1.15)';
+        showToast('🔍 Projector Zoom Mode ON');
+      } else {
+        canvas.style.transform = 'none';
+        showToast('🔍 Normal Zoom');
+      }
+    }
+
+    // === QUICK QUIZ MODAL LOGIC ===
+    let currentQuizQuestions = [];
+    let currentQuizIndex = 0;
+
+    async function launchPresenterQuickQuiz() {
+      const modal = document.getElementById('presenter-quiz-modal');
+      const qText = document.getElementById('pres-quiz-question');
+      const choicesContainer = document.getElementById('pres-quiz-choices');
+      modal.classList.remove('hidden');
+
+      const lessonTitle = document.getElementById('lesson-title').textContent || '';
+      const topicName = lessonTitle.replace(/^Grade\s*\d\s*—\s*/i, '');
+      const gradeMatch = lessonTitle.match(/Grade\s*(\d)/i);
+      const grade = gradeMatch ? gradeMatch[1] : '4';
+
+      qText.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading question from question bank...';
+      choicesContainer.innerHTML = '';
+
+      try {
+        const res = await fetch(`questions_api.php?grade=${grade}`);
+        const data = await res.json();
+        if (data.status === 'success' && Array.isArray(data.questions) && data.questions.length > 0) {
+          const matching = data.questions.filter(q => (q.topic || '').toLowerCase().includes(topicName.toLowerCase()));
+          currentQuizQuestions = matching.length > 0 ? matching : data.questions;
+          currentQuizIndex = Math.floor(Math.random() * currentQuizQuestions.length);
+          displayQuickQuizQuestion();
+        } else {
+          qText.textContent = `Review Question: What is the main scientific concept of ${topicName}?`;
+        }
+      } catch(e) {
+        qText.textContent = `Oral Question: Explain in your own words the key concept of this lesson.`;
+      }
+    }
+
+    function displayQuickQuizQuestion() {
+      const q = currentQuizQuestions[currentQuizIndex];
+      const qText = document.getElementById('pres-quiz-question');
+      const choicesContainer = document.getElementById('pres-quiz-choices');
+      if (!q) return;
+
+      qText.textContent = q.question || q.text;
+      choicesContainer.innerHTML = '';
+
+      if (q.options && Array.isArray(q.options) && q.options.length > 0) {
+        choicesContainer.innerHTML = q.options.map((opt, idx) => `
+          <button class="choice-card" onclick="checkPresenterQuizChoice(this, ${idx === q.answer || opt === q.answer})">
+            <span class="choice-letter">${String.fromCharCode(65 + idx)}</span>
+            <span>${opt}</span>
+          </button>
+        `).join('');
+      }
+    }
+
+    function checkPresenterQuizChoice(btn, isCorrect) {
+      if (isCorrect) {
+        btn.classList.add('correct');
+        playPresenterChime('correct');
+        showToast('🎉 Correct Answer!');
+      } else {
+        btn.classList.add('wrong');
+        playPresenterChime('pass');
+        showToast('❌ Try Again!');
+      }
+    }
+
+    function nextPresenterQuizQuestion() {
+      if (currentQuizQuestions.length > 0) {
+        currentQuizIndex = (currentQuizIndex + 1) % currentQuizQuestions.length;
+        displayQuickQuizQuestion();
+      }
+    }
+
+    function closePresenterQuickQuiz() {
+      document.getElementById('presenter-quiz-modal').classList.add('hidden');
+    }
+
+    function toggleShortcutsModal() {
+      const modal = document.getElementById('presenter-help-modal');
+      modal.classList.toggle('hidden');
+    }
+
+    // Hook sound chimes to score submissions
+    const origSubmit = submitRecitationScore;
+    submitRecitationScore = async function(pts) {
+      if (pts > 0) playPresenterChime('correct');
+      else playPresenterChime('pass');
+      await origSubmit(pts);
+    };
+
+    // Hook sound chime to slide navigation
+    const origGoToSlide = goToSlide;
+    goToSlide = function(idx) {
+      origGoToSlide(idx);
+      playPresenterChime('slide');
+    };
+
+    function readCurrentSlideAloud() {
+      const slide = slides[currentSlide];
+      if (!slide) return;
+      const title = slide.title || '';
+      const content = slide.content ? slide.content.replace(/<[^>]*>?/gm, '') : '';
+      const textToRead = `${title}. ${content}`;
+      if (typeof window.speechSynthesis !== 'undefined') {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(textToRead);
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+        showToast('🔊 Reading Slide Aloud...');
+      }
+    }
+
+    // Enhanced Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (['input', 'select', 'textarea'].includes(document.activeElement.tagName.toLowerCase())) return;
+
+      switch(e.key) {
+        case 'ArrowRight': case ' ': e.preventDefault(); nextSlide(); break;
+        case 'ArrowLeft': e.preventDefault(); prevSlide(); break;
+        case 'Escape':
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+            document.body.classList.remove('fullscreen-mode');
+          } else {
+            const drawer = document.getElementById('recitation-drawer');
+            if (drawer && !drawer.classList.contains('hidden')) drawer.classList.add('hidden');
+            const quizModal = document.getElementById('presenter-quiz-modal');
+            if (quizModal && !quizModal.classList.contains('hidden')) quizModal.classList.add('hidden');
+            const helpModal = document.getElementById('presenter-help-modal');
+            if (helpModal && !helpModal.classList.contains('hidden')) helpModal.classList.add('hidden');
+          }
+          break;
+        case 'f': case 'F': toggleFullscreen(); break;
+        case 's': case 'S': toggleSidebar(); break;
+        case 'e': case 'E': presenterAIExplain(); break;
+        case 'v': case 'V': readCurrentSlideAloud(); break;
+        case 'r': case 'R': toggleRecitationDrawer(); break;
+        case 't': case 'T': togglePresentationViewMode(); break;
+        case 'q': case 'Q': launchPresenterQuickQuiz(); break;
+        case 'p': case 'P': setPresenterTool(currentTool === 'pen' ? 'cursor' : 'pen'); break;
+        case 'l': case 'L': setPresenterTool(currentTool === 'laser' ? 'cursor' : 'laser'); break;
+        case 'c': case 'C': clearPresenterAnnotations(); break;
+        case 'z': case 'Z': toggleSlideZoom(); break;
+        case '?': case 'h': case 'H': toggleShortcutsModal(); break;
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) document.body.classList.remove('fullscreen-mode');
+    });
+
     // Initialize — choose mode based on URL params
     if (pptxId) {
       loadPPTXPresentation();
@@ -970,6 +1407,7 @@
       loadLesson();
     }
     loadRecitationStudents();
+    setTimeout(initAnnotations, 500);
   </script>
 
   <!-- Live Recitation Drawer -->
@@ -1001,6 +1439,45 @@
         <button onclick="submitRecitationScore(2)" class="rec-score-btn s2">2 · Fair (+2)</button>
         <button onclick="submitRecitationScore(1)" class="rec-score-btn s1">1 · Needs Work (+1)</button>
         <button onclick="submitRecitationScore(0)" class="rec-score-btn s0">0 · Pass / Incorrect</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Class Quiz Modal -->
+  <div id="presenter-quiz-modal" class="presenter-quiz-overlay hidden">
+    <div class="presenter-quiz-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h3 style="color:#60a5fa; margin:0;"><i class="fa-solid fa-bolt"></i> Quick Class Question</h3>
+        <button onclick="closePresenterQuickQuiz()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <h2 id="pres-quiz-question" style="font-size:22px; line-height:1.4; margin:20px 0; color:#fff;"></h2>
+      <div id="pres-quiz-choices" class="choice-cards-grid"></div>
+      <div style="display:flex; justify-content:center; gap:12px; margin-top:24px;">
+        <button class="btn btn-secondary" onclick="nextPresenterQuizQuestion()"><i class="fa-solid fa-shuffle"></i> Another Question</button>
+        <button class="btn btn-success" onclick="toggleRecitationDrawer(); closePresenterQuickQuiz();"><i class="fa-solid fa-hand-sparkles"></i> Award Recitation Points</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Cheat Sheet Modal -->
+  <div id="presenter-help-modal" class="presenter-quiz-overlay hidden">
+    <div class="presenter-quiz-box" style="max-width:500px; text-align:left;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h3 style="color:var(--accent-glow); margin:0;"><i class="fa-solid fa-keyboard"></i> Presenter Shortcuts</h3>
+        <button onclick="toggleShortcutsModal()" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div style="display:grid; grid-template-columns:auto 1fr; gap:10px 16px; font-size:14px; margin-top:14px;">
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">Space / ➔</kbd><span>Next Slide</span>
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">⬅</kbd><span>Previous Slide</span>
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">F</kbd><span>Toggle Fullscreen</span>
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">R</kbd><span>Open Recitation Drawer</span>
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">Q</kbd><span>Launch Quick Class Quiz</span>
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">P</kbd><span>Highlighter Pen</span>
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">L</kbd><span>Laser Pointer</span>
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">C</kbd><span>Clear Annotations</span>
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">T</kbd><span>Switch Visual / Text Mode</span>
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">E</kbd><span>AI Lesson Explanation</span>
+        <kbd style="background:#334155; padding:4px 8px; border-radius:6px;">ESC</kbd><span>Exit Fullscreen / Close Drawers</span>
       </div>
     </div>
   </div>

@@ -1,0 +1,304 @@
+{
+    "title": "DepEd Science MATATAG Curriculum — Grade 5 Life Science",
+    "grade": "5",
+    "customLessons": [
+        {
+            "title": "Human Body Systems (Digestive, Respiratory, Reproductive System)",
+            "grade": "5",
+            "quarter": "1",
+            "lesson_number": "1",
+            "objectives": [
+                "Describe the organs and physiological processes of the Digestive System (mouth, esophagus, stomach, small and large intestines).",
+                "Describe the structures and gas exchange mechanisms of the Respiratory System (nose, trachea, lungs, alveoli, diaphragm).",
+                "Explain the structures and functions of the male and female Reproductive Systems in human life continuity."
+            ],
+            "content": "The human body operates through interconnected organ systems that maintain internal homeostasis:\n- Digestive System: Mechanically breaks down food with teeth and stomach churning, then chemically breaks polymers into glucose, amino acids, and fatty acids using digestive enzymes and bile. The small intestine absorbs nutrients into the bloodstream, while the large intestine reabsorbs water and forms solid waste.\n- Respiratory System: Transports oxygen from ambient air into blood and removes carbon dioxide waste. The diaphragm contracts downward during inhalation, drawing air into lungs where alveoli exchange gases with capillaries.\n- Reproductive System: Ensures species propagation. The male system produces sperm cells and testosterone (testes, vas deferens, penis); the female system produces egg cells, supports fetal development, and produces estrogen\/progesterone (ovaries, fallopian tubes, uterus, vagina).",
+            "slides": [
+                {
+                    "title": "Human Body Systems",
+                    "content": "Grade 5 — Term 1 Life Science\n\nExplore internal anatomy: The Digestive, Respiratory, and Reproductive Systems.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The Digestive System: Food to Fuel",
+                    "content": "The Gastrointestinal Pathway:\n• Mouth: Teeth chew food; salivary amylase begins carbohydrate breakdown\n• Esophagus: Peristalsis muscle contractions push bolus to stomach\n• Stomach: Hydrochloric acid and pepsin churn and digest proteins\n• Small Intestine: Pancreatic enzymes and liver bile complete digestion; villi absorb nutrients into capillaries\n• Large Intestine: Absorbs water and minerals; compacts feces",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The Respiratory System: Gas Exchange",
+                    "content": "How we breathe:\n• Inhalation: Diaphragm contracts downward, ribs lift, air rushes into lungs\n• Alveoli: 300 million microscopic air sacs enveloped in capillaries\n• Diffusion: Oxygen moves into blood; Carbon dioxide diffuses into alveoli to be exhaled",
+                    "mediaType": "step",
+                    "mediaUrl": "Inhale: Diaphragm contracts -> Air fills alveoli\nGas Exchange: O2 enters capillaries, CO2 leaves\nExhale: Diaphragm relaxes -> Air pushed out\nEvery cell receives oxygen for energy!"
+                },
+                {
+                    "title": "The Reproductive System: Continuity of Life",
+                    "content": "Ensuring species continuation:\n• Male: Testes produce sperm cells and testosterone\n• Female: Ovaries release mature egg cells; Fallopian tubes are site of fertilization; Uterus (womb) protects developing fetus",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Body Systems Check Quiz",
+                    "content": "In which organ of the digestive system are most digested nutrients absorbed into the bloodstream?\nA) Esophagus\nB) Stomach\nC) Small Intestine\nD) Large Intestine\n\nCorrect Answer: C (Small intestine villi absorb amino acids and glucose!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Classification and Reproduction of Living Things",
+            "grade": "5",
+            "quarter": "1",
+            "lesson_number": "2",
+            "objectives": [
+                "Compare sexual reproduction (gamete fusion) with asexual reproduction (budding, vegetative propagation, binary fission).",
+                "Classify organisms into major taxonomic kingdoms based on cellular structure and reproductive mode.",
+                "Describe how vegetative propagation is used in Philippine agriculture."
+            ],
+            "content": "Reproduction is the biological mechanism by which new individual organisms are produced:\n- Sexual Reproduction: Involves two parents providing gametes (sperm and egg) that fuse during fertilization to create genetically unique offspring with blended traits. Common in flowering plants, mammals, birds, and fish.\n- Asexual Reproduction: Involves a single parent producing offspring that are genetically identical clones. Examples include binary fission in bacteria, budding in yeast and hydra, and vegetative propagation in plants (potatoes from tubers, katakataka plantlets from leaves, onion bulbs).\n\nBiological classification groups organisms into Domains and Kingdoms based on cellular complexity and nutrition.",
+            "slides": [
+                {
+                    "title": "Classification & Reproduction",
+                    "content": "Grade 5 — Term 1 Life Science\n\nCompare sexual and asexual reproduction and explore biological classification.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Sexual vs Asexual Reproduction",
+                    "content": "Two Routes to New Life:\n• Sexual Reproduction:\n  - Two parents provide sperm and egg gametes\n  - Fertilization creates genetically unique offspring\n  - High genetic variation helps species adapt to disease\n• Asexual Reproduction:\n  - Single parent produces identical offspring (clones)\n  - Rapid reproduction without needing a mate\n  - Examples: Binary fission (bacteria), Budding (yeast\/hydra)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Vegetative Propagation in Crops",
+                    "content": "Asexual reproduction in Philippine farming:\n• Stem Cuttings: Sugarcane and cassava grown from stalk nodes\n• Tubers & Bulbs: Sweet potatoes (camote) from tubers; Onions from bulbs\n• Runners \/ Stolons: Strawberry and grass creeping stems\n• Leaf Plantlets: Katakataka (miracle leaf) budding along leaf edges",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Cut healthy sugarcane stem with nodes\nStep 2: Plant cuttings diagonally in moist furrow\nStep 3: New roots sprout from nodes within days\nStep 4: Genetically identical crop grows reliably"
+                },
+                {
+                    "title": "Taxonomic Kingdoms of Life",
+                    "content": "Classifying the Living World:\n• Kingdom Animalia: Multicellular heterotrophs (movement, nervous tissue)\n• Kingdom Plantae: Multicellular autotrophs (cellulose cell walls, photosynthesis)\n• Kingdom Fungi: Heterotrophs absorbing nutrients (mushrooms, molds, yeast)\n• Kingdom Protista: Single-celled eukaryotes (amoeba, paramecium, algae)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Reproduction Check Quiz",
+                    "content": "What is the primary evolutionary advantage of sexual reproduction over asexual cloning?\nA) It is much faster\nB) It requires no energy\nC) It creates genetic diversity that helps populations survive diseases and climate shifts\nD) It produces identical clones\n\nCorrect Answer: C (Genetic variation drives survival resilience!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Life Cycles of Living Things",
+            "grade": "5",
+            "quarter": "1",
+            "lesson_number": "3",
+            "objectives": [
+                "Analyze diverse life cycles across amphibians, reptiles, birds, mammals, and spore-bearing plants.",
+                "Contrast internal embryonic gestation in placental mammals with external egg development in birds and reptiles.",
+                "Diagram the alternation of generations in non-flowering ferns and mosses."
+            ],
+            "content": "Organisms have diverse reproductive strategies and life cycles tailored to their environmental niches:\n- Oviparous animals lay eggs outside the body (birds, most reptiles, insects, amphibians). Eggs contain nourishing yolk.\n- Viviparous animals give live birth after nourishing the embryo internally through a placenta (placental mammals including humans, dogs, whales).\n- Ovoviviparous animals produce eggs that hatch inside the female's body before live birth (some sharks, sea snakes).\n\nPlants exhibit life cycles from seeds or spores: Ferns and mosses do not produce flowers; they reproduce using microscopic spores that grow into gametophytes in moist environments.",
+            "slides": [
+                {
+                    "title": "Life Cycles of Living Things",
+                    "content": "Grade 5 — Term 1 Life Science\n\nFrom oviparous egg-layers to viviparous mammals and ancient spore-bearing ferns.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Three Reproductive Strategies in Animals",
+                    "content": "How animal embryos develop:\n• Oviparous: Eggs laid outside mother's body (Birds, turtles, crocodiles)\n  - Nourished by rich yolk inside egg\n• Viviparous: Live birth (Placental mammals, humans, carabao, dolphins)\n  - Placenta provides continuous oxygen and maternal nutrients\n• Ovoviviparous: Eggs hatch INSIDE mother before birth (Some sharks, vipers)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Amphibian Metamorphosis: Dual Life",
+                    "content": "Frog transformation:\n1. Jelly-coated eggs in fresh pond water\n2. Aquatic tadpole with gills, lateral line, and swimming tail\n3. Tadpole grows hind legs and develops internal lungs\n4. Adult frog with powerful leaping legs and cutaneous skin respiration",
+                    "mediaType": "step",
+                    "mediaUrl": "Aquatic: Egg laid in pond\nLarva: Gills & swimming tail\nTransition: Lungs & legs emerge\nTerrestrial: Adult carnivorous frog"
+                },
+                {
+                    "title": "Spore Plants: Ancient Life Cycles",
+                    "content": "Reproduction without seeds:\n• Ferns and mosses predate flowering plants by millions of years\n• Fronds produce sori clusters containing millions of microscopic spores\n• Spores germinate into heart-shaped prothallus gametophytes that fertilize in moisture",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Life Cycle Comparison Quiz",
+                    "content": "What term describes animals like carabao, dogs, and whales that give birth to live offspring developed inside a womb?\nA) Oviparous\nB) Viviparous\nC) Metamorphic\nD) Spore-bearing\n\nCorrect Answer: B (Viviparous mammals nourish embryos internally!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Plant and Animal Adaptations",
+            "grade": "5",
+            "quarter": "2",
+            "lesson_number": "1",
+            "objectives": [
+                "Differentiate structural (physical), behavioral, and physiological adaptations in organisms.",
+                "Explain survival mechanisms: camouflage, mimicry, dormancy, and specialized appendages.",
+                "Analyze adaptations of Philippine wildlife to tropical rainforest and monsoon conditions."
+            ],
+            "content": "An adaptation is any inherited characteristic that enhances an organism's ability to survive and reproduce in its specific habitat:\n- Structural Adaptations: Physical body features (e.g., thick blubber in whales, hollow bones in birds, webbed feet in ducks).\n- Behavioral Adaptations: Actions organisms take (e.g., bird migration, hibernation during winter, nocturnal hunting by bats).\n- Physiological Adaptations: Internal chemical or metabolic processes (e.g., snake venom production, desert cacti storing water in mucilage, human sweating).\n\nCamouflage allows organisms to blend into surroundings (stick insects, walking leaf insects), while mimicry fools predators by resembling toxic species.",
+            "slides": [
+                {
+                    "title": "Plant & Animal Adaptations",
+                    "content": "Grade 5 — Term 2 Life Science\n\nEvolutionary genius: Structural, behavioral, and physiological adaptations for survival.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Three Categories of Adaptations",
+                    "content": "How organisms adapt to their environment:\n• Structural (Physical Form): Hollow bones in birds for flight; wide pads on camel feet\n• Behavioral (Actions): Bats hunting at night (nocturnal); monkeys grooming in social troops\n• Physiological (Internal Chemistry): Snake venom; desert cactus mucilage storing water",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Masters of Camouflage & Mimicry",
+                    "content": "Deception in the Philippine Rainforest:\n• Camouflage (Cryptic coloration): Stick insects looking identical to brown twigs\n• Mimicry (Batesian): Harmless butterflies evolving the wing patterns of toxic poisonous species to scare off birds",
+                    "mediaType": "step",
+                    "mediaUrl": "Stick insect freezes on branch -> Blends into twig\nPredator passes without noticing -> Prey survives\nSurviving insect reproduces -> Passes camouflage genes"
+                },
+                {
+                    "title": "Extreme Flora: Mangroves & Pitcher Plants",
+                    "content": "Thriving in harsh conditions:\n• Mangrove Trees: Excrete salt crystals through specialized leaf glands; breathe air using aerial pneumatophores\n• Pitcher Plants (Nepenthes): Evolved slippery fluid-filled pitfall traps to digest insects in nutrient-poor mountain soil",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Adaptation Mystery Quiz",
+                    "content": "Which of the following is a behavioral adaptation rather than a structural adaptation?\nA) Hollow bones in eagles\nB) Bats hunting for insects exclusively at night to avoid daytime heat and hawks\nC) Sharp talons on owls\nD) Green scales on tree snakes\n\nCorrect Answer: B (Nocturnal hunting is an action\/behavior!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        }
+    ],
+    "questions": [
+        {
+            "grade": "5",
+            "topic": "Human Body Systems (Digestive, Respiratory, Reproductive System)",
+            "difficulty": "Easy",
+            "text": "In which organ of the digestive tract are most digested nutrients absorbed into blood? | A: Small intestine B: Mouth C: Stomach D: Large intestine"
+        },
+        {
+            "grade": "5",
+            "topic": "Human Body Systems (Digestive, Respiratory, Reproductive System)",
+            "difficulty": "Easy",
+            "text": "What muscular sheet contracts and moves downward to pull air into the lungs during inhalation? | A: Diaphragm B: Trachea C: Bronchus D: Esophagus"
+        },
+        {
+            "grade": "5",
+            "topic": "Human Body Systems (Digestive, Respiratory, Reproductive System)",
+            "difficulty": "Medium",
+            "text": "What are the microscopic air sacs in the lungs where oxygen passes into blood capillaries called? | A: Alveoli B: Villi C: Nephrons D: Bronchioles"
+        },
+        {
+            "grade": "5",
+            "topic": "Human Body Systems (Digestive, Respiratory, Reproductive System)",
+            "difficulty": "Medium",
+            "text": "In the female reproductive system, in which organ does fertilization of the egg typically occur? | A: Fallopian tube (oviduct) B: Uterus C: Ovary D: Cervix"
+        },
+        {
+            "grade": "5",
+            "topic": "Human Body Systems (Digestive, Respiratory, Reproductive System)",
+            "difficulty": "Hard",
+            "text": "How do the digestive, respiratory, and circulatory systems cooperate to generate cellular energy in muscle cells? | A: Digestive absorbs glucose -> Respiratory provides oxygen -> Circulatory delivers both to muscle mitochondria for ATP respiration B: Digestive pumps air C: Respiratory digests food D: Circulatory breathes"
+        },
+        {
+            "grade": "5",
+            "topic": "Classification and Reproduction of Living Things",
+            "difficulty": "Easy",
+            "text": "What mode of reproduction requires only one parent and produces genetically identical clones? | A: Asexual reproduction B: Sexual reproduction C: Cross-fertilization D: Pollination"
+        },
+        {
+            "grade": "5",
+            "topic": "Classification and Reproduction of Living Things",
+            "difficulty": "Easy",
+            "text": "Which agricultural crop in the Philippines is commonly grown asexually using stem cuttings? | A: Sugarcane B: Corn C: Coconut D: Mango"
+        },
+        {
+            "grade": "5",
+            "topic": "Classification and Reproduction of Living Things",
+            "difficulty": "Medium",
+            "text": "What is the main biological advantage of sexual reproduction compared to asexual cloning? | A: It creates genetic variation, increasing species survival if diseases strike B: It is faster C: It requires zero food D: It produces fewer offspring"
+        },
+        {
+            "grade": "5",
+            "topic": "Classification and Reproduction of Living Things",
+            "difficulty": "Medium",
+            "text": "How does the Katakataka (miracle leaf) plant reproduce asexually? | A: Tiny plantlets sprout along the serrated notches of its leaves and root in soil B: Through underground seeds C: With bright red flowers only D: By spores"
+        },
+        {
+            "grade": "5",
+            "topic": "Classification and Reproduction of Living Things",
+            "difficulty": "Hard",
+            "text": "Contrast internal fertilization in mammals with external fertilization in fish. | A: Internal fertilization occurs inside female body protecting few embryos; external releases hundreds of eggs into water with higher predation risk B: Both are identical C: Fish have live birth D: Mammals lay eggs in water"
+        },
+        {
+            "grade": "5",
+            "topic": "Life Cycles of Living Things",
+            "difficulty": "Easy",
+            "text": "Which term describes animals like birds and sea turtles that lay eggs outside the body? | A: Oviparous B: Viviparous C: Asexual D: Herbivore"
+        },
+        {
+            "grade": "5",
+            "topic": "Life Cycles of Living Things",
+            "difficulty": "Easy",
+            "text": "How do non-flowering plants like ferns reproduce without flowers or seeds? | A: Spores produced in sori clusters on fronds B: Bulbs C: Cones D: Fruit"
+        },
+        {
+            "grade": "5",
+            "topic": "Life Cycles of Living Things",
+            "difficulty": "Medium",
+            "text": "Why can bird eggs develop on dry land while frog eggs must be laid in fresh water? | A: Bird eggs have hard waterproof shells and amniotic fluid; frog eggs lack shells and dry out B: Birds fly C: Frogs have fur D: Frog eggs have stones"
+        },
+        {
+            "grade": "5",
+            "topic": "Life Cycles of Living Things",
+            "difficulty": "Medium",
+            "text": "What organ connects a mammalian mother to her developing fetus to supply nutrients and oxygen? | A: Placenta B: Gills C: Yolk sac D: Lung"
+        },
+        {
+            "grade": "5",
+            "topic": "Life Cycles of Living Things",
+            "difficulty": "Hard",
+            "text": "Contrast the survival chances of a viviparous mammalian newborn with an oviparous sea turtle hatchling. | A: Mammal fetus is protected internally and nursed with milk (high survival rate); sea turtle hatchlings face heavy beach and ocean predation (low survival rate) B: Turtles have higher survival C: Mammals lay 1,000 eggs D: Turtles nurse milk"
+        },
+        {
+            "grade": "5",
+            "topic": "Plant and Animal Adaptations",
+            "difficulty": "Easy",
+            "text": "What do we call an adaptation where an animal physically blends into its surroundings? | A: Camouflage B: Hibernation C: Migration D: Germination"
+        },
+        {
+            "grade": "5",
+            "topic": "Plant and Animal Adaptations",
+            "difficulty": "Easy",
+            "text": "Is a migratory bird flying south to avoid cold winter temperatures a structural or behavioral adaptation? | A: Behavioral adaptation B: Structural adaptation C: Fossil adaptation D: Chemical change"
+        },
+        {
+            "grade": "5",
+            "topic": "Plant and Animal Adaptations",
+            "difficulty": "Medium",
+            "text": "How do aerial breathing roots (pneumatophores) help mangrove trees survive in tidal swamp mud? | A: They grow upward above water to absorb oxygen gas from the air because waterlogged mud lacks oxygen B: They catch flying insects C: They store honey D: They make wood lighter"
+        },
+        {
+            "grade": "5",
+            "topic": "Plant and Animal Adaptations",
+            "difficulty": "Medium",
+            "text": "Why do nocturnal animals like the Philippine Tarsier have exceptionally large eyes? | A: Enormous pupils gather the maximum available ambient light to hunt insects in the dark B: To scare predators C: For swimming D: Large eyes are lighter"
+        },
+        {
+            "grade": "5",
+            "topic": "Plant and Animal Adaptations",
+            "difficulty": "Hard",
+            "text": "Describe three distinct anatomical adaptations that make the Philippine Eagle an apex aerial predator. | A: Broad wings for maneuvering through dense forest canopy; dagger-sharp talons for grasping prey; powerful hooked beak for tearing flesh B: Webbed feet, gills, and fins C: Scales, venom, and shell D: Thin beak for sipping nectar"
+        }
+    ]
+}

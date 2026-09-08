@@ -432,11 +432,13 @@ function toggleHamburgerMenu() {
   if (panel) panel.classList.toggle('hidden');
 }
 
-// Login Logic — login is now on login.html, so this just ensures the main app is visible
+// Login Logic — login is now on login.html, so this ensures main app is visible and login overlay is dismissed
 function checkLoginStatus() {
   const mainApp = document.getElementById('main-app');
-  if (mainApp && state.isLoggedIn) {
-    mainApp.classList.remove('hidden');
+  const loginScreen = document.getElementById('login-screen');
+  if (state.isLoggedIn) {
+    if (mainApp) mainApp.classList.remove('hidden');
+    if (loginScreen) loginScreen.classList.add('hidden');
   }
 }
 
@@ -487,7 +489,11 @@ function showLogoutModal() {
   document.getElementById('logout-yes-btn').addEventListener('click', () => {
     state.isLoggedIn = false;
     state.currentUser = null;
+    state.currentRole = 'teacher';
     saveState();
+    try {
+      fetch('auth.php?action=logout', { method: 'POST', credentials: 'same-origin' }).catch(() => {});
+    } catch(e) {}
     const loginUser = document.getElementById('login-user');
     const loginPass = document.getElementById('login-pass');
     if (loginUser) loginUser.value = '';
@@ -949,6 +955,59 @@ function removeStudent(id) {
 
     renderStudents();
   }
+}
+
+async function bulkAddStudents(namesText, grade, section) {
+  if (!namesText || !namesText.trim()) return alert('Please enter student names, one per line.');
+  const lines = namesText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  if (lines.length === 0) return alert('No valid names found.');
+
+  let addedCount = 0;
+  for (const name of lines) {
+    const newId = Date.now() + Math.floor(Math.random() * 1000);
+    const newStudent = { id: newId, name, grade: String(grade), section: String(section), recitations: 0, totalScore: 0, photo: null };
+    state.students.push(newStudent);
+    addedCount++;
+
+    // Persist to database
+    fetch('student_api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newStudent)
+    }).catch(e => console.warn('Student DB save failed (offline?):', e));
+  }
+
+  saveState();
+  renderStudents();
+  playChime('coin');
+  alert(`✅ Successfully imported ${addedCount} students into Grade ${grade} Section ${section}!`);
+}
+
+function resetQuarterRecitations(grade) {
+  const gStr = String(grade);
+  const targetLabel = gStr === 'all' ? 'ALL Grades' : `Grade ${gStr}`;
+  if (!confirm(`Are you sure you want to reset recitation scores for ${targetLabel}? This is typically done at the start of a new quarter. (Student profiles will NOT be deleted)`)) {
+    return;
+  }
+
+  state.students.forEach(s => {
+    if (gStr === 'all' || s.grade === gStr) {
+      s.recitations = 0;
+      s.totalScore = 0;
+      fetch('student_api.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(s)
+      }).catch(e => {});
+    }
+  });
+
+  saveState();
+  if (typeof renderStudents === 'function') renderStudents();
+  if (typeof renderScoreboard === 'function') renderScoreboard();
+  if (typeof renderRecords === 'function') renderRecords();
+  playChime('correct');
+  alert(`✅ Recitation scores reset successfully for ${targetLabel}! Ready for new quarter.`);
 }
 
 // --- Materials Management (DB-driven topics) ---
@@ -1584,6 +1643,59 @@ function setDifficulty(diff) {
   if(activeButton) activeButton.classList.add('active');
 }
 
+function renderFlashChoices(rawText, correctAnswer) {
+  const container = document.getElementById('flash-choices-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (!rawText || !rawText.includes('|')) return;
+
+  const parts = rawText.split('|');
+  const choicesStr = parts.slice(1).join('|').trim();
+  
+  const regex = /([A-D]):\s*([^A-D:]+)(?=(?:[A-D]:|$))/gi;
+  let match;
+  const choices = [];
+  while ((match = regex.exec(choicesStr)) !== null) {
+    choices.push({ letter: match[1].toUpperCase(), text: match[2].trim() });
+  }
+
+  if (choices.length === 0) return;
+
+  let targetCorrect = 'A';
+  if (correctAnswer && typeof correctAnswer === 'string') {
+    targetCorrect = correctAnswer.trim().toUpperCase();
+  }
+
+  choices.forEach(c => {
+    const card = document.createElement('div');
+    card.className = 'choice-card';
+    card.innerHTML = `<span class="choice-letter">${c.letter}</span> <span>${c.text}</span>`;
+    
+    card.onclick = () => {
+      container.querySelectorAll('.choice-card').forEach(cc => cc.style.pointerEvents = 'none');
+      const isRight = (c.letter === targetCorrect);
+      if (isRight) {
+        card.classList.add('correct');
+        if (typeof playChime === 'function') playChime('correct');
+        const pText = document.getElementById('participation-text');
+        if (pText) pText.innerHTML = `<span style="color:#10b981;font-weight:bold;">✓ Correct Answer (${c.letter})! Award recitation points below.</span>`;
+      } else {
+        card.classList.add('wrong');
+        container.querySelectorAll('.choice-card').forEach(cc => {
+          if (cc.querySelector('.choice-letter')?.textContent.trim() === targetCorrect) {
+            cc.classList.add('correct');
+          }
+        });
+        if (typeof playChime === 'function') playChime('wrong');
+        const pText = document.getElementById('participation-text');
+        if (pText) pText.innerHTML = `<span style="color:#ef4444;font-weight:bold;">✗ Selected ${c.letter}. Correct was ${targetCorrect}.</span>`;
+      }
+    };
+    container.appendChild(card);
+  });
+}
+
 async function startQuizFlash() {
   const studentId = document.getElementById('assess-student').value;
   if(!studentId) return alert('Select a student first.');
@@ -1594,26 +1706,35 @@ async function startQuizFlash() {
   if(!topicSelect) return;
   const selectedOption = topicSelect.options[topicSelect.selectedIndex];
   
-  if (state.assessment.useCurriculum && selectedOption.dataset.lessonId) {
+  if (state.assessment.useCurriculum && selectedOption && selectedOption.dataset.lessonId) {
     const lessonId = selectedOption.dataset.lessonId;
     const lessons = await fetchCurriculumLessons(state.assessment.grade);
     const lesson = lessons.find(l => l.id == lessonId);
     if(lesson && lesson.questions && lesson.questions.length > 0) {
-      const availableQ = lesson.questions;
+      state.assessment.topic = lesson.topic;
+      const matchingQ = lesson.questions.filter(q => (typeof q === 'object') && q.difficulty === state.assessment.difficulty);
+      const availableQ = matchingQ.length > 0 ? matchingQ : lesson.questions;
       const qObj = availableQ[Math.floor(Math.random() * availableQ.length)];
-      state.assessment.activeQuestion = qObj.question || qObj;
+      const rawText = (typeof qObj === 'object') ? (qObj.text || qObj.question || JSON.stringify(qObj)) : qObj;
+      const correctAns = (typeof qObj === 'object') ? (qObj.correct || 'A') : 'A';
+      state.assessment.activeQuestion = rawText;
+
       document.getElementById('flash-diff').textContent = `${state.assessment.difficulty} (${state.pointsMap[state.assessment.difficulty]} pts)`;
       document.getElementById('flash-diff').className = `badge ${state.assessment.difficulty === 'Easy' ? 'bg-success' : state.assessment.difficulty === 'Medium' ? 'bg-warning' : 'bg-danger'}`;
       document.getElementById('flash-student-name').textContent = student.name;
-      document.getElementById('flash-q-text').textContent = state.assessment.activeQuestion;
+      
+      const qStem = rawText.includes('|') ? rawText.split('|')[0].trim() : rawText;
+      document.getElementById('flash-q-text').textContent = qStem;
+      renderFlashChoices(rawText, correctAns);
+
       document.getElementById('pts-label').textContent = `(+${state.pointsMap[state.assessment.difficulty]} pts)`;
       document.getElementById('assessment-flash').classList.remove('hidden');
-      showQuestionOnTV(state.assessment.activeQuestion);
+      showQuestionOnTV(qStem);
     } else {
       alert('No questions found for this lesson. Please add questions to the lesson plan.');
     }
   } else {
-    state.assessment.topic = topicSelect.value;
+    state.assessment.topic = topicSelect ? topicSelect.value : '';
     
     // Ensure we have latest questions from DB
     if (dbQuestions.length === 0) await fetchQuestionsFromDB();
@@ -1629,25 +1750,34 @@ async function startQuizFlash() {
     }
     
     const qObj = availableQ[Math.floor(Math.random() * availableQ.length)];
-    state.assessment.activeQuestion = qObj.text;
+    const rawText = qObj.text;
+    const correctAns = qObj.correct || 'A';
+    state.assessment.activeQuestion = rawText;
     
     // Setup flash UI
     document.getElementById('flash-diff').textContent = `${state.assessment.difficulty} (${state.pointsMap[state.assessment.difficulty]} pts)`;
     document.getElementById('flash-diff').className = `badge ${state.assessment.difficulty === 'Easy' ? 'bg-success' : state.assessment.difficulty === 'Medium' ? 'bg-warning' : 'bg-danger'}`;
     document.getElementById('flash-student-name').textContent = student.name;
-    document.getElementById('flash-q-text').textContent = state.assessment.activeQuestion;
-    document.getElementById('pts-label').textContent = `(+${state.pointsMap[state.assessment.difficulty]} pts)`;
     
+    const qStem = rawText.includes('|') ? rawText.split('|')[0].trim() : rawText;
+    document.getElementById('flash-q-text').textContent = qStem;
+    renderFlashChoices(rawText, correctAns);
+
+    document.getElementById('pts-label').textContent = `(+${state.pointsMap[state.assessment.difficulty]} pts)`;
     document.getElementById('assessment-flash').classList.remove('hidden');
     
     // Send question to TV if TV display is open
-    showQuestionOnTV(state.assessment.activeQuestion);
+    showQuestionOnTV(qStem);
   }
 }
 
 function cancelQuiz() {
   const flash = document.getElementById('assessment-flash');
   if(flash) flash.classList.add('hidden');
+  const choicesContainer = document.getElementById('flash-choices-container');
+  if(choicesContainer) choicesContainer.innerHTML = '';
+  const pText = document.getElementById('participation-text');
+  if(pText) pText.textContent = 'Ready';
 }
 
 function recordQuizResult(isCorrect) {
@@ -1657,6 +1787,12 @@ function recordQuizResult(isCorrect) {
 
   const points = isCorrect ? state.pointsMap[state.assessment.difficulty] : 0;
   student.totalScore += points;
+
+  if (isCorrect) {
+    playChime('correct');
+  } else {
+    playChime('wrong');
+  }
 
   saveState();
 
@@ -2261,6 +2397,9 @@ function renderScoreboard() {
   const gradeFilter = document.getElementById('scoreboard-grade');
   const sectionFilter = document.getElementById('scoreboard-section');
   const sortBy = document.getElementById('scoreboard-sort');
+  const searchEl = document.getElementById('scoreboard-search');
+  const searchQ = searchEl ? searchEl.value.toLowerCase().trim() : '';
+
   const gf = gradeFilter ? gradeFilter.value : 'all';
   const sf = sectionFilter ? sectionFilter.value : 'all';
   const sortField = sortBy ? sortBy.value : 'points';
@@ -2274,6 +2413,10 @@ function renderScoreboard() {
 
   if (sf !== 'all') {
     filtered = filtered.filter(s => (s.section || 'A') === sf);
+  }
+
+  if (searchQ) {
+    filtered = filtered.filter(s => s.name.toLowerCase().includes(searchQ));
   }
 
   // Calculate proficiency for sorting
@@ -2358,9 +2501,47 @@ function renderScoreboard() {
           ? '<span class="status-passive" title="Never participated"><i class="fa-solid fa-circle-xmark"></i> None</span>'
           : '<span style="color:#ffd166" title="Passive"><i class="fa-solid fa-circle-minus"></i> Low</span>'
       }</td>
+      <td style="text-align:center;">
+        <div class="score-btn-group">
+          <button class="btn-point-quick btn-point-plus1" onclick="app.quickModifyPoints(${student.id}, 1)" title="Add 1 point">+1</button>
+          <button class="btn-point-quick btn-point-plus3" onclick="app.quickModifyPoints(${student.id}, 3)" title="Add 3 points">+3</button>
+          <button class="btn-point-quick btn-point-plus5" onclick="app.quickModifyPoints(${student.id}, 5)" title="Add 5 points">+5</button>
+          <button class="btn-point-quick btn-point-minus1" onclick="app.quickModifyPoints(${student.id}, -1)" title="Subtract 1 point">-1</button>
+        </div>
+      </td>
     `;
     tbody.appendChild(tr);
   });
+}
+
+async function quickModifyPoints(studentId, pts) {
+  const student = state.students.find(s => s.id == studentId);
+  if (!student) return;
+
+  student.totalScore = Math.max(0, (student.totalScore || 0) + pts);
+  if (pts > 0) {
+    student.recitations = (student.recitations || 0) + 1;
+    playChime('coin');
+  } else {
+    playChime('click');
+  }
+
+  saveState();
+  renderScoreboard();
+
+  try {
+    await fetch('recitation_api.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        student_id: student.id,
+        topic: 'Scoreboard Quick Modifier',
+        difficulty: pts >= 3 ? 'Medium' : 'Easy',
+        points: pts,
+        is_correct: pts > 0 ? 1 : 0
+      })
+    });
+  } catch(e) {}
 }
 
 function refreshScoreboard() {
@@ -2441,6 +2622,12 @@ function recordRubricResult(points) {
   if (student) {
     student.recitations++;
     student.totalScore += points;
+
+    if (points > 0) {
+      playChime('correct');
+    } else {
+      playChime('wrong');
+    }
 
     // Update TV to show points awarded
     if (tvWindow && !tvWindow.closed) {
@@ -3740,6 +3927,197 @@ function toggleMusic() {
     btn.classList.add('off');
   }
   saveState();
+}
+
+// Procedural Web Audio Synthesizer (100% Offline, Zero external media files)
+let appAudioCtx = null;
+function playChime(type) {
+  if (!state.soundEnabled) return;
+  try {
+    if (!appAudioCtx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) appAudioCtx = new AudioCtx();
+    }
+    if (appAudioCtx && appAudioCtx.state === 'suspended') {
+      appAudioCtx.resume();
+    }
+    if (!appAudioCtx) return;
+
+    const now = appAudioCtx.currentTime;
+
+    if (type === 'correct') {
+      // Ascending C Major Triad + High C (C5, E5, G5, C6)
+      [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+        const osc = appAudioCtx.createOscillator();
+        const gain = appAudioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+        gain.gain.setValueAtTime(0.2, now + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.35);
+        osc.connect(gain);
+        gain.connect(appAudioCtx.destination);
+        osc.start(now + idx * 0.08);
+        osc.stop(now + idx * 0.08 + 0.36);
+      });
+    } else if (type === 'wrong') {
+      // Low dual-tone buzzer
+      const osc = appAudioCtx.createOscillator();
+      const gain = appAudioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(150, now);
+      osc.frequency.linearRampToValueAtTime(110, now + 0.25);
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+      osc.connect(gain);
+      gain.connect(appAudioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.3);
+    } else if (type === 'fanfare') {
+      // Triumphant Winner Fanfare (C5, G5, C6)
+      const notes = [
+        { f: 523.25, d: 0.12, t: 0 },
+        { f: 523.25, d: 0.12, t: 0.14 },
+        { f: 523.25, d: 0.12, t: 0.28 },
+        { f: 659.25, d: 0.2, t: 0.42 },
+        { f: 783.99, d: 0.2, t: 0.64 },
+        { f: 1046.5, d: 0.5, t: 0.86 }
+      ];
+      notes.forEach(n => {
+        const osc = appAudioCtx.createOscillator();
+        const gain = appAudioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(n.f, now + n.t);
+        gain.gain.setValueAtTime(0.25, now + n.t);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + n.t + n.d);
+        osc.connect(gain);
+        gain.connect(appAudioCtx.destination);
+        osc.start(now + n.t);
+        osc.stop(now + n.t + n.d + 0.02);
+      });
+    } else if (type === 'coin') {
+      // Upward frequency chirp
+      const osc = appAudioCtx.createOscillator();
+      const gain = appAudioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(987.77, now);
+      osc.frequency.setValueAtTime(1318.51, now + 0.08);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      osc.connect(gain);
+      gain.connect(appAudioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.36);
+    } else if (type === 'tick') {
+      // Woodblock tap
+      const osc = appAudioCtx.createOscillator();
+      const gain = appAudioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, now);
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc.connect(gain);
+      gain.connect(appAudioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.05);
+    } else if (type === 'buzzer') {
+      // Time's up alarm
+      [0, 0.2].forEach(offset => {
+        const osc = appAudioCtx.createOscillator();
+        const gain = appAudioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, now + offset);
+        gain.gain.setValueAtTime(0.3, now + offset);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.15);
+        osc.connect(gain);
+        gain.connect(appAudioCtx.destination);
+        osc.start(now + offset);
+        osc.stop(now + offset + 0.16);
+      });
+    } else if (type === 'click') {
+      // Soft UI Click
+      const osc = appAudioCtx.createOscillator();
+      const gain = appAudioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(450, now);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+      osc.connect(gain);
+      gain.connect(appAudioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.04);
+    }
+  } catch(e) {}
+}
+
+// Native Offline Text-to-Speech Engine (0 bytes download, native Web Speech API)
+function speakText(text, lang = 'en-US') {
+  if (!text || typeof window.speechSynthesis === 'undefined') return;
+  try {
+    window.speechSynthesis.cancel(); // Stop any active speech
+    const cleanText = text.replace(/<[^>]*>?/gm, '').replace(/[_*#]/g, '');
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = lang;
+    utterance.rate = 0.9; // Clear, natural speed for young learners
+    utterance.pitch = 1.0;
+    window.speechSynthesis.speak(utterance);
+  } catch(e) {
+    console.warn('Speech synthesis unavailable:', e);
+  }
+}
+
+// Global Science Curriculum MIDI Player Helper
+async function playCurriculumMidi(fileKey) {
+  if (window.midiPlayer) {
+    try {
+      await window.midiPlayer.load(`audio/${fileKey}`);
+      window.midiPlayer.play();
+      return true;
+    } catch (e) {
+      console.warn('MIDI playback error:', e);
+      return false;
+    }
+  }
+  return false;
+}
+
+function stopCurriculumMidi() {
+  if (window.midiPlayer) {
+    window.midiPlayer.stop();
+  }
+}
+
+// Quick Science Question Seeder for Question Bank
+async function seedScienceQuestions() {
+  const sampleItems = [
+    { grade: '3', topic: 'Living Things', difficulty: 'Easy', text: 'Which part of the plant absorbs water and nutrients from the soil?', type: 'multiple-choice' },
+    { grade: '3', topic: 'Living Things', difficulty: 'Medium', text: 'Name the process by which green plants make their own food.', type: 'identification' },
+    { grade: '3', topic: 'Matter', difficulty: 'Easy', text: 'Which state of matter has a definite shape and volume?', type: 'multiple-choice' },
+    { grade: '4', topic: 'Materials', difficulty: 'Easy', text: 'Materials that allow water to pass through them are called porous materials.', type: 'multiple-choice' },
+    { grade: '4', topic: 'Materials', difficulty: 'Medium', text: 'What property of materials describes their ability to decay and decompose naturally?', type: 'identification' },
+    { grade: '4', topic: 'Living Things', difficulty: 'Hard', text: 'Explain the function of chloroplasts in plant photosynthesis.', type: 'open-ended' },
+    { grade: '5', topic: 'Simple Machines', difficulty: 'Easy', text: 'A ramp used to load heavy boxes onto a truck is an example of which simple machine?', type: 'multiple-choice' },
+    { grade: '5', topic: 'Simple Machines', difficulty: 'Medium', text: 'What is the point on which a lever rests or turns called?', type: 'identification' },
+    { grade: '5', topic: 'Electricity', difficulty: 'Medium', text: 'In a complete electrical circuit, electrons flow from the negative terminal to the positive terminal.', type: 'multiple-choice' },
+    { grade: '6', topic: 'Solar System', difficulty: 'Easy', text: 'Which planet is known as the Red Planet in our Solar System?', type: 'multiple-choice' },
+    { grade: '6', topic: 'Ecosystems', difficulty: 'Hard', text: 'Describe how energy flows through a terrestrial food web starting from producers.', type: 'open-ended' }
+  ];
+
+  let added = 0;
+  for (const q of sampleItems) {
+    try {
+      await fetch('questions_api.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(q)
+      });
+      added++;
+    } catch(e) {}
+  }
+
+  await fetchQuestionsFromDB();
+  if (typeof renderQuestionBank === 'function') renderQuestionBank();
+  playChime('fanfare');
+  alert(`🎉 Successfully seeded ${added} curriculum science questions into the database!`);
 }
 
 function restartApp() {
@@ -5268,6 +5646,7 @@ function spinTheStudentWheel() {
         winnerDisplay.textContent = `🎯 ${winner.name}!`;
         winnerDisplay.classList.add('pulse');
       }
+      playChime('fanfare');
       
       const select = document.getElementById('assess-student');
       if (select) {
@@ -5450,5 +5829,13 @@ window.app = {
   showVideoOnTVDirect,
   generateDynamicGroupings,
   openStudentSpinner,
-  spinTheStudentWheel
+  spinTheStudentWheel,
+  quickModifyPoints,
+  playChime,
+  speakText,
+  playCurriculumMidi,
+  stopCurriculumMidi,
+  bulkAddStudents,
+  resetQuarterRecitations,
+  seedScienceQuestions
 };

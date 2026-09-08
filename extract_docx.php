@@ -1,9 +1,22 @@
 <?php
+$inputFile = isset($argv[1]) ? $argv[1] : __DIR__ . '/manuscript.docx';
+$outputFile = isset($argv[2]) ? $argv[2] : __DIR__ . '/manuscript_paragraphs.txt';
+
+if (!file_exists($inputFile)) {
+    echo "File not found: $inputFile\n";
+    exit(1);
+}
+
 $zip = new ZipArchive;
-if ($zip->open('manuscript.docx') === TRUE) {
+if ($zip->open($inputFile) === TRUE) {
     $xml = $zip->getFromName('word/document.xml');
     $zip->close();
     
+    if (!$xml) {
+        echo "Could not find word/document.xml in $inputFile\n";
+        exit(1);
+    }
+
     $dom = new DOMDocument();
     @$dom->loadXML($xml);
     $xpath = new DOMXPath($dom);
@@ -21,8 +34,9 @@ if ($zip->open('manuscript.docx') === TRUE) {
             $out[] = $line;
         }
     }
-    file_put_contents('manuscript_paragraphs.txt', implode("\n\n", $out));
-    echo "Successfully extracted " . count($out) . " paragraphs.\n";
+    file_put_contents($outputFile, implode("\n\n", $out));
+    echo "Successfully extracted " . count($out) . " paragraphs into " . basename($outputFile) . "\n";
 } else {
-    echo "Failed to open manuscript.docx\n";
+    echo "Failed to open $inputFile as a zip/docx archive\n";
+    exit(1);
 }

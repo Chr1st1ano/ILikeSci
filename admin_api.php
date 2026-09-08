@@ -16,17 +16,17 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit(0);
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit(0);
 
 // Ensure email column exists
 try {
-    $cols = $pdo->query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='ilikesci_db' AND TABLE_NAME='users'")->fetchAll(PDO::FETCH_COLUMN);
-    if (!in_array('email', $cols)) {
-        $pdo->exec("ALTER TABLE users ADD COLUMN email VARCHAR(150) DEFAULT '' AFTER display_name");
+    if (!db_column_exists($pdo, 'users', 'email')) {
+        $colType = is_sqlite() ? "TEXT DEFAULT ''" : "VARCHAR(150) DEFAULT ''";
+        $pdo->exec("ALTER TABLE users ADD COLUMN email $colType");
     }
 } catch (Exception $e) { /* ignore */ }
 
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 if ($method === 'GET') {
     $action = $_GET['action'] ?? 'users';
@@ -206,7 +206,8 @@ if ($method === 'GET') {
         $stmt->execute([$username, $hashed, $displayName, $email, $role]);
         
         // Auto-create teacher profile
-        $pdo->prepare("INSERT IGNORE INTO teacher_profiles (username, display_name) VALUES (?, ?)")
+        $ignoreKeyword = is_sqlite() ? "INSERT OR IGNORE INTO" : "INSERT IGNORE INTO";
+        $pdo->prepare("$ignoreKeyword teacher_profiles (username, display_name) VALUES (?, ?)")
             ->execute([$username, $displayName]);
 
         echo json_encode(["status" => "success", "message" => "User '$username' created", "id" => $pdo->lastInsertId()]);

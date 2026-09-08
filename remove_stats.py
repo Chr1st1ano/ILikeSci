@@ -1,7 +1,7 @@
 import os
 import re
 
-directory = r"c:\Games\xampp\htdocs\ILikeSci"
+directory = os.path.dirname(os.path.abspath(__file__))
 pattern = re.compile(r'\s*<div class="stats-counter">.*?</div>', re.DOTALL)
 
 for filename in os.listdir(directory):

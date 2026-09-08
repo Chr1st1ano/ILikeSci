@@ -1,7 +1,7 @@
 import os
 
 # Create directory
-out_dir = r"c:\Games\xampp\htdocs\ILikeSci\lowpai"
+out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lowpai")
 os.makedirs(out_dir, exist_ok=True)
 
 css_content = """

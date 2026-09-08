@@ -77,6 +77,8 @@
           <button class="btn-icon" id="student-sort-dir" onclick="toggleStudentSortDir()" title="Toggle Ascending/Descending" style="font-size:16px;">
             <i class="fa-solid fa-arrow-down-a-z" id="student-sort-dir-icon"></i>
           </button>
+          <button class="btn btn-secondary" onclick="toggleBulkImportModal()" title="Bulk Import Student Names"><i class="fa-solid fa-users-line"></i> <span class="hide-mobile">Bulk Import</span></button>
+          <button class="btn btn-secondary" onclick="app.resetQuarterRecitations(document.getElementById('grade-filter').value)" title="Reset recitation points for new quarter" style="color:#ffd166; border-color:rgba(255,209,102,0.4);"><i class="fa-solid fa-rotate-left"></i> <span class="hide-mobile">Reset Quarter</span></button>
           <button class="btn btn-secondary" onclick="app.openTVDisplay()" title="TV Display"><i class="fa-solid fa-display"></i> <span class="hide-mobile">TV</span></button>
           <button class="btn btn-primary" onclick="app.toggleAddStudent()"><i class="fa-solid fa-plus"></i> Add Student</button>
         </div>
@@ -93,7 +95,7 @@
               <label>Grade Level</label>
               <select id="student-grade" class="form-control">
                 <option value="3">Grade 3</option>
-                <option value="4">Grade 4</option>
+                <option value="4" selected>Grade 4</option>
                 <option value="5">Grade 5</option>
                 <option value="6">Grade 6</option>
               </select>
@@ -111,6 +113,38 @@
           <div style="display:flex; gap:12px; margin-top:16px;">
             <button class="btn btn-success" onclick="app.addStudent()"><i class="fa-solid fa-check"></i> Save</button>
             <button class="btn btn-secondary" onclick="app.toggleAddStudent()"><i class="fa-solid fa-xmark"></i> Cancel</button>
+          </div>
+        </div>
+
+        <!-- Bulk Import Student Roster Modal -->
+        <div id="bulk-import-modal" class="glass-card hidden mt-20" style="border: 2px solid var(--primary); background: var(--bg-card);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 style="margin:0;"><i class="fa-solid fa-users-line text-primary"></i> Bulk Import Student Roster</h3>
+            <button onclick="toggleBulkImportModal()" class="btn-icon"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <p class="subtitle" style="margin-bottom:12px;">Paste your class list of student names below (one name per line, e.g. from Excel or DepEd SF1):</p>
+          <textarea id="bulk-student-names" class="form-control" rows="8" placeholder="Juan Dela Cruz&#10;Maria Santos&#10;Pedro Reyes&#10;Ana Lim"></textarea>
+          <div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; align-items:center;">
+            <div>
+              <label style="font-size:13px; font-weight:600;">Grade:</label>
+              <select id="bulk-grade" class="form-control" style="width:auto; display:inline-block; margin-left:6px;">
+                <option value="3">Grade 3</option>
+                <option value="4" selected>Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:13px; font-weight:600;">Section:</label>
+              <select id="bulk-section" class="form-control" style="width:auto; display:inline-block; margin-left:6px;">
+                <option value="A">Section A</option>
+                <option value="B">Section B</option>
+                <option value="C">Section C</option>
+                <option value="D">Section D</option>
+              </select>
+            </div>
+            <button class="btn btn-success" onclick="executeBulkImport()"><i class="fa-solid fa-cloud-arrow-up"></i> Import All Students</button>
+            <button class="btn btn-secondary" onclick="toggleBulkImportModal()"><i class="fa-solid fa-xmark"></i> Cancel</button>
           </div>
         </div>
 
@@ -132,6 +166,20 @@
       app.renderStudents();
     }
     window.getStudentSortDir = () => studentSortAsc;
+
+    function toggleBulkImportModal() {
+      const m = document.getElementById('bulk-import-modal');
+      m.classList.toggle('hidden');
+    }
+
+    async function executeBulkImport() {
+      const names = document.getElementById('bulk-student-names').value;
+      const grade = document.getElementById('bulk-grade').value;
+      const section = document.getElementById('bulk-section').value;
+      await app.bulkAddStudents(names, grade, section);
+      document.getElementById('bulk-student-names').value = '';
+      toggleBulkImportModal();
+    }
   </script>
   <script src="app.js"></script>
   <script src="mobile-optimizations.js"></script>

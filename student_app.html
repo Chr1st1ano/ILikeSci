@@ -285,15 +285,15 @@
 
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
-    <button class="nav-btn active" onclick="switchTab('learn')">
+    <button class="nav-btn active" onclick="switchTab('learn', event)">
       <i class="fa-solid fa-book-open"></i>
       <span>Learn</span>
     </button>
-    <button class="nav-btn" onclick="switchTab('play')">
+    <button class="nav-btn" onclick="switchTab('play', event)">
       <i class="fa-solid fa-gamepad"></i>
       <span>Play</span>
     </button>
-    <button class="nav-btn" onclick="switchTab('profile')">
+    <button class="nav-btn" onclick="switchTab('profile', event)">
       <i class="fa-solid fa-user"></i>
       <span>Profile</span>
     </button>
@@ -301,12 +301,14 @@
 
   <script>
     // Simple tab switcher for the Mobile App
-    function switchTab(tabId) {
+    function switchTab(tabId, ev) {
       document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
       
-      document.getElementById('view-' + tabId).classList.add('active');
-      event.currentTarget.classList.add('active');
+      const targetView = document.getElementById('view-' + tabId);
+      if (targetView) targetView.classList.add('active');
+      const targetBtn = (ev && ev.currentTarget) ? ev.currentTarget : document.querySelector(`.nav-btn[onclick*="${tabId}"]`);
+      if (targetBtn) targetBtn.classList.add('active');
       
       // Haptic feedback if supported by the mobile device
       if (navigator.vibrate) {

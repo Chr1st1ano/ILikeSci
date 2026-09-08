@@ -21,7 +21,8 @@ const urlsToCache = [
   'styles.css',
   'app.js',
   'manifest.json',
-  'presenter.html'
+  'presenter.html',
+  'student_app.html'
 ];
 
 // Install event - Cache core assets

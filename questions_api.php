@@ -5,18 +5,18 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
 
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 try {
     // Dynamic database migration for type column
     try {
-        $cols = $pdo->query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='ilikesci_db' AND TABLE_NAME='questions'")->fetchAll(PDO::FETCH_COLUMN);
-        if (!in_array('type', $cols)) {
-            $pdo->exec("ALTER TABLE questions ADD COLUMN type VARCHAR(50) DEFAULT 'multiple-choice'");
+        if (!db_column_exists($pdo, 'questions', 'type')) {
+            $colType = is_sqlite() ? "TEXT DEFAULT 'multiple-choice'" : "VARCHAR(50) DEFAULT 'multiple-choice'";
+            $pdo->exec("ALTER TABLE questions ADD COLUMN type $colType");
         }
     } catch (Exception $e) { /* ignore */ }
 

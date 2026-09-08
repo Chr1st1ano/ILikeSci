@@ -38,16 +38,17 @@ try {
     )");
 
     // Add missing columns if table already existed
-    $cols = $pdo->query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'ilikesci_db' AND TABLE_NAME = 'pptx_uploads'")->fetchAll(PDO::FETCH_COLUMN);
-    if (!in_array('slides_dir', $cols)) {
-        $pdo->exec("ALTER TABLE pptx_uploads ADD COLUMN slides_dir VARCHAR(255) DEFAULT '' AFTER curriculum_lesson_id");
+    if (!db_column_exists($pdo, 'pptx_uploads', 'slides_dir')) {
+        $colType = is_sqlite() ? "TEXT DEFAULT ''" : "VARCHAR(255) DEFAULT ''";
+        $pdo->exec("ALTER TABLE pptx_uploads ADD COLUMN slides_dir $colType");
     }
-    if (!in_array('has_images', $cols)) {
-        $pdo->exec("ALTER TABLE pptx_uploads ADD COLUMN has_images TINYINT DEFAULT 0 AFTER slides_dir");
+    if (!db_column_exists($pdo, 'pptx_uploads', 'has_images')) {
+        $colType = is_sqlite() ? "INTEGER DEFAULT 0" : "TINYINT DEFAULT 0";
+        $pdo->exec("ALTER TABLE pptx_uploads ADD COLUMN has_images $colType");
     }
 } catch (Exception $e) { /* ignore */ }
 
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 // ============================================
 // GET — List presentations / Get slides / Serve image
@@ -257,15 +258,17 @@ if ($method === 'POST') {
     // Find Python executable
     $pythonCmd = '';
     $pythonPaths = [
+        'C:\\Users\\08oyo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe',
         'C:\\Users\\08oyo\\AppData\\Local\\Python\\bin\\python.exe',
         'python',
+        'py',
         'python3',
         'C:\\Games\\Python3.14\\python.exe',
         'C:\\Python3\\python.exe',
         'C:\\Python\\python.exe'
     ];
     foreach ($pythonPaths as $pp) {
-        $testOut = shell_exec("\"$pp\" --version 2>&1");
+        $testOut = shell_exec(escapeshellarg($pp) . " --version 2>&1");
         if ($testOut && stripos($testOut, 'python') !== false) {
             $pythonCmd = $pp;
             break;
@@ -275,7 +278,7 @@ if ($method === 'POST') {
     if ($pythonCmd) {
         $scriptPath = __DIR__ . '/pptx_to_images.py';
         if (file_exists($scriptPath)) {
-            $cmd = "\"$pythonCmd\" \"$scriptPath\" \"$savedPath\" \"$slidesDirFull\" 2>&1";
+            $cmd = escapeshellarg($pythonCmd) . " " . escapeshellarg($scriptPath) . " " . escapeshellarg($savedPath) . " " . escapeshellarg($slidesDirFull) . " 2>&1";
             $output = shell_exec($cmd);
 
             // Parse Python output — last line should be JSON
@@ -306,7 +309,8 @@ if ($method === 'POST') {
         return $s['title'] . "\n" . $s['content'];
     }, $slides));
 
-    $stmtLessonNum = $pdo->prepare("SELECT COALESCE(MAX(CAST(lesson_number AS UNSIGNED)),0)+1 FROM curriculum_lessons WHERE grade=? AND quarter=?");
+    $castType = is_sqlite() ? "INTEGER" : "UNSIGNED";
+    $stmtLessonNum = $pdo->prepare("SELECT COALESCE(MAX(CAST(lesson_number AS $castType)),0)+1 FROM curriculum_lessons WHERE grade=? AND quarter=?");
     $stmtLessonNum->execute([$grade, $quarter]);
     $lessonNum = $stmtLessonNum->fetchColumn();
 

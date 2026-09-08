@@ -1,0 +1,1315 @@
+<?php
+/**
+ * ILikeSci — Official MATATAG / DepEd "Life Science" Curriculum Seeder
+ * Populates all 21 curriculum units across Grades 3 to 6:
+ * - Grade 3 (Term 1 & Term 2): 6 Units
+ * - Grade 4 (Term 1, Term 2 & Term 3): 7 Units
+ * - Grade 5 (Term 1 & Term 2): 4 Units
+ * - Grade 6 (Term 1 & Term 2): 4 Units
+ * Total: 21 Curriculum Lessons, 105 Detailed Presentation Slides, 105+ Tiered Questions.
+ * Compatible with both XAMPP MySQL and SQLite fallback.
+ */
+
+if (php_sapi_name() !== 'cli') {
+    header('Content-Type: text/html; charset=utf-8');
+}
+
+require_once __DIR__ . '/db.php';
+
+$lifeScienceUnits = [
+    // ==========================================
+    // GRADE 3 — LIFE SCIENCE
+    // ==========================================
+    [
+        'grade' => '3',
+        'quarter' => '1',
+        'lesson_number' => '1',
+        'topic' => 'Scientific Inquiry in Life Science',
+        'objectives' => [
+            'Formulate questions and make scientific observations of living organisms using the five senses and hand lenses.',
+            'Record qualitative and quantitative observations of plants and small animals in an inquiry journal.',
+            'Differentiate living organisms from non-living objects through guided classroom investigations.'
+        ],
+        'content' => "Life Science is the systematic study of living things, including plants, animals, and microorganisms. Biologists use scientific inquiry to understand how living organisms survive, grow, and interact with the world around them.\n\nScientific inquiry begins with curious questions and careful observations. Using scientific tools like magnifying hand lenses, measuring rulers, and inquiry journals, young scientists observe details like leaf vein patterns, insect legs, and root structures without harming the specimens.\n\nObservations are classified as qualitative (descriptions using words like green, fuzzy, or fragrant) and quantitative (measurements using numbers like 5 leaves or 12 centimeters tall).",
+        'slides' => [
+            [
+                'title' => 'Scientific Inquiry in Life Science',
+                'content' => "Grade 3 — Term 1 Life Science\n\nBecome a young biologist: Discover how scientists observe, question, and investigate the living world.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Tools of the Young Biologist',
+                'content' => "Essential tools for studying living organisms:\n• Hand Lens / Magnifying Glass: Enlarge leaf veins, insect antennae, and soil microbes\n• Metric Ruler & Tape: Measure plant height and leaf width accurately\n• Science Inquiry Journal: Sketch specimens and log daily growth\n• Ethical Care: Always observe living creatures gently and return them safely to nature!",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Qualitative vs Quantitative Observations',
+                'content' => "Two Ways to Record Science Data:\n• Qualitative: Describing observable qualities using senses\n  - 'The caterpillar is bright green, smooth, and moves slowly'\n• Quantitative: Describing measurable quantities with numbers\n  - 'The caterpillar is 4 cm long and weighs 2 grams'",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Choose a plant leaf or small insect\nStep 2: Note color, texture, and smell (Qualitative)\nStep 3: Measure length in millimeters with a ruler (Quantitative)\nStep 4: Record findings neatly in your science notebook"
+            ],
+            [
+                'title' => 'Field Study: Philippine Wildlife',
+                'content' => "How Filipino naturalists study nature:\n• Observing Philippine sunbirds pollinating banana blossoms\n• Counting egg clusters of tree frogs during monsoon rains\n• Identifying native flowering orchids in national parks",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Classroom Inquiry Check',
+                'content' => "A pupil writes: 'The garden sunflower has 18 bright yellow petals.' Which part is a quantitative observation?\nA) 'Bright yellow'\nB) 'Garden sunflower'\nC) '18 petals'\nD) 'Smells sweet'\n\nCorrect Answer: C ('18 petals' uses a countable number!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '3', 'topic' => 'Scientific Inquiry in Life Science', 'difficulty' => 'Easy', 'text' => 'What science tool helps young biologists enlarge small insect legs and leaf veins? | A: Hand lens (magnifying glass) B: Flashlight C: Thermometer D: Compass', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Scientific Inquiry in Life Science', 'difficulty' => 'Easy', 'text' => 'Which of the following is an example of a living organism? | A: River pebble B: Earthworm C: Plastic bottle D: Rubber eraser', 'correct' => 'B'],
+            ['grade' => '3', 'topic' => 'Scientific Inquiry in Life Science', 'difficulty' => 'Medium', 'text' => 'A student writes: "The caterpillar is soft and measures 4 centimeters long." Which part is quantitative? | A: "4 centimeters long" B: "The caterpillar" C: "soft" D: None of the above', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Scientific Inquiry in Life Science', 'difficulty' => 'Medium', 'text' => 'Why should pupils observe outdoor insects gently without stepping on or injuring them? | A: Living organisms play vital ecological roles and must be respected B: Insects break glass C: Tools get dirty D: Hand lenses stop working', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Scientific Inquiry in Life Science', 'difficulty' => 'Hard', 'text' => 'How can a student prove scientifically that a mung bean seed is alive while a brown pebble is non-living? | A: Plant both in moist soil; the seed absorbs water, germinates, and grows into a plant, while the pebble shows zero growth B: Weigh both on a balance C: Paint both green D: Drop both into water', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '3',
+        'quarter' => '1',
+        'lesson_number' => '2',
+        'topic' => 'Characteristics and Life Processes of Living Things',
+        'objectives' => [
+            'Identify the fundamental characteristics of living things (growth, movement, nutrition, respiration, excretion, response to stimuli, reproduction).',
+            'Compare life processes in plants and animals.',
+            'Explain how living organisms respond to changes in their immediate environment.'
+        ],
+        'content' => "All living things share fundamental characteristics that set them apart from non-living matter: they grow, move, consume nutrients, breathe, excrete waste, respond to stimuli, and reproduce.\n\nPlants make their own food through sunlight and show tropisms (growing toward light or gravity). Animals actively move from place to place using legs, wings, or fins to find food and shelter.\n\nLiving things respond to external stimuli: a mimosa plant (Makahiya) folds its leaves when touched; animals seek shade when it gets too hot; earthworms burrow into moist soil when exposed to bright sunlight.",
+        'slides' => [
+            [
+                'title' => 'Characteristics of Living Things',
+                'content' => "Grade 3 — Term 1 Life Science\n\nLearn the 7 life processes that define living organisms on planet Earth.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The 7 Signs of Life',
+                'content' => "Every living organism performs these processes:\n1. Movement: Active locomotion or slow plant bending\n2. Respiration: Exchanging gases to release energy\n3. Sensitivity: Responding to environmental stimuli\n4. Growth: Increasing in size and developing complexity\n5. Reproduction: Producing offspring to continue the species\n6. Excretion: Eliminating cellular waste products\n7. Nutrition: Absorbing or making food nutrients",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Plants vs Animals in Action',
+                'content' => "Comparing Life Processes:\n• Feeding: Plants synthesize food via photosynthesis; animals ingest food\n• Movement: Animals walk, fly, or swim; plants turn leaves toward the Sun (phototropism)\n• Breathing: Animals inhale oxygen through lungs/gills; plants exchange gases via leaf stomata",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Place a potted bean plant near a window\nStep 2: Observe stem bending toward sunlight\nStep 3: Touch a Makahiya leaf and watch it fold\nStep 4: Conclude: Plants actively respond to stimuli!"
+            ],
+            [
+                'title' => 'Sensitivity: Responding to Stimuli',
+                'content' => "How living things react to keep safe:\n• Makahiya plant folds its leaves when touched to deter herbivores\n• Dogs pant and drink water when overheated\n• Earthworms burrow deeper into soil when sunlight hits their skin",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Living vs Non-Living Quiz',
+                'content' => "A toy robot can walk, speak words, and uses battery power. Why is it still considered non-living?\nA) It is too small\nB) It cannot grow, reproduce, or possess living cells\nC) It has bright plastic colors\nD) It moves on wheels\n\nCorrect Answer: B (Non-living objects do not grow, heal, or reproduce!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '3', 'topic' => 'Characteristics and Life Processes of Living Things', 'difficulty' => 'Easy', 'text' => 'What happens to the leaves of the Makahiya (touch-me-not) plant when gently touched? | A: They fold closed rapidly B: They fall off immediately C: They turn into flowers D: They catch fire', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Characteristics and Life Processes of Living Things', 'difficulty' => 'Easy', 'text' => 'Which of the following life processes ensures that a species of animal does not go extinct? | A: Reproduction B: Sleeping C: Walking D: Running', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Characteristics and Life Processes of Living Things', 'difficulty' => 'Medium', 'text' => 'Why do potted green plants placed near a classroom window slowly bend toward the glass? | A: Stems grow toward sunlight to maximize photosynthesis (phototropism) B: Stems try to break the glass C: Wind pushes them inside D: Roots dislike darkness', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Characteristics and Life Processes of Living Things', 'difficulty' => 'Medium', 'text' => 'How does an animal\'s movement differ from a plant\'s movement? | A: Most animals can travel from place to place, while plants move by slow growth and bending B: Plants run fast C: Animals never move D: Both move identically', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Characteristics and Life Processes of Living Things', 'difficulty' => 'Hard', 'text' => 'A car consumes gasoline, releases exhaust gas, and moves fast. Explain why a car is classified as non-living. | A: It cannot grow, cannot reproduce, lacks biological cells, and requires human construction B: It is made of metal C: It is painted red D: It has rubber tires', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '3',
+        'quarter' => '2',
+        'lesson_number' => '1',
+        'topic' => 'Basic Needs of Living Things',
+        'objectives' => [
+            'Identify the basic survival needs of plants and animals: water, food/nutrients, air, sunlight, and shelter/space.',
+            'Describe what happens when living organisms are deprived of one or more basic needs.',
+            'Relate basic needs to the welfare and care of household pets, farm animals, and crops.'
+        ],
+        'content' => "All living organisms require essential resources from their environment to survive and thrive.\n\nPlants require sunlight, water, carbon dioxide from the air, soil nutrients (nitrogen, phosphorus, potassium), and space to spread their roots and leaves.\n\nAnimals require clean water, nutritious food, oxygen to breathe, and safe shelter to protect themselves from predators and harsh weather.\n\nDepriving an organism of its basic needs leads to stunted growth, wilting, disease, or death. Caring for pets, farm animals, and trees requires providing these necessities consistently.",
+        'slides' => [
+            [
+                'title' => 'Basic Needs of Living Things',
+                'content' => "Grade 3 — Term 2 Life Science\n\nExplore the essential resources that keep all plants, animals, and humans alive.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'What Green Plants Need',
+                'content' => "Five essentials for plant life:\n1. Sunlight: Energy source for food production\n2. Water: Carries minerals and maintains turgor pressure\n3. Carbon Dioxide: Carbon building block for glucose\n4. Soil Nutrients: Essential minerals (N-P-K) for cell growth\n5. Space: Adequate room for roots and spreading branches",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'What Animals Need to Survive',
+                'content' => "Four essentials for animal life:\n1. Nutritious Food: Energy for muscles, growth, and body warmth\n2. Clean Water: Solvent for blood, cooling, and digestion\n3. Oxygen Gas: Required for cellular respiration\n4. Safe Shelter & Space: Protection from heavy rains, heat, and predators",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Check your pet's water bowl daily\nStep 2: Provide nutritious age-appropriate food\nStep 3: Ensure dry, ventilated sleeping shelter\nStep 4: Allow exercise space for healthy development"
+            ],
+            [
+                'title' => 'Deprivation: What Happens When Needs Are Missing?',
+                'content' => "Effects of lacking basic needs:\n• No water: Plant leaves wilt, lose cell pressure, and dry out\n• No sunlight: Plant leaves turn pale yellow and cannot produce food\n• No food: Animals lose weight, become weak, and succumb to illness",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Basic Needs Check Quiz',
+                'content' => "What vital gas in the air do dogs, birds, fish, and humans breathe in to stay alive?\nA) Carbon dioxide\nB) Oxygen\nC) Helium\nD) Nitrogen only\n\nCorrect Answer: B (Oxygen gas is required by animals for respiration!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '3', 'topic' => 'Basic Needs of Living Things', 'difficulty' => 'Easy', 'text' => 'What invisible gas in ambient air do animals and humans need to breathe in? | A: Oxygen B: Carbon dioxide C: Smoke D: Steam', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Basic Needs of Living Things', 'difficulty' => 'Easy', 'text' => 'Which primary energy source do green plants need to manufacture their food? | A: Sunlight B: Moonlight C: Wind D: Sound', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Basic Needs of Living Things', 'difficulty' => 'Medium', 'text' => 'What happens to a healthy potted plant kept in a dark cupboard without water for two weeks? | A: It will turn yellow, wilt, and die from lack of light and moisture B: It will produce flowers C: It will turn into plastic D: It grows faster', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Basic Needs of Living Things', 'difficulty' => 'Medium', 'text' => 'Why must fish tanks and aquariums have an electric aerator pump? | A: The pump dissolves essential oxygen gas into the water for fish gills to breathe B: To heat water to boiling C: To turn water into soda D: To feed the fish automatically', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Basic Needs of Living Things', 'difficulty' => 'Hard', 'text' => 'Why does crowding 50 tomato seedlings into one small flowerpot cause weak, spindly growth even with daily watering? | A: The seedlings compete intensely for limited root space, soil minerals, and sunlight B: Tomato seeds dislike water C: Soil turns to rock D: Roots generate too much heat', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '3',
+        'quarter' => '2',
+        'lesson_number' => '2',
+        'topic' => 'Structure and Function of Organisms',
+        'objectives' => [
+            'Identify the external body parts of common animals and explain their functions.',
+            'Identify the major vegetative and reproductive organs of flowering plants and their functions.',
+            'Relate specialized anatomical structures to specific survival tasks.'
+        ],
+        'content' => "Living things have specialized body parts called structures, and each structure performs a specific job called a function.\n\nIn plants: Roots anchor the plant and absorb water from soil; stems support branches and transport sap; leaves capture sunlight for photosynthesis; flowers enable reproduction; fruits protect seeds.\n\nIn animals: Eyes, ears, and noses detect predators and food; legs, wings, and fins enable locomotion; claws, beaks, and teeth gather and process food; fur and scales provide protection.\n\nSpecialized structures match survival needs: ducks have webbed feet for paddling; eagles have hooked talons for catching fish; cacti have needle-like spines to reduce water loss.",
+        'slides' => [
+            [
+                'title' => 'Structure and Function of Organisms',
+                'content' => "Grade 3 — Term 2 Life Science\n\nDiscover how specialized body parts help plants and animals survive and succeed.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Plant Structures & Their Functions',
+                'content' => "The 5 Major Organs of Plants:\n• Roots: Anchor plant into soil; absorb water and dissolved minerals\n• Stem: Supports aerial branches and transports fluids between roots and leaves\n• Leaves: The solar food factories performing photosynthesis\n• Flowers: Colorful structures attracting pollinators for reproduction\n• Fruits & Seeds: Protect developing seeds and aid dispersal",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Animal Structures: Movement & Feeding',
+                'content' => "Matching form to function:\n• Fins & Streamlined Body (Fish): Slicing through water with minimal drag\n• Webbed Feet (Ducks): Paddle-like surface for swimming\n• Sharp Curved Talons (Eagles): Grasping and holding slippery fish\n• Grinding Molars (Carabao): Crushing tough grass fibers",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Look at the feet of a bird\nStep 2: Are they webbed, clawed, or grasping?\nStep 3: Webbed = Swimming; Talons = Hunting; Claws = Perching\nStep 4: Structure always reveals function!"
+            ],
+            [
+                'title' => 'Protective Structures',
+                'content' => "Defensive body armor in nature:\n• Turtles: Hard bony carapace shields soft internal organs\n• Cacti: Needle-sharp spines deter thirsty desert herbivores\n• Porcupines: Modified sharp quills detach to injure attacking predators",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Organ Function Quiz',
+                'content' => "Which plant structure is primarily responsible for absorbing water and dissolved minerals from the soil?\nA) Flowers\nB) Leaves\nC) Roots\nD) Bark\n\nCorrect Answer: C (Roots anchor and absorb water/nutrients!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '3', 'topic' => 'Structure and Function of Organisms', 'difficulty' => 'Easy', 'text' => 'Which plant structure absorbs water and minerals from the ground? | A: Roots B: Leaves C: Flowers D: Fruits', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Structure and Function of Organisms', 'difficulty' => 'Easy', 'text' => 'What specialized body structure enables fish to extract oxygen from water? | A: Gills B: Lungs C: Skin only D: Fins', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Structure and Function of Organisms', 'difficulty' => 'Medium', 'text' => 'Why do ducks have webbed feet while chickens have slender clawed toes? | A: Webbed feet act like paddles for swimming, while chicken claws scratch soil for seeds B: Ducks cannot walk C: Chickens swim faster D: Chickens have no bones', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Structure and Function of Organisms', 'difficulty' => 'Medium', 'text' => 'What is the primary function of the colorful petals on gumamela and mango flowers? | A: Attract pollinating insects like bees and butterflies B: Absorb soil water C: Make seeds directly D: Protect stems from wind', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Structure and Function of Organisms', 'difficulty' => 'Hard', 'text' => 'Contrast the needle-like spines of a desert cactus with the broad flat leaves of a tropical banana plant. | A: Cactus spines minimize surface area to prevent moisture loss in dry heat; banana leaves maximize sunlight capture in moist rainforests B: Cactus spines make fruit C: Banana leaves are made of stone D: Both are identical', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '3',
+        'quarter' => '2',
+        'lesson_number' => '3',
+        'topic' => 'Interactions Among Living Things and Their Environment',
+        'objectives' => [
+            'Identify cooperative relationships where living things help one another (mutualism).',
+            'Explain the oxygen and carbon dioxide gas exchange between plants and animals.',
+            'Describe how living things interact with non-living environmental elements.'
+        ],
+        'content' => "No organism lives in isolation. Living things constantly interact with other living things (biotic factors) and non-living surroundings (abiotic factors).\n\nPlants and animals depend on each other: plants release oxygen that animals breathe, while animals exhale carbon dioxide that plants use to make food.\n\nPollination is a key interaction: bees, butterflies, and sunbirds drink flower nectar and simultaneously carry pollen between blossoms, allowing plants to form fruits and seeds.\n\nAnimals use non-living materials for habitat: birds build nests with twigs on tree branches; earthworms aerate soil; fish swim in river water.",
+        'slides' => [
+            [
+                'title' => 'Interactions in the Environment',
+                'content' => "Grade 3 — Term 2 Life Science\n\nDiscover the web of life: How plants, animals, and non-living elements depend on each other.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Oxygen-Carbon Dioxide Partnership',
+                'content' => "Nature's Perfect Balance:\n• Plants take in Carbon Dioxide (CO2) exhaled by animals and release fresh Oxygen (O2)\n• Animals inhale Oxygen (O2) and exhale Carbon Dioxide (CO2)\n• Together, plants and animals maintain clean, breathable air on Earth!",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Pollination: A Win-Win Friendship',
+                'content' => "Mutual cooperation in nature:\n• Flowers provide sweet nectar as food for bees, butterflies, and sunbirds\n• Pollinators dust pollen grains across their bodies and carry it to neighboring flowers\n• Result: The plant successfully produces delicious fruits and fertile seeds!",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Bee visits flower for nectar\nStep 2: Sticky pollen coats bee's legs\nStep 3: Bee flies to next flower\nStep 4: Pollination enables seed and fruit development"
+            ],
+            [
+                'title' => 'Living Things Using Non-Living Resources',
+                'content' => "Biotic organisms utilizing abiotic nature:\n• Birds collect mud, grass, and twigs to construct sturdy nests\n• Earthworms burrow through soil, creating aeration tunnels that help roots breathe\n• Mudfish burrow into moist lakebed mud to survive summer dry spells",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Ecosystem Interaction Quiz',
+                'content' => "What gas do plants release during the day that humans and animals need to inhale?\nA) Smoke\nB) Carbon dioxide\nC) Oxygen\nD) Helium\n\nCorrect Answer: C (Plants produce life-giving oxygen during photosynthesis!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '3', 'topic' => 'Interactions Among Living Things and Their Environment', 'difficulty' => 'Easy', 'text' => 'What essential gas do plants release into the air that animals breathe? | A: Oxygen B: Carbon dioxide C: Helium D: Hydrogen', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Interactions Among Living Things and Their Environment', 'difficulty' => 'Easy', 'text' => 'How do butterflies and honeybees help flowering fruit trees? | A: By carrying pollen between flowers so fruits can grow B: By eating all the leaves C: By making the tree colder D: By blocking sunlight', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Interactions Among Living Things and Their Environment', 'difficulty' => 'Medium', 'text' => 'How do burrowing earthworms improve soil for garden vegetables? | A: Their tunneling aerates soil and allows water to reach roots easily B: They eat the plant roots C: They turn soil into stone D: They dry out the garden', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Interactions Among Living Things and Their Environment', 'difficulty' => 'Medium', 'text' => 'What would happen to animals in a community if all green plants were removed? | A: Herbivores would starve, oxygen levels would drop, and animal life would collapse B: Animals would thrive better C: Rocks would produce food D: It would have no effect', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Interactions Among Living Things and Their Environment', 'difficulty' => 'Hard', 'text' => 'Explain the relationship between clownfish and sea anemones on coral reefs. | A: Clownfish gets protection among stinging tentacles (immune to sting), while it cleans the anemone and lures food (Mutualism) B: Clownfish eats the anemone C: Anemone kills clownfish D: Parasitism', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '3',
+        'quarter' => '2',
+        'lesson_number' => '4',
+        'topic' => 'Environmental Stewardship and Conservation',
+        'objectives' => [
+            'Explain the importance of protecting Philippine plant and animal habitats (forests, rivers, mangroves).',
+            'Identify harmful human activities that endanger local ecosystems.',
+            'Practice concrete conservation actions: waste segregation, tree planting, and wildlife protection.'
+        ],
+        'content' => "Environmental stewardship means taking responsibility to care for, protect, and preserve the natural world for present and future generations.\n\nPhilippine ecosystems (coral reefs, tropical rainforests, mangrove swamps) are home to unique biodiversity like the Philippine Eagle, Tarsier, and Tamaraw.\n\nDestructive human actions—cutting down forests (deforestation), dumping trash in rivers, and blasting reefs—destroy homes of living things and lead to species endangerment.\n\nEvery student can be an environmental steward: planting native trees, conserving water, avoiding plastic waste, participating in river cleanups, and respecting wild animals.",
+        'slides' => [
+            [
+                'title' => 'Environmental Stewardship & Conservation',
+                'content' => "Grade 3 — Term 2 Life Science\n\nProtecting Philippine biodiversity: Caring for our forests, rivers, mangroves, and wildlife.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Philippine Biodiversity Treasures',
+                'content' => "Unique organisms found only in the Philippines (Endemic):\n• Philippine Eagle: Magnificent apex predator of Sierra Madre rainforests\n• Philippine Tarsier: Tiny nocturnal primate of Bohol\n• Tamaraw: Rare dwarf wild buffalo of Mindoro\n• Dugong (Sea Cow): Gentle marine herbivore of Palawan seagrass beds",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Threats to Wildlife Habitats',
+                'content' => "Human impacts threatening nature:\n• Deforestation: Cutting trees leaves birds and primates homeless\n• River & Ocean Plastic Pollution: Sea turtles ingest plastic bags mistaking them for jellyfish\n• Siltation: Soil runoff smothers living coral reefs",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Sort waste into 4 bins at school\nStep 2: Plant native tree seedlings in the garden\nStep 3: Turn off taps to save freshwater\nStep 4: Spread the word to family and neighbors!"
+            ],
+            [
+                'title' => 'Why Mangrove Forests Are Superheroes',
+                'content' => "Coastal guardians of our islands:\n• Roots act as safe nursery schools for baby fish, crabs, and shrimp\n• Dense thickets break typhoon waves and protect coastal communities from storm surges\n• Traps sediment to prevent ocean muddying",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Stewardship Challenge Quiz',
+                'content' => "Which action represents responsible environmental stewardship?\nA) Burning plastic garbage in the backyard\nB) Planting native mangrove and tree seedlings along riverbanks\nC) Keeping wild endangered tarsiers as indoor pets\nD) Dumping detergent soap directly into rivers\n\nCorrect Answer: B (Tree planting restores habitats and stabilizes soil!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '3', 'topic' => 'Environmental Stewardship and Conservation', 'difficulty' => 'Easy', 'text' => 'What is the national bird of the Philippines that lives in dense mountain rainforests? | A: Philippine Eagle B: Maya C: Pigeon D: Ostrich', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Environmental Stewardship and Conservation', 'difficulty' => 'Easy', 'text' => 'What do we call the act of planting new trees to replace destroyed forests? | A: Reforestation B: Mining C: Deforestation D: Harvesting', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Environmental Stewardship and Conservation', 'difficulty' => 'Medium', 'text' => 'Why are mangrove forests along coastlines vital for protecting Philippine villages? | A: Their tangled roots break storm waves and prevent shoreline erosion during typhoons B: They make beaches sandy C: They stop rain from falling D: They produce electricity', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Environmental Stewardship and Conservation', 'difficulty' => 'Medium', 'text' => 'How does throwing plastic bags into a river miles inland endanger sea turtles in the ocean? | A: Plastic floats out to sea where sea turtles mistake it for jellyfish and choke B: Plastic dissolves into salt C: Plastic makes water cold D: Turtles eat plastic intentionally', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Environmental Stewardship and Conservation', 'difficulty' => 'Hard', 'text' => 'Design an action project for Grade 3 pupils to restore a degraded creek bank beside their school. | A: Clean up plastic wrappers, plant bamboo and native shrubs to anchor soil, and post educational no-littering signs B: Dump concrete waste into creek C: Pour bleach into water D: Cut remaining bushes', 'correct' => 'A']
+        ]
+    ],
+
+    // ==========================================
+    // GRADE 4 — LIFE SCIENCE
+    // ==========================================
+    [
+        'grade' => '4',
+        'quarter' => '1',
+        'lesson_number' => '1',
+        'topic' => 'Systems in Animals and Plants',
+        'objectives' => [
+            'Identify the root and shoot systems in plants and describe their collaborative transport functions.',
+            'Describe major organ systems in animals: skeletal, muscular, digestive, and circulatory systems.',
+            'Explain how organ systems work together to maintain life.'
+        ],
+        'content' => "Multicellular organisms are organized into hierarchical levels: Cells -> Tissues -> Organs -> Organ Systems -> Organism.\n\nPlants possess two primary systems:\n- The Root System (taproots and fibrous roots): Anchors the plant and absorbs water/minerals from soil.\n- The Shoot System (stems, leaves, buds, flowers): Supports leaves, captures sunlight for photosynthesis, and carries sap via xylem and phloem.\n\nAnimals possess coordinated body systems:\n- Skeletal & Muscular Systems: Provide framework, support, and enable movement.\n- Digestive System: Breaks down food into absorbable nutrients.\n- Circulatory System: Pumps blood carrying nutrients and oxygen to all cells.",
+        'slides' => [
+            [
+                'title' => 'Systems in Animals and Plants',
+                'content' => "Grade 4 — Term 1 Life Science\n\nDiscover how organs team up to form body systems that power plants and animals.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Plant Systems: Root vs Shoot',
+                'content' => "Two Interconnected Systems:\n• Root System (Underground): Anchors plant; absorbs moisture and nitrogen/phosphorus/potassium minerals\n• Shoot System (Aerial): Stems support foliage; leaves manufacture glucose; flowers produce seeds\n• Vascular Highway: Xylem tubes transport water UP; Phloem tubes carry sugar DOWN",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Animal Organ Systems at Work',
+                'content' => "Coordinated Teamwork:\n• Skeletal System: 206 bones giving rigid shape and protecting brain/heart\n• Muscular System: 600+ muscles contracting to move bones\n• Digestive System: Breaks food into microscopic glucose fuel\n• Circulatory System: Heart pumps nutrient-rich blood to active muscles",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Brain sends motor nerve signal\nStep 2: Skeletal muscles contract\nStep 3: Bones pivot across joints to move limbs\nStep 4: Heart beats faster to supply oxygen"
+            ],
+            [
+                'title' => 'Teamwork Keeps Us Alive',
+                'content' => "How systems work together during exercise:\n• Running requires leg muscles to burn glucose fuel\n• Digestive system supplies the glucose from lunch\n• Respiratory system inhales extra oxygen gas\n• Circulatory system rushes blood delivery to muscles!",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Vascular Transport Quiz',
+                'content' => "Which specialized plant vascular tissue transports water and dissolved soil minerals upward from roots to leaves?\nA) Phloem\nB) Xylem\nC) Bark\nD) Flower petal\n\nCorrect Answer: B (Xylem transports water upward!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Systems in Animals and Plants', 'difficulty' => 'Easy', 'text' => 'Which plant vascular tissue transports water and minerals upward from roots to leaves? | A: Xylem B: Phloem C: Bark D: Cuticle', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Systems in Animals and Plants', 'difficulty' => 'Easy', 'text' => 'Which animal body system pumps oxygen and nutrients throughout the body? | A: Circulatory system B: Skeletal system C: Excretory system D: Integumentary system', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Systems in Animals and Plants', 'difficulty' => 'Medium', 'text' => 'How do the muscular system and skeletal system collaborate to allow a child to run? | A: Muscles contract and pull on bones across flexible joints to create movement B: Bones contract like rubber C: Muscles protect the brain D: Bones digest food', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Systems in Animals and Plants', 'difficulty' => 'Medium', 'text' => 'What happens to a tree if a continuous ring of bark containing phloem tissue is stripped from its trunk? | A: Sugars made in leaves cannot reach roots, causing roots to starve and the tree to die B: Tree grows faster C: Leaves turn blue D: Roots produce extra fruit', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Systems in Animals and Plants', 'difficulty' => 'Hard', 'text' => 'Trace how a bite of bread provides kinetic energy to leg muscles during running. | A: Digestive system breaks starch into glucose -> Blood absorbs glucose -> Circulatory pumps blood to legs -> Muscles combine glucose with oxygen to contract B: Bread goes directly to legs C: Food turns into bone D: Lungs digest bread', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '4',
+        'quarter' => '1',
+        'lesson_number' => '2',
+        'topic' => 'Plant and Animal Habitats',
+        'objectives' => [
+            'Classify terrestrial, aquatic, and aerial habitats of plants and animals.',
+            'Relate physical adaptations of organisms to the specific habitat where they live.',
+            'Explain the consequences of habitat destruction on wildlife survival.'
+        ],
+        'content' => "A habitat is the natural home or environment where an organism finds food, water, shelter, and conditions to reproduce.\n\nTerrestrial Habitats: Forests, grasslands, deserts, agricultural fields, and mountains (home to carabao, tarsier, narra trees, pine trees).\n\nAquatic Habitats: Freshwater (lakes, rivers, ponds) and marine (coral reefs, open oceans, mangrove estuaries) (home to bangus, tilapia, sea turtles, corals, water lilies).\n\nAerial/Arboreal: Trees and airspace used by birds, bats, and climbing orchids.\n\nOrganisms have body adaptations fitted to their habitat: fish have streamlined bodies and fins for water; camels have humps and padded feet for hot desert sand; water hyacinths have bulbous air-filled stems to stay afloat.",
+        'slides' => [
+            [
+                'title' => 'Plant and Animal Habitats',
+                'content' => "Grade 4 — Term 1 Life Science\n\nExplore Earth's major habitats: Terrestrial lands, freshwater rivers, and marine coral reefs.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Spectrum of Natural Habitats',
+                'content' => "Major Habitat Categories:\n• Terrestrial: Tropical rainforests (Dipterocarps, hornbills), grasslands (carabao), mountains (pine trees)\n• Aquatic (Freshwater): Ponds, lakes, and rivers (Tilapia, kangkong, water lilies)\n• Aquatic (Marine): Coral reefs, coastal seagrass beds, deep oceans (Clownfish, sea turtles, corals)\n• Arboreal: Forest canopy branches (Philippine eagle, fruit bats, orchids)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Anatomy Tailored for Habitats',
+                'content' => "Physical adaptations matching environmental challenges:\n• Aquatic: Streamlined torpedo shape and caudal fins minimize water resistance\n• Wetland Plants: Spongy, air-filled petioles in water hyacinths keep leaves floating\n• High Canopy: Strong gripping zygodactyl claws in parrots for climbing branches",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Identify organism's body covering (scales, fur, bark)\nStep 2: Check limbs (flippers, hooves, wings)\nStep 3: Analyze breathing organs (gills vs lungs)\nStep 4: Conclude their native habitat!"
+            ],
+            [
+                'title' => 'Habitat Loss: The Greatest Threat',
+                'content' => "When habitats are fragmented or destroyed:\n• Deforestation leaves forest primates and birds without nesting canopy\n• Coral bleaching from warming waters evicts reef fish\n• Wetland drainage for subdivisions destroys migratory bird resting stops",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Habitat Adaptation Quiz',
+                'content' => "What anatomical adaptation allows water hyacinths and water lilies to float on lake surfaces?\nA) Solid iron stems\nB) Spongy, air-filled chambers inside stems and leaves\nC) Heavy rock-like roots\nD) Absence of leaves\n\nCorrect Answer: B (Air pockets provide positive buoyancy!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Plant and Animal Habitats', 'difficulty' => 'Easy', 'text' => 'What do we call an ecosystem located in fresh or ocean water? | A: Aquatic habitat B: Terrestrial habitat C: Subterranean habitat D: Aerial habitat', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Plant and Animal Habitats', 'difficulty' => 'Easy', 'text' => 'Which of the following organisms is native to an aquatic coral reef habitat? | A: Clownfish B: Carabao C: Pine tree D: Grasshopper', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Plant and Animal Habitats', 'difficulty' => 'Medium', 'text' => 'Why do freshwater tilapia struggle and die if suddenly transferred into ocean saltwater? | A: Hypertonic saltwater draws water out of their body cells by osmosis, causing dehydration B: They dislike salt taste C: Water is too deep D: Water is too cold', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Plant and Animal Habitats', 'difficulty' => 'Medium', 'text' => 'How does building a wide concrete highway through a virgin rainforest harm arboreal animals? | A: It destroys canopy bridges, separating animal populations and exposing them to vehicle collisions B: It provides animals with food C: It cools the trees D: It helps birds fly', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Plant and Animal Habitats', 'difficulty' => 'Hard', 'text' => 'Contrast the adaptations of a desert camel with an arctic polar bear. | A: Camel has fat-storing humps, broad non-sinking feet, and water-retaining kidneys; polar bear has thick blubber, waterproof fur, and wide snow paws B: Both are adapted to cold C: Both have scales D: Neither can drink water', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '4',
+        'quarter' => '2',
+        'lesson_number' => '1',
+        'topic' => 'Life Cycles of Plants and Animals',
+        'objectives' => [
+            'Describe the developmental stages in the life cycles of flowering plants.',
+            'Compare complete metamorphosis (4 stages) with incomplete metamorphosis (3 stages) in animals.',
+            'Explain the biological importance of life cycles for species continuity.'
+        ],
+        'content' => "A life cycle is the series of developmental changes an organism undergoes from the start of life to reproduction and adulthood.\n\nFlowering Plant Life Cycle: Seed -> Germination -> Seedling -> Mature Plant -> Flower & Pollination -> Fruit & Seed Dispersal.\n\nAnimal Metamorphosis:\n- Complete Metamorphosis (4 stages): Butterfly, mosquito, beetle, frog (Egg -> Larva/Caterpillar/Tadpole -> Pupa/Chrysalis -> Adult).\n- Incomplete Metamorphosis (3 stages): Grasshopper, cockroach, dragonfly (Egg -> Nymph -> Adult).\n\nEach stage has distinct food requirements and ecological roles, ensuring the species survives across generations.",
+        'slides' => [
+            [
+                'title' => 'Life Cycles of Plants and Animals',
+                'content' => "Grade 4 — Term 2 Life Science\n\nExplore life's developmental transformations: Plant germination and insect metamorphosis.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Flowering Plant Journey',
+                'content' => "From Dormant Seed to Mature Fruit:\n1. Seed: Contains miniature plant embryo and cotyledon food store\n2. Germination: Moisture and warmth prompt radical root to sprout\n3. Seedling: Leaves emerge and begin photosynthesis\n4. Mature Plant: Produces flowers for pollination\n5. Fruit & Seed: Dispersed by wind, water, or animals",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Complete Metamorphosis (4 Stages)',
+                'content' => "Egg -> Larva -> Pupa -> Adult:\n• Organisms: Butterflies, mosquitoes, bees, beetles, and frogs\n• Larva (Caterpillar/Wiggler): Feeding and growing stage\n• Pupa (Chrysalis/Cocoon): Resting stage of profound internal transformation\n• Adult: Winged reproductive stage",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Egg: Laid on host leaf\nLarva: Voracious leaf-chewing caterpillar\nPupa: Chrysalis reconstructing body tissues\nAdult: Flying butterfly drinking nectar"
+            ],
+            [
+                'title' => 'Incomplete Metamorphosis (3 Stages)',
+                'content' => "Egg -> Nymph -> Adult:\n• Organisms: Grasshoppers, cockroaches, dragonflies, and crickets\n• Nymph: Resembles a miniature wingless adult\n• Molting: Nymph sheds rigid exoskeleton multiple times to grow\n• Adult: Develops fully functional wings and reproductive organs",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Metamorphosis Check Quiz',
+                'content' => "What is the resting, transforming stage in a butterfly's complete metamorphosis?\nA) Egg\nB) Caterpillar\nC) Pupa (Chrysalis)\nD) Nymph\n\nCorrect Answer: C (Inside the chrysalis, larval tissues transform into adult wings!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Life Cycles of Plants and Animals', 'difficulty' => 'Easy', 'text' => 'What are the four developmental stages of complete metamorphosis in butterflies? | A: Egg, Larva (Caterpillar), Pupa (Chrysalis), Adult B: Egg, Nymph, Adult C: Seed, Sprout, Tree D: Tadpole, Froglet, Adult', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Life Cycles of Plants and Animals', 'difficulty' => 'Easy', 'text' => 'What stage of incomplete metamorphosis looks like a miniature wingless adult? | A: Nymph B: Pupa C: Caterpillar D: Cocoon', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Life Cycles of Plants and Animals', 'difficulty' => 'Medium', 'text' => 'Why do grasshopper nymphs shed their outer shell (molt) several times as they grow? | A: Their rigid exoskeleton cannot stretch or expand as internal body tissues grow larger B: They change color for fun C: To build nests D: Molting keeps them warm', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Life Cycles of Plants and Animals', 'difficulty' => 'Medium', 'text' => 'Why is targeting mosquito larvae (wigglers) in stagnant water more effective for dengue prevention than swatting flying adults? | A: Larvae are trapped in small water containers and cannot fly away, making them easy to destroy in bulk B: Adult mosquitoes cannot fly C: Larvae do not move D: Larvae have shells', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Life Cycles of Plants and Animals', 'difficulty' => 'Hard', 'text' => 'How does having different food habits in the caterpillar stage (leaves) versus adult butterfly stage (nectar) prevent self-competition? | A: The caterpillar and adult do not compete for the same food supply within the habitat B: Caterpillars eat butterflies C: Butterflies eat leaves D: Both starve', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '4',
+        'quarter' => '2',
+        'lesson_number' => '2',
+        'topic' => 'Animals and the Food They Eat',
+        'objectives' => [
+            'Classify animals according to their diet: herbivores, carnivores, omnivores, and decomposers.',
+            'Correlate teeth structures and beak shapes with dietary habits.',
+            'Describe predator hunting adaptations and prey defense mechanisms.'
+        ],
+        'content' => "All animals are heterotrophs that must consume other organisms for energy and raw materials.\n\nDietary Classifications:\n- Herbivores: Plant-eaters (carabao, goats, caterpillars, rabbits) have broad, flat molars to grind tough plant cellulose fibers.\n- Carnivores: Meat-eaters (lions, hawks, Philippine eagles, sharks) have sharp, pointed canine teeth or hooked beaks to tear flesh.\n- Omnivores: Eat both plants and animals (humans, pigs, bears, chickens) with a versatile set of incisors, canines, and molars.\n- Decomposers & Scavengers: Vultures, crabs, and dung beetles feed on dead matter and return nutrients to soil.",
+        'slides' => [
+            [
+                'title' => 'Animals & the Food They Eat',
+                'content' => "Grade 4 — Term 2 Life Science\n\nExplore dietary diversity: Herbivores, Carnivores, Omnivores, and anatomical feeding adaptations.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Dietary Trinity',
+                'content' => "Three Major Nutritional Categories:\n• Herbivores (Plant Eaters): Carabao, goats, caterpillars, sea cows (Dugongs)\n• Carnivores (Meat Eaters): Philippine eagles, cobras, sharks, lions\n• Omnivores (Both Plants & Animals): Humans, pigs, chickens, crows\n• Decomposers & Scavengers: Crabs, vultures, and dung beetles recycling carrion",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Dental Adaptations Reveal Diet',
+                'content' => "Skulls tell the story of what animals eat:\n• Flat, broad molars (Herbivores): Grinding abrasive grass cell walls\n• Sharp, pointed canine teeth (Carnivores): Piercing, tearing, and killing prey\n• Mixed teeth with flat molars and incisors (Omnivores): Slicing fruit and chewing cooked meat",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Examine teeth: Sharp canines? -> Carnivore\nExamine teeth: Flat wide molars? -> Herbivore\nExamine teeth: Both sharp and flat? -> Omnivore\nDiet directly shapes skull anatomy!"
+            ],
+            [
+                'title' => 'Beak Shapes in Philippine Birds',
+                'content' => "Beaks specialized for feeding:\n• Sunbird: Long, curved needle beak for sipping floral nectar\n• Philippine Eagle: Huge, heavy hooked beak for tearing forest prey\n• Maya Bird: Short, cone-shaped seed-cracking beak",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Diet Classification Quiz',
+                'content' => "To which feeding category does a Philippine Eagle belong based on its hooked beak, sharp talons, and diet of monkeys and monitor lizards?\nA) Herbivore\nB) Carnivore\nC) Decomposer\nD) Plant parasite\n\nCorrect Answer: B (The Philippine Eagle is an apex carnivore!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Animals and the Food They Eat', 'difficulty' => 'Easy', 'text' => 'What do we call an animal that consumes only grasses, leaves, and fruits? | A: Herbivore B: Carnivore C: Omnivore D: Decomposer', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Animals and the Food They Eat', 'difficulty' => 'Easy', 'text' => 'Which category includes animals like pigs and humans that eat both plant and animal foods? | A: Omnivores B: Herbivores C: Detritivores D: Photosynthesizers', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Animals and the Food They Eat', 'difficulty' => 'Medium', 'text' => 'What type of teeth would you expect to dominate the jaw of a grass-eating carabao? | A: Broad, flat molars for grinding tough fibrous plant matter B: Long dagger-like sharp canines C: No teeth at all D: Poisonous fangs', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Animals and the Food They Eat', 'difficulty' => 'Medium', 'text' => 'How does the long, curved beak of a Philippine sunbird assist its feeding? | A: It probes deep into tubular flowers to reach sweet liquid nectar B: It cracks hard coconut shells C: It catches flying mice D: It digs underground tunnels', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Animals and the Food They Eat', 'difficulty' => 'Hard', 'text' => 'Explain the ecological significance of scavengers like vultures and dung beetles in tropical ecosystems. | A: They consume decaying animal carcasses and waste, preventing disease spread and recycling minerals into the soil B: They hunt living animals C: They eat live trees D: They pollute rivers', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '4',
+        'quarter' => '2',
+        'lesson_number' => '3',
+        'topic' => 'Food Chains',
+        'objectives' => [
+            'Construct and interpret food chains demonstrating energy transfer from the Sun through trophic levels.',
+            'Identify producers, primary consumers, secondary consumers, tertiary consumers, and decomposers.',
+            'Predict the environmental consequences of removing an organism from a food chain.'
+        ],
+        'content' => "A food chain represents the linear transfer of food energy from one organism to another within an ecosystem:\nSun -> Producer (Green Plant) -> Primary Consumer -> Secondary Consumer -> Apex Predator -> Decomposer\n\nEnergy always originates from the Sun; plants convert light energy into chemical glucose via photosynthesis.\n\nArrows in a food chain point in the direction of energy flow (from the organism being eaten to the organism eating it).\n\nDecomposers (bacteria and fungi) break down organic waste and return minerals to the soil to nourish new plants.",
+        'slides' => [
+            [
+                'title' => 'Food Chains & Energy Flow',
+                'content' => "Grade 4 — Term 2 Life Science\n\nTrace the flow of energy: From solar rays to producers, consumers, and decomposers.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Sunlight Engine: Producers First',
+                'content' => "Energy Flow Architecture:\n• The Sun: Ultimate source of energy powering Earth's biosphere\n• Primary Producers: Green plants, phytoplankton, and algae converting light into glucose chemical energy\n• Primary Consumers (Herbivores): Eat producers (caterpillar eating leaves)\n• Secondary Consumers: Carnivores/omnivores eating herbivores (frog eating caterpillar)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Constructing a Philippine Rice Paddy Chain',
+                'content' => "A Linear Energy Pathway:\n$$\\text{Sun} \\longrightarrow \\text{Rice Plant} \\longrightarrow \\text{Grasshopper} \\longrightarrow \\text{Field Frog} \\longrightarrow \\text{Cobra} \\longrightarrow \\text{Philippine Eagle}$$\n\n• Arrows point toward the eater (direction of energy flow)\n• Each link transfers fuel for body metabolism",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Start with the Producer (Plant)\nStep 2: Draw arrow pointing to Herbivore\nStep 3: Draw arrow pointing to Predator\nStep 4: End with Apex Predator & Decomposer"
+            ],
+            [
+                'title' => 'The Unsung Heroes: Decomposers',
+                'content' => "Completing the cycle:\n• Bacteria, mushrooms, and earthworms break down dead organisms and animal dung\n• Return essential minerals (nitrogen, potassium) back to the soil\n• Without decomposers, Earth would be buried in organic waste!",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Food Chain Disruption Quiz',
+                'content' => "In the chain: Grass -> Caterpillar -> Frog -> Snake, what happens if pesticides wipe out all frogs?\nA) Caterpillar population surges, devastating the grass\nB) Snakes increase\nC) Caterpillars go extinct\nD) Grass grows taller than trees\n\nCorrect Answer: A (Without frog predation, caterpillars overpopulate and devour grass!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Food Chains', 'difficulty' => 'Easy', 'text' => 'In all ecological food chains, what is the original source of energy? | A: The Sun B: The Moon C: Wind D: Ocean tides', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Food Chains', 'difficulty' => 'Easy', 'text' => 'What do the arrows in a food chain diagram indicate? | A: The direction in which food energy travels B: The direction animals run C: Which organism is bigger D: The wind direction', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Food Chains', 'difficulty' => 'Medium', 'text' => 'In the food chain: Rice -> Locust -> Quail -> Hawk, which organism is the secondary consumer? | A: Quail B: Rice C: Locust D: Hawk', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Food Chains', 'difficulty' => 'Medium', 'text' => 'What role do fungi and soil bacteria play at the end of every food chain? | A: Decomposers that recycle organic nutrients back into the soil B: Primary producers C: Carnivores D: Predators', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Food Chains', 'difficulty' => 'Hard', 'text' => 'Why does available energy decrease at each higher link in a food chain (the 10% rule)? | A: Roughly 90% of energy is burned by the organism for movement, metabolism, and lost as body heat B: Higher animals eat less C: Energy is destroyed D: Plants absorb energy backwards', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '4',
+        'quarter' => '3',
+        'lesson_number' => '1',
+        'topic' => 'Water and Living Things',
+        'objectives' => [
+            'Explain the biological necessity of water in cellular metabolism, nutrient transport, and growth.',
+            'Describe plant water transport and transpiration through leaf stomata.',
+            'Investigate animal water balance and physiological adaptations to drought.'
+        ],
+        'content' => "Water constitutes 60% to 90% of all living biomass and is the biological solvent of life.\n\nIn Plants: Water dissolves soil minerals, maintains turgor pressure (keeping stems and leaves upright), and serves as a vital reactant in photosynthesis. Plants release water vapor into the air through microscopic leaf pores (stomata) in a process called transpiration.\n\nIn Animals: Water regulates body temperature through sweating/panting, transports nutrients and hormones in blood, lubricates joints, and flushes metabolic waste through urine.\n\nDesert plants and animals have evolved extreme water-saving mechanisms: cacti store gallons of water in succulent stems; desert rodents excrete hyper-concentrated urine to conserve moisture.",
+        'slides' => [
+            [
+                'title' => 'Water and Living Things',
+                'content' => "Grade 4 — Term 3 Life Science\n\nThe universal solvent of life: How water fuels plant growth, animal circulation, and cell health.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Water Inside Plant Tissues',
+                'content' => "Hydraulic support and transport:\n• Photosynthesis Reactant: $6CO_2 + 6H_2O + \\text{Light} \\to \\text{Glucose} + 6O_2$\n• Turgor Pressure: Water fills plant vacuoles, pushing against cell walls to keep stems stiff and leaves crisp\n• Without water, cell turgidity collapses and the plant wilts limp!",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Transpiration: The Plant Water Pump',
+                'content' => "How tall trees pull water up from deep roots:\n• Water evaporates as invisible vapor through leaf stomata\n• This creates negative suction pressure that pulls water columns upward through xylem tubes\n• Transpiration cools the tree canopy in hot tropical heat",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Enclose a leafy branch in a clear plastic bag\nStep 2: Seal tightly with a string\nStep 3: Leave in warm sunlight for 3 hours\nStep 4: Observe condensed water droplets inside bag!"
+            ],
+            [
+                'title' => 'Water Functions in Animals & Humans',
+                'content' => "Vital physiological roles:\n• Blood Circulation: Plasma is 92% water carrying glucose and antibodies\n• Temperature Regulation: Sweating evaporates from skin, cooling the body\n• Waste Excretion: Kidneys filter toxins dissolved in water (urine)\n• Lubrication: Protects joints, spinal cord, and eyeballs",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Transpiration Quiz',
+                'content' => "What is the biological process where green plants release water vapor into the air through microscopic leaf pores?\nA) Respiration\nB) Transpiration\nC) Germination\nD) Sublimation\n\nCorrect Answer: B (Transpiration pumps water up and cools the plant!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Water and Living Things', 'difficulty' => 'Easy', 'text' => 'What biological process describes plants releasing water vapor into the air through leaf stomata? | A: Transpiration B: Perspiration C: Condensation D: Freezing', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Water and Living Things', 'difficulty' => 'Easy', 'text' => 'Why do wilted garden flowers perk up and stand upright a few hours after being watered? | A: Water fills cellular vacuoles, restoring internal turgor pressure B: Water turns stems into wood C: Flowers absorb sunlight through roots D: Soil pulls them upward', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Water and Living Things', 'difficulty' => 'Medium', 'text' => 'Why is drinking 6 to 8 glasses of clean water daily essential for children during hot school days? | A: To replace moisture lost through heavy sweating and maintain healthy blood volume B: To make bones heavier C: Water has high sugar D: To avoid eating food', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Water and Living Things', 'difficulty' => 'Medium', 'text' => 'If a plastic bag is tied over a leafy tree branch on a sunny afternoon, what forms inside the bag? | A: Condensed liquid water droplets from transpired water vapor B: Smoke C: Dust D: Oil', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Water and Living Things', 'difficulty' => 'Hard', 'text' => 'Explain how turgor pressure acts like an inflated tire tube inside non-woody plant stems like kangkong. | A: High internal fluid pressure pushes firmly against rigid cellulose cell walls, keeping non-woody stems erect B: Turgor pressure heats the plant C: It melts the cell walls D: It removes all water', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '4',
+        'quarter' => '3',
+        'lesson_number' => '2',
+        'topic' => 'Soil and Plant Growth',
+        'objectives' => [
+            'Identify components of fertile soil: mineral particles, organic humus, air pockets, water, and microbial life.',
+            'Compare how different soil textures affect root growth, nutrient uptake, and plant vigor.',
+            'Investigate the benefits of organic composting on agricultural crops.'
+        ],
+        'content' => "Soil is a dynamic living ecosystem that anchors terrestrial vegetation and supplies essential water, air, and mineral nutrients (Nitrogen, Phosphorus, Potassium).\n\nFertile topsoil is formed slowly by weathering of bedrock mixed with decomposed leaves and animal matter (humus).\n\nSoil texture determines moisture retention and aeration:\n- Sandy soil: Drains water too fast; roots dry out.\n- Clay soil: Holds too much water; poor aeration can suffocate roots.\n- Loam soil: Ideal balance with high humus, optimal drainage, and root aeration.\n\nOrganic composting recycles kitchen vegetable peelings and dried leaves into rich natural fertilizer that enriches microbial life and accelerates plant growth without synthetic chemicals.",
+        'slides' => [
+            [
+                'title' => 'Soil and Plant Growth',
+                'content' => "Grade 4 — Term 3 Life Science\n\nThe living foundation of terrestrial life: How soil texture, minerals, and humus nourish crops.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Anatomy of Healthy Topsoil',
+                'content' => "Four Pillars of Soil Matrix:\n• Mineral Particles (45%): Sand, silt, and clay weathered from rock\n• Organic Matter & Humus (5%): Decayed leaves, earthworm castings, and beneficial microbes\n• Soil Water (25%): Dissolving mineral nutrients for root uptake\n• Soil Air (25%): Oxygen required by living root cells for cellular respiration",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Comparing the Three Main Textures',
+                'content' => "Which soil is best for roots?\n• Sand: Large coarse grains, fast drainage, low nutrient holding\n• Clay: Dense tiny particles, holds too much water, poor root aeration\n• Loam: The gold standard! Crumbly texture, rich humus, optimal balance of water and air",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Moisten a handful of soil\nStep 2: Roll between palms into a ribbon\nStep 3: Falls apart = Sand; Forms stiff ribbon = Clay; Soft moldable ball = Loam\nStep 4: Loam is ideal for vegetable garden beds"
+            ],
+            [
+                'title' => 'Organic Composting: Black Gold',
+                'content' => "Recycling nature's nutrients:\n• Mix brown materials (dried leaves, twigs) with green materials (vegetable peels, coffee grounds)\n• Microscopic fungi and earthworms decompose waste into nutrient-dense humus\n• Boosts plant disease resistance without chemical runoffs",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Soil Investigation Quiz',
+                'content' => "Why will a potted plant develop root rot and die if planted in a container without drainage holes that stays waterlogged?\nA) Roots need oxygen from soil air pockets, which are displaced by water\nB) Water is poisonous to roots\nC) Soil turns to gold\nD) Earthworms eat the plant\n\nCorrect Answer: A (Roots require oxygen gas for respiration!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '4', 'topic' => 'Soil and Plant Growth', 'difficulty' => 'Easy', 'text' => 'What is the dark nutrient-rich component of soil formed from decayed plant and animal matter? | A: Humus B: Gravel C: Pure sand D: Chalk', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Soil and Plant Growth', 'difficulty' => 'Easy', 'text' => 'Which type of soil contains balanced sand, silt, clay, and humus, making it ideal for gardens? | A: Loam soil B: Hard clay C: Dry sand D: River silt only', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Soil and Plant Growth', 'difficulty' => 'Medium', 'text' => 'Why do plant roots rot and die when soil is continuously flooded with water without drainage? | A: Standing water drowns air pockets, cutting off oxygen that root cells need to respire B: Water dissolves roots C: Water is too acidic D: Minerals disappear', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Soil and Plant Growth', 'difficulty' => 'Medium', 'text' => 'How does mixing organic compost into heavy clay soil improve plant root growth? | A: Compost loosens tightly packed clay particles, improving air drainage and aeration B: Compost turns clay to sand C: Compost hardens the soil D: It prevents roots from spreading', 'correct' => 'A'],
+            ['grade' => '4', 'topic' => 'Soil and Plant Growth', 'difficulty' => 'Hard', 'text' => 'Design a 3-week experiment to test the effect of compost on mung bean seedlings. | A: Plant identical seeds in Pot A (pure sand) and Pot B (sand + compost), keep water and light identical, measure weekly sprout height and leaf counts B: Place Pot A in dark closet and Pot B in sun C: Give Pot A salt and Pot B water D: Use different seed varieties', 'correct' => 'A']
+        ]
+    ],
+
+    // ==========================================
+    // GRADE 5 — LIFE SCIENCE
+    // ==========================================
+    [
+        'grade' => '5',
+        'quarter' => '1',
+        'lesson_number' => '1',
+        'topic' => 'Human Body Systems (Digestive, Respiratory, Reproductive System)',
+        'objectives' => [
+            'Describe the organs and physiological processes of the Digestive System (mouth, esophagus, stomach, small and large intestines).',
+            'Describe the structures and gas exchange mechanisms of the Respiratory System (nose, trachea, lungs, alveoli, diaphragm).',
+            'Explain the structures and functions of the male and female Reproductive Systems in human life continuity.'
+        ],
+        'content' => "The human body operates through interconnected organ systems that maintain internal homeostasis:\n- Digestive System: Mechanically breaks down food with teeth and stomach churning, then chemically breaks polymers into glucose, amino acids, and fatty acids using digestive enzymes and bile. The small intestine absorbs nutrients into the bloodstream, while the large intestine reabsorbs water and forms solid waste.\n- Respiratory System: Transports oxygen from ambient air into blood and removes carbon dioxide waste. The diaphragm contracts downward during inhalation, drawing air into lungs where alveoli exchange gases with capillaries.\n- Reproductive System: Ensures species propagation. The male system produces sperm cells and testosterone (testes, vas deferens, penis); the female system produces egg cells, supports fetal development, and produces estrogen/progesterone (ovaries, fallopian tubes, uterus, vagina).",
+        'slides' => [
+            [
+                'title' => 'Human Body Systems',
+                'content' => "Grade 5 — Term 1 Life Science\n\nExplore internal anatomy: The Digestive, Respiratory, and Reproductive Systems.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Digestive System: Food to Fuel',
+                'content' => "The Gastrointestinal Pathway:\n• Mouth: Teeth chew food; salivary amylase begins carbohydrate breakdown\n• Esophagus: Peristalsis muscle contractions push bolus to stomach\n• Stomach: Hydrochloric acid and pepsin churn and digest proteins\n• Small Intestine: Pancreatic enzymes and liver bile complete digestion; villi absorb nutrients into capillaries\n• Large Intestine: Absorbs water and minerals; compacts feces",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Respiratory System: Gas Exchange',
+                'content' => "How we breathe:\n• Inhalation: Diaphragm contracts downward, ribs lift, air rushes into lungs\n• Alveoli: 300 million microscopic air sacs enveloped in capillaries\n• Diffusion: Oxygen moves into blood; Carbon dioxide diffuses into alveoli to be exhaled",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Inhale: Diaphragm contracts -> Air fills alveoli\nGas Exchange: O2 enters capillaries, CO2 leaves\nExhale: Diaphragm relaxes -> Air pushed out\nEvery cell receives oxygen for energy!"
+            ],
+            [
+                'title' => 'The Reproductive System: Continuity of Life',
+                'content' => "Ensuring species continuation:\n• Male: Testes produce sperm cells and testosterone\n• Female: Ovaries release mature egg cells; Fallopian tubes are site of fertilization; Uterus (womb) protects developing fetus",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Body Systems Check Quiz',
+                'content' => "In which organ of the digestive system are most digested nutrients absorbed into the bloodstream?\nA) Esophagus\nB) Stomach\nC) Small Intestine\nD) Large Intestine\n\nCorrect Answer: C (Small intestine villi absorb amino acids and glucose!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '5', 'topic' => 'Human Body Systems (Digestive, Respiratory, Reproductive System)', 'difficulty' => 'Easy', 'text' => 'In which organ of the digestive tract are most digested nutrients absorbed into blood? | A: Small intestine B: Mouth C: Stomach D: Large intestine', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Human Body Systems (Digestive, Respiratory, Reproductive System)', 'difficulty' => 'Easy', 'text' => 'What muscular sheet contracts and moves downward to pull air into the lungs during inhalation? | A: Diaphragm B: Trachea C: Bronchus D: Esophagus', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Human Body Systems (Digestive, Respiratory, Reproductive System)', 'difficulty' => 'Medium', 'text' => 'What are the microscopic air sacs in the lungs where oxygen passes into blood capillaries called? | A: Alveoli B: Villi C: Nephrons D: Bronchioles', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Human Body Systems (Digestive, Respiratory, Reproductive System)', 'difficulty' => 'Medium', 'text' => 'In the female reproductive system, in which organ does fertilization of the egg typically occur? | A: Fallopian tube (oviduct) B: Uterus C: Ovary D: Cervix', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Human Body Systems (Digestive, Respiratory, Reproductive System)', 'difficulty' => 'Hard', 'text' => 'How do the digestive, respiratory, and circulatory systems cooperate to generate cellular energy in muscle cells? | A: Digestive absorbs glucose -> Respiratory provides oxygen -> Circulatory delivers both to muscle mitochondria for ATP respiration B: Digestive pumps air C: Respiratory digests food D: Circulatory breathes', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '5',
+        'quarter' => '1',
+        'lesson_number' => '2',
+        'topic' => 'Classification and Reproduction of Living Things',
+        'objectives' => [
+            'Compare sexual reproduction (gamete fusion) with asexual reproduction (budding, vegetative propagation, binary fission).',
+            'Classify organisms into major taxonomic kingdoms based on cellular structure and reproductive mode.',
+            'Describe how vegetative propagation is used in Philippine agriculture.'
+        ],
+        'content' => "Reproduction is the biological mechanism by which new individual organisms are produced:\n- Sexual Reproduction: Involves two parents providing gametes (sperm and egg) that fuse during fertilization to create genetically unique offspring with blended traits. Common in flowering plants, mammals, birds, and fish.\n- Asexual Reproduction: Involves a single parent producing offspring that are genetically identical clones. Examples include binary fission in bacteria, budding in yeast and hydra, and vegetative propagation in plants (potatoes from tubers, katakataka plantlets from leaves, onion bulbs).\n\nBiological classification groups organisms into Domains and Kingdoms based on cellular complexity and nutrition.",
+        'slides' => [
+            [
+                'title' => 'Classification & Reproduction',
+                'content' => "Grade 5 — Term 1 Life Science\n\nCompare sexual and asexual reproduction and explore biological classification.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Sexual vs Asexual Reproduction',
+                'content' => "Two Routes to New Life:\n• Sexual Reproduction:\n  - Two parents provide sperm and egg gametes\n  - Fertilization creates genetically unique offspring\n  - High genetic variation helps species adapt to disease\n• Asexual Reproduction:\n  - Single parent produces identical offspring (clones)\n  - Rapid reproduction without needing a mate\n  - Examples: Binary fission (bacteria), Budding (yeast/hydra)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Vegetative Propagation in Crops',
+                'content' => "Asexual reproduction in Philippine farming:\n• Stem Cuttings: Sugarcane and cassava grown from stalk nodes\n• Tubers & Bulbs: Sweet potatoes (camote) from tubers; Onions from bulbs\n• Runners / Stolons: Strawberry and grass creeping stems\n• Leaf Plantlets: Katakataka (miracle leaf) budding along leaf edges",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Cut healthy sugarcane stem with nodes\nStep 2: Plant cuttings diagonally in moist furrow\nStep 3: New roots sprout from nodes within days\nStep 4: Genetically identical crop grows reliably"
+            ],
+            [
+                'title' => 'Taxonomic Kingdoms of Life',
+                'content' => "Classifying the Living World:\n• Kingdom Animalia: Multicellular heterotrophs (movement, nervous tissue)\n• Kingdom Plantae: Multicellular autotrophs (cellulose cell walls, photosynthesis)\n• Kingdom Fungi: Heterotrophs absorbing nutrients (mushrooms, molds, yeast)\n• Kingdom Protista: Single-celled eukaryotes (amoeba, paramecium, algae)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Reproduction Check Quiz',
+                'content' => "What is the primary evolutionary advantage of sexual reproduction over asexual cloning?\nA) It is much faster\nB) It requires no energy\nC) It creates genetic diversity that helps populations survive diseases and climate shifts\nD) It produces identical clones\n\nCorrect Answer: C (Genetic variation drives survival resilience!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '5', 'topic' => 'Classification and Reproduction of Living Things', 'difficulty' => 'Easy', 'text' => 'What mode of reproduction requires only one parent and produces genetically identical clones? | A: Asexual reproduction B: Sexual reproduction C: Cross-fertilization D: Pollination', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Classification and Reproduction of Living Things', 'difficulty' => 'Easy', 'text' => 'Which agricultural crop in the Philippines is commonly grown asexually using stem cuttings? | A: Sugarcane B: Corn C: Coconut D: Mango', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Classification and Reproduction of Living Things', 'difficulty' => 'Medium', 'text' => 'What is the main biological advantage of sexual reproduction compared to asexual cloning? | A: It creates genetic variation, increasing species survival if diseases strike B: It is faster C: It requires zero food D: It produces fewer offspring', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Classification and Reproduction of Living Things', 'difficulty' => 'Medium', 'text' => 'How does the Katakataka (miracle leaf) plant reproduce asexually? | A: Tiny plantlets sprout along the serrated notches of its leaves and root in soil B: Through underground seeds C: With bright red flowers only D: By spores', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Classification and Reproduction of Living Things', 'difficulty' => 'Hard', 'text' => 'Contrast internal fertilization in mammals with external fertilization in fish. | A: Internal fertilization occurs inside female body protecting few embryos; external releases hundreds of eggs into water with higher predation risk B: Both are identical C: Fish have live birth D: Mammals lay eggs in water', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '5',
+        'quarter' => '1',
+        'lesson_number' => '3',
+        'topic' => 'Life Cycles of Living Things',
+        'objectives' => [
+            'Analyze diverse life cycles across amphibians, reptiles, birds, mammals, and spore-bearing plants.',
+            'Contrast internal embryonic gestation in placental mammals with external egg development in birds and reptiles.',
+            'Diagram the alternation of generations in non-flowering ferns and mosses.'
+        ],
+        'content' => "Organisms have diverse reproductive strategies and life cycles tailored to their environmental niches:\n- Oviparous animals lay eggs outside the body (birds, most reptiles, insects, amphibians). Eggs contain nourishing yolk.\n- Viviparous animals give live birth after nourishing the embryo internally through a placenta (placental mammals including humans, dogs, whales).\n- Ovoviviparous animals produce eggs that hatch inside the female's body before live birth (some sharks, sea snakes).\n\nPlants exhibit life cycles from seeds or spores: Ferns and mosses do not produce flowers; they reproduce using microscopic spores that grow into gametophytes in moist environments.",
+        'slides' => [
+            [
+                'title' => 'Life Cycles of Living Things',
+                'content' => "Grade 5 — Term 1 Life Science\n\nFrom oviparous egg-layers to viviparous mammals and ancient spore-bearing ferns.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Three Reproductive Strategies in Animals',
+                'content' => "How animal embryos develop:\n• Oviparous: Eggs laid outside mother's body (Birds, turtles, crocodiles)\n  - Nourished by rich yolk inside egg\n• Viviparous: Live birth (Placental mammals, humans, carabao, dolphins)\n  - Placenta provides continuous oxygen and maternal nutrients\n• Ovoviviparous: Eggs hatch INSIDE mother before birth (Some sharks, vipers)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Amphibian Metamorphosis: Dual Life',
+                'content' => "Frog transformation:\n1. Jelly-coated eggs in fresh pond water\n2. Aquatic tadpole with gills, lateral line, and swimming tail\n3. Tadpole grows hind legs and develops internal lungs\n4. Adult frog with powerful leaping legs and cutaneous skin respiration",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Aquatic: Egg laid in pond\nLarva: Gills & swimming tail\nTransition: Lungs & legs emerge\nTerrestrial: Adult carnivorous frog"
+            ],
+            [
+                'title' => 'Spore Plants: Ancient Life Cycles',
+                'content' => "Reproduction without seeds:\n• Ferns and mosses predate flowering plants by millions of years\n• Fronds produce sori clusters containing millions of microscopic spores\n• Spores germinate into heart-shaped prothallus gametophytes that fertilize in moisture",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Life Cycle Comparison Quiz',
+                'content' => "What term describes animals like carabao, dogs, and whales that give birth to live offspring developed inside a womb?\nA) Oviparous\nB) Viviparous\nC) Metamorphic\nD) Spore-bearing\n\nCorrect Answer: B (Viviparous mammals nourish embryos internally!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '5', 'topic' => 'Life Cycles of Living Things', 'difficulty' => 'Easy', 'text' => 'Which term describes animals like birds and sea turtles that lay eggs outside the body? | A: Oviparous B: Viviparous C: Asexual D: Herbivore', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Life Cycles of Living Things', 'difficulty' => 'Easy', 'text' => 'How do non-flowering plants like ferns reproduce without flowers or seeds? | A: Spores produced in sori clusters on fronds B: Bulbs C: Cones D: Fruit', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Life Cycles of Living Things', 'difficulty' => 'Medium', 'text' => 'Why can bird eggs develop on dry land while frog eggs must be laid in fresh water? | A: Bird eggs have hard waterproof shells and amniotic fluid; frog eggs lack shells and dry out B: Birds fly C: Frogs have fur D: Frog eggs have stones', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Life Cycles of Living Things', 'difficulty' => 'Medium', 'text' => 'What organ connects a mammalian mother to her developing fetus to supply nutrients and oxygen? | A: Placenta B: Gills C: Yolk sac D: Lung', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Life Cycles of Living Things', 'difficulty' => 'Hard', 'text' => 'Contrast the survival chances of a viviparous mammalian newborn with an oviparous sea turtle hatchling. | A: Mammal fetus is protected internally and nursed with milk (high survival rate); sea turtle hatchlings face heavy beach and ocean predation (low survival rate) B: Turtles have higher survival C: Mammals lay 1,000 eggs D: Turtles nurse milk', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '5',
+        'quarter' => '2',
+        'lesson_number' => '1',
+        'topic' => 'Plant and Animal Adaptations',
+        'objectives' => [
+            'Differentiate structural (physical), behavioral, and physiological adaptations in organisms.',
+            'Explain survival mechanisms: camouflage, mimicry, dormancy, and specialized appendages.',
+            'Analyze adaptations of Philippine wildlife to tropical rainforest and monsoon conditions.'
+        ],
+        'content' => "An adaptation is any inherited characteristic that enhances an organism's ability to survive and reproduce in its specific habitat:\n- Structural Adaptations: Physical body features (e.g., thick blubber in whales, hollow bones in birds, webbed feet in ducks).\n- Behavioral Adaptations: Actions organisms take (e.g., bird migration, hibernation during winter, nocturnal hunting by bats).\n- Physiological Adaptations: Internal chemical or metabolic processes (e.g., snake venom production, desert cacti storing water in mucilage, human sweating).\n\nCamouflage allows organisms to blend into surroundings (stick insects, walking leaf insects), while mimicry fools predators by resembling toxic species.",
+        'slides' => [
+            [
+                'title' => 'Plant & Animal Adaptations',
+                'content' => "Grade 5 — Term 2 Life Science\n\nEvolutionary genius: Structural, behavioral, and physiological adaptations for survival.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Three Categories of Adaptations',
+                'content' => "How organisms adapt to their environment:\n• Structural (Physical Form): Hollow bones in birds for flight; wide pads on camel feet\n• Behavioral (Actions): Bats hunting at night (nocturnal); monkeys grooming in social troops\n• Physiological (Internal Chemistry): Snake venom; desert cactus mucilage storing water",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Masters of Camouflage & Mimicry',
+                'content' => "Deception in the Philippine Rainforest:\n• Camouflage (Cryptic coloration): Stick insects looking identical to brown twigs\n• Mimicry (Batesian): Harmless butterflies evolving the wing patterns of toxic poisonous species to scare off birds",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Stick insect freezes on branch -> Blends into twig\nPredator passes without noticing -> Prey survives\nSurviving insect reproduces -> Passes camouflage genes"
+            ],
+            [
+                'title' => 'Extreme Flora: Mangroves & Pitcher Plants',
+                'content' => "Thriving in harsh conditions:\n• Mangrove Trees: Excrete salt crystals through specialized leaf glands; breathe air using aerial pneumatophores\n• Pitcher Plants (Nepenthes): Evolved slippery fluid-filled pitfall traps to digest insects in nutrient-poor mountain soil",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Adaptation Mystery Quiz',
+                'content' => "Which of the following is a behavioral adaptation rather than a structural adaptation?\nA) Hollow bones in eagles\nB) Bats hunting for insects exclusively at night to avoid daytime heat and hawks\nC) Sharp talons on owls\nD) Green scales on tree snakes\n\nCorrect Answer: B (Nocturnal hunting is an action/behavior!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '5', 'topic' => 'Plant and Animal Adaptations', 'difficulty' => 'Easy', 'text' => 'What do we call an adaptation where an animal physically blends into its surroundings? | A: Camouflage B: Hibernation C: Migration D: Germination', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Plant and Animal Adaptations', 'difficulty' => 'Easy', 'text' => 'Is a migratory bird flying south to avoid cold winter temperatures a structural or behavioral adaptation? | A: Behavioral adaptation B: Structural adaptation C: Fossil adaptation D: Chemical change', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Plant and Animal Adaptations', 'difficulty' => 'Medium', 'text' => 'How do aerial breathing roots (pneumatophores) help mangrove trees survive in tidal swamp mud? | A: They grow upward above water to absorb oxygen gas from the air because waterlogged mud lacks oxygen B: They catch flying insects C: They store honey D: They make wood lighter', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Plant and Animal Adaptations', 'difficulty' => 'Medium', 'text' => 'Why do nocturnal animals like the Philippine Tarsier have exceptionally large eyes? | A: Enormous pupils gather the maximum available ambient light to hunt insects in the dark B: To scare predators C: For swimming D: Large eyes are lighter', 'correct' => 'A'],
+            ['grade' => '5', 'topic' => 'Plant and Animal Adaptations', 'difficulty' => 'Hard', 'text' => 'Describe three distinct anatomical adaptations that make the Philippine Eagle an apex aerial predator. | A: Broad wings for maneuvering through dense forest canopy; dagger-sharp talons for grasping prey; powerful hooked beak for tearing flesh B: Webbed feet, gills, and fins C: Scales, venom, and shell D: Thin beak for sipping nectar', 'correct' => 'A']
+        ]
+    ],
+
+    // ==========================================
+    // GRADE 6 — LIFE SCIENCE
+    // ==========================================
+    [
+        'grade' => '6',
+        'quarter' => '1',
+        'lesson_number' => '1',
+        'topic' => 'Human Body Systems (Circulatory and Nervous Systems)',
+        'objectives' => [
+            'Describe the anatomy and physiology of the Circulatory System (heart chambers, valves, arteries, veins, capillaries, blood cells).',
+            'Describe the Central Nervous System (brain, spinal cord) and Peripheral Nervous System (sensory and motor neurons).',
+            'Explain the reflex arc and how the nervous system regulates all body systems.'
+        ],
+        'content' => "Advanced coordination in humans is maintained by two master regulatory systems:\n- Circulatory System: The four-chambered muscular heart (atria and ventricles) pumps oxygenated blood through arteries to tissues and returns deoxygenated blood through veins. Capillaries facilitate gas and nutrient exchange. Red blood cells carry oxygen via hemoglobin; white blood cells fight pathogens; platelets form clotting scabs.\n- Nervous System: Transmits electrical and chemical signals throughout the body:\n  - Central Nervous System (CNS): Brain (cerebrum, cerebellum, brainstem) processes information; spinal cord acts as the communications highway.\n  - Peripheral Nervous System (PNS): Sensory and motor neurons transmit impulses.\n  - Reflex Arc: An involuntary, split-second protective reaction (e.g., jerking your hand away from a hot pan) that bypasses the brain directly through the spinal cord.",
+        'slides' => [
+            [
+                'title' => 'Circulatory & Nervous Systems',
+                'content' => "Grade 6 — Term 1 Life Science\n\nThe body's transport network and electrical control grid: Heart, blood, brain, and nerves.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The 4-Chambered Cardiovascular Pump',
+                'content' => "Double Circulation Loop:\n• Right Atrium & Ventricle: Pumps deoxygenated blood to the lungs (Pulmonary Circuit)\n• Left Atrium & Ventricle: Powerful muscular pump sending oxygen-rich blood to the entire body (Systemic Circuit)\n• Blood Vessels: Arteries (Away from heart), Veins (toward heart with valves), Capillaries (microscopic gas exchange)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Central Nervous System Command',
+                'content' => "Brain Anatomy & Specializations:\n• Cerebrum: Conscious thought, memory, sensory interpretation, reasoning\n• Cerebellum: Muscle coordination, posture, balance, precision movement\n• Brainstem (Medulla): Involuntary vital reflexes (heartbeat, breathing, swallowing)\n• Spinal Cord: The high-speed neural information trunk line",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Sensory receptors detect stimulus (Heat)\nStep 2: Sensory neuron transmits impulse to spinal cord\nStep 3: Interneuron triggers immediate motor neuron\nStep 4: Muscle jerks hand away before brain registers pain!"
+            ],
+            [
+                'title' => 'Components of Living Blood',
+                'content' => "Liquid tissue carrying life:\n• Red Blood Cells (RBCs): Packed with iron hemoglobin to transport O2\n• White Blood Cells (WBCs): Immune soldiers engulfing bacteria and viruses\n• Platelets: Cell fragments forming fibrin clots to seal wounds\n• Plasma: 90% water fluid carrying dissolved glucose, hormones, and waste",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Nervous System Reflex Quiz',
+                'content' => "Why does your hand pull back from a burning hot stove burner before your brain even realizes you were burned?\nA) Your hand has its own brain\nB) The reflex arc routes the emergency motor response directly through the spinal cord for speed\nC) The muscles contract on their own\nD) Blood stops flowing\n\nCorrect Answer: B (Spinal reflex arcs bypass the brain for split-second survival!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '6', 'topic' => 'Human Body Systems (Circulatory and Nervous Systems)', 'difficulty' => 'Easy', 'text' => 'Which blood vessels carry oxygenated blood away from the heart to body organs? | A: Arteries B: Veins C: Lymph vessels D: Trachea', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Human Body Systems (Circulatory and Nervous Systems)', 'difficulty' => 'Easy', 'text' => 'What part of the brain is responsible for balance, posture, and smooth muscle coordination? | A: Cerebellum B: Cerebrum C: Medulla D: Spinal cord', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Human Body Systems (Circulatory and Nervous Systems)', 'difficulty' => 'Medium', 'text' => 'Why does touching a hot surface trigger an involuntary hand withdrawal before you consciously feel pain? | A: An emergency reflex arc completes a circuit through the spinal cord without waiting for brain processing B: The heart pumps faster C: The skin is detached D: Nerves freeze', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Human Body Systems (Circulatory and Nervous Systems)', 'difficulty' => 'Medium', 'text' => 'What is the role of blood platelets when you accidentally cut your finger? | A: They adhere to the injured vessel walls and form a fibrin clot to stop blood loss B: They carry oxygen C: They digest food D: They generate white blood cells', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Human Body Systems (Circulatory and Nervous Systems)', 'difficulty' => 'Hard', 'text' => 'Trace the complete pathway of a red blood cell from the right atrium to the lungs and out to the left leg. | A: Right atrium -> Right ventricle -> Pulmonary artery -> Lung capillaries (oxygenated) -> Pulmonary veins -> Left atrium -> Left ventricle -> Aorta -> Femoral artery to leg B: Directly from right atrium to aorta C: Through stomach D: Through kidneys first', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '6',
+        'quarter' => '1',
+        'lesson_number' => '2',
+        'topic' => 'Reproduction in Plants',
+        'objectives' => [
+            'Identify floral reproductive organs: stamen (anther, filament) and pistil/carpel (stigma, style, ovary, ovule).',
+            'Explain pollination, pollen tube germination, double fertilization, and seed/fruit development.',
+            'Analyze seed dispersal mechanisms: wind, water, animal ingestion, and mechanical expulsion.'
+        ],
+        'content' => "Flowers are the reproductive organs of angiosperms (flowering plants):\n- Male organ (Stamen): Anther produces pollen grains containing male sperm nuclei, supported by the filament.\n- Female organ (Carpel/Pistil): Stigma receives pollen; style connects to the ovary; ovary contains ovules with egg cells.\n\nPollination occurs when pollen transfers from anther to stigma via wind or pollinators (bees, bats, butterflies).\n\nFertilization: A pollen tube grows down the style into the ovule; the sperm fuses with the egg nucleus to form an embryo seed, while the ovary wall swells and matures into a fleshy fruit.\n\nSeed dispersal ensures seeds land far from the parent plant to prevent competition for light and nutrients.",
+        'slides' => [
+            [
+                'title' => 'Reproduction in Plants',
+                'content' => "Grade 6 — Term 1 Life Science\n\nBotanical reproduction: Flower anatomy, pollination pathways, fertilization, and seed dispersal.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Flower Anatomy: Stamen & Pistil',
+                'content' => "The Reproductive Organs:\n• Male Organ (Stamen):\n  - Anther: Produces golden pollen grains carrying male sperm cells\n  - Filament: Slender stalk holding the anther aloft\n• Female Organ (Pistil / Carpel):\n  - Stigma: Sticky surface catching airborne or insect-carried pollen\n  - Style: Neck tube through which pollen tubes grow\n  - Ovary: Swollen base containing ovules (prospective seeds)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'From Pollen Grain to Fruit',
+                'content' => "The Steps of Plant Fertilization:\n1. Pollination: Pollen lands on sticky stigma\n2. Tube Growth: Pollen grain germinates a tube down the style\n3. Fertilization: Sperm fuses with ovule egg cell\n4. Transformation: The fertilized ovule becomes a hard SEED; the surrounding ovary wall expands into the FRUIT!",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Step 1: Pollen lands on stigma\nStep 2: Tube grows down style\nStep 3: Sperm fertilizes ovule egg\nStep 4: Ovule becomes seed, Ovary becomes fruit"
+            ],
+            [
+                'title' => 'Seed Dispersal Engineering',
+                'content' => "Escaping the parent tree's shade:\n• Wind: Dandelion parachutes and winged Narra tree seeds\n• Water: Buoyant fibrous coconut husks drifting across oceans\n• Animals: Sweet mango fruits eaten and seeds dropped; prickly burrs clinging to fur\n• Explosive: Touch-me-not seedpods bursting open under tension",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Plant Reproduction Quiz',
+                'content' => "Following successful plant fertilization, what does the flower's ovary develop into?\nA) A green leaf\nB) A fleshy fruit protecting the seeds\nC) A taproot\nD) A new flower petal\n\nCorrect Answer: B (The ovary wall swells and ripens into fruit!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '6', 'topic' => 'Reproduction in Plants', 'difficulty' => 'Easy', 'text' => 'Which part of a flower develops into the fertile seed after fertilization? | A: Ovule B: Petal C: Sepal D: Anther', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Reproduction in Plants', 'difficulty' => 'Easy', 'text' => 'What part of a flower ripens into the fleshy edible fruit? | A: Ovary B: Stigma C: Filament D: Style', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Reproduction in Plants', 'difficulty' => 'Medium', 'text' => 'How does the sticky surface of a flower\'s stigma assist in sexual reproduction? | A: It traps pollen grains delivered by visiting insects or wind currents B: It absorbs rainwater C: It repels bees D: It makes honey', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Reproduction in Plants', 'difficulty' => 'Medium', 'text' => 'Why have coconut palms evolved thick, fibrous, air-filled husks around their seeds? | A: To float buoyant across ocean waves and colonize distant coastlines B: To make seeds sink C: To attract monkeys D: To stay warm in snow', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Reproduction in Plants', 'difficulty' => 'Hard', 'text' => 'Distinguish self-pollination from cross-pollination. Why is cross-pollination genetically superior? | A: Cross-pollination transfers pollen between different plants of the same species, increasing genetic variation and disease resilience B: Self-pollination produces animals C: Cross-pollination requires no pollen D: Both produce clones', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '6',
+        'quarter' => '1',
+        'lesson_number' => '3',
+        'topic' => 'Vertebrates and Invertebrates',
+        'objectives' => [
+            'Classify animals into Vertebrates (with backbones) and Invertebrates (without backbones).',
+            'Distinguish characteristics of the 5 vertebrate classes: Fish, Amphibians, Reptiles, Birds, and Mammals.',
+            'Classify major invertebrate phyla: Arthropods, Mollusks, Annelids, Cnidarians, and Echinoderms.'
+        ],
+        'content' => "The Animal Kingdom is divided into two major divisions based on the presence of an internal vertebral column:\n- Vertebrates (Chordates): Possess an endoskeleton and spinal column:\n  1. Fish: Ectothermic, aquatic, gills, scales, fins.\n  2. Amphibians: Ectothermic, smooth moist skin, dual water-land life cycle.\n  3. Reptiles: Ectothermic, dry scaly skin, amniotic shelled eggs, breathe with lungs.\n  4. Birds: Endothermic, feathers, hollow bones, beaks, lay hard-shelled eggs.\n  5. Mammals: Endothermic, hair/fur, mammary glands for milk, give live birth.\n- Invertebrates: Make up over 95% of animal species!\n  - Arthropods (insects, crustaceans, arachnids) with chitinous exoskeletons and jointed legs.\n  - Mollusks (snails, clams, squids) with soft bodies often protected by calcium shells.\n  - Annelids (earthworms, leeches) with segmented bodies.\n  - Cnidarians (corals, jellyfish) with stinging nematocysts.\n  - Echinoderms (starfish, sea urchins) with spiny skins and radial symmetry.",
+        'slides' => [
+            [
+                'title' => 'Vertebrates & Invertebrates',
+                'content' => "Grade 6 — Term 1 Life Science\n\nClassifying the Animal Kingdom: Backbone possessors versus the vast invertebrate empire.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'The Five Vertebrate Classes',
+                'content' => "Animals with Internal Spinal Columns:\n• Fish: Scales, fins, gills, cold-blooded (Tilapia, bangus)\n• Amphibians: Moist skin, metamorphosis, aquatic eggs (Frogs, toads)\n• Reptiles: Dry scaly skin, lungs, leathery shelled eggs (Lizards, crocodiles, snakes)\n• Birds: Feathers, hollow flight bones, warm-blooded (Philippine eagle, maya)\n• Mammals: Hair/fur, mammary glands, warm-blooded (Whales, bats, carabao, humans)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Ectotherms vs Endotherms',
+                'content' => "Body Temperature Regulation:\n• Ectothermic (Cold-Blooded): Body temperature depends on external sun/water (Fish, amphibians, reptiles)\n• Endothermic (Warm-Blooded): Generate internal metabolic body heat, maintaining steady temperature (Birds and mammals)",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Has a backbone? -> Vertebrate\nHas hair and nurses young? -> Mammal\nHas feathers and beak? -> Bird\nCold-blooded with dry scales? -> Reptile"
+            ],
+            [
+                'title' => 'The Invertebrate Majority (>95% of Species)',
+                'content' => "Creatures without backbones:\n• Arthropods: Jointed legs & chitinous exoskeleton (Crabs, spiders, bees, butterflies)\n• Mollusks: Soft unsegmented bodies, often with shells (Snails, giant clams, squids)\n• Annelids: Segmented cylindrical bodies (Earthworms, leeches)\n• Cnidarians: Stinging tentacles around central mouth (Jellyfish, sea anemones, corals)\n• Echinoderms: Spiny skin and 5-part radial symmetry (Starfish, sea urchins)",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Vertebrate Classification Quiz',
+                'content' => "Why is a dolphin classified as a mammal rather than a fish, even though it swims in the sea?\nA) It lays eggs in coral reefs\nB) It has hair, breathes atmospheric air with lungs, and nurses young with milk\nC) It has scales and gills\nD) It is cold-blooded\n\nCorrect Answer: B (Dolphins are warm-blooded placental marine mammals!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '6', 'topic' => 'Vertebrates and Invertebrates', 'difficulty' => 'Easy', 'text' => 'What major anatomical structure distinguishes vertebrates from invertebrates? | A: An internal backbone (vertebral column) B: Large eyes C: Number of legs D: Body color', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Vertebrates and Invertebrates', 'difficulty' => 'Easy', 'text' => 'Which is the only vertebrate class characterized by feathers and hollow flight bones? | A: Birds (Aves) B: Mammals C: Reptiles D: Fish', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Vertebrates and Invertebrates', 'difficulty' => 'Medium', 'text' => 'Why is a dolphin classified as a mammal rather than a fish? | A: It breathes air with lungs, gives live birth, is warm-blooded, and nurses young with milk B: It has gills C: It has scales D: It lays eggs in sand', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Vertebrates and Invertebrates', 'difficulty' => 'Medium', 'text' => 'What type of skeleton protects insects and crustaceans, and what phylum do they belong to? | A: Chitinous exoskeleton; Phylum Arthropoda B: Endoskeleton; Chordata C: Shell; Mollusca D: Spines; Echinodermata', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Vertebrates and Invertebrates', 'difficulty' => 'Hard', 'text' => 'Construct a dichotomous key to distinguish a milkfish, cane toad, monitor lizard, owl, and fruit bat. | A: 1. Has feathers -> Owl; 2. Has fur & nurses young -> Fruit bat; 3. Has gills and fins -> Milkfish; 4. Has dry scales and claws -> Monitor lizard; 5. Has moist scaleless skin -> Cane toad B: All are mammals C: All are birds D: All are fish', 'correct' => 'A']
+        ]
+    ],
+    [
+        'grade' => '6',
+        'quarter' => '2',
+        'lesson_number' => '1',
+        'topic' => 'Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)',
+        'objectives' => [
+            'Construct and analyze complex food webs and determine the consequences of ecological disruptions.',
+            'Differentiate symbiotic ecological relationships: Mutualism, Commensalism, Parasitism, Predation, and Competition.',
+            'Explain the cycling of matter and energy between biotic (living) and abiotic (non-living) components.'
+        ],
+        'content' => "An ecosystem is a biological community of interacting organisms (biotic factors) and their physical environment (abiotic factors: temperature, sunlight, soil, water, atmospheric gases).\n\nFood Webs: Natural feeding relationships are not single chains but interconnected webs. Removing a keystone predator (like sharks or Philippine eagles) triggers trophic cascades that destabilize the entire ecosystem.\n\nEcological Symbiosis:\n- Mutualism: Both species benefit (+ / +), e.g., coral polyps and zooxanthellae algae, bees and flowers.\n- Commensalism: One benefits, the other is unharmed (+ / 0), e.g., orchids growing on tree trunks, barnacles on whales.\n- Parasitism: One benefits at the host's expense (+ / -), e.g., mosquitoes, intestinal worms, tick on dog.\n- Predation: Predator hunts and consumes prey (+ / -).\n- Competition: Organisms compete for limited resources (food, space, mates).",
+        'slides' => [
+            [
+                'title' => 'Ecosystem Relationships & Food Webs',
+                'content' => "Grade 6 — Term 2 Life Science\n\nComplex ecological webs: Food webs, symbiotic partnerships, and biotic-abiotic cycles.",
+                'slide_type' => 'title',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Biotic vs Abiotic Factors',
+                'content' => "The Two Halves of Every Ecosystem:\n• Biotic Factors (Living): Plants, herbivores, carnivores, fungi, bacteria\n• Abiotic Factors (Non-Living Physical): Sunlight intensity, temperature, rainfall, dissolved oxygen, soil minerals, pH\n• Constant interaction: Sunlight and water dictate what vegetation thrives; vegetation feeds the animal community",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Food Webs: Interconnected Stability',
+                'content' => "Why webs are stronger than single chains:\n• Animals eat diverse prey species, not just one food source\n• Keystone Predators: Keep prey populations from exploding and overconsuming vegetation\n• Trophic Cascade: Eliminating top predators triggers ecological collapse!",
+                'slide_type' => 'step',
+                'media_type' => 'step',
+                'media_url' => "Producers: Seagrass & Phytoplankton\nPrimary: Zooplankton & Herbivore Fish\nSecondary: Squid, Snapper, Reef Crabs\nTertiary / Apex: Reef Sharks & Sea Turtles"
+            ],
+            [
+                'title' => 'The Five Symbiotic Relationships',
+                'content' => "Living together in close association:\n• Mutualism (+ / +): Both benefit (Corals & algae; Bees & flowers)\n• Commensalism (+ / 0): One benefits, other unaffected (Bird nest in tree; Orchids on bark)\n• Parasitism (+ / -): Parasite feeds on host (Ticks on dog; Tapeworms in intestine)\n• Predation (+ / -): Predator kills prey\n• Competition (- / -): Fighting for limited resources",
+                'slide_type' => 'content',
+                'media_type' => 'none',
+                'media_url' => ''
+            ],
+            [
+                'title' => 'Ecosystem Symbiosis Quiz',
+                'content' => "What ecological relationship exists between an aerial orchid growing on the trunk of a giant narra tree?\nA) Parasitism (orchid steals tree sap)\nB) Commensalism (orchid gains sunlight height; tree is neither helped nor harmed)\nC) Predation\nD) Mutualism\n\nCorrect Answer: B (Commensalism: orchid benefits while tree is unharmed!)",
+                'slide_type' => 'quiz',
+                'media_type' => 'none',
+                'media_url' => ''
+            ]
+        ],
+        'questions' => [
+            ['grade' => '6', 'topic' => 'Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)', 'difficulty' => 'Easy', 'text' => 'What do we call a complex network of interconnected food chains in an ecosystem? | A: Food web B: Food pyramid C: Monoculture D: Energy ring', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)', 'difficulty' => 'Easy', 'text' => 'Which symbiotic relationship benefits both participating organisms (+ / +)? | A: Mutualism B: Parasitism C: Commensalism D: Predation', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)', 'difficulty' => 'Medium', 'text' => 'Describe the mutualistic relationship between coral polyps and microscopic zooxanthellae algae in a coral reef. | A: Algae perform photosynthesis inside coral cells to provide food; coral provides shelter and carbon dioxide B: Coral eats algae C: Algae poisons coral D: Coral destroys algae', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)', 'difficulty' => 'Medium', 'text' => 'Why is an orchid attached to the high bark of a forest tree classified as commensalism? | A: The orchid gains access to sunlight without harming or stealing nutrients from the host tree B: The orchid kills the tree C: The tree eats the orchid D: Both organisms die', 'correct' => 'A'],
+            ['grade' => '6', 'topic' => 'Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)', 'difficulty' => 'Hard', 'text' => 'Predict the ecological impact on a Philippine mangrove ecosystem if industrial overfishing eliminates 90% of predatory groupers and snappers. | A: Predation release causes herbivorous crab populations to explode, which overconsume mangrove seedlings and destroy coastal forest regeneration B: Fish multiply infinitely C: Mangroves grow faster D: No effect', 'correct' => 'A']
+        ]
+    ]
+];
+
+echo "<h2>🌿 Seeding Life Science Curriculum across Grades 3 to 6...</h2>\n";
+
+try {
+    // 1. Ensure topics table exists
+    $pdo->exec("CREATE TABLE IF NOT EXISTS topics (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        grade VARCHAR(10) NOT NULL,
+        topic_name VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+} catch (Exception $e) {
+    // SQLite syntax fallback
+    $pdo->exec("CREATE TABLE IF NOT EXISTS topics (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        grade TEXT NOT NULL,
+        topic_name TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )");
+}
+
+$lessonsInserted = 0;
+$slidesInserted = 0;
+$questionsInserted = 0;
+$topicsRegistered = 0;
+
+foreach ($lifeScienceUnits as $unit) {
+    $grade = $unit['grade'];
+    $quarter = $unit['quarter'];
+    $lessonNum = $unit['lesson_number'];
+    $topic = $unit['topic'];
+    $content = $unit['content'];
+    $objectives = json_encode($unit['objectives'], JSON_UNESCAPED_UNICODE);
+    $questionsJson = json_encode($unit['questions'], JSON_UNESCAPED_UNICODE);
+
+    // 1. Check if curriculum lesson exists, update or insert
+    $stmtCheck = $pdo->prepare("SELECT id FROM curriculum_lessons WHERE grade = ? AND quarter = ? AND topic = ?");
+    $stmtCheck->execute([$grade, $quarter, $topic]);
+    $existingId = $stmtCheck->fetchColumn();
+
+    if ($existingId) {
+        $lessonId = $existingId;
+        $stmtUpd = $pdo->prepare("UPDATE curriculum_lessons SET content = ?, objectives = ?, questions = ?, lesson_number = ? WHERE id = ?");
+        $stmtUpd->execute([$content, $objectives, $questionsJson, $lessonNum, $lessonId]);
+    } else {
+        $stmtIns = $pdo->prepare("INSERT INTO curriculum_lessons (grade, quarter, lesson_number, topic, content, objectives, questions) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmtIns->execute([$grade, $quarter, $lessonNum, $topic, $content, $objectives, $questionsJson]);
+        $lessonId = $pdo->lastInsertId();
+        $lessonsInserted++;
+    }
+
+    // 2. Register Topic in topics table if not exists
+    $stmtTCheck = $pdo->prepare("SELECT COUNT(*) FROM topics WHERE grade = ? AND topic_name = ?");
+    $stmtTCheck->execute([$grade, $topic]);
+    if ($stmtTCheck->fetchColumn() == 0) {
+        $stmtTIns = $pdo->prepare("INSERT INTO topics (grade, topic_name) VALUES (?, ?)");
+        $stmtTIns->execute([$grade, $topic]);
+        $topicsRegistered++;
+    }
+
+    // 3. Clear and Insert lesson slides
+    $pdo->prepare("DELETE FROM lesson_slides WHERE curriculum_lesson_id = ?")->execute([$lessonId]);
+    $stmtSlide = $pdo->prepare("INSERT INTO lesson_slides (curriculum_lesson_id, slide_number, title, content, slide_type, media_type, media_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    foreach ($unit['slides'] as $sIdx => $s) {
+        $stmtSlide->execute([
+            $lessonId,
+            $sIdx + 1,
+            $s['title'],
+            $s['content'],
+            $s['slide_type'],
+            $s['media_type'] ?? null,
+            $s['media_url'] ?? null
+        ]);
+        $slidesInserted++;
+    }
+
+    // 4. Seed Questions into questions table (without duplicating)
+    $stmtQCheck = $pdo->prepare("SELECT COUNT(*) FROM questions WHERE grade = ? AND topic = ? AND question_text = ?");
+    $stmtQIns = $pdo->prepare("INSERT INTO questions (grade, topic, difficulty, question_text) VALUES (?, ?, ?, ?)");
+    foreach ($unit['questions'] as $q) {
+        $stmtQCheck->execute([$q['grade'], $q['topic'], $q['text']]);
+        if ($stmtQCheck->fetchColumn() == 0) {
+            $stmtQIns->execute([$q['grade'], $q['topic'], $q['difficulty'], $q['text']]);
+            $questionsInserted++;
+        }
+    }
+}
+
+echo "<p>✅ <strong>Life Science Curriculum Seeding Complete!</strong></p>\n";
+echo "<ul>\n";
+echo "<li>Curriculum Lessons Processed: " . count($lifeScienceUnits) . " (21 units across Grades 3 to 6)</li>\n";
+echo "<li>Interactive Lesson Slides Populated: $slidesInserted (5 slides per unit)</li>\n";
+echo "<li>Question Bank Recitations Seeded: $questionsInserted</li>\n";
+echo "<li>Topic Registry Entries Added: $topicsRegistered</li>\n";
+echo "</ul>\n";
+
+if (php_sapi_name() === 'cli') {
+    echo "Summary:\n";
+    echo "- 21 Life Science Lessons active across Grades 3-6\n";
+    echo "- $slidesInserted Lesson Slides seeded\n";
+    echo "- $questionsInserted Questions added to bank\n";
+    echo "- Database: " . (defined('DB_ENGINE') ? DB_ENGINE : 'Connected') . "\n";
+}
+?>

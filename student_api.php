@@ -5,9 +5,9 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { exit(0); }
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') { exit(0); }
 
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 try {
     if ($method === 'GET') {
@@ -21,31 +21,49 @@ try {
 
     } else if ($method === 'POST') {
         // Add or update a student (upsert)
-        $input = json_decode(file_get_contents('php://input'), true);
+        $rawInput = file_get_contents('php://input');
+        $input = json_decode($rawInput, true);
+        if (!$input && !empty($_POST)) {
+            $input = $_POST;
+        }
 
         if (!$input || !isset($input['id'], $input['name'], $input['grade'])) {
             echo json_encode(["status" => "error", "message" => "id, name, and grade required"]);
             exit;
         }
 
-        $stmt = $pdo->prepare(
-            "INSERT INTO students (id, name, grade, section, recitations, total_score, photo)
-             VALUES (?, ?, ?, ?, ?, ?, ?)
-             ON DUPLICATE KEY UPDATE
-               name        = VALUES(name),
-               grade       = VALUES(grade),
-               section     = VALUES(section),
-               recitations = VALUES(recitations),
-               total_score = VALUES(total_score),
-               photo       = VALUES(photo)"
-        );
+        if (is_sqlite()) {
+            $stmt = $pdo->prepare(
+                "INSERT INTO students (id, name, grade, section, recitations, total_score, photo)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)
+                 ON CONFLICT(id) DO UPDATE SET
+                   name        = excluded.name,
+                   grade       = excluded.grade,
+                   section     = excluded.section,
+                   recitations = excluded.recitations,
+                   total_score = excluded.total_score,
+                   photo       = excluded.photo"
+            );
+        } else {
+            $stmt = $pdo->prepare(
+                "INSERT INTO students (id, name, grade, section, recitations, total_score, photo)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)
+                 ON DUPLICATE KEY UPDATE
+                   name        = VALUES(name),
+                   grade       = VALUES(grade),
+                   section     = VALUES(section),
+                   recitations = VALUES(recitations),
+                   total_score = VALUES(total_score),
+                   photo       = VALUES(photo)"
+            );
+        }
         $stmt->execute([
             $input['id'],
             $input['name'],
             $input['grade'],
             $input['section']      ?? 'A',
             $input['recitations']  ?? 0,
-            $input['totalScore']   ?? 0,
+            $input['total_score']  ?? $input['totalScore'] ?? 0,
             $input['photo']        ?? null
         ]);
 

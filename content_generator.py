@@ -1,8 +1,12 @@
+import os
+import sys
 import json
-import mysql.connector
-from mysql.connector import Error
+import sqlite3
 
-# Configuration for Central Elementary School Database
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SQLITE_DB = os.path.join(BASE_DIR, "ilikesci_db.sqlite")
+
+# Configuration for Central Elementary School Database (MySQL fallback)
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
@@ -12,11 +16,12 @@ DB_CONFIG = {
 
 def connect_db():
     try:
+        import mysql.connector
+        from mysql.connector import Error
         connection = mysql.connector.connect(**DB_CONFIG)
         if connection.is_connected():
             return connection
-    except Error as e:
-        print(f"Error: {e}")
+    except Exception as e:
         return None
 
 def generate_lesson_material(grade, topic):
@@ -62,9 +67,10 @@ def save_to_json(lesson, questions):
         "questions": questions
     }
     filename = f"material_{lesson['title'].replace(' ', '_')}.json"
-    with open(filename, 'w') as f:
+    filepath = os.path.join(BASE_DIR, filename)
+    with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4)
-    print(f"\n✅ Material saved to {filename}")
+    print(f"\n✅ Material saved to {filepath}")
     print("👉 You can now go to ILikeSci > Settings > Import Data and select this file.")
 
 def main():

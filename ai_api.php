@@ -22,7 +22,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
 
@@ -30,11 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // RATE LIMITING
 // ============================================================
 function checkRateLimit($pdo) {
-    session_start();
-    $sessionId = session_id();
+    if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
+        @session_start();
+    }
+    $sessionId = session_id() ?: 'cli_session';
     
     // Clean old entries (older than 1 minute)
-    $pdo->exec("DELETE FROM ai_rate_limits WHERE created_at < DATE_SUB(NOW(), INTERVAL 1 MINUTE)");
+    if (is_sqlite()) {
+        $pdo->exec("DELETE FROM ai_rate_limits WHERE created_at < datetime('now', '-1 minute')");
+    } else {
+        $pdo->exec("DELETE FROM ai_rate_limits WHERE created_at < DATE_SUB(NOW(), INTERVAL 1 MINUTE)");
+    }
     
     // Count requests in the last minute
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM ai_rate_limits WHERE session_id = ?");
@@ -56,16 +62,27 @@ function checkRateLimit($pdo) {
 // CACHE FUNCTIONS
 // ============================================================
 function getCachedResponse($pdo, $promptHash) {
-    $stmt = $pdo->prepare("SELECT response_text FROM ai_cache WHERE prompt_hash = ? AND created_at > DATE_SUB(NOW(), INTERVAL " . AI_CACHE_TTL . " SECOND)");
+    $ttlSeconds = intval(AI_CACHE_TTL);
+    if (is_sqlite()) {
+        $stmt = $pdo->prepare("SELECT response_text FROM ai_cache WHERE prompt_hash = ? AND created_at > datetime('now', '-{$ttlSeconds} seconds')");
+    } else {
+        $stmt = $pdo->prepare("SELECT response_text FROM ai_cache WHERE prompt_hash = ? AND created_at > DATE_SUB(NOW(), INTERVAL {$ttlSeconds} SECOND)");
+    }
     $stmt->execute([$promptHash]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row ? $row['response_text'] : null;
 }
 
 function cacheResponse($pdo, $promptHash, $action, $promptText, $responseText) {
-    $stmt = $pdo->prepare("INSERT INTO ai_cache (prompt_hash, action, prompt_text, response_text, provider) 
-        VALUES (?, ?, ?, ?, ?) 
-        ON DUPLICATE KEY UPDATE response_text = VALUES(response_text), created_at = NOW()");
+    if (is_sqlite()) {
+        $stmt = $pdo->prepare("INSERT INTO ai_cache (prompt_hash, action, prompt_text, response_text, provider, created_at) 
+            VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP) 
+            ON CONFLICT(prompt_hash) DO UPDATE SET response_text = excluded.response_text, created_at = CURRENT_TIMESTAMP");
+    } else {
+        $stmt = $pdo->prepare("INSERT INTO ai_cache (prompt_hash, action, prompt_text, response_text, provider) 
+            VALUES (?, ?, ?, ?, ?) 
+            ON DUPLICATE KEY UPDATE response_text = VALUES(response_text), created_at = NOW()");
+    }
     $stmt->execute([$promptHash, $action, $promptText, $responseText, AI_PROVIDER]);
 }
 
@@ -196,13 +213,16 @@ function getSystemPrompt() {
 // ACTION HANDLERS
 // ============================================================
 
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 $action = '';
 
 if ($method === 'GET') {
     $action = $_GET['action'] ?? '';
 } else if ($method === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
+    if (!$input && !empty($_POST)) {
+        $input = $_POST;
+    }
     $action = $input['action'] ?? '';
 }
 
@@ -220,6 +240,27 @@ try {
             'rate_limit' => AI_RATE_LIMIT,
             'cache_ttl' => AI_CACHE_TTL
         ]);
+        exit;
+    }
+
+    // ---- CACHE STATS (for admin) ----
+    if ($action === 'cache_stats') {
+        $stmt = $pdo->query("SELECT COUNT(*) as total, 
+            SUM(CASE WHEN action = 'generate_questions' THEN 1 ELSE 0 END) as questions,
+            SUM(CASE WHEN action = 'explain_topic' THEN 1 ELSE 0 END) as explanations,
+            SUM(CASE WHEN action = 'study_hint' THEN 1 ELSE 0 END) as hints,
+            SUM(CASE WHEN action = 'performance_insight' THEN 1 ELSE 0 END) as insights
+            FROM ai_cache");
+        $stats = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        echo json_encode(['status' => 'success', 'cache_stats' => $stats]);
+        exit;
+    }
+    
+    // ---- CLEAR CACHE (admin only) ----
+    if ($action === 'clear_cache') {
+        $pdo->exec("DELETE FROM ai_cache");
+        echo json_encode(['status' => 'success', 'message' => 'AI cache cleared']);
         exit;
     }
     
@@ -431,27 +472,6 @@ try {
         $response = callAI($prompt, getSystemPrompt());
         
         echo json_encode(['status' => 'success', 'rephrased' => trim($response), 'source' => 'ai']);
-        exit;
-    }
-    
-    // ---- CACHE STATS (for admin) ----
-    if ($action === 'cache_stats') {
-        $stmt = $pdo->query("SELECT COUNT(*) as total, 
-            SUM(CASE WHEN action = 'generate_questions' THEN 1 ELSE 0 END) as questions,
-            SUM(CASE WHEN action = 'explain_topic' THEN 1 ELSE 0 END) as explanations,
-            SUM(CASE WHEN action = 'study_hint' THEN 1 ELSE 0 END) as hints,
-            SUM(CASE WHEN action = 'performance_insight' THEN 1 ELSE 0 END) as insights
-            FROM ai_cache");
-        $stats = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        echo json_encode(['status' => 'success', 'cache_stats' => $stats]);
-        exit;
-    }
-    
-    // ---- CLEAR CACHE (admin only) ----
-    if ($action === 'clear_cache') {
-        $pdo->exec("DELETE FROM ai_cache");
-        echo json_encode(['status' => 'success', 'message' => 'AI cache cleared']);
         exit;
     }
     

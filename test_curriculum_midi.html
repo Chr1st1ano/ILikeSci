@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ILikeSci — Curriculum MIDI Test Suite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background: #0b0f19;
+      color: #edf2f4;
+      font-family: 'Outfit', sans-serif;
+      padding: 24px;
+      margin: 0;
+    }
+    .test-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .test-header {
+      background: linear-gradient(135deg, rgba(67,97,238,0.2) 0%, rgba(76,201,240,0.1) 100%);
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid rgba(67,97,238,0.3);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .badge-pass { background: rgba(6,214,160,0.2); color: #06d6a0; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+    .badge-fail { background: rgba(239,68,68,0.2); color: #ef4444; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+    .test-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      background: rgba(15,23,42,0.6);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .test-table th, .test-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.9rem;
+    }
+    .test-table th {
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .player-card {
+      background: rgba(15,23,42,0.8);
+      border: 1px solid rgba(67,97,238,0.3);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <div class="test-header">
+      <div>
+        <h1 style="font-size:1.8rem; font-weight:800; margin-bottom:6px;">
+          <i class="fa-solid fa-music text-primary"></i> Curriculum MIDI Test Suite
+        </h1>
+        <p style="color:var(--text-muted); margin:0;">
+          DepEd Elementary Science Curriculum (Grades 3–6) • Automated Diagnostics & Web Audio Synthesis Test
+        </p>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-primary" onclick="runAllMidiTests()"><i class="fa-solid fa-play"></i> Run All Batch Tests</button>
+        <button class="btn btn-secondary" onclick="window.location.href='multimedia.html'"><i class="fa-solid fa-arrow-left"></i> Back to Multimedia</button>
+      </div>
+    </div>
+
+    <!-- Summary Metrics -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:24px;">
+      <div class="glass-card" style="padding:16px; text-align:center;">
+        <div style="font-size:0.85rem; color:var(--text-muted);">Total Curriculum Songs</div>
+        <div id="stat-total" style="font-size:2rem; font-weight:800; color:#4cc9f0;">15</div>
+      </div>
+      <div class="glass-card" style="padding:16px; text-align:center;">
+        <div style="font-size:0.85rem; color:var(--text-muted);">Files Validated</div>
+        <div id="stat-tested" style="font-size:2rem; font-weight:800; color:#edf2f4;">0</div>
+      </div>
+      <div class="glass-card" style="padding:16px; text-align:center;">
+        <div style="font-size:0.85rem; color:var(--text-muted);">Passed SMF Syntax</div>
+        <div id="stat-passed" style="font-size:2rem; font-weight:800; color:#06d6a0;">0</div>
+      </div>
+      <div class="glass-card" style="padding:16px; text-align:center;">
+        <div style="font-size:0.85rem; color:var(--text-muted);">Synthesizer Engine</div>
+        <div id="stat-engine" style="font-size:1.2rem; font-weight:700; color:#38bdf8; margin-top:8px;">Web Audio API (Offline)</div>
+      </div>
+    </div>
+
+    <!-- Test Table -->
+    <div class="glass-card" style="padding:20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h2 style="font-size:1.2rem; font-weight:700;"><i class="fa-solid fa-list-check text-primary"></i> Curriculum Song Diagnostics</h2>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="test-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Filename</th>
+              <th>Curriculum Topic</th>
+              <th>Grade / Quarter</th>
+              <th>Tracks</th>
+              <th>Notes Count</th>
+              <th>Est. Duration</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="test-tbody">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Interactive Player Console -->
+    <div class="player-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h2 id="current-song-title" style="font-size:1.2rem; font-weight:700;"><i class="fa-solid fa-play-circle text-primary"></i> Live Web Audio Synthesizer Preview</h2>
+        <span id="playing-status" class="badge-pass" style="display:none;"><i class="fa-solid fa-volume-high"></i> Synthesizing</span>
+      </div>
+
+      <div style="position:relative; width:100%; height:100px; background:#000; border-radius:12px; overflow:hidden; margin-bottom:14px; border:1px solid rgba(255,255,255,0.1);">
+        <canvas id="test-visualizer" style="width:100%; height:100%; display:block;"></canvas>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <span id="player-time-curr" style="font-family:monospace; font-weight:700;">00:00</span>
+        <input type="range" id="player-scrub" min="0" max="100" value="0" step="0.1" style="flex:1; cursor:pointer;" oninput="onPlayerScrub(this.value)">
+        <span id="player-time-total" style="font-family:monospace; color:var(--text-muted);">00:00</span>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div style="display:flex; gap:8px;">
+          <button id="btn-toggle-play" class="btn btn-primary btn-sm" onclick="toggleTestPlay()"><i class="fa-solid fa-play"></i> Play</button>
+          <button class="btn btn-secondary btn-sm" onclick="stopTestMidi()"><i class="fa-solid fa-stop"></i> Stop</button>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <span style="font-size:0.85rem; color:var(--text-muted);">Speed:</span>
+          <select id="player-speed" class="form-control form-control-sm" style="padding:4px 8px; background:rgba(255,255,255,0.08); color:white; border-radius:6px;" onchange="window.midiPlayer.setPlaybackRate(parseFloat(this.value))">
+            <option value="0.75">0.75x</option>
+            <option value="1.0" selected>1.0x (Normal)</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="midi_player.js"></script>
+  <script>
+    const TEST_FILES = [
+      { file: 'living_things_song.mid', topic: 'Living Things & Basic Needs', grade: 'Grade 3 • Q1' },
+      { file: 'matter_states_song.mid', topic: 'States of Matter (Solid, Liquid, Gas)', grade: 'Grade 3 • Q1' },
+      { file: 'five_senses_song.mid', topic: 'The Five Senses Exploration', grade: 'Grade 3 • Q1' },
+      { file: 'photosynthesis_song.mid', topic: 'Photosynthesis & Chlorophyll', grade: 'Grade 4 • Q1' },
+      { file: 'water_cycle_song.mid', topic: 'Water Cycle & Weather Dynamics', grade: 'Grade 4 • Q2' },
+      { file: 'force_and_machines_song.mid', topic: 'Forces, Motion & Simple Machines', grade: 'Grade 4 • Q3' },
+      { file: 'sun_and_earth_song.mid', topic: 'Earth Rotation, Sun & Seasons', grade: 'Grade 4 • Q4' },
+      { file: 'electricity_circuits_song.mid', topic: 'Electricity & Electric Circuits', grade: 'Grade 5 • Q3' },
+      { file: 'human_body_song.mid', topic: 'Human Body Systems Harmony', grade: 'Grade 5 • Q2' },
+      { file: 'solar_system_song.mid', topic: 'Solar System Planetary Journey', grade: 'Grade 5 • Q4' },
+      { file: 'mixtures_solutions_song.mid', topic: 'Mixtures & Solutions Chemistry', grade: 'Grade 6 • Q1' },
+      { file: 'vertebrates_invertebrates_song.mid', topic: 'Vertebrates & Animal Kingdom', grade: 'Grade 6 • Q2' },
+      { file: 'motion_and_energy_song.mid', topic: 'Speed, Motion & Newton Energy', grade: 'Grade 6 • Q3' },
+      { file: 'volcanoes_and_earth_song.mid', topic: 'Volcanoes & Earth Geology', grade: 'Grade 6 • Q4' },
+      { file: 'ilikesci_theme.mid', topic: 'ILikeSci Science Explorer Anthem', grade: 'All • Flagship' }
+    ];
+
+    let currentTestFile = '';
+    let visualizerHandle = null;
+
+    function renderInitialTable() {
+      const tbody = document.getElementById('test-tbody');
+      tbody.innerHTML = TEST_FILES.map((item, idx) => `
+        <tr id="row-${idx}">
+          <td>${idx + 1}</td>
+          <td><code>${item.file}</code></td>
+          <td><strong>${item.topic}</strong></td>
+          <td><span style="color:#4cc9f0; font-weight:600;">${item.grade}</span></td>
+          <td id="tracks-${idx}">—</td>
+          <td id="notes-${idx}">—</td>
+          <td id="dur-${idx}">—</td>
+          <td id="status-${idx}"><span style="color:var(--text-muted);">Ready</span></td>
+          <td>
+            <button class="btn btn-primary btn-sm" onclick="testPlaySingle('${item.file}', ${idx})">
+              <i class="fa-solid fa-play"></i> Test
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function runAllMidiTests() {
+      let passedCount = 0;
+      for (let i = 0; i < TEST_FILES.length; i++) {
+        const item = TEST_FILES[i];
+        const statusEl = document.getElementById(`status-${i}`);
+        statusEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-primary"></i> Testing...';
+
+        try {
+          const res = await fetch(`audio/${item.file}`);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const buffer = await res.arrayBuffer();
+          const parsed = MidiParser.parse(buffer);
+
+          const totalNotes = parsed.events.filter(e => e.type === 'noteOn').length;
+          document.getElementById(`tracks-${i}`).textContent = parsed.numTracks;
+          document.getElementById(`notes-${i}`).textContent = totalNotes;
+          document.getElementById(`dur-${i}`).textContent = `${Math.round(parsed.duration)}s`;
+          statusEl.innerHTML = '<span class="badge-pass"><i class="fa-solid fa-check"></i> PASS</span>';
+          passedCount++;
+        } catch (err) {
+          statusEl.innerHTML = `<span class="badge-fail"><i class="fa-solid fa-xmark"></i> ${err.message}</span>`;
+        }
+
+        document.getElementById('stat-tested').textContent = i + 1;
+        document.getElementById('stat-passed').textContent = passedCount;
+      }
+    }
+
+    async function testPlaySingle(filename, idx) {
+      currentTestFile = filename;
+      document.getElementById('current-song-title').innerHTML = `<i class="fa-solid fa-play-circle text-primary"></i> Playing: <code>${filename}</code>`;
+      document.getElementById('playing-status').style.display = 'inline-block';
+
+      try {
+        await window.midiPlayer.load(`audio/${filename}`);
+        const canvas = document.getElementById('test-visualizer');
+        if (visualizerHandle) visualizerHandle.stop();
+        visualizerHandle = window.midiPlayer.attachVisualizer(canvas);
+
+        window.midiPlayer.onProgress = (curr, total, pct) => {
+          document.getElementById('player-time-curr').textContent = formatTime(curr);
+          document.getElementById('player-time-total').textContent = formatTime(total);
+          document.getElementById('player-scrub').value = pct;
+        };
+
+        window.midiPlayer.onEnded = () => {
+          document.getElementById('btn-toggle-play').innerHTML = '<i class="fa-solid fa-play"></i> Play';
+          document.getElementById('playing-status').style.display = 'none';
+        };
+
+        window.midiPlayer.play();
+        document.getElementById('btn-toggle-play').innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+      } catch (err) {
+        alert('Playback failed: ' + err.message);
+      }
+    }
+
+    function toggleTestPlay() {
+      if (!window.midiPlayer) return;
+      if (window.midiPlayer.isPlaying) {
+        window.midiPlayer.pause();
+        document.getElementById('btn-toggle-play').innerHTML = '<i class="fa-solid fa-play"></i> Resume';
+      } else {
+        window.midiPlayer.resume();
+        document.getElementById('btn-toggle-play').innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+      }
+    }
+
+    function stopTestMidi() {
+      if (window.midiPlayer) {
+        window.midiPlayer.stop();
+        document.getElementById('btn-toggle-play').innerHTML = '<i class="fa-solid fa-play"></i> Play';
+        document.getElementById('player-scrub').value = 0;
+        document.getElementById('player-time-curr').textContent = '00:00';
+        document.getElementById('playing-status').style.display = 'none';
+      }
+    }
+
+    function onPlayerScrub(val) {
+      if (window.midiPlayer && window.midiPlayer.midiData) {
+        const dur = window.midiPlayer.midiData.duration;
+        window.midiPlayer.seek((val / 100) * dur);
+      }
+    }
+
+    function formatTime(sec) {
+      if (!sec || isNaN(sec)) return '00:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderInitialTable();
+      runAllMidiTests();
+    });
+  </script>
+</body>
+</html>

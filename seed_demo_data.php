@@ -12,16 +12,29 @@ try {
     $quarter = 1;
 
     // Upsert into students table
-    $stmtStudent = $pdo->prepare(
-        "INSERT INTO students (id, name, grade, section, recitations, total_score, photo)
-         VALUES (?, ?, ?, ?, ?, ?, ?)
-         ON DUPLICATE KEY UPDATE
-           name = VALUES(name),
-           grade = VALUES(grade),
-           section = VALUES(section),
-           recitations = VALUES(recitations),
-           total_score = VALUES(total_score)"
-    );
+    if (is_sqlite()) {
+        $stmtStudent = $pdo->prepare(
+            "INSERT INTO students (id, name, grade, section, recitations, total_score, photo)
+             VALUES (?, ?, ?, ?, ?, ?, ?)
+             ON CONFLICT(id) DO UPDATE SET
+               name = excluded.name,
+               grade = excluded.grade,
+               section = excluded.section,
+               recitations = excluded.recitations,
+               total_score = excluded.total_score"
+        );
+    } else {
+        $stmtStudent = $pdo->prepare(
+            "INSERT INTO students (id, name, grade, section, recitations, total_score, photo)
+             VALUES (?, ?, ?, ?, ?, ?, ?)
+             ON DUPLICATE KEY UPDATE
+               name = VALUES(name),
+               grade = VALUES(grade),
+               section = VALUES(section),
+               recitations = VALUES(recitations),
+               total_score = VALUES(total_score)"
+        );
+    }
     $stmtStudent->execute([$studentId, $studentName, $gradeLevel, $section, 8, 90, null]);
 
     // Ensure any existing quarters 2, 3, 4 records for this student are removed if present
@@ -49,17 +62,31 @@ try {
     $initialGrade = 89.90; // 35.50 + 36.40 + 18.00
     $transmutedGrade = 93;
 
-    $stmtGrade = $pdo->prepare(
-        "INSERT INTO student_grades 
-         (student_name, grade_level, section, quarter, gender, ww_scores, ww_total, ww_ps, ww_ws, pt_scores, pt_total, pt_ps, pt_ws, qa_score, qa_ps, qa_ws, initial_grade, transmuted_grade, ww_highest, pt_highest, qa_highest)
-         VALUES (?, ?, ?, ?, 'M', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-         ON DUPLICATE KEY UPDATE
-           ww_scores = VALUES(ww_scores), ww_total = VALUES(ww_total), ww_ps = VALUES(ww_ps), ww_ws = VALUES(ww_ws),
-           pt_scores = VALUES(pt_scores), pt_total = VALUES(pt_total), pt_ps = VALUES(pt_ps), pt_ws = VALUES(pt_ws),
-           qa_score = VALUES(qa_score), qa_ps = VALUES(qa_ps), qa_ws = VALUES(qa_ws),
-           initial_grade = VALUES(initial_grade), transmuted_grade = VALUES(transmuted_grade),
-           ww_highest = VALUES(ww_highest), pt_highest = VALUES(pt_highest), qa_highest = VALUES(qa_highest)"
-    );
+    if (is_sqlite()) {
+        $stmtGrade = $pdo->prepare(
+            "INSERT INTO student_grades 
+             (student_name, grade_level, section, quarter, gender, ww_scores, ww_total, ww_ps, ww_ws, pt_scores, pt_total, pt_ps, pt_ws, qa_score, qa_ps, qa_ws, initial_grade, transmuted_grade, ww_highest, pt_highest, qa_highest)
+             VALUES (?, ?, ?, ?, 'M', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             ON CONFLICT(student_name, grade_level, section, quarter) DO UPDATE SET
+               ww_scores = excluded.ww_scores, ww_total = excluded.ww_total, ww_ps = excluded.ww_ps, ww_ws = excluded.ww_ws,
+               pt_scores = excluded.pt_scores, pt_total = excluded.pt_total, pt_ps = excluded.pt_ps, pt_ws = excluded.pt_ws,
+               qa_score = excluded.qa_score, qa_ps = excluded.qa_ps, qa_ws = excluded.qa_ws,
+               initial_grade = excluded.initial_grade, transmuted_grade = excluded.transmuted_grade,
+               ww_highest = excluded.ww_highest, pt_highest = excluded.pt_highest, qa_highest = excluded.qa_highest"
+        );
+    } else {
+        $stmtGrade = $pdo->prepare(
+            "INSERT INTO student_grades 
+             (student_name, grade_level, section, quarter, gender, ww_scores, ww_total, ww_ps, ww_ws, pt_scores, pt_total, pt_ps, pt_ws, qa_score, qa_ps, qa_ws, initial_grade, transmuted_grade, ww_highest, pt_highest, qa_highest)
+             VALUES (?, ?, ?, ?, 'M', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             ON DUPLICATE KEY UPDATE
+               ww_scores = VALUES(ww_scores), ww_total = VALUES(ww_total), ww_ps = VALUES(ww_ps), ww_ws = VALUES(ww_ws),
+               pt_scores = VALUES(pt_scores), pt_total = VALUES(pt_total), pt_ps = VALUES(pt_ps), pt_ws = VALUES(pt_ws),
+               qa_score = VALUES(qa_score), qa_ps = VALUES(qa_ps), qa_ws = VALUES(qa_ws),
+               initial_grade = VALUES(initial_grade), transmuted_grade = VALUES(transmuted_grade),
+               ww_highest = VALUES(ww_highest), pt_highest = VALUES(pt_highest), qa_highest = VALUES(qa_highest)"
+        );
+    }
     $stmtGrade->execute([
         $studentName, $gradeLevel, $section, $quarter,
         $wwScores, $wwTotal, $wwPS, $wwWS,
@@ -116,7 +143,8 @@ try {
     }
 
     // Auto-sync topics table for Grade 7 and new topics
-    $pdo->exec("INSERT IGNORE INTO topics (grade, topic_name) VALUES 
+    $ignoreKw = is_sqlite() ? "INSERT OR IGNORE INTO" : "INSERT IGNORE INTO";
+    $pdo->exec("$ignoreKw topics (grade, topic_name) VALUES 
         ('7', 'Cell Structure & Function'),
         ('7', 'Ecosystems & Biodiversity'),
         ('7', 'Force & Motion (Physics)'),

@@ -1,0 +1,38 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite journal and temporary files
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+
+# Large screen recordings and video archives (>100MB GitHub limit)
+Recording*.mp4
+*.zip
+*.tar.gz
+*.rar
+
+# Heavy offline curriculum packs (12GB+ raw archives)
+Curriculums/
+
+# User uploads runtime cache (preserve .htaccess security config)
+uploads/*
+!uploads/.htaccess
+!uploads/.gitkeep
+
+# Local backup directories
+backups*/
+
+# Operating system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Editor and IDE configurations
+.idea/
+.vscode/
+*.swp
+*.swo

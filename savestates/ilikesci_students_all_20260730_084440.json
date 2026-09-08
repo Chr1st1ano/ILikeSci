@@ -1,0 +1,231 @@
+{
+    "students": [
+        {
+            "id": 101,
+            "name": "Alex Brown",
+            "grade": "3",
+            "section": "A",
+            "recitations": 4,
+            "totalScore": 9,
+            "photo": null
+        },
+        {
+            "id": 103,
+            "name": "Ethan Williams",
+            "grade": "3",
+            "section": "A",
+            "recitations": 6,
+            "totalScore": 15,
+            "photo": null
+        },
+        {
+            "id": 105,
+            "name": "Liam Johnson",
+            "grade": "3",
+            "section": "B",
+            "recitations": 8,
+            "totalScore": 23,
+            "photo": null
+        },
+        {
+            "id": 106,
+            "name": "Mia Anderson",
+            "grade": "3",
+            "section": "B",
+            "recitations": 4,
+            "totalScore": 11,
+            "photo": null
+        },
+        {
+            "id": 104,
+            "name": "Olivia Taylor",
+            "grade": "3",
+            "section": "B",
+            "recitations": 7,
+            "totalScore": 16,
+            "photo": null
+        },
+        {
+            "id": 102,
+            "name": "Sophia Martinez",
+            "grade": "3",
+            "section": "A",
+            "recitations": 5,
+            "totalScore": 17,
+            "photo": null
+        },
+        {
+            "id": 111,
+            "name": "Ava Harris",
+            "grade": "4",
+            "section": "B",
+            "recitations": 4,
+            "totalScore": 12,
+            "photo": null
+        },
+        {
+            "id": 112,
+            "name": "Elijah Martin",
+            "grade": "4",
+            "section": "B",
+            "recitations": 5,
+            "totalScore": 10,
+            "photo": null
+        },
+        {
+            "id": 109,
+            "name": "Emma Jackson",
+            "grade": "4",
+            "section": "A",
+            "recitations": 7,
+            "totalScore": 18,
+            "photo": null
+        },
+        {
+            "id": 110,
+            "name": "Lucas White",
+            "grade": "4",
+            "section": "B",
+            "recitations": 8,
+            "totalScore": 17,
+            "photo": null
+        },
+        {
+            "id": 107,
+            "name": "Maria Garcia",
+            "grade": "4",
+            "section": "A",
+            "recitations": 5,
+            "totalScore": 10,
+            "photo": null
+        },
+        {
+            "id": 108,
+            "name": "Noah Thomas",
+            "grade": "4",
+            "section": "A",
+            "recitations": 6,
+            "totalScore": 15,
+            "photo": null
+        },
+        {
+            "id": 118,
+            "name": "Amelia Young",
+            "grade": "5",
+            "section": "B",
+            "recitations": 6,
+            "totalScore": 17,
+            "photo": null
+        },
+        {
+            "id": 115,
+            "name": "Benjamin Lewis",
+            "grade": "5",
+            "section": "A",
+            "recitations": 8,
+            "totalScore": 18,
+            "photo": null
+        },
+        {
+            "id": 116,
+            "name": "Charlotte Robinson",
+            "grade": "5",
+            "section": "B",
+            "recitations": 4,
+            "totalScore": 10,
+            "photo": null
+        },
+        {
+            "id": 114,
+            "name": "Isabella Clark",
+            "grade": "5",
+            "section": "A",
+            "recitations": 7,
+            "totalScore": 16,
+            "photo": null
+        },
+        {
+            "id": 113,
+            "name": "James Smith",
+            "grade": "5",
+            "section": "A",
+            "recitations": 6,
+            "totalScore": 13,
+            "photo": null
+        },
+        {
+            "id": 117,
+            "name": "William Walker",
+            "grade": "5",
+            "section": "B",
+            "recitations": 5,
+            "totalScore": 17,
+            "photo": null
+        },
+        {
+            "id": 124,
+            "name": "Alexander Baker",
+            "grade": "6",
+            "section": "B",
+            "recitations": 7,
+            "totalScore": 20,
+            "photo": null
+        },
+        {
+            "id": 121,
+            "name": "Evelyn Wright",
+            "grade": "6",
+            "section": "A",
+            "recitations": 4,
+            "totalScore": 13,
+            "photo": null
+        },
+        {
+            "id": 123,
+            "name": "Harper Green",
+            "grade": "6",
+            "section": "B",
+            "recitations": 6,
+            "totalScore": 18,
+            "photo": null
+        },
+        {
+            "id": 122,
+            "name": "Henry Scott",
+            "grade": "6",
+            "section": "B",
+            "recitations": 5,
+            "totalScore": 12,
+            "photo": null
+        },
+        {
+            "id": 119,
+            "name": "Linda Johnson",
+            "grade": "6",
+            "section": "A",
+            "recitations": 7,
+            "totalScore": 18,
+            "photo": null
+        },
+        {
+            "id": 120,
+            "name": "Oliver King",
+            "grade": "6",
+            "section": "A",
+            "recitations": 8,
+            "totalScore": 25,
+            "photo": null
+        },
+        {
+            "id": 7001,
+            "name": "abc def ghi",
+            "grade": "7",
+            "section": "A",
+            "recitations": 8,
+            "totalScore": 90,
+            "photo": null
+        }
+    ],
+    "exportDate": "2026-07-30 08:44:40",
+    "exportGrade": "all"
+}

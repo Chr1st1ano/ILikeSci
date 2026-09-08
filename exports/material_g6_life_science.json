@@ -1,0 +1,304 @@
+{
+    "title": "DepEd Science MATATAG Curriculum — Grade 6 Life Science",
+    "grade": "6",
+    "customLessons": [
+        {
+            "title": "Human Body Systems (Circulatory and Nervous Systems)",
+            "grade": "6",
+            "quarter": "1",
+            "lesson_number": "1",
+            "objectives": [
+                "Describe the anatomy and physiology of the Circulatory System (heart chambers, valves, arteries, veins, capillaries, blood cells).",
+                "Describe the Central Nervous System (brain, spinal cord) and Peripheral Nervous System (sensory and motor neurons).",
+                "Explain the reflex arc and how the nervous system regulates all body systems."
+            ],
+            "content": "Advanced coordination in humans is maintained by two master regulatory systems:\n- Circulatory System: The four-chambered muscular heart (atria and ventricles) pumps oxygenated blood through arteries to tissues and returns deoxygenated blood through veins. Capillaries facilitate gas and nutrient exchange. Red blood cells carry oxygen via hemoglobin; white blood cells fight pathogens; platelets form clotting scabs.\n- Nervous System: Transmits electrical and chemical signals throughout the body:\n  - Central Nervous System (CNS): Brain (cerebrum, cerebellum, brainstem) processes information; spinal cord acts as the communications highway.\n  - Peripheral Nervous System (PNS): Sensory and motor neurons transmit impulses.\n  - Reflex Arc: An involuntary, split-second protective reaction (e.g., jerking your hand away from a hot pan) that bypasses the brain directly through the spinal cord.",
+            "slides": [
+                {
+                    "title": "Circulatory & Nervous Systems",
+                    "content": "Grade 6 — Term 1 Life Science\n\nThe body's transport network and electrical control grid: Heart, blood, brain, and nerves.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The 4-Chambered Cardiovascular Pump",
+                    "content": "Double Circulation Loop:\n• Right Atrium & Ventricle: Pumps deoxygenated blood to the lungs (Pulmonary Circuit)\n• Left Atrium & Ventricle: Powerful muscular pump sending oxygen-rich blood to the entire body (Systemic Circuit)\n• Blood Vessels: Arteries (Away from heart), Veins (toward heart with valves), Capillaries (microscopic gas exchange)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The Central Nervous System Command",
+                    "content": "Brain Anatomy & Specializations:\n• Cerebrum: Conscious thought, memory, sensory interpretation, reasoning\n• Cerebellum: Muscle coordination, posture, balance, precision movement\n• Brainstem (Medulla): Involuntary vital reflexes (heartbeat, breathing, swallowing)\n• Spinal Cord: The high-speed neural information trunk line",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Sensory receptors detect stimulus (Heat)\nStep 2: Sensory neuron transmits impulse to spinal cord\nStep 3: Interneuron triggers immediate motor neuron\nStep 4: Muscle jerks hand away before brain registers pain!"
+                },
+                {
+                    "title": "Components of Living Blood",
+                    "content": "Liquid tissue carrying life:\n• Red Blood Cells (RBCs): Packed with iron hemoglobin to transport O2\n• White Blood Cells (WBCs): Immune soldiers engulfing bacteria and viruses\n• Platelets: Cell fragments forming fibrin clots to seal wounds\n• Plasma: 90% water fluid carrying dissolved glucose, hormones, and waste",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Nervous System Reflex Quiz",
+                    "content": "Why does your hand pull back from a burning hot stove burner before your brain even realizes you were burned?\nA) Your hand has its own brain\nB) The reflex arc routes the emergency motor response directly through the spinal cord for speed\nC) The muscles contract on their own\nD) Blood stops flowing\n\nCorrect Answer: B (Spinal reflex arcs bypass the brain for split-second survival!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Reproduction in Plants",
+            "grade": "6",
+            "quarter": "1",
+            "lesson_number": "2",
+            "objectives": [
+                "Identify floral reproductive organs: stamen (anther, filament) and pistil\/carpel (stigma, style, ovary, ovule).",
+                "Explain pollination, pollen tube germination, double fertilization, and seed\/fruit development.",
+                "Analyze seed dispersal mechanisms: wind, water, animal ingestion, and mechanical expulsion."
+            ],
+            "content": "Flowers are the reproductive organs of angiosperms (flowering plants):\n- Male organ (Stamen): Anther produces pollen grains containing male sperm nuclei, supported by the filament.\n- Female organ (Carpel\/Pistil): Stigma receives pollen; style connects to the ovary; ovary contains ovules with egg cells.\n\nPollination occurs when pollen transfers from anther to stigma via wind or pollinators (bees, bats, butterflies).\n\nFertilization: A pollen tube grows down the style into the ovule; the sperm fuses with the egg nucleus to form an embryo seed, while the ovary wall swells and matures into a fleshy fruit.\n\nSeed dispersal ensures seeds land far from the parent plant to prevent competition for light and nutrients.",
+            "slides": [
+                {
+                    "title": "Reproduction in Plants",
+                    "content": "Grade 6 — Term 1 Life Science\n\nBotanical reproduction: Flower anatomy, pollination pathways, fertilization, and seed dispersal.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Flower Anatomy: Stamen & Pistil",
+                    "content": "The Reproductive Organs:\n• Male Organ (Stamen):\n  - Anther: Produces golden pollen grains carrying male sperm cells\n  - Filament: Slender stalk holding the anther aloft\n• Female Organ (Pistil \/ Carpel):\n  - Stigma: Sticky surface catching airborne or insect-carried pollen\n  - Style: Neck tube through which pollen tubes grow\n  - Ovary: Swollen base containing ovules (prospective seeds)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "From Pollen Grain to Fruit",
+                    "content": "The Steps of Plant Fertilization:\n1. Pollination: Pollen lands on sticky stigma\n2. Tube Growth: Pollen grain germinates a tube down the style\n3. Fertilization: Sperm fuses with ovule egg cell\n4. Transformation: The fertilized ovule becomes a hard SEED; the surrounding ovary wall expands into the FRUIT!",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Pollen lands on stigma\nStep 2: Tube grows down style\nStep 3: Sperm fertilizes ovule egg\nStep 4: Ovule becomes seed, Ovary becomes fruit"
+                },
+                {
+                    "title": "Seed Dispersal Engineering",
+                    "content": "Escaping the parent tree's shade:\n• Wind: Dandelion parachutes and winged Narra tree seeds\n• Water: Buoyant fibrous coconut husks drifting across oceans\n• Animals: Sweet mango fruits eaten and seeds dropped; prickly burrs clinging to fur\n• Explosive: Touch-me-not seedpods bursting open under tension",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Plant Reproduction Quiz",
+                    "content": "Following successful plant fertilization, what does the flower's ovary develop into?\nA) A green leaf\nB) A fleshy fruit protecting the seeds\nC) A taproot\nD) A new flower petal\n\nCorrect Answer: B (The ovary wall swells and ripens into fruit!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Vertebrates and Invertebrates",
+            "grade": "6",
+            "quarter": "1",
+            "lesson_number": "3",
+            "objectives": [
+                "Classify animals into Vertebrates (with backbones) and Invertebrates (without backbones).",
+                "Distinguish characteristics of the 5 vertebrate classes: Fish, Amphibians, Reptiles, Birds, and Mammals.",
+                "Classify major invertebrate phyla: Arthropods, Mollusks, Annelids, Cnidarians, and Echinoderms."
+            ],
+            "content": "The Animal Kingdom is divided into two major divisions based on the presence of an internal vertebral column:\n- Vertebrates (Chordates): Possess an endoskeleton and spinal column:\n  1. Fish: Ectothermic, aquatic, gills, scales, fins.\n  2. Amphibians: Ectothermic, smooth moist skin, dual water-land life cycle.\n  3. Reptiles: Ectothermic, dry scaly skin, amniotic shelled eggs, breathe with lungs.\n  4. Birds: Endothermic, feathers, hollow bones, beaks, lay hard-shelled eggs.\n  5. Mammals: Endothermic, hair\/fur, mammary glands for milk, give live birth.\n- Invertebrates: Make up over 95% of animal species!\n  - Arthropods (insects, crustaceans, arachnids) with chitinous exoskeletons and jointed legs.\n  - Mollusks (snails, clams, squids) with soft bodies often protected by calcium shells.\n  - Annelids (earthworms, leeches) with segmented bodies.\n  - Cnidarians (corals, jellyfish) with stinging nematocysts.\n  - Echinoderms (starfish, sea urchins) with spiny skins and radial symmetry.",
+            "slides": [
+                {
+                    "title": "Vertebrates & Invertebrates",
+                    "content": "Grade 6 — Term 1 Life Science\n\nClassifying the Animal Kingdom: Backbone possessors versus the vast invertebrate empire.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "The Five Vertebrate Classes",
+                    "content": "Animals with Internal Spinal Columns:\n• Fish: Scales, fins, gills, cold-blooded (Tilapia, bangus)\n• Amphibians: Moist skin, metamorphosis, aquatic eggs (Frogs, toads)\n• Reptiles: Dry scaly skin, lungs, leathery shelled eggs (Lizards, crocodiles, snakes)\n• Birds: Feathers, hollow flight bones, warm-blooded (Philippine eagle, maya)\n• Mammals: Hair\/fur, mammary glands, warm-blooded (Whales, bats, carabao, humans)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Ectotherms vs Endotherms",
+                    "content": "Body Temperature Regulation:\n• Ectothermic (Cold-Blooded): Body temperature depends on external sun\/water (Fish, amphibians, reptiles)\n• Endothermic (Warm-Blooded): Generate internal metabolic body heat, maintaining steady temperature (Birds and mammals)",
+                    "mediaType": "step",
+                    "mediaUrl": "Has a backbone? -> Vertebrate\nHas hair and nurses young? -> Mammal\nHas feathers and beak? -> Bird\nCold-blooded with dry scales? -> Reptile"
+                },
+                {
+                    "title": "The Invertebrate Majority (>95% of Species)",
+                    "content": "Creatures without backbones:\n• Arthropods: Jointed legs & chitinous exoskeleton (Crabs, spiders, bees, butterflies)\n• Mollusks: Soft unsegmented bodies, often with shells (Snails, giant clams, squids)\n• Annelids: Segmented cylindrical bodies (Earthworms, leeches)\n• Cnidarians: Stinging tentacles around central mouth (Jellyfish, sea anemones, corals)\n• Echinoderms: Spiny skin and 5-part radial symmetry (Starfish, sea urchins)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Vertebrate Classification Quiz",
+                    "content": "Why is a dolphin classified as a mammal rather than a fish, even though it swims in the sea?\nA) It lays eggs in coral reefs\nB) It has hair, breathes atmospheric air with lungs, and nurses young with milk\nC) It has scales and gills\nD) It is cold-blooded\n\nCorrect Answer: B (Dolphins are warm-blooded placental marine mammals!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        },
+        {
+            "title": "Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)",
+            "grade": "6",
+            "quarter": "2",
+            "lesson_number": "1",
+            "objectives": [
+                "Construct and analyze complex food webs and determine the consequences of ecological disruptions.",
+                "Differentiate symbiotic ecological relationships: Mutualism, Commensalism, Parasitism, Predation, and Competition.",
+                "Explain the cycling of matter and energy between biotic (living) and abiotic (non-living) components."
+            ],
+            "content": "An ecosystem is a biological community of interacting organisms (biotic factors) and their physical environment (abiotic factors: temperature, sunlight, soil, water, atmospheric gases).\n\nFood Webs: Natural feeding relationships are not single chains but interconnected webs. Removing a keystone predator (like sharks or Philippine eagles) triggers trophic cascades that destabilize the entire ecosystem.\n\nEcological Symbiosis:\n- Mutualism: Both species benefit (+ \/ +), e.g., coral polyps and zooxanthellae algae, bees and flowers.\n- Commensalism: One benefits, the other is unharmed (+ \/ 0), e.g., orchids growing on tree trunks, barnacles on whales.\n- Parasitism: One benefits at the host's expense (+ \/ -), e.g., mosquitoes, intestinal worms, tick on dog.\n- Predation: Predator hunts and consumes prey (+ \/ -).\n- Competition: Organisms compete for limited resources (food, space, mates).",
+            "slides": [
+                {
+                    "title": "Ecosystem Relationships & Food Webs",
+                    "content": "Grade 6 — Term 2 Life Science\n\nComplex ecological webs: Food webs, symbiotic partnerships, and biotic-abiotic cycles.",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Biotic vs Abiotic Factors",
+                    "content": "The Two Halves of Every Ecosystem:\n• Biotic Factors (Living): Plants, herbivores, carnivores, fungi, bacteria\n• Abiotic Factors (Non-Living Physical): Sunlight intensity, temperature, rainfall, dissolved oxygen, soil minerals, pH\n• Constant interaction: Sunlight and water dictate what vegetation thrives; vegetation feeds the animal community",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Food Webs: Interconnected Stability",
+                    "content": "Why webs are stronger than single chains:\n• Animals eat diverse prey species, not just one food source\n• Keystone Predators: Keep prey populations from exploding and overconsuming vegetation\n• Trophic Cascade: Eliminating top predators triggers ecological collapse!",
+                    "mediaType": "step",
+                    "mediaUrl": "Producers: Seagrass & Phytoplankton\nPrimary: Zooplankton & Herbivore Fish\nSecondary: Squid, Snapper, Reef Crabs\nTertiary \/ Apex: Reef Sharks & Sea Turtles"
+                },
+                {
+                    "title": "The Five Symbiotic Relationships",
+                    "content": "Living together in close association:\n• Mutualism (+ \/ +): Both benefit (Corals & algae; Bees & flowers)\n• Commensalism (+ \/ 0): One benefits, other unaffected (Bird nest in tree; Orchids on bark)\n• Parasitism (+ \/ -): Parasite feeds on host (Ticks on dog; Tapeworms in intestine)\n• Predation (+ \/ -): Predator kills prey\n• Competition (- \/ -): Fighting for limited resources",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Ecosystem Symbiosis Quiz",
+                    "content": "What ecological relationship exists between an aerial orchid growing on the trunk of a giant narra tree?\nA) Parasitism (orchid steals tree sap)\nB) Commensalism (orchid gains sunlight height; tree is neither helped nor harmed)\nC) Predation\nD) Mutualism\n\nCorrect Answer: B (Commensalism: orchid benefits while tree is unharmed!)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                }
+            ]
+        }
+    ],
+    "questions": [
+        {
+            "grade": "6",
+            "topic": "Human Body Systems (Circulatory and Nervous Systems)",
+            "difficulty": "Easy",
+            "text": "Which blood vessels carry oxygenated blood away from the heart to body organs? | A: Arteries B: Veins C: Lymph vessels D: Trachea"
+        },
+        {
+            "grade": "6",
+            "topic": "Human Body Systems (Circulatory and Nervous Systems)",
+            "difficulty": "Easy",
+            "text": "What part of the brain is responsible for balance, posture, and smooth muscle coordination? | A: Cerebellum B: Cerebrum C: Medulla D: Spinal cord"
+        },
+        {
+            "grade": "6",
+            "topic": "Human Body Systems (Circulatory and Nervous Systems)",
+            "difficulty": "Medium",
+            "text": "Why does touching a hot surface trigger an involuntary hand withdrawal before you consciously feel pain? | A: An emergency reflex arc completes a circuit through the spinal cord without waiting for brain processing B: The heart pumps faster C: The skin is detached D: Nerves freeze"
+        },
+        {
+            "grade": "6",
+            "topic": "Human Body Systems (Circulatory and Nervous Systems)",
+            "difficulty": "Medium",
+            "text": "What is the role of blood platelets when you accidentally cut your finger? | A: They adhere to the injured vessel walls and form a fibrin clot to stop blood loss B: They carry oxygen C: They digest food D: They generate white blood cells"
+        },
+        {
+            "grade": "6",
+            "topic": "Human Body Systems (Circulatory and Nervous Systems)",
+            "difficulty": "Hard",
+            "text": "Trace the complete pathway of a red blood cell from the right atrium to the lungs and out to the left leg. | A: Right atrium -> Right ventricle -> Pulmonary artery -> Lung capillaries (oxygenated) -> Pulmonary veins -> Left atrium -> Left ventricle -> Aorta -> Femoral artery to leg B: Directly from right atrium to aorta C: Through stomach D: Through kidneys first"
+        },
+        {
+            "grade": "6",
+            "topic": "Reproduction in Plants",
+            "difficulty": "Easy",
+            "text": "Which part of a flower develops into the fertile seed after fertilization? | A: Ovule B: Petal C: Sepal D: Anther"
+        },
+        {
+            "grade": "6",
+            "topic": "Reproduction in Plants",
+            "difficulty": "Easy",
+            "text": "What part of a flower ripens into the fleshy edible fruit? | A: Ovary B: Stigma C: Filament D: Style"
+        },
+        {
+            "grade": "6",
+            "topic": "Reproduction in Plants",
+            "difficulty": "Medium",
+            "text": "How does the sticky surface of a flower's stigma assist in sexual reproduction? | A: It traps pollen grains delivered by visiting insects or wind currents B: It absorbs rainwater C: It repels bees D: It makes honey"
+        },
+        {
+            "grade": "6",
+            "topic": "Reproduction in Plants",
+            "difficulty": "Medium",
+            "text": "Why have coconut palms evolved thick, fibrous, air-filled husks around their seeds? | A: To float buoyant across ocean waves and colonize distant coastlines B: To make seeds sink C: To attract monkeys D: To stay warm in snow"
+        },
+        {
+            "grade": "6",
+            "topic": "Reproduction in Plants",
+            "difficulty": "Hard",
+            "text": "Distinguish self-pollination from cross-pollination. Why is cross-pollination genetically superior? | A: Cross-pollination transfers pollen between different plants of the same species, increasing genetic variation and disease resilience B: Self-pollination produces animals C: Cross-pollination requires no pollen D: Both produce clones"
+        },
+        {
+            "grade": "6",
+            "topic": "Vertebrates and Invertebrates",
+            "difficulty": "Easy",
+            "text": "What major anatomical structure distinguishes vertebrates from invertebrates? | A: An internal backbone (vertebral column) B: Large eyes C: Number of legs D: Body color"
+        },
+        {
+            "grade": "6",
+            "topic": "Vertebrates and Invertebrates",
+            "difficulty": "Easy",
+            "text": "Which is the only vertebrate class characterized by feathers and hollow flight bones? | A: Birds (Aves) B: Mammals C: Reptiles D: Fish"
+        },
+        {
+            "grade": "6",
+            "topic": "Vertebrates and Invertebrates",
+            "difficulty": "Medium",
+            "text": "Why is a dolphin classified as a mammal rather than a fish? | A: It breathes air with lungs, gives live birth, is warm-blooded, and nurses young with milk B: It has gills C: It has scales D: It lays eggs in sand"
+        },
+        {
+            "grade": "6",
+            "topic": "Vertebrates and Invertebrates",
+            "difficulty": "Medium",
+            "text": "What type of skeleton protects insects and crustaceans, and what phylum do they belong to? | A: Chitinous exoskeleton; Phylum Arthropoda B: Endoskeleton; Chordata C: Shell; Mollusca D: Spines; Echinodermata"
+        },
+        {
+            "grade": "6",
+            "topic": "Vertebrates and Invertebrates",
+            "difficulty": "Hard",
+            "text": "Construct a dichotomous key to distinguish a milkfish, cane toad, monitor lizard, owl, and fruit bat. | A: 1. Has feathers -> Owl; 2. Has fur & nurses young -> Fruit bat; 3. Has gills and fins -> Milkfish; 4. Has dry scales and claws -> Monitor lizard; 5. Has moist scaleless skin -> Cane toad B: All are mammals C: All are birds D: All are fish"
+        },
+        {
+            "grade": "6",
+            "topic": "Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)",
+            "difficulty": "Easy",
+            "text": "What do we call a complex network of interconnected food chains in an ecosystem? | A: Food web B: Food pyramid C: Monoculture D: Energy ring"
+        },
+        {
+            "grade": "6",
+            "topic": "Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)",
+            "difficulty": "Easy",
+            "text": "Which symbiotic relationship benefits both participating organisms (+ \/ +)? | A: Mutualism B: Parasitism C: Commensalism D: Predation"
+        },
+        {
+            "grade": "6",
+            "topic": "Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)",
+            "difficulty": "Medium",
+            "text": "Describe the mutualistic relationship between coral polyps and microscopic zooxanthellae algae in a coral reef. | A: Algae perform photosynthesis inside coral cells to provide food; coral provides shelter and carbon dioxide B: Coral eats algae C: Algae poisons coral D: Coral destroys algae"
+        },
+        {
+            "grade": "6",
+            "topic": "Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)",
+            "difficulty": "Medium",
+            "text": "Why is an orchid attached to the high bark of a forest tree classified as commensalism? | A: The orchid gains access to sunlight without harming or stealing nutrients from the host tree B: The orchid kills the tree C: The tree eats the orchid D: Both organisms die"
+        },
+        {
+            "grade": "6",
+            "topic": "Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)",
+            "difficulty": "Hard",
+            "text": "Predict the ecological impact on a Philippine mangrove ecosystem if industrial overfishing eliminates 90% of predatory groupers and snappers. | A: Predation release causes herbivorous crab populations to explode, which overconsume mangrove seedlings and destroy coastal forest regeneration B: Fish multiply infinitely C: Mangroves grow faster D: No effect"
+        }
+    ]
+}

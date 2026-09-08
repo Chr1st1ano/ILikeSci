@@ -13,7 +13,7 @@ DB_CONFIG = {
     'database': 'ilikesci_db'
 }
 
-CURRICULUM_PATH = r"c:\Games\xampp\htdocs\ILikeSci\Curriculums"
+CURRICULUM_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Curriculums")
 
 def connect_db():
     try:
