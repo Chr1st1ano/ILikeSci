@@ -51,8 +51,8 @@ echo [OK] Working Python found: %PYTHON_BIN%
 
 :: 2. Install Dependencies
 echo.
-echo [2/4] Installing Python dependencies (Science Tools)...
-"%PYTHON_BIN%" -m pip install mysql-connector-python python-docx --quiet
+echo [2/4] Installing Python dependencies (Science Tools & PPTX Engine)...
+"%PYTHON_BIN%" -m pip install mysql-connector-python python-docx python-pptx --quiet
 if %errorlevel% neq 0 (
     echo [WARNING] Could not install dependencies automatically.
     echo Make sure you have an internet connection.

@@ -22,19 +22,26 @@ if (!is_dir($slidesBaseDir)) mkdir($slidesBaseDir, 0777, true);
 
 // Ensure pptx_uploads table exists with slides_dir column
 try {
+    $idCol = is_sqlite() ? "id INTEGER PRIMARY KEY AUTOINCREMENT" : "id INT AUTO_INCREMENT PRIMARY KEY";
+    $textCol = is_sqlite() ? "TEXT" : "VARCHAR(255)";
+    $shortCol = is_sqlite() ? "TEXT" : "VARCHAR(50)";
+    $intCol = is_sqlite() ? "INTEGER" : "INT";
+    $tinyIntCol = is_sqlite() ? "INTEGER" : "TINYINT";
+    $timeCol = is_sqlite() ? "DATETIME DEFAULT CURRENT_TIMESTAMP" : "TIMESTAMP DEFAULT CURRENT_TIMESTAMP";
+
     $pdo->exec("CREATE TABLE IF NOT EXISTS pptx_uploads (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        filename VARCHAR(255) NOT NULL,
-        original_name VARCHAR(255) NOT NULL,
-        grade VARCHAR(10) DEFAULT '',
-        quarter VARCHAR(10) DEFAULT '',
-        topic VARCHAR(255) DEFAULT '',
-        slide_count INT DEFAULT 0,
-        curriculum_lesson_id INT DEFAULT NULL,
-        slides_dir VARCHAR(255) DEFAULT '',
-        has_images TINYINT DEFAULT 0,
-        uploaded_by VARCHAR(50) DEFAULT '',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        $idCol,
+        filename $textCol NOT NULL,
+        original_name $textCol NOT NULL,
+        grade $shortCol DEFAULT '',
+        quarter $shortCol DEFAULT '',
+        topic $textCol DEFAULT '',
+        slide_count $intCol DEFAULT 0,
+        curriculum_lesson_id $intCol DEFAULT NULL,
+        slides_dir $textCol DEFAULT '',
+        has_images $tinyIntCol DEFAULT 0,
+        uploaded_by $shortCol DEFAULT '',
+        created_at $timeCol
     )");
 
     // Add missing columns if table already existed

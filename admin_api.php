@@ -32,8 +32,11 @@ if ($method === 'GET') {
     $action = $_GET['action'] ?? 'users';
 
     if ($action === 'users') {
-        // List all users (no passwords)
-        $stmt = $pdo->query("SELECT id, username, display_name, email, role, created_at FROM users ORDER BY id ASC");
+        // List all users with avatar data (no passwords)
+        $stmt = $pdo->query("SELECT u.id, u.username, u.display_name, u.email, u.role, u.created_at, tp.avatar_data 
+                             FROM users u 
+                             LEFT JOIN teacher_profiles tp ON u.username = tp.username 
+                             ORDER BY u.id ASC");
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode(["status" => "success", "users" => $users]);
 

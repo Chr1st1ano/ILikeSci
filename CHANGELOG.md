@@ -4,6 +4,33 @@
 > Capstone Project — Laguna State Polytechnic University, San Pablo City Campus  
 > By: Abril, Millera, Olidan | May 2026
 
+## Session 13 — September 10, 2026 (Life & Matter Curriculum, PPTX Engine Stabilization, Lesson Builder & Production Readiness)
+
+### 🌿 Life & Matter DepEd MATATAG Curriculum + 📽️ PPTX Engine Fix + 🛠️ Lesson Builder & Production Suite
+
+**Major upgrades:** Ingested the official DepEd MATATAG "Life Science" and "Matter & Materials" curricula with full inquiry skills and tiered question banks, resolved the SQLite auto-increment primary key issue affecting PPTX presentation IDs, stabilized the visual PowerPoint slide pipeline, perfected the interactive Lesson Builder, optimized offline query performance for low-end hardware, and introduced an 11-suite, 40-test Production Readiness verification engine.
+
+| # | File | Change | Status |
+|---|------|--------|--------|
+| 1 | **`import_life_matter_and_materials.php`** | **NEW** — High-precision curriculum importer for `life matter.txt` (*Scientific Inquiry in Life Science*) and `matter and materials.txt` (*Properties and Uses of Materials*). Populates `curriculum_lessons`, `lesson_slides`, `questions`, and `topics` across Grades 3 and 4 with full objectives, competencies, activities, and 10 multiple-choice questions with answer keys. | ✅ |
+| 2 | **`seed_life_science.php` & `seed_matter_materials.php`** | Synchronized database seeders with the complete curriculum content, inquiry skills (Observing, Predicting, Measuring), 6-step investigation cycle, physical material properties, and Philippine community metals (yero, copper, aluminum, iron, stainless steel). | ✅ |
+| 3 | **`export_life_science_json.php` & `export_matter_json.php`** | Exported and synchronized updated offline lesson packages in `exports/` (`material_Matter.json` and `exports/material_Scientific_Inquiry_in_Life_Science.json`). | ✅ |
+| 4 | **`db.php`** | **CRITICAL FIX & HARDENING** — 1) Switched SQLite primary keys from MySQL-style `INT AUTO_INCREMENT` to `INTEGER PRIMARY KEY AUTOINCREMENT` (fixing `NULL` ID bugs in PPTX uploads and topics). 2) Added self-healing schema migration that backfilled valid integer IDs. 3) Added 100ms `fsockopen` socket pre-check to eliminate the 4,000ms offline connection stall on machines without MySQL running. | ✅ |
+| 5 | **`pptx_api.php`** | Fixed SQLite table creation schema to use `INTEGER PRIMARY KEY AUTOINCREMENT`, updated lesson number resolution with engine-safe CAST (`INTEGER` for SQLite, `UNSIGNED` for MySQL), and ensured visual slide listings return valid presentation IDs. | ✅ |
+| 6 | **`import_root_ppts.php`** | **NEW** — Root PowerPoint importer that pre-processes `.pptx` files, converts them to high-resolution PNG slides, creates curriculum lessons, and registers visual slide decks with valid IDs. | ✅ |
+| 7 | **`import_all_ppts.php`** | Updated with engine-safe `CAST(... AS INTEGER/UNSIGNED)` for seamless compatibility across both SQLite and MySQL engines. | ✅ |
+| 8 | **`app.js`** | **BUG FIXES & ENHANCEMENT** — 1) Removed duplicate conflicting definitions of `loadPPTXList()` and `deletePPTX()`. 2) Enhanced `parseTXTQuestions()` to parse unnumbered questions and multi-line choices with explicit answer keys. | ✅ |
+| 9 | **`lessons_api.php`** | Added explicit cascading slide deletion on lesson delete, and added fallback from `php://input` to `$_POST` for cross-environment testing and CLI harness compatibility. | ✅ |
+| 10 | **`run.bat`** | Added `python-pptx` to automatic dependency installation step to ensure PPTX slide conversion engine is available out of the box. | ✅ |
+| 11 | **`test_lesson_builder.py`** | **NEW** — Automated test harness verifying Lesson Builder API for single-slide creation, 3-slide creation, 5-slide batch updates, and lesson retrieval. | ✅ |
+| 12 | **`test_production_readiness.php`** | **EXPANDED** — Production verification suite covering 11 architectural domains (Database portability, Auth security, Student upsert, Curriculum & Questions, Admin stats, AI cache, DepEd Grade transmutation, Security hardening, Hardware benchmarks, PPTX pipeline, and Lesson Builder CRUD). All 40/40 tests passing (100%). | ✅ |
+| 13 | **`questions_api.php`** | Enhanced `PUT` endpoint to update question grade, topic, difficulty, text, and type with automatic topic registration in the `topics` table. | ✅ |
+| 14 | **`materials.html` & `app.js`** | **NEW QUESTION EDIT MODAL** — Added an interactive **Edit** button to every question card in the Question Bank (`materials.html` & `admin.html`). Replaced browser `prompt()` with a full glass-card modal supporting multi-line question text, choices, grade, topic, and difficulty selection with instant database sync. | ✅ |
+| 15 | **`students.html` & `app.js`** | **NEW STUDENT PHOTO MODAL** — Added student photo inspection dialog with webcam snap and file upload options, saving lightweight JPEGs directly to SQLite/MySQL, plus student avatars rendered on the leaderboard. | ✅ |
+| 16 | **`multimedia.html`** | **PLACEHOLDER CLEANUP** — Removed static hardcoded placeholder picture cards ("Sun Safety", "Plants", "Simple Machines") from the Picture Gallery, ensuring only authentic curriculum and user-uploaded media are rendered. | ✅ |
+| 17 | **`assessment.html` & `app.js`** | **FLASH QUIZ RESILIENCE & MULTI-TIER FALLBACK** — Resolved flash quiz failing to start when lessons lacked embedded JSON questions or when selected difficulty filters had no direct matches. Implemented auto-student selection, multi-tier fallback (lesson questions → topic question bank → grade question bank → full question pool), automatic difficulty relaxation, and instant timer/modal rendering. | ✅ |
+
+
 ---
 
 ## Session 12 — September 2, 2026 (Science Curriculum MIDI Suite & Offline Synthesizer Engine)

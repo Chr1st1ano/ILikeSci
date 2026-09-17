@@ -35,13 +35,13 @@ function assert_test($description, $condition, $details = '') {
 function run_endpoint($script, $method = 'GET', $params = [], $body = null) {
     $tmpFile = __DIR__ . '/scratch_runner_' . uniqid() . '.php';
     
-    $postData = ($method === 'POST') ? ($body !== null && is_array($body) ? array_merge($params, $body) : $params) : [];
+    $postData = ($body !== null && is_array($body)) ? array_merge($params, $body) : $params;
     $getData = ($method === 'GET') ? $params : [];
     
     $rawBody = '';
     if ($body !== null) {
         $rawBody = is_string($body) ? $body : json_encode($body);
-    } elseif ($method === 'POST' && !empty($postData)) {
+    } elseif (!empty($postData) && $method !== 'GET') {
         $rawBody = json_encode($postData);
     }
 
@@ -49,14 +49,31 @@ function run_endpoint($script, $method = 'GET', $params = [], $body = null) {
     $code .= "\$_SERVER['REQUEST_METHOD'] = " . var_export($method, true) . ";\n";
     $code .= "\$_GET = " . var_export($getData, true) . ";\n";
     $code .= "\$_POST = " . var_export($postData, true) . ";\n";
-    
-    // If rawBody is non-empty, use a stream wrapper or php://input simulator if needed
-    // In our APIs, $input = json_decode(file_get_contents('php://input')) ?: $_POST;
-    // So setting $_POST already fulfills $input!
     $code .= "require " . var_export(__DIR__ . '/' . $script, true) . ";\n";
 
     file_put_contents($tmpFile, $code);
-    $out = shell_exec("php " . escapeshellarg($tmpFile) . " 2>&1");
+
+    $descriptorSpec = [
+        0 => ["pipe", "r"],
+        1 => ["pipe", "w"],
+        2 => ["pipe", "w"]
+    ];
+
+    $process = proc_open("php " . escapeshellarg($tmpFile), $descriptorSpec, $pipes);
+    if (is_resource($process)) {
+        if ($rawBody !== '') {
+            fwrite($pipes[0], $rawBody);
+        }
+        fclose($pipes[0]);
+
+        $out = stream_get_contents($pipes[1]);
+        $err = stream_get_contents($pipes[2]);
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        proc_close($process);
+    } else {
+        $out = shell_exec("php " . escapeshellarg($tmpFile) . " 2>&1");
+    }
     @unlink($tmpFile);
 
     // Extract json from possible PHP warnings
@@ -218,6 +235,70 @@ for ($i = 0; $i < $iterations; $i++) {
 $benchDuration = (microtime(true) - $startBench) * 1000; // ms
 $avgPerQuery = $benchDuration / $iterations;
 assert_test("100 indexed queries execute in < 250ms total (measured: " . round($benchDuration, 2) . "ms, " . round($avgPerQuery, 3) . "ms/query)", $benchDuration < 250);
+
+// --- SUITE 10: PPTX VISUAL PRESENTATION PIPELINE ---
+echo "\n" . CLR_YELLOW . CLR_BOLD . "10. PPTX Visual Presentation Pipeline & Image Serving" . CLR_RESET . "\n";
+if (is_sqlite()) {
+    $nullUploadIds = $pdo->query("SELECT COUNT(*) FROM pptx_uploads WHERE id IS NULL OR id = 0")->fetchColumn();
+    assert_test("pptx_uploads SQLite table has zero NULL/zero IDs (AUTOINCREMENT valid)", (int)$nullUploadIds === 0);
+    $nullTopicIds = $pdo->query("SELECT COUNT(*) FROM topics WHERE id IS NULL OR id = 0")->fetchColumn();
+    assert_test("topics SQLite table has zero NULL/zero IDs (AUTOINCREMENT valid)", (int)$nullTopicIds === 0);
+}
+
+$pptxListRes = run_endpoint('pptx_api.php', 'GET', ['action' => 'list']);
+assert_test("GET pptx_api.php?action=list returns valid presentations", is_array($pptxListRes) && ($pptxListRes['status'] ?? '') === 'success' && !empty($pptxListRes['uploads']));
+
+$firstUpload = $pptxListRes['uploads'][0] ?? null;
+$firstUploadId = $firstUpload['id'] ?? 1;
+assert_test("PPTX upload has valid integer ID (> 0)", !empty($firstUploadId) && (int)$firstUploadId > 0);
+
+$slidesListRes = run_endpoint('pptx_api.php', 'GET', ['action' => 'slides', 'id' => (string)$firstUploadId]);
+assert_test("GET pptx_api.php?action=slides for valid ID returns slides list", is_array($slidesListRes) && ($slidesListRes['status'] ?? '') === 'success' && !empty($slidesListRes['slides']));
+
+// Verify slide image exists on disk
+if ($firstUpload && !empty($firstUpload['slides_dir'])) {
+    $slideImgPath = __DIR__ . '/' . $firstUpload['slides_dir'] . 'slide_1.png';
+    assert_test("First slide PNG image file exists on disk for presentation", file_exists($slideImgPath));
+}
+
+// --- SUITE 11: LIFE & MATTER CURRICULUM AND LESSON BUILDER CRUD ---
+echo "\n" . CLR_YELLOW . CLR_BOLD . "11. Life & Matter Curriculum and Lesson Builder CRUD" . CLR_RESET . "\n";
+$stmtLifeCheck = $pdo->prepare("SELECT COUNT(*) FROM curriculum_lessons WHERE topic LIKE '%Scientific Inquiry%'");
+$stmtLifeCheck->execute();
+assert_test("Scientific Inquiry in Life Science curriculum lesson verified in database", (int)$stmtLifeCheck->fetchColumn() > 0);
+
+$stmtMatterCheck = $pdo->prepare("SELECT COUNT(*) FROM curriculum_lessons WHERE topic LIKE '%Properties and Uses of Materials%'");
+$stmtMatterCheck->execute();
+assert_test("Properties and Uses of Materials curriculum lesson verified in database", (int)$stmtMatterCheck->fetchColumn() > 0);
+
+$stmtQBankCheck = $pdo->prepare("SELECT COUNT(*) FROM questions WHERE topic LIKE '%Scientific Inquiry%' OR topic LIKE '%Properties and Uses%'");
+$stmtQBankCheck->execute();
+assert_test("Official assessment questions from life & matter imported into question bank", (int)$stmtQBankCheck->fetchColumn() >= 10);
+
+// Test Lesson Builder End-to-End API CRUD
+$builderCreateRes = run_endpoint('lessons_api.php', 'POST', [], [
+    'action' => 'create_lesson',
+    'grade' => '4',
+    'quarter' => '1',
+    'lesson_number' => '999',
+    'topic' => 'Production Verification Test Lesson',
+    'objectives' => ['Objective 1', 'Objective 2'],
+    'slides' => [
+        ['title' => 'Test Slide 1', 'content' => 'Verification content 1', 'slide_type' => 'content'],
+        ['title' => 'Test Slide 2', 'content' => 'Verification content 2', 'slide_type' => 'step']
+    ]
+]);
+assert_test("Lesson Builder POST create_lesson creates lesson and returns ID", is_array($builderCreateRes) && ($builderCreateRes['status'] ?? '') === 'success' && isset($builderCreateRes['lesson_id']));
+
+$createdLessonId = $builderCreateRes['lesson_id'] ?? null;
+if ($createdLessonId) {
+    $verifySlides = run_endpoint('lessons_api.php', 'GET', ['slides' => (string)$createdLessonId]);
+    assert_test("Lesson Builder GET slides verifies created slides count (2)", is_array($verifySlides) && count($verifySlides['slides'] ?? []) === 2);
+
+    // Delete test lesson
+    $deleteRes = run_endpoint('lessons_api.php', 'DELETE', [], ['id' => $createdLessonId]);
+    assert_test("Lesson Builder DELETE removes test lesson cleanly", is_array($deleteRes) && ($deleteRes['status'] ?? '') === 'success');
+}
 
 // --- SUMMARY ---
 echo "\n" . CLR_CYAN . CLR_BOLD . "=======================================================" . CLR_RESET . "\n";

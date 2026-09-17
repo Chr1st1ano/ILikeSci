@@ -148,6 +148,49 @@
           </div>
         </div>
 
+        <!-- Student Photo & Avatar Modal -->
+        <div id="student-photo-modal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); display:flex; align-items:center; justify-content:center; z-index:99999;">
+          <div class="glass-card" style="width:90%; max-width:440px; text-align:center; position:relative; padding:28px; border:2px solid var(--primary); background:var(--bg-card,#1e293b); box-shadow:0 12px 32px rgba(0,0,0,0.5);">
+            <button onclick="app.closeStudentPhotoModal()" class="btn-icon" style="position:absolute; right:16px; top:16px;" title="Close"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="sp-modal-title" style="margin-bottom:6px;"><i class="fa-solid fa-id-badge text-primary"></i> Student Photo</h3>
+            <p id="sp-modal-subtitle" class="text-muted" style="font-size:13px; margin-bottom:18px;">View, upload, or capture picture</p>
+            
+            <!-- Avatar Display -->
+            <div id="sp-modal-avatar-container" style="display:flex; justify-content:center; margin-bottom:16px;">
+              <div id="sp-modal-avatar-preview" style="width:140px; height:140px; border-radius:50%; border:3px solid var(--primary); overflow:hidden; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.05); font-size:42px; font-weight:800; color:var(--primary); box-shadow:0 8px 24px rgba(0,0,0,0.3);">
+                <!-- Img or initials injected via JS -->
+              </div>
+            </div>
+
+            <!-- Student Info Badges -->
+            <div id="sp-modal-info" style="margin-bottom:18px;">
+              <strong id="sp-modal-student-name" style="font-size:17px;"></strong><br>
+              <span id="sp-modal-student-details" class="text-muted" style="font-size:13px;"></span>
+            </div>
+
+            <!-- Camera View (Hidden by default) -->
+            <div id="camera-container" class="hidden" style="margin-bottom:16px;">
+              <video id="camera-video" width="100%" autoplay playsinline style="border-radius:12px; border:2px solid var(--primary); max-height:220px; object-fit:cover; background:#000;"></video>
+              <div style="display:flex; gap:10px; margin-top:10px;">
+                <button class="btn btn-success" style="flex:1;" onclick="app.captureStudentPhoto()"><i class="fa-solid fa-camera"></i> Snap!</button>
+                <button class="btn btn-danger" style="flex:1;" onclick="app.stopStudentCamera()"><i class="fa-solid fa-xmark"></i> Cancel</button>
+              </div>
+              <canvas id="camera-canvas" class="hidden"></canvas>
+            </div>
+
+            <!-- Action Buttons -->
+            <div id="sp-modal-actions" style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; gap:10px;">
+                <button class="btn btn-primary" style="flex:1;" onclick="document.getElementById('student-file-upload').click()"><i class="fa-solid fa-upload"></i> Upload Image</button>
+                <button class="btn btn-secondary" style="flex:1;" onclick="app.openStudentCamera()"><i class="fa-solid fa-camera"></i> Use Camera</button>
+              </div>
+              <button id="sp-btn-remove" class="btn btn-danger hidden" style="width:100%;" onclick="app.removeStudentPhoto()"><i class="fa-solid fa-trash"></i> Remove Photo</button>
+            </div>
+            
+            <input type="file" id="student-file-upload" class="hidden" accept="image/*" onchange="app.handleStudentPhotoUpload(event)">
+          </div>
+        </div>
+
         <!-- Students Grid -->
         <div class="student-list mt-20" id="students-container">
           <!-- Rendered via JS -->

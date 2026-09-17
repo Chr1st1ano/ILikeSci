@@ -8,39 +8,37 @@
             "quarter": "1",
             "lesson_number": "1",
             "objectives": [
-                "Formulate questions and make scientific observations of living organisms using the five senses and hand lenses.",
-                "Record qualitative and quantitative observations of plants and small animals in an inquiry journal.",
-                "Differentiate living organisms from non-living objects through guided classroom investigations."
+                "Perform simple guided investigations using the skills of observing, predicting, and measuring to gather data and answer questions about the natural world."
             ],
-            "content": "Life Science is the systematic study of living things, including plants, animals, and microorganisms. Biologists use scientific inquiry to understand how living organisms survive, grow, and interact with the world around them.\n\nScientific inquiry begins with curious questions and careful observations. Using scientific tools like magnifying hand lenses, measuring rulers, and inquiry journals, young scientists observe details like leaf vein patterns, insect legs, and root structures without harming the specimens.\n\nObservations are classified as qualitative (descriptions using words like green, fuzzy, or fragrant) and quantitative (measurements using numbers like 5 leaves or 12 centimeters tall).",
+            "content": "LESSON 1: Scientific Inquiry in Life Science\n\nLearning Competency:\nPerform simple guided investigations using the skills of observing, predicting, and measuring to gather data and answer questions about the natural world.\n\nLET'S EXPLORE\nHave you ever wondered why a plant grows toward sunlight? Or why some animals behave differently when they are in different places?\nScientists ask questions about things they observe. They use simple investigations to find answers.\n\nWHAT IS SCIENTIFIC INQUIRY?\nScientific inquiry is a way of learning about the natural world by asking questions, observing, making predictions, gathering information, and using evidence.\n\nFor young scientists, three important skills are:\n• Observing: Using our senses or tools to gather information (e.g. Looking at the leaves of a plant)\n• Predicting: Making a reasonable guess about what may happen (e.g. Predicting that a plant near sunlight will grow well)\n• Measuring: Using tools or standard units to determine something (e.g. Measuring the height of a plant)\n\nSIMPLE INVESTIGATION\nA simple investigation may follow these steps:\nAsk → Predict → Observe → Measure → Record → Explain\n\nExample:\n• Question: Does a plant grow taller over time?\n• Prediction: The plant will become taller after several days.\n• Observation: The plant is measured each day.\n• Measurement: Its height is recorded in centimeters.\n• Conclusion: The observations and measurements are used to explain what happened.\n\nMULTIMEDIA SUPPORT:\n• A short video of a plant growing\n• Pictures of scientists observing living things\n• A simple time-lapse of plant growth\n\nINTERACTIVE ACTIVITY: Young Scientist!\n1. Ana looks closely at a flower. -> Observing\n2. Ben says the seed will grow into a plant. -> Predicting\n3. Carlo uses a ruler to measure a leaf. -> Measuring\n4. Dana records the number of leaves on a plant. -> Observing\/Recording\n5. Ella guesses that the plant will grow taller next week. -> Predicting\n\nKEY TAKEAWAYS:\n• Scientists ask questions about the natural world.\n• Observing means gathering information.\n• Predicting means making a reasonable guess about what may happen.\n• Measuring uses tools or standard units to determine something.\n• Scientists use evidence from observations and measurements to answer questions.",
             "slides": [
                 {
                     "title": "Scientific Inquiry in Life Science",
                     "content": "Grade 3 — Term 1 Life Science\n\nBecome a young biologist: Discover how scientists observe, question, and investigate the living world.",
-                    "mediaType": "none",
-                    "mediaUrl": ""
+                    "mediaType": "image",
+                    "mediaUrl": "https:\/\/images.unsplash.com\/photo-1530587191325-3db32d826c18?w=800"
                 },
                 {
-                    "title": "Tools of the Young Biologist",
-                    "content": "Essential tools for studying living organisms:\n• Hand Lens \/ Magnifying Glass: Enlarge leaf veins, insect antennae, and soil microbes\n• Metric Ruler & Tape: Measure plant height and leaf width accurately\n• Science Inquiry Journal: Sketch specimens and log daily growth\n• Ethical Care: Always observe living creatures gently and return them safely to nature!",
-                    "mediaType": "none",
-                    "mediaUrl": ""
-                },
-                {
-                    "title": "Qualitative vs Quantitative Observations",
-                    "content": "Two Ways to Record Science Data:\n• Qualitative: Describing observable qualities using senses\n  - 'The caterpillar is bright green, smooth, and moves slowly'\n• Quantitative: Describing measurable quantities with numbers\n  - 'The caterpillar is 4 cm long and weighs 2 grams'",
+                    "title": "Three Core Inquiry Skills",
+                    "content": "For young scientists, three important skills are:\n\n• Observing: Using our senses or tools to gather information\n  - Example: Looking at the leaves of a plant\n• Predicting: Making a reasonable guess about what may happen\n  - Example: Predicting that a plant near sunlight will grow well\n• Measuring: Using tools or standard units to determine something\n  - Example: Measuring the height of a plant with a ruler",
                     "mediaType": "step",
-                    "mediaUrl": "Step 1: Choose a plant leaf or small insect\nStep 2: Note color, texture, and smell (Qualitative)\nStep 3: Measure length in millimeters with a ruler (Quantitative)\nStep 4: Record findings neatly in your science notebook"
+                    "mediaUrl": "Skill 1: Observing\nSkill 2: Predicting\nSkill 3: Measuring"
                 },
                 {
-                    "title": "Field Study: Philippine Wildlife",
-                    "content": "How Filipino naturalists study nature:\n• Observing Philippine sunbirds pollinating banana blossoms\n• Counting egg clusters of tree frogs during monsoon rains\n• Identifying native flowering orchids in national parks",
+                    "title": "Steps of a Simple Investigation",
+                    "content": "A simple investigation follows these steps:\nAsk → Predict → Observe → Measure → Record → Explain\n\nExample Investigation:\n• Question: Does a plant grow taller over time?\n• Prediction: The plant will become taller after several days.\n• Observation: The plant is measured each day.\n• Measurement: Its height is recorded in centimeters.\n• Conclusion: Observations and measurements explain what happened!",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Ask\nStep 2: Predict\nStep 3: Observe\nStep 4: Measure\nStep 5: Record\nStep 6: Explain"
+                },
+                {
+                    "title": "Interactive Activity: Young Scientist!",
+                    "content": "Identify whether the scientist is Observing, Predicting, or Measuring:\n\n1. Ana looks closely at a flower. (Observing)\n2. Ben says the seed will grow into a plant. (Predicting)\n3. Carlo uses a ruler to measure a leaf. (Measuring)\n4. Dana records the number of leaves on a plant. (Observing\/Recording)\n5. Ella guesses that the plant will grow taller next week. (Predicting)",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
-                    "title": "Classroom Inquiry Check",
-                    "content": "A pupil writes: 'The garden sunflower has 18 bright yellow petals.' Which part is a quantitative observation?\nA) 'Bright yellow'\nB) 'Garden sunflower'\nC) '18 petals'\nD) 'Smells sweet'\n\nCorrect Answer: C ('18 petals' uses a countable number!)",
+                    "title": "Assessment & Key Takeaways",
+                    "content": "Key Takeaways:\n• Scientists ask questions about the natural world.\n• Observing means gathering information using senses.\n• Predicting means making a reasonable guess about what may happen.\n• Measuring uses tools or standard units to determine quantities.\n• Scientists use evidence from observations and measurements to answer questions.",
                     "mediaType": "none",
                     "mediaUrl": ""
                 }
@@ -272,31 +270,31 @@
             "grade": "3",
             "topic": "Scientific Inquiry in Life Science",
             "difficulty": "Easy",
-            "text": "What science tool helps young biologists enlarge small insect legs and leaf veins? | A: Hand lens (magnifying glass) B: Flashlight C: Thermometer D: Compass"
+            "text": "What skill involves gathering information using our senses? | A: Predicting B: Observing C: Guessing D: Drawing"
         },
         {
             "grade": "3",
             "topic": "Scientific Inquiry in Life Science",
             "difficulty": "Easy",
-            "text": "Which of the following is an example of a living organism? | A: River pebble B: Earthworm C: Plastic bottle D: Rubber eraser"
+            "text": "What do we do when we say what we think will happen? | A: Measuring B: Predicting C: Recording D: Comparing"
+        },
+        {
+            "grade": "3",
+            "topic": "Scientific Inquiry in Life Science",
+            "difficulty": "Easy",
+            "text": "Which tool can be used to measure the height of a plant? | A: Ruler B: Spoon C: Plate D: Pencil case"
         },
         {
             "grade": "3",
             "topic": "Scientific Inquiry in Life Science",
             "difficulty": "Medium",
-            "text": "A student writes: \"The caterpillar is soft and measures 4 centimeters long.\" Which part is quantitative? | A: \"4 centimeters long\" B: \"The caterpillar\" C: \"soft\" D: None of the above"
+            "text": "Why do scientists record their observations and measurements? | A: To decorate their notebook B: To keep evidence of what they found C: To make the investigation longer D: To avoid asking questions"
         },
         {
             "grade": "3",
             "topic": "Scientific Inquiry in Life Science",
             "difficulty": "Medium",
-            "text": "Why should pupils observe outdoor insects gently without stepping on or injuring them? | A: Living organisms play vital ecological roles and must be respected B: Insects break glass C: Tools get dirty D: Hand lenses stop working"
-        },
-        {
-            "grade": "3",
-            "topic": "Scientific Inquiry in Life Science",
-            "difficulty": "Hard",
-            "text": "How can a student prove scientifically that a mung bean seed is alive while a brown pebble is non-living? | A: Plant both in moist soil; the seed absorbs water, germinates, and grows into a plant, while the pebble shows zero growth B: Weigh both on a balance C: Paint both green D: Drop both into water"
+            "text": "Which sequence shows a simple investigation? | A: Ask → Predict → Observe → Measure B: Measure → Sleep → Predict → Ask C: Draw → Play → Ask → Sleep D: Guess → Stop → Measure → Forget"
         },
         {
             "grade": "3",

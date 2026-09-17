@@ -56,11 +56,32 @@ try {
         echo json_encode(["status" => "success", "message" => "Question added", "id" => $pdo->lastInsertId()]);
     }
     else if ($method === 'PUT') {
-        $input = json_decode(file_get_contents('php://input'), true);
+        $raw = file_get_contents('php://input');
+        $input = json_decode($raw, true) ?: $_POST;
         if (!$input || !isset($input['id'])) throw new Exception("Invalid JSON or missing ID");
         
-        $stmt = $pdo->prepare("UPDATE questions SET difficulty = ?, question_text = ?, type = ? WHERE id = ?");
-        $stmt->execute([$input['difficulty'], $input['text'], $input['type'] ?? 'multiple-choice', $input['id']]);
+        $difficulty = $input['difficulty'] ?? 'Medium';
+        $text = $input['text'] ?? $input['question_text'] ?? '';
+        $type = $input['type'] ?? 'multiple-choice';
+        $grade = $input['grade'] ?? null;
+        $topic = $input['topic'] ?? null;
+
+        if ($grade !== null && $topic !== null) {
+            $stmt = $pdo->prepare("UPDATE questions SET grade = ?, topic = ?, difficulty = ?, question_text = ?, type = ? WHERE id = ?");
+            $stmt->execute([$grade, $topic, $difficulty, $text, $type, $input['id']]);
+
+            try {
+                $stmtTCheck = $pdo->prepare("SELECT COUNT(*) FROM topics WHERE grade = ? AND topic_name = ?");
+                $stmtTCheck->execute([$grade, $topic]);
+                if ($stmtTCheck->fetchColumn() == 0) {
+                    $stmtTIns = $pdo->prepare("INSERT INTO topics (grade, topic_name) VALUES (?, ?)");
+                    $stmtTIns->execute([$grade, $topic]);
+                }
+            } catch(Exception $te) {}
+        } else {
+            $stmt = $pdo->prepare("UPDATE questions SET difficulty = ?, question_text = ?, type = ? WHERE id = ?");
+            $stmt->execute([$difficulty, $text, $type, $input['id']]);
+        }
         
         echo json_encode(["status" => "success", "message" => "Question updated"]);
     }

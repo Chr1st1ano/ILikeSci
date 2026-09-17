@@ -745,8 +745,8 @@ async function renderQuestionBank() {
             <div style="margin-top:4px;">${q.text}</div>
           </div>
           <div style="display:flex; gap:8px;">
-            <button class="btn btn-primary btn-sm" onclick="app.editQuestion(${q.id})"><i class="fa-solid fa-edit"></i></button>
-            <button class="btn btn-danger btn-sm" onclick="app.deleteQuestion(${q.id})"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn btn-primary btn-sm" onclick="app.openEditQuestionModal(${q.id})" title="Edit Question"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="btn btn-danger btn-sm" onclick="app.deleteQuestion(${q.id})" title="Delete Question"><i class="fa-solid fa-trash"></i></button>
           </div>
         </div>
       `;
@@ -765,31 +765,154 @@ async function renderQuestionBank() {
           <span class="badge ${q.difficulty === 'Easy' ? 'bg-success' : q.difficulty === 'Medium' ? 'bg-warning' : 'bg-danger'}">${q.difficulty}</span>
           <span class="badge" style="background:rgba(255,255,255,0.1); padding:2px 8px; border-radius:12px; font-size:12px;">${typeDisplay}</span>
           <strong style="margin-left:8px;">Gr ${q.grade} - ${q.topic}</strong>
-          <p style="margin-top:4px; font-size:14px;">${q.text}</p>
+          <p style="margin-top:6px; font-size:14px; line-height:1.5;">${q.text}</p>
         </div>
-        <button class="btn-remove" onclick="app.deleteQuestion(${q.id})"><i class="fa-solid fa-trash"></i></button>
+        <div style="display:flex; gap:8px; align-items:flex-start; margin-left:12px;">
+          <button class="btn btn-secondary btn-sm" onclick="app.openEditQuestionModal(${q.id})" title="Edit Question" style="padding:6px 12px; display:inline-flex; align-items:center; gap:6px;"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+          <button class="btn-remove" onclick="app.deleteQuestion(${q.id})" title="Delete Question"><i class="fa-solid fa-trash"></i></button>
+        </div>
       `;
       matList.appendChild(item);
     }
   });
 }
 
-async function editQuestion(id) {
-  const q = dbQuestions.find(x => x.id == id);
-  if (!q) return;
-  const newText = prompt("Edit Question Text:", q.text);
-  if (newText !== null && newText.trim() !== "") {
-    const newDifficulty = prompt("Edit Difficulty (Easy, Medium, Hard):", q.difficulty) || q.difficulty;
-    const newType = prompt("Edit Type (multiple-choice, identification, open-ended):", q.type || 'multiple-choice') || q.type || 'multiple-choice';
-    
-    await fetch('questions_api.php', {
+function escapeHtmlAttr(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+
+function openEditQuestionModal(id) {
+  const q = dbQuestions.find(x => Number(x.id) === Number(id));
+  if (!q) return alert("Question not found in memory.");
+
+  let modal = document.getElementById('edit-question-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'edit-question-modal';
+    modal.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); display:flex; align-items:center; justify-content:center; z-index:99999; padding:16px; box-sizing:border-box;';
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+    <div class="glass-card" style="width:100%; max-width:620px; max-height:90vh; overflow-y:auto; padding:28px; background:var(--bg-card, #1e293b); border:2px solid var(--primary); border-radius:16px; box-shadow:0 16px 40px rgba(0,0,0,0.6); position:relative;">
+      <button onclick="app.closeEditQuestionModal()" class="btn-icon" style="position:absolute; right:16px; top:16px;" title="Close"><i class="fa-solid fa-xmark"></i></button>
+      <h3 style="margin-top:0; margin-bottom:6px; display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-pen-to-square text-primary"></i> Edit Question #` + q.id + `
+      </h3>
+      <p class="text-muted" style="font-size:13px; margin-bottom:18px;">Update question text, multiple-choice choices, difficulty, grade, or topic.</p>
+
+      <input type="hidden" id="eq-id" value="${q.id}">
+
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px;">
+        <div style="flex:1; min-width:120px;">
+          <label style="font-size:13px; font-weight:600; display:block; margin-bottom:4px;">Grade Level</label>
+          <select id="eq-grade" class="form-control">
+            <option value="3" ${String(q.grade) === '3' ? 'selected' : ''}>Grade 3</option>
+            <option value="4" ${String(q.grade) === '4' ? 'selected' : ''}>Grade 4</option>
+            <option value="5" ${String(q.grade) === '5' ? 'selected' : ''}>Grade 5</option>
+            <option value="6" ${String(q.grade) === '6' ? 'selected' : ''}>Grade 6</option>
+          </select>
+        </div>
+        <div style="flex:2; min-width:180px;">
+          <label style="font-size:13px; font-weight:600; display:block; margin-bottom:4px;">Topic</label>
+          <input type="text" id="eq-topic" class="form-control" value="${escapeHtmlAttr(q.topic)}">
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px;">
+        <div style="flex:1; min-width:140px;">
+          <label style="font-size:13px; font-weight:600; display:block; margin-bottom:4px;">Difficulty</label>
+          <select id="eq-difficulty" class="form-control">
+            <option value="Easy" ${q.difficulty === 'Easy' ? 'selected' : ''}>Easy</option>
+            <option value="Medium" ${q.difficulty === 'Medium' ? 'selected' : ''}>Medium</option>
+            <option value="Hard" ${q.difficulty === 'Hard' ? 'selected' : ''}>Hard</option>
+          </select>
+        </div>
+        <div style="flex:1; min-width:140px;">
+          <label style="font-size:13px; font-weight:600; display:block; margin-bottom:4px;">Question Type</label>
+          <select id="eq-type" class="form-control">
+            <option value="multiple-choice" ${(q.type||'multiple-choice') === 'multiple-choice' ? 'selected' : ''}>Multiple Choice</option>
+            <option value="identification" ${q.type === 'identification' ? 'selected' : ''}>Identification</option>
+            <option value="open-ended" ${q.type === 'open-ended' ? 'selected' : ''}>Open Ended</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-bottom:18px;">
+        <label style="font-size:13px; font-weight:600; display:block; margin-bottom:4px;">Question Text & Choices</label>
+        <textarea id="eq-text" rows="5" class="form-control" style="font-family:inherit; line-height:1.5;">${escapeHtmlAttr(q.text)}</textarea>
+        <small class="text-muted" style="display:block; margin-top:4px; font-size:12px;">Tip: For Multiple Choice, format choices with pipes e.g. <code>Question text | A: Choice 1 B: Choice 2 C: Choice 3 D: Choice 4</code></small>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button class="btn btn-secondary" onclick="app.closeEditQuestionModal()"><i class="fa-solid fa-xmark"></i> Cancel</button>
+        <button class="btn btn-success" onclick="app.saveEditedQuestion()"><i class="fa-solid fa-check"></i> Save Changes</button>
+      </div>
+    </div>
+  `;
+
+  modal.classList.remove('hidden');
+  modal.style.display = 'flex';
+}
+
+function closeEditQuestionModal() {
+  const modal = document.getElementById('edit-question-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+  }
+}
+
+async function saveEditedQuestion() {
+  const idEl = document.getElementById('eq-id');
+  const gradeEl = document.getElementById('eq-grade');
+  const topicEl = document.getElementById('eq-topic');
+  const diffEl = document.getElementById('eq-difficulty');
+  const typeEl = document.getElementById('eq-type');
+  const textEl = document.getElementById('eq-text');
+
+  if (!idEl || !textEl) return;
+
+  const id = Number(idEl.value);
+  const grade = gradeEl ? gradeEl.value : '4';
+  const topic = topicEl ? topicEl.value.trim() : '';
+  const difficulty = diffEl ? diffEl.value : 'Medium';
+  const type = typeEl ? typeEl.value : 'multiple-choice';
+  const text = textEl.value.trim();
+
+  if (!text) return alert("Question text cannot be empty.");
+  if (!topic) return alert("Topic cannot be empty.");
+
+  try {
+    const res = await fetch('questions_api.php', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: id, text: newText, difficulty: newDifficulty, type: newType })
+      body: JSON.stringify({ id, grade, topic, difficulty, type, text })
     });
-    renderQuestionBank();
-    alert("Question updated in database!");
+    const data = await res.json();
+    if (data.status === 'success') {
+      const q = dbQuestions.find(x => Number(x.id) === id);
+      if (q) {
+        q.grade = grade;
+        q.topic = topic;
+        q.difficulty = difficulty;
+        q.type = type;
+        q.text = text;
+      }
+      closeEditQuestionModal();
+      renderQuestionBank();
+      alert("✅ Question updated successfully!");
+    } else {
+      alert("❌ Error: " + (data.message || 'Failed to update question.'));
+    }
+  } catch(e) {
+    alert("Network or server error updating question: " + e.message);
   }
+}
+
+function editQuestion(id) {
+  openEditQuestionModal(id);
 }
 
 async function deleteQuestion(id) {
@@ -886,8 +1009,8 @@ function renderStudents() {
   filtered.forEach(student => {
     const initials = student.name.split(' ').map(n => n[0]).join('').toUpperCase();
     const photoHTML = student.photo 
-      ? `<img src="${student.photo}" class="avatar" style="object-fit: cover;">`
-      : `<div class="avatar">${initials}</div>`;
+      ? `<img src="${student.photo}" class="avatar" style="object-fit: cover; cursor:pointer;" onclick="app.openStudentPhotoModal(${student.id})" title="Click to view or change photo">`
+      : `<div class="avatar" style="cursor:pointer;" onclick="app.openStudentPhotoModal(${student.id})" title="Click to view or add photo">${initials}</div>`;
     const section = student.section || 'A';
     const div = document.createElement('div');
     div.className = 'glass-card student-card';
@@ -900,7 +1023,7 @@ function renderStudents() {
         </div>
       </div>
       <div style="display:flex; gap:8px;">
-        <button class="btn-icon" onclick="app.startStudentPhoto(${student.id})" title="Take Photo"><i class="fa-solid fa-camera"></i></button>
+        <button class="btn-icon" onclick="app.openStudentPhotoModal(${student.id})" title="Student Photo (View / Upload / Camera)"><i class="fa-solid fa-camera"></i></button>
         <button class="btn-remove" onclick="app.removeStudent(${student.id})"><i class="fa-solid fa-trash"></i></button>
       </div>
     `;
@@ -1301,10 +1424,33 @@ function parseTXTQuestions(text, filename) {
       continue;
     }
 
-    // --- Pattern 3: Standalone question with "?" ---
-    if (line.endsWith('?') && line.length > 20 && !isBoilerplate(line) && !line.match(/^\d+\./)) {
+    // --- Pattern 3: Standalone question with "?" or inquiry question followed by options ---
+    if ((line.endsWith('?') || line.match(/^(?:Which|What|Why|How|Where|Who)\b/i)) && line.length > 15 && !isBoilerplate(line) && !line.match(/^\d+\./)) {
       const cleanQ = line.replace(/^[\s•\-\*]+/, '').trim();
-      if (cleanQ.length > 20) {
+      let options = [];
+      let j = i + 1;
+
+      // Collect following options (A. B. C. D.)
+      while (j < lines.length && lines[j] && lines[j].match(/^[a-dA-D][\.\)]\s/)) {
+        const optMatch = lines[j].match(/^[a-dA-D][\.\)]\s+(.*)/);
+        if (optMatch) options.push(optMatch[1].trim());
+        j++;
+      }
+
+      if (options.length >= 2) {
+        const optionsStr = '\nOptions: ' + options.join(' | ');
+        questions.push({
+          text: cleanQ + optionsStr,
+          grade: grade,
+          topic: topic,
+          difficulty: guessDifficulty(cleanQ, defaultDiff),
+          type: 'multiple-choice',
+          selected: true,
+          source: filename
+        });
+        i = j;
+        continue;
+      } else if (cleanQ.endsWith('?') && cleanQ.length > 20) {
         questions.push({
           text: cleanQ,
           grade: grade,
@@ -1588,11 +1734,37 @@ async function updateAssessmentTopics() {
 
   const lessons = await fetchCurriculumLessons(grade);
 
-  if(lessons.length > 0) {
-    lessons.forEach(lesson => {
+  // Filter out any obsolete test or non-science lessons
+  const cleanLessons = (lessons || []).filter(l => {
+    if (!l.topic) return false;
+    const t = l.topic.toLowerCase();
+    if (t.includes('automated test') || t.includes('production verification') || t.includes('ap4') || t.startsWith('ap ')) return false;
+    return true;
+  });
+
+  if(cleanLessons.length > 0) {
+    // Sort lessons by quarter and lesson number
+    cleanLessons.sort((a, b) => {
+      const qA = parseInt(a.quarter) || 0;
+      const qB = parseInt(b.quarter) || 0;
+      if (qA !== qB) return qA - qB;
+      const lA = parseInt(a.lesson_number) || 0;
+      const lB = parseInt(b.lesson_number) || 0;
+      return lA - lB;
+    });
+
+    // Deduplicate by topic name
+    const seenTopics = new Set();
+    cleanLessons.forEach(lesson => {
+      const topicKey = lesson.topic.trim().toLowerCase();
+      if (seenTopics.has(topicKey)) return;
+      seenTopics.add(topicKey);
+
       const opt = document.createElement('option');
       opt.value = lesson.id;
-      opt.textContent = `Q${lesson.quarter} L${lesson.lesson_number}: ${lesson.topic}`;
+      const qNum = lesson.quarter ? `Q${lesson.quarter}` : '';
+      const lNum = lesson.lesson_number ? ` L${lesson.lesson_number}` : '';
+      opt.textContent = `${qNum}${lNum ? lNum + ': ' : ': '}${lesson.topic}`;
       opt.dataset.topic = lesson.topic;
       opt.dataset.lessonId = lesson.id;
       topicSelect.appendChild(opt);
@@ -1601,7 +1773,9 @@ async function updateAssessmentTopics() {
   } else {
     // Fallback: load topics from questions DB
     await fetchQuestionsFromDB();
-    const qTopics = [...new Set(dbQuestions.filter(q => q.grade === grade).map(q => q.topic))];
+    const qTopics = [...new Set((dbQuestions || [])
+      .filter(q => q.grade === grade && !q.topic.toLowerCase().includes('test') && !q.topic.toLowerCase().includes('ap4'))
+      .map(q => q.topic))];
     qTopics.forEach(topic => {
       const opt = document.createElement('option');
       opt.value = topic;
@@ -1648,16 +1822,32 @@ function renderFlashChoices(rawText, correctAnswer) {
   if (!container) return;
   container.innerHTML = '';
 
-  if (!rawText || !rawText.includes('|')) return;
+  if (!rawText) return;
 
-  const parts = rawText.split('|');
-  const choicesStr = parts.slice(1).join('|').trim();
-  
-  const regex = /([A-D]):\s*([^A-D:]+)(?=(?:[A-D]:|$))/gi;
+  // Extract choices portion
+  let choicesStr = '';
+  if (rawText.includes('|')) {
+    const parts = rawText.split('|');
+    choicesStr = parts.slice(1).join(' ').trim();
+  } else {
+    const firstChoiceIdx = rawText.search(/(?:^|[|\s]+)[A-D][:\.)\-]\s+/i);
+    if (firstChoiceIdx !== -1) {
+      choicesStr = rawText.substring(firstChoiceIdx).trim();
+    }
+  }
+
+  if (!choicesStr) return;
+
+  // Match each choice starting with [A-D] followed by : . ) or -
+  const choiceRegex = /(?:^|[|\s]+)([A-D])[:.)\-]\s*(.*?)(?=(?:[|\s]+[A-D][:.)\-]\s*)|$)/gi;
   let match;
   const choices = [];
-  while ((match = regex.exec(choicesStr)) !== null) {
-    choices.push({ letter: match[1].toUpperCase(), text: match[2].trim() });
+  while ((match = choiceRegex.exec(choicesStr)) !== null) {
+    const letter = match[1].toUpperCase();
+    const cleanText = match[2].replace(/[|\s]+$/, '').trim();
+    if (cleanText) {
+      choices.push({ letter, text: cleanText });
+    }
   }
 
   if (choices.length === 0) return;
@@ -1697,78 +1887,156 @@ function renderFlashChoices(rawText, correctAnswer) {
 }
 
 async function startQuizFlash() {
-  const studentId = document.getElementById('assess-student').value;
-  if(!studentId) return alert('Select a student first.');
+  const studentSelect = document.getElementById('assess-student');
+  let studentId = studentSelect ? studentSelect.value : null;
+
+  // Auto-select first student if none selected yet
+  if ((!studentId || studentId === '') && studentSelect && studentSelect.options.length > 0) {
+    for (let i = 0; i < studentSelect.options.length; i++) {
+      if (studentSelect.options[i].value) {
+        studentSelect.selectedIndex = i;
+        studentId = studentSelect.options[i].value;
+        break;
+      }
+    }
+  }
+
+  if (!studentId && typeof suggestStudent === 'function') {
+    suggestStudent();
+    studentId = studentSelect ? studentSelect.value : null;
+  }
+
+  if (!studentId) {
+    return alert('Please add or select a student from the dropdown first!');
+  }
 
   state.assessment.studentId = parseInt(studentId);
-  const student = state.students.find(s => s.id === state.assessment.studentId);
+  const student = state.students.find(s => Number(s.id) === Number(state.assessment.studentId)) || { name: 'Student', id: studentId };
+
+  const gradeSelect = document.getElementById('assess-grade');
+  const grade = gradeSelect ? gradeSelect.value : (state.assessment.grade || '4');
+  state.assessment.grade = grade;
+
   const topicSelect = document.getElementById('assess-topic');
-  if(!topicSelect) return;
-  const selectedOption = topicSelect.options[topicSelect.selectedIndex];
-  
-  if (state.assessment.useCurriculum && selectedOption && selectedOption.dataset.lessonId) {
-    const lessonId = selectedOption.dataset.lessonId;
-    const lessons = await fetchCurriculumLessons(state.assessment.grade);
-    const lesson = lessons.find(l => l.id == lessonId);
-    if(lesson && lesson.questions && lesson.questions.length > 0) {
-      state.assessment.topic = lesson.topic;
-      const matchingQ = lesson.questions.filter(q => (typeof q === 'object') && q.difficulty === state.assessment.difficulty);
-      const availableQ = matchingQ.length > 0 ? matchingQ : lesson.questions;
-      const qObj = availableQ[Math.floor(Math.random() * availableQ.length)];
-      const rawText = (typeof qObj === 'object') ? (qObj.text || qObj.question || JSON.stringify(qObj)) : qObj;
-      const correctAns = (typeof qObj === 'object') ? (qObj.correct || 'A') : 'A';
-      state.assessment.activeQuestion = rawText;
+  const selectedOption = (topicSelect && topicSelect.selectedIndex >= 0) ? topicSelect.options[topicSelect.selectedIndex] : null;
+  const lessonId = selectedOption ? (selectedOption.dataset.lessonId || selectedOption.value) : null;
+  const topicTitle = selectedOption ? (selectedOption.dataset.topic || selectedOption.textContent.replace(/^Q\d+\s+L\d+:\s*/i, '').trim()) : '';
+  state.assessment.topic = topicTitle;
 
-      document.getElementById('flash-diff').textContent = `${state.assessment.difficulty} (${state.pointsMap[state.assessment.difficulty]} pts)`;
-      document.getElementById('flash-diff').className = `badge ${state.assessment.difficulty === 'Easy' ? 'bg-success' : state.assessment.difficulty === 'Medium' ? 'bg-warning' : 'bg-danger'}`;
-      document.getElementById('flash-student-name').textContent = student.name;
-      
-      const qStem = rawText.includes('|') ? rawText.split('|')[0].trim() : rawText;
-      document.getElementById('flash-q-text').textContent = qStem;
-      renderFlashChoices(rawText, correctAns);
+  // Question resolution pool
+  let questionPool = [];
 
-      document.getElementById('pts-label').textContent = `(+${state.pointsMap[state.assessment.difficulty]} pts)`;
-      document.getElementById('assessment-flash').classList.remove('hidden');
-      showQuestionOnTV(qStem);
-    } else {
-      alert('No questions found for this lesson. Please add questions to the lesson plan.');
+  // 1. Try to find questions from curriculum lesson
+  if (lessonId) {
+    try {
+      const lessons = await fetchCurriculumLessons(grade);
+      const lesson = lessons.find(l => l.id == lessonId || l.topic == topicTitle);
+      if (lesson && Array.isArray(lesson.questions) && lesson.questions.length > 0) {
+        questionPool = lesson.questions.map(q => {
+          if (typeof q === 'object') return q;
+          return { text: q, correct: 'A', difficulty: 'Medium' };
+        });
+      }
+    } catch(e) {
+      console.warn('Curriculum lesson questions fetch error:', e);
     }
-  } else {
-    state.assessment.topic = topicSelect ? topicSelect.value : '';
-    
-    // Ensure we have latest questions from DB
-    if (dbQuestions.length === 0) await fetchQuestionsFromDB();
-    
-    const availableQ = dbQuestions.filter(q => 
-      q.grade === state.assessment.grade && 
-      q.topic === state.assessment.topic && 
-      q.difficulty === state.assessment.difficulty
-    );
-    
-    if(availableQ.length === 0) {
-      return alert(`No ${state.assessment.difficulty} questions found for Grade ${state.assessment.grade} - ${state.assessment.topic}. Please add them in the Materials tab!`);
-    }
-    
-    const qObj = availableQ[Math.floor(Math.random() * availableQ.length)];
-    const rawText = qObj.text;
-    const correctAns = qObj.correct || 'A';
-    state.assessment.activeQuestion = rawText;
-    
-    // Setup flash UI
-    document.getElementById('flash-diff').textContent = `${state.assessment.difficulty} (${state.pointsMap[state.assessment.difficulty]} pts)`;
-    document.getElementById('flash-diff').className = `badge ${state.assessment.difficulty === 'Easy' ? 'bg-success' : state.assessment.difficulty === 'Medium' ? 'bg-warning' : 'bg-danger'}`;
-    document.getElementById('flash-student-name').textContent = student.name;
-    
-    const qStem = rawText.includes('|') ? rawText.split('|')[0].trim() : rawText;
-    document.getElementById('flash-q-text').textContent = qStem;
-    renderFlashChoices(rawText, correctAns);
-
-    document.getElementById('pts-label').textContent = `(+${state.pointsMap[state.assessment.difficulty]} pts)`;
-    document.getElementById('assessment-flash').classList.remove('hidden');
-    
-    // Send question to TV if TV display is open
-    showQuestionOnTV(qStem);
   }
+
+  // 2. Fallback to Question Bank (dbQuestions)
+  if (questionPool.length === 0) {
+    if (dbQuestions.length === 0) await fetchQuestionsFromDB();
+
+    // Match by grade and topic
+    const topicNorm = topicTitle.toLowerCase().trim();
+    let topicMatches = dbQuestions.filter(q => 
+      String(q.grade) === String(grade) && 
+      (q.topic.toLowerCase().trim() === topicNorm || 
+       topicNorm.includes(q.topic.toLowerCase().trim()) || 
+       q.topic.toLowerCase().trim().includes(topicNorm))
+    );
+
+    // If no topic matches, fallback to all questions for this grade
+    if (topicMatches.length === 0) {
+      topicMatches = dbQuestions.filter(q => String(q.grade) === String(grade));
+    }
+
+    // If still empty, fallback to all questions across all grades
+    if (topicMatches.length === 0) {
+      topicMatches = [...dbQuestions];
+    }
+
+    questionPool = topicMatches;
+  }
+
+  if (questionPool.length === 0) {
+    return alert('No questions found. Please add questions in the Materials tab or seed science questions!');
+  }
+
+  // 3. Filter by chosen difficulty, or fallback gracefully to any available difficulty in pool
+  const chosenDiff = state.assessment.difficulty || 'Easy';
+  let diffMatching = questionPool.filter(q => (q.difficulty || 'Medium').toLowerCase() === chosenDiff.toLowerCase());
+  let chosenQ = null;
+
+  if (diffMatching.length > 0) {
+    chosenQ = diffMatching[Math.floor(Math.random() * diffMatching.length)];
+  } else {
+    // Graceful fallback to any question in the pool
+    chosenQ = questionPool[Math.floor(Math.random() * questionPool.length)];
+  }
+
+  const rawText = (typeof chosenQ === 'object') ? (chosenQ.text || chosenQ.question || JSON.stringify(chosenQ)) : String(chosenQ);
+  const correctAns = (typeof chosenQ === 'object') ? (chosenQ.correct || 'A') : 'A';
+  const effectiveDiff = (typeof chosenQ === 'object' && chosenQ.difficulty) ? chosenQ.difficulty : chosenDiff;
+  state.assessment.difficulty = effectiveDiff;
+  state.assessment.activeQuestion = rawText;
+
+  // 4. Update UI
+  const pts = state.pointsMap[effectiveDiff] || 3;
+  const diffBadge = document.getElementById('flash-diff');
+  if (diffBadge) {
+    diffBadge.textContent = `${effectiveDiff} (${pts} pts)`;
+    diffBadge.className = `badge ${effectiveDiff === 'Easy' ? 'bg-success' : effectiveDiff === 'Medium' ? 'bg-warning' : 'bg-danger'}`;
+  }
+
+  const studentNameEl = document.getElementById('flash-student-name');
+  if (studentNameEl) studentNameEl.textContent = student.name;
+
+  let qStem = rawText;
+  if (rawText.includes('|')) {
+    qStem = rawText.split('|')[0].trim();
+  } else {
+    const firstChoiceIdx = rawText.search(/(?:^|[|\s]+)[A-D][:\.)\-]\s+/i);
+    if (firstChoiceIdx !== -1) {
+      qStem = rawText.substring(0, firstChoiceIdx).trim();
+    }
+  }
+  const qTextEl = document.getElementById('flash-q-text');
+  if (qTextEl) qTextEl.textContent = qStem;
+
+  renderFlashChoices(rawText, correctAns);
+
+  const ptsLabel = document.getElementById('pts-label');
+  if (ptsLabel) ptsLabel.textContent = `(+${pts} pts)`;
+
+  const pText = document.getElementById('participation-text');
+  if (pText) pText.textContent = `Ready: Recitation for ${student.name}`;
+
+  const flashScreen = document.getElementById('assessment-flash');
+  if (flashScreen) {
+    flashScreen.classList.remove('hidden');
+    flashScreen.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Timer animation reset
+  const timerBar = document.getElementById('flash-timer-bar');
+  if (timerBar) {
+    timerBar.style.animation = 'none';
+    timerBar.offsetHeight; // Trigger reflow
+    timerBar.style.animation = 'flashCountdown 20s linear forwards';
+  }
+
+  // Sync to TV screen if open
+  showQuestionOnTV(qStem);
 }
 
 function cancelQuiz() {
@@ -2000,7 +2268,170 @@ function openCamera() {
     });
 }
 
+// --- Student Photo Management & Modal Logic ---
+let activeStudentPhotoId = null;
+
+function openStudentPhotoModal(studentId) {
+  activeStudentPhotoId = Number(studentId);
+  const modal = document.getElementById('student-photo-modal');
+  if (!modal) {
+    // Fallback if modal not present (e.g. other pages)
+    startStudentPhoto(studentId);
+    return;
+  }
+
+  const student = state.students.find(s => Number(s.id) === activeStudentPhotoId);
+  if (!student) return;
+
+  const nameEl = document.getElementById('sp-modal-student-name');
+  const detailsEl = document.getElementById('sp-modal-student-details');
+  const avatarPreview = document.getElementById('sp-modal-avatar-preview');
+  const removeBtn = document.getElementById('sp-btn-remove');
+  const camContainer = document.getElementById('camera-container');
+
+  if (camContainer) camContainer.classList.add('hidden');
+  stopStudentCamera();
+
+  if (nameEl) nameEl.textContent = student.name;
+  if (detailsEl) detailsEl.textContent = `Grade ${student.grade} • Section ${student.section || 'A'} • ${student.totalScore || 0} pts • ${student.recitations || 0} recitations`;
+
+  const initials = student.name.split(' ').filter(Boolean).map(n => n[0]).join('').toUpperCase();
+  if (avatarPreview) {
+    if (student.photo) {
+      avatarPreview.innerHTML = `<img src="${student.photo}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`;
+      if (removeBtn) removeBtn.classList.remove('hidden');
+    } else {
+      avatarPreview.innerHTML = initials;
+      if (removeBtn) removeBtn.classList.add('hidden');
+    }
+  }
+
+  modal.classList.remove('hidden');
+}
+
+function closeStudentPhotoModal() {
+  stopStudentCamera();
+  const modal = document.getElementById('student-photo-modal');
+  if (modal) modal.classList.add('hidden');
+  activeStudentPhotoId = null;
+}
+
+function openStudentCamera() {
+  const container = document.getElementById('camera-container');
+  const video = document.getElementById('camera-video');
+  if (!container || !video) return;
+
+  container.classList.remove('hidden');
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(s => {
+      stream = s;
+      video.srcObject = stream;
+    })
+    .catch(err => {
+      alert("Camera access denied or unavailable.");
+      container.classList.add('hidden');
+    });
+}
+
+function stopStudentCamera() {
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+    stream = null;
+  }
+  const container = document.getElementById('camera-container');
+  if (container) container.classList.add('hidden');
+}
+
+function captureStudentPhoto() {
+  const video = document.getElementById('camera-video');
+  const canvas = document.getElementById('camera-canvas') || document.createElement('canvas');
+  if (!video || !activeStudentPhotoId) return;
+
+  // Scale down to max 320x320 for speed, crisp quality, and low RAM
+  const size = Math.min(video.videoWidth, video.videoHeight) || 320;
+  canvas.width = 320;
+  canvas.height = 320;
+  const ctx = canvas.getContext('2d');
+
+  // Center crop square
+  const sx = (video.videoWidth - size) / 2;
+  const sy = (video.videoHeight - size) / 2;
+  ctx.drawImage(video, sx, sy, size, size, 0, 0, 320, 320);
+
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+  updateStudentPhotoData(activeStudentPhotoId, dataUrl);
+  stopStudentCamera();
+}
+
+function handleStudentPhotoUpload(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file || !activeStudentPhotoId) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 320;
+      canvas.height = 320;
+      const ctx = canvas.getContext('2d');
+      const size = Math.min(img.width, img.height);
+      const sx = (img.width - size) / 2;
+      const sy = (img.height - size) / 2;
+      ctx.drawImage(img, sx, sy, size, size, 0, 0, 320, 320);
+      const compressedData = canvas.toDataURL('image/jpeg', 0.75);
+      updateStudentPhotoData(activeStudentPhotoId, compressedData);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  event.target.value = '';
+}
+
+function removeStudentPhoto() {
+  if (!activeStudentPhotoId) return;
+  if (confirm("Remove this student's photo?")) {
+    updateStudentPhotoData(activeStudentPhotoId, null);
+  }
+}
+
+function updateStudentPhotoData(studentId, photoData) {
+  const student = state.students.find(s => Number(s.id) === Number(studentId));
+  if (!student) return;
+
+  student.photo = photoData;
+  saveState();
+  if (typeof renderStudents === 'function') renderStudents();
+  if (typeof renderScoreboard === 'function') renderScoreboard();
+
+  // Update modal preview
+  const avatarPreview = document.getElementById('sp-modal-avatar-preview');
+  const removeBtn = document.getElementById('sp-btn-remove');
+  const initials = student.name.split(' ').filter(Boolean).map(n => n[0]).join('').toUpperCase();
+  if (avatarPreview) {
+    if (photoData) {
+      avatarPreview.innerHTML = `<img src="${photoData}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`;
+      if (removeBtn) removeBtn.classList.remove('hidden');
+    } else {
+      avatarPreview.innerHTML = initials;
+      if (removeBtn) removeBtn.classList.add('hidden');
+    }
+  }
+
+  // Persist to database immediately
+  fetch('student_api.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(student)
+  }).catch(e => console.warn('Student photo DB update error:', e));
+}
+
 function startStudentPhoto(studentId) {
+  const modal = document.getElementById('student-photo-modal');
+  if (modal) {
+    openStudentPhotoModal(studentId);
+    return;
+  }
   cameraTarget = studentId;
   openCamera();
 }
@@ -2026,17 +2457,13 @@ function capturePhoto() {
   const ctx = canvas.getContext('2d');
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
   
-  const dataUrl = canvas.toDataURL('image/jpeg', 0.7); // Using jpeg and 0.7 quality for database performance
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
   
   if (cameraTarget === 'profile') {
     state.profile.picture = dataUrl;
     applyProfileUI();
   } else {
-    const student = state.students.find(s => s.id === cameraTarget);
-    if (student) {
-      student.photo = dataUrl;
-      renderStudents();
-    }
+    updateStudentPhotoData(cameraTarget, dataUrl);
   }
   
   closeCamera();
@@ -2482,9 +2909,14 @@ function renderScoreboard() {
     if (isLeader) tr.className = 'rank-1';
     if (hasZero) tr.classList.add('highlight-zero');
 
+    const initials = student.name.split(' ').filter(Boolean).map(n => n[0]).join('').toUpperCase();
+    const miniAvatar = student.photo
+      ? `<img src="${student.photo}" style="width:24px; height:24px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:8px; border:1px solid var(--primary);" title="${student.name}">`
+      : `<span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; background:rgba(255,255,255,0.1); color:var(--text-main); font-size:10px; font-weight:700; margin-right:8px; vertical-align:middle;">${initials}</span>`;
+
     tr.innerHTML = `
       <td>${isLeader ? '<i class="fa-solid fa-crown" style="color:#ffd700"></i>' : rank}</td>
-      <td><strong>${student.name}</strong></td>
+      <td>${miniAvatar}<strong>${student.name}</strong></td>
       <td>Gr ${student.grade}</td>
       <td>${section}</td>
       <td><strong class="text-primary">${student.totalScore||0} pts</strong></td>
@@ -3328,69 +3760,6 @@ async function uploadPPTX() {
   }
 }
 
-async function loadPPTXList() {
-  const container = document.getElementById('pptx-list');
-  if (!container) return;
-
-  container.innerHTML = '<p style="color:var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> Loading presentations...</p>';
-
-  try {
-    const res = await fetch('pptx_api.php?action=list');
-    const data = await res.json();
-
-    if (data.status === 'success' && data.uploads.length > 0) {
-      container.innerHTML = data.uploads.map(u => `
-        <div class="glass-card mb-10" style="padding:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-          <div style="flex:1;min-width:200px;">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <i class="fa-solid fa-file-powerpoint" style="font-size:24px;color:#c4532e;"></i>
-              <div>
-                <strong>${u.original_name}</strong>
-                <div style="font-size:12px;color:var(--text-muted);">
-                  Grade ${u.grade || '?'} · Q${u.quarter || '?'} · ${u.slide_count} slides · ${new Date(u.created_at).toLocaleDateString()}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style="display:flex;gap:8px;">
-            <button class="btn btn-primary btn-sm" onclick="window.location.href='presenter.html?id=${u.curriculum_lesson_id}'">
-              <i class="fa-solid fa-play"></i> Present
-            </button>
-            <button class="btn btn-danger btn-sm" onclick="app.deletePPTX(${u.id})">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </div>
-        </div>
-      `).join('');
-    } else {
-      container.innerHTML = `
-        <div style="text-align:center;padding:40px;color:var(--text-muted);">
-          <i class="fa-solid fa-file-powerpoint" style="font-size:48px;opacity:0.3;margin-bottom:12px;display:block;"></i>
-          <p>No presentations uploaded yet.</p>
-          <p style="font-size:13px;">Click "Import PPTX" to upload your first PowerPoint file!</p>
-        </div>
-      `;
-    }
-  } catch (e) {
-    container.innerHTML = '<p style="color:var(--danger);">Failed to load. Is XAMPP running?</p>';
-  }
-}
-
-async function deletePPTX(id) {
-  if (!confirm('Delete this presentation?')) return;
-  try {
-    // We'll just delete the pptx_uploads record (slides stay in curriculum for now)
-    const res = await fetch('pptx_api.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'delete', id: id })
-    });
-    loadPPTXList();
-  } catch (e) {
-    alert('Delete failed');
-  }
-}
-
 // --- Admin Interface (Database-Driven via admin_api.php) ---
 
 async function loadAdminStats() {
@@ -3460,20 +3829,26 @@ async function loadAdminUsers() {
     const data = await res.json();
     if (data.status !== 'success') throw new Error(data.message);
 
-    tbody.innerHTML = data.users.map(u => `
-      <tr>
-        <td>${u.id}</td>
-        <td><strong>${u.username}</strong></td>
-        <td>${u.display_name || '—'}</td>
-        <td>${u.email || '—'}</td>
-        <td><span class="badge-role badge-${u.role}">${u.role}</span></td>
-        <td>${u.created_at ? new Date(u.created_at).toLocaleDateString() : '—'}</td>
-        <td>
-          <button class="btn-xs btn-edit" onclick="app.adminEditUser(${u.id}, '${u.username}', '${(u.display_name||'').replace(/'/g,"\\'")}', '${(u.email||'').replace(/'/g,"\\'")}', '${u.role}')"><i class="fa-solid fa-pen"></i></button>
-          <button class="btn-xs btn-del" onclick="app.adminDeleteUser(${u.id}, '${u.username}')"><i class="fa-solid fa-trash"></i></button>
-        </td>
-      </tr>
-    `).join('');
+    tbody.innerHTML = data.users.map(u => {
+      const uInitials = (u.display_name || u.username).substring(0, 2).toUpperCase();
+      const uAvatar = u.avatar_data
+        ? `<img src="${u.avatar_data}" style="width:28px; height:28px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:8px; border:1.5px solid var(--primary);" title="${u.username}">`
+        : `<span style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--primary); color:#fff; font-size:11px; font-weight:700; vertical-align:middle; margin-right:8px;">${uInitials}</span>`;
+      return `
+        <tr>
+          <td>${u.id}</td>
+          <td>${uAvatar}<strong>${u.username}</strong></td>
+          <td>${u.display_name || '—'}</td>
+          <td>${u.email || '—'}</td>
+          <td><span class="badge-role badge-${u.role}">${u.role}</span></td>
+          <td>${u.created_at ? new Date(u.created_at).toLocaleDateString() : '—'}</td>
+          <td>
+            <button class="btn-xs btn-edit" onclick="app.adminEditUser(${u.id}, '${u.username}', '${(u.display_name||'').replace(/'/g,"\\'")}', '${(u.email||'').replace(/'/g,"\\'")}', '${u.role}')"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn-xs btn-del" onclick="app.adminDeleteUser(${u.id}, '${u.username}')"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `;
+    }).join('');
 
     if (loading) loading.style.display = 'none';
     if (table) table.style.display = 'table';
@@ -5740,6 +6115,9 @@ window.app = {
   showVideoOnTV,
   setupGlobalEscapeHandler,
   saveSystemSettings,
+  openEditQuestionModal,
+  closeEditQuestionModal,
+  saveEditedQuestion,
   editQuestion,
   deleteQuestion,
   exportQuestionsCSV,
@@ -5766,6 +6144,13 @@ window.app = {
   addMaterialQuestion,
   addStudent,
   startStudentPhoto,
+  openStudentPhotoModal,
+  closeStudentPhotoModal,
+  openStudentCamera,
+  stopStudentCamera,
+  captureStudentPhoto,
+  handleStudentPhotoUpload,
+  removeStudentPhoto,
   capturePhoto,
   openCamera,
   closeCamera,

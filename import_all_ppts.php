@@ -124,7 +124,8 @@ foreach ($uniqueFiles as $originalName => $fullPath) {
     }
 
     // Create curriculum lesson
-    $stmtLessonNum = $pdo->prepare("SELECT COALESCE(MAX(CAST(lesson_number AS UNSIGNED)),0)+1 FROM curriculum_lessons WHERE grade=? AND quarter=?");
+    $castType = is_sqlite() ? 'INTEGER' : 'UNSIGNED';
+    $stmtLessonNum = $pdo->prepare("SELECT COALESCE(MAX(CAST(lesson_number AS {$castType})),0)+1 FROM curriculum_lessons WHERE grade=? AND quarter=?");
     $stmtLessonNum->execute([$grade, $quarter]);
     $lessonNum = $stmtLessonNum->fetchColumn();
 

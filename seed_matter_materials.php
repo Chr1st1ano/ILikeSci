@@ -25,54 +25,54 @@ $matterUnits = [
         'lesson_number' => '1',
         'topic' => 'Properties and Uses of Materials',
         'objectives' => [
-            'Identify different materials used in common everyday objects (wood, metal, plastic, glass, fabric, rubber).',
-            'Describe observable physical properties including hardness, flexibility, texture, and absorbency.',
-            'Match everyday materials with their practical functions and explain why specific materials are chosen.'
+            'Describe and compare the observable physical properties of solid materials, such as hardness, shininess, roughness, smoothness, flexibility, and stretchability.',
+            'Explain how changing the shape or form of solid materials, such as shaping, pressing, hammering, joining, or cutting, can make them useful for different purposes.',
+            'Describe the observable properties and everyday uses of common metal materials in Philippine homes, schools, and communities, such as iron or steel, galvanized iron sheets or yero, aluminum, copper, and stainless steel.'
         ],
-        'content' => "Materials are substances used to make objects. Everyday items are made from materials like wood, metal, plastic, glass, paper, fabric, and rubber.\n\nEach material has distinct physical properties. Hard materials like iron and hardwood resist scratching. Flexible materials like rubber and silicone bend easily without breaking. Absorbent materials like cotton and sponges soak up liquids, while waterproof materials like plastic and glass repel water.\n\nChoosing the right material depends on its purpose. For example, cooking pots are made of metal because metal conducts heat and does not melt easily, while the handles are made of plastic or wood to protect our hands from burns.",
+        'content' => "TERM 1 LESSON 1: Properties and Uses of Materials\n\nLearning Competencies:\n1. Describe and compare observable physical properties of solid materials: hardness, shininess, roughness, smoothness, flexibility, and stretchability.\n2. Explain how changing the shape or form of solid materials (shaping, pressing, hammering, joining, cutting) can make them useful for different purposes.\n3. Describe the observable properties and everyday uses of common metal materials in Philippine homes, schools, and communities (iron or steel, galvanized iron sheets or yero, aluminum, copper, and stainless steel).\n\nLET'S EXPLORE\nLook around the classroom. What objects can you see? What are they made of?\nMaterials have different properties that we can observe and describe.\n\nDISCUSSION: Observable Properties of Materials\n• Hardness — how hard a material is (e.g., Rock -> hard)\n• Shininess — how much light a material reflects (e.g., Metal spoon -> shiny)\n• Roughness — having an uneven surface (e.g., Sandpaper -> rough)\n• Smoothness — having an even surface (e.g., Glass -> smooth)\n• Flexibility — ability to bend (e.g., Rubber -> flexible)\n• Stretchability — ability to stretch when pulled (e.g., Rubber band -> stretchable)\n\nCHANGING MATERIALS\nThe shape or form of a solid material can be changed by:\nshaping • pressing • hammering • joining • cutting\nThese changes can make materials useful for different purposes.\n\nMETALS AROUND US (Philippine Context)\nCommon metals found in homes, schools, and communities include:\n• Iron or steel — chairs, gates, tools\n• Galvanized iron sheets or yero — roofing\n• Aluminum — containers and household objects\n• Copper — electrical wires\n• Stainless steel — spoons, forks, and other utensils\n\nINTERACTIVE ACTIVITY: What Property Is It?\nA rubber band becomes longer when pulled. What property does it show?\nAnswer: C — Stretchability\n\nKEY TAKEAWAYS:\n• Materials have different observable properties.\n• Materials can be changed in shape or form to make them useful.\n• Metals have different properties and everyday uses.",
         'slides' => [
             [
                 'title' => 'Properties and Uses of Materials',
-                'content' => "Grade 3 — Term 1 Science\n\nDiscover how the properties of wood, metal, plastic, glass, and rubber shape our everyday world.",
+                'content' => "Term 1 — Lesson 1: Properties and Uses of Materials\n\nLook around your classroom:\n• Desks, windows, armchairs, utensils...\nEvery object is made of specific materials chosen for their unique observable properties!",
                 'slide_type' => 'title',
-                'media_type' => 'none',
-                'media_url' => ''
+                'media_type' => 'image',
+                'media_url' => 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=800'
             ],
             [
-                'title' => 'Common Materials Around Us',
-                'content' => "Look around your classroom and home:\n• Wood: Desks, doors, and pencils (sturdy, natural)\n• Metal: Nails, spoons, and coins (hard, shiny, strong)\n• Plastic: Bottles, rulers, and lunchboxes (lightweight, waterproof)\n• Glass: Windows, mirrors, and spectacles (transparent, smooth)\n• Fabric & Rubber: Clothes, tires, and erasers (soft, flexible, elastic)",
+                'title' => '6 Observable Properties of Materials',
+                'content' => "How can we describe and compare materials?\n\n1. Hardness: How hard a material is (Rock -> hard)\n2. Shininess: How much light a material reflects (Metal spoon -> shiny)\n3. Roughness: Having an uneven surface (Sandpaper -> rough)\n4. Smoothness: Having an even surface (Glass -> smooth)\n5. Flexibility: Ability to bend without breaking (Rubber -> flexible)\n6. Stretchability: Ability to stretch when pulled (Rubber band -> stretchable)",
                 'slide_type' => 'content',
-                'media_type' => 'none',
-                'media_url' => ''
+                'media_type' => 'step',
+                'media_url' => "Property 1: Hardness (Rock)\nProperty 2: Shininess (Metal spoon)\nProperty 3: Roughness (Sandpaper)\nProperty 4: Smoothness (Glass)\nProperty 5: Flexibility (Rubber)\nProperty 6: Stretchability (Rubber band)"
             ],
             [
-                'title' => 'Observing Physical Properties',
-                'content' => "How can we describe materials?\n1. Hardness: Can it resist scratching? (Diamond vs Chalk)\n2. Flexibility: Can it bend without breaking? (Rubber vs Ceramic)\n3. Absorbency: Can it soak up water? (Sponge vs Plastic wrap)\n4. Transparency: Can light pass through it? (Clear glass vs Wood)",
+                'title' => 'Changing Solid Materials for Use',
+                'content' => "The shape or form of a solid material can be changed by:\n• Shaping\n• Pressing\n• Hammering\n• Joining\n• Cutting\n\nThese changes make materials useful for different purposes (e.g. cutting cloth for uniforms, hammering steel for tools)!",
                 'slide_type' => 'step',
                 'media_type' => 'step',
-                'media_url' => "Step 1: Observe color and texture\nStep 2: Test flexibility by gentle bending\nStep 3: Test absorbency with water droplet\nStep 4: Record findings in science notebook"
+                'media_url' => "Action 1: Shaping\nAction 2: Pressing\nAction 3: Hammering\nAction 4: Joining\nAction 5: Cutting"
             ],
             [
-                'title' => 'Matching Materials to Their Purpose',
-                'content' => "Why are cooking pots made of metal while their handles are made of plastic or wood?\n\n• Metal conducts heat quickly to cook food evenly.\n• Plastic and wood are thermal insulators that stay cool, preventing burns when lifting the pot!",
+                'title' => 'Metals Around Us in the Philippines',
+                'content' => "Common metals found in homes, schools, and communities:\n\n• Iron or Steel — school chairs, security gates, construction tools\n• Galvanized Iron Sheets (Yero) — sturdy typhoon roofing\n• Aluminum — food containers, pots, window frames\n• Copper — electrical wires powering classroom lights\n• Stainless Steel — spoons, forks, and kitchen utensils",
                 'slide_type' => 'content',
                 'media_type' => 'none',
                 'media_url' => ''
             ],
             [
-                'title' => 'Classroom Quick Check',
-                'content' => "Which material would be the best choice for making a rain umbrella?\nA) Cotton fabric\nB) Waterproof plastic\nC) Thick cardboard\nD) Heavy iron\n\nCorrect Answer: B (Waterproof plastic keeps rain out and is lightweight!)",
+                'title' => 'Interactive Activity & Quick Assessment',
+                'content' => "Interactive Activity: What Property Is It?\n\nQuestion: A rubber band becomes longer when pulled. What property does it show?\nA. Hardness\nB. Shininess\nC. Stretchability\nD. Roughness\n\nCorrect Answer: C — Stretchability!\n\nKey Takeaway: Materials are carefully chosen and shaped to suit their everyday functions.",
                 'slide_type' => 'quiz',
                 'media_type' => 'none',
                 'media_url' => ''
             ]
         ],
         'questions' => [
-            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Easy', 'text' => 'What property makes rubber ideal for bicycle tires and rubber bands? | A: Flexibility and elasticity B: Transparency C: Fragility D: High absorbency', 'correct' => 'A'],
-            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Easy', 'text' => 'Which material is transparent and allows sunlight into our classrooms through windows? | A: Wood B: Clear Glass C: Steel D: Clay', 'correct' => 'B'],
-            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Medium', 'text' => 'Why are cooking pans made of metal while their handles are covered with plastic or wood? | A: To make the pan heavier B: Metal conducts heat while plastic/wood insulates to prevent burns C: Plastic cooks food faster D: Wood conducts electricity', 'correct' => 'B'],
-            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Medium', 'text' => 'If water spills on a wooden floor, why is a cotton mop used instead of a plastic bag? | A: Cotton is absorbent and holds liquid B: Plastic absorbs water faster C: Cotton is harder than wood D: Plastic damages the mop handle', 'correct' => 'A'],
-            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Hard', 'text' => 'A toy designer wants to create a safe floating bathtub toy for toddlers. Which material is best and why? | A: Glass because it is shiny B: Lightweight waterproof plastic or rubber because it floats and will not shatter C: Heavy iron because it is sturdy D: Paper because it is soft', 'correct' => 'B']
+            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Easy', 'text' => 'Which property means a material can bend? | A: Hardness B: Flexibility C: Shininess D: Transparency', 'correct' => 'B'],
+            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Easy', 'text' => 'Which material is stretchable? | A: Rubber band B: Glass C: Rock D: Wood', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Medium', 'text' => 'Which metal is commonly used for electrical wires? | A: Copper B: Yero C: Stainless steel D: Lead', 'correct' => 'A'],
+            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Medium', 'text' => 'Which material is commonly used for roofing in Philippine homes? | A: Rubber B: Yero (Galvanized iron) C: Paper D: Cardboard', 'correct' => 'B'],
+            ['grade' => '3', 'topic' => 'Properties and Uses of Materials', 'difficulty' => 'Hard', 'text' => 'Why do people change the shape of solid materials? | A: To make them useful for different purposes B: To make them disappear C: To make them useless D: To break them permanently', 'correct' => 'A']
         ]
     ],
     [

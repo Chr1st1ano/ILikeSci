@@ -83,7 +83,7 @@ if ($method === 'GET') {
 
 } else if ($method === 'POST') {
     // Create a new lesson or lesson slides
-    $input = json_decode(file_get_contents('php://input'), true);
+    $input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
     
     try {
         if (isset($input['action']) && $input['action'] === 'create_lesson') {
@@ -188,7 +188,7 @@ if ($method === 'GET') {
     }
 } else if ($method === 'PUT') {
     // Edit/Update an existing lesson and its slides
-    $input = json_decode(file_get_contents('php://input'), true);
+    $input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
     $lessonId = $input['id'] ?? null;
     
     if (!$lessonId) {
@@ -256,7 +256,7 @@ if ($method === 'GET') {
     }
 } else if ($method === 'DELETE') {
     // Delete a lesson and all of its slides
-    $input = json_decode(file_get_contents('php://input'), true);
+    $input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
     $lessonId = $input['id'] ?? null;
     
     if (!$lessonId) {
@@ -267,7 +267,10 @@ if ($method === 'GET') {
     try {
         $pdo->beginTransaction();
         
-        // Delete lesson (slides cascade delete due to schema)
+        // Delete slides first to prevent orphaned slides
+        $pdo->prepare("DELETE FROM lesson_slides WHERE curriculum_lesson_id = ?")->execute([$lessonId]);
+        
+        // Delete lesson
         $stmt = $pdo->prepare("DELETE FROM curriculum_lessons WHERE id = ?");
         $stmt->execute([$lessonId]);
         

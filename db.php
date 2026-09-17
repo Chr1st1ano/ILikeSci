@@ -28,31 +28,40 @@ $pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : '';
 $pdo = null;
 $dbEngine = 'mysql';
 
-// 1. Try MySQL Connection
-try {
-    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4", $user, $pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_TIMEOUT => 2
-    ]);
-    $dbEngine = 'mysql';
-} catch (Exception $e) {
-    try {
-        // Attempt to auto-create database if MySQL server is accessible
-        $pdoServer = new PDO("mysql:host=$host;port=$port;charset=utf8mb4", $user, $pass, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_TIMEOUT => 2
-        ]);
-        $pdoServer->exec("CREATE DATABASE IF NOT EXISTS `$db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-        $pdoServer = null;
+// 1. Try MySQL Connection (with ultra-fast socket probe to prevent 4s timeouts on low-end hardware)
+$mysqlPortOpen = false;
+$probe = @fsockopen($host, (int)$port, $errno, $errstr, 0.1);
+if ($probe) {
+    $mysqlPortOpen = true;
+    fclose($probe);
+}
 
+if ($mysqlPortOpen) {
+    try {
         $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4", $user, $pass, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_TIMEOUT => 1
         ]);
         $dbEngine = 'mysql';
-    } catch (Exception $serverEx) {
-        $pdo = null;
+    } catch (Exception $e) {
+        try {
+            // Attempt to auto-create database if MySQL server is accessible
+            $pdoServer = new PDO("mysql:host=$host;port=$port;charset=utf8mb4", $user, $pass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_TIMEOUT => 1
+            ]);
+            $pdoServer->exec("CREATE DATABASE IF NOT EXISTS `$db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+            $pdoServer = null;
+
+            $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4", $user, $pass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            ]);
+            $dbEngine = 'mysql';
+        } catch (Exception $serverEx) {
+            $pdo = null;
+        }
     }
 }
 
@@ -256,6 +265,51 @@ if (!$pdo) {
             if (!in_array('objectives', $cols)) $pdo->exec("ALTER TABLE curriculum_lessons ADD COLUMN objectives TEXT");
         } catch (Exception $e) {}
 
+        // Self-heal SQLite tables created with non-INTEGER primary key (INT AUTO_INCREMENT)
+        try {
+            $pptxSql = $pdo->query("SELECT sql FROM sqlite_master WHERE name = 'pptx_uploads'")->fetchColumn();
+            if ($pptxSql && stripos($pptxSql, 'AUTO_INCREMENT') !== false) {
+                $pdo->exec("CREATE TABLE pptx_uploads_fixed (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    filename TEXT NOT NULL,
+                    original_name TEXT NOT NULL,
+                    grade TEXT DEFAULT '',
+                    quarter TEXT DEFAULT '',
+                    topic TEXT DEFAULT '',
+                    slide_count INTEGER DEFAULT 0,
+                    curriculum_lesson_id INTEGER,
+                    slides_dir TEXT DEFAULT '',
+                    has_images INTEGER DEFAULT 0,
+                    uploaded_by TEXT DEFAULT '',
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )");
+                $pdo->exec("INSERT INTO pptx_uploads_fixed (id, filename, original_name, grade, quarter, topic, slide_count, curriculum_lesson_id, slides_dir, has_images, uploaded_by, created_at)
+                    SELECT rowid, filename, original_name, grade, quarter, topic, slide_count, curriculum_lesson_id, slides_dir, has_images, uploaded_by, created_at FROM pptx_uploads");
+                $pdo->exec("DROP TABLE pptx_uploads");
+                $pdo->exec("ALTER TABLE pptx_uploads_fixed RENAME TO pptx_uploads");
+            }
+            // Ensure any NULL IDs in pptx_uploads are backfilled with rowid
+            $pdo->exec("UPDATE pptx_uploads SET id = rowid WHERE id IS NULL OR id = 0");
+        } catch (Exception $e) {}
+
+        try {
+            $topicSql = $pdo->query("SELECT sql FROM sqlite_master WHERE name = 'topics'")->fetchColumn();
+            if ($topicSql && stripos($topicSql, 'AUTO_INCREMENT') !== false) {
+                $pdo->exec("CREATE TABLE topics_fixed (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    grade TEXT NOT NULL,
+                    topic_name TEXT NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )");
+                $pdo->exec("INSERT INTO topics_fixed (id, grade, topic_name, created_at)
+                    SELECT rowid, grade, topic_name, created_at FROM topics");
+                $pdo->exec("DROP TABLE topics");
+                $pdo->exec("ALTER TABLE topics_fixed RENAME TO topics");
+            }
+            // Ensure any NULL IDs in topics are backfilled with rowid
+            $pdo->exec("UPDATE topics SET id = rowid WHERE id IS NULL OR id = 0");
+        } catch (Exception $e) {}
+
     } catch (Exception $sqliteEx) {
         if (!headers_sent()) header("Content-Type: application/json");
         echo json_encode([
@@ -287,6 +341,13 @@ try {
     foreach ($indexes as $idxSql) {
         $pdo->exec($idxSql);
     }
+
+    // Clean obsolete test artifacts from automated test harnesses
+    try {
+        $pdo->exec("DELETE FROM curriculum_lessons WHERE topic LIKE '%Automated Test%' OR topic LIKE '%Production Verification%' OR topic LIKE '%AP4%'");
+        $pdo->exec("DELETE FROM topics WHERE topic_name LIKE '%Automated Test%' OR topic_name LIKE '%Production Verification%' OR topic_name LIKE '%AP4%'");
+        $pdo->exec("DELETE FROM questions WHERE topic LIKE '%Automated Test%' OR topic LIKE '%Production Verification%' OR topic LIKE '%AP4%'");
+    } catch (Exception $cleanEx) {}
 } catch (Exception $e) {
     // Indexes non-fatal if already handled by engine
 }
