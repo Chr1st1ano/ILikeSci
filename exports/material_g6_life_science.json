@@ -5,42 +5,42 @@
         {
             "title": "Human Body Systems (Circulatory and Nervous Systems)",
             "grade": "6",
-            "quarter": "1",
+            "quarter": "2",
             "lesson_number": "1",
             "objectives": [
-                "Describe the anatomy and physiology of the Circulatory System (heart chambers, valves, arteries, veins, capillaries, blood cells).",
-                "Describe the Central Nervous System (brain, spinal cord) and Peripheral Nervous System (sensory and motor neurons).",
-                "Explain the reflex arc and how the nervous system regulates all body systems."
+                "Analyze the anatomy and physiology of the Circulatory System (four-chambered heart, vascular circuits, blood components) and Nervous System (CNS, PNS, reflex arc).",
+                "Conduct a pulse rate observation investigation comparing resting heart rate with post-exercise cardiovascular response.",
+                "Apply higher-order thinking to explain how the autonomic nervous system coordinates cardiovascular and respiratory adaptations during physical stress."
             ],
-            "content": "Advanced coordination in humans is maintained by two master regulatory systems:\n- Circulatory System: The four-chambered muscular heart (atria and ventricles) pumps oxygenated blood through arteries to tissues and returns deoxygenated blood through veins. Capillaries facilitate gas and nutrient exchange. Red blood cells carry oxygen via hemoglobin; white blood cells fight pathogens; platelets form clotting scabs.\n- Nervous System: Transmits electrical and chemical signals throughout the body:\n  - Central Nervous System (CNS): Brain (cerebrum, cerebellum, brainstem) processes information; spinal cord acts as the communications highway.\n  - Peripheral Nervous System (PNS): Sensory and motor neurons transmit impulses.\n  - Reflex Arc: An involuntary, split-second protective reaction (e.g., jerking your hand away from a hot pan) that bypasses the brain directly through the spinal cord.",
+            "content": "GRADE 6 SCIENCE — LESSON 1: Human Body Systems (Circulatory and Nervous Systems)\n(Enhanced DepEd Curriculum — Revised Framework)\n\nLEARNING COMPETENCY:\nExplain how the organs of each system work together to coordinate bodily functions and respond to internal and external stimuli.\n\nI. THE CIRCULATORY SYSTEM: THE BODY'S TRANSPORT HIGHWAY\n• Four-Chambered Cardiovascular Pump:\n  - Right Atrium & Ventricle: Collects deoxygenated blood from body tissues and pumps it to the lungs via the pulmonary artery.\n  - Left Atrium & Ventricle: Muscular power chamber that receives freshly oxygenated blood from lungs and pumps it into the aorta to supply the entire body.\n• Specialized Blood Vessels:\n  - Arteries: Thick, elastic muscular walls carrying high-pressure blood away from the heart.\n  - Veins: Thinner walls equipped with one-way pocket valves that prevent backflow of blood returning to the heart.\n  - Capillaries: Microscopic single-cell-thick vessels where gas exchange (O2 \/ CO2) and nutrient delivery occur.\n• Components of Blood: Red Blood Cells (hemoglobin carries oxygen), White Blood Cells (immune defense), Platelets (fibrin clot formation), and Plasma (92% water solvent transporting nutrients and hormones).\n\nII. THE NERVOUS SYSTEM: MASTER COMMUNICATION GRID\n• Central Nervous System (CNS): Brain (Cerebrum: thought\/memory, Cerebellum: posture\/coordination, Brainstem: breathing\/heartbeat) and the Spinal Cord.\n• Peripheral Nervous System (PNS): Sensory neurons (receptors to CNS) and Motor neurons (CNS to effector muscles).\n• The Spinal Reflex Arc: An involuntary, lightning-fast protective circuit (e.g., pulling your hand away from a boiling kettle). Stimulus → Sensory Receptor → Sensory Neuron → Spinal Interneuron → Motor Neuron → Muscle Contraction. This survival arc bypasses the brain, acting before pain is consciously registered!\n\nHANDS-ON OBSERVATION & INQUIRY TASK: The Cardiovascular Response to Exercise\n1. Observation: Locate your radial pulse on the wrist. Count your beats for 60 seconds at rest. (Normal resting: 70–85 bpm).\n2. Physical Stress Test: Perform 2 minutes of vigorous jumping jacks or running in place.\n3. Immediate Measurement: Count your pulse rate immediately. Notice: Increased pulse (130–160 bpm), deeper breathing rate, flushed skin.\n4. Explanation & HOTS Application:\n   - Why did your pulse surge? Working leg muscles burned glucose and required massive oxygen delivery!\n   - How did the body coordinate this? Sensory chemoreceptors detected rising CO2 in the blood; the brainstem activated the sympathetic autonomic nervous system, signaling the heart pacemaker (SA node) to pump faster and arteries to dilate!\n\nKEY TAKEAWAYS:\n• The Circulatory System pumps blood in a double loop to deliver oxygen and nutrients.\n• The Nervous System coordinates responses through voluntary brain pathways and rapid spinal reflex arcs.\n• Observation and scientific measurement prove that organ systems dynamically adapt to support bodily exertion.",
             "slides": [
                 {
                     "title": "Circulatory & Nervous Systems",
-                    "content": "Grade 6 — Term 1 Life Science\n\nThe body's transport network and electrical control grid: Heart, blood, brain, and nerves.",
+                    "content": "Grade 6 — Term 2: Life Science\n(Enhanced DepEd Framework)\n\nInvestigate how your cardiovascular pump and neural command grid team up to power human life.",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
-                    "title": "The 4-Chambered Cardiovascular Pump",
-                    "content": "Double Circulation Loop:\n• Right Atrium & Ventricle: Pumps deoxygenated blood to the lungs (Pulmonary Circuit)\n• Left Atrium & Ventricle: Powerful muscular pump sending oxygen-rich blood to the entire body (Systemic Circuit)\n• Blood Vessels: Arteries (Away from heart), Veins (toward heart with valves), Capillaries (microscopic gas exchange)",
+                    "title": "Double Cardiovascular Circulation Loop",
+                    "content": "The Four-Chambered Marvel:\n• Pulmonary Circuit: Right heart sends deoxygenated blood to lung alveoli for fresh O2\n• Systemic Circuit: Left heart pumps high-pressure oxygen-rich blood through the aorta to all organs\n• Vessels: High-pressure Arteries, Valved Veins, and Microscopic Capillaries",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
-                    "title": "The Central Nervous System Command",
-                    "content": "Brain Anatomy & Specializations:\n• Cerebrum: Conscious thought, memory, sensory interpretation, reasoning\n• Cerebellum: Muscle coordination, posture, balance, precision movement\n• Brainstem (Medulla): Involuntary vital reflexes (heartbeat, breathing, swallowing)\n• Spinal Cord: The high-speed neural information trunk line",
+                    "title": "Neural Architecture: CNS & Reflex Arc",
+                    "content": "Central Control and Emergency Reactions:\n• Brain: Cerebrum (cognition), Cerebellum (balance\/muscle coordination), Brainstem (involuntary survival)\n• Spinal Reflex Arc: Sensory receptor -> Spinal cord interneuron -> Motor neuron -> Immediate muscle jerk!\n• Emergency arcs protect your body before your brain registers pain!",
                     "mediaType": "step",
-                    "mediaUrl": "Step 1: Sensory receptors detect stimulus (Heat)\nStep 2: Sensory neuron transmits impulse to spinal cord\nStep 3: Interneuron triggers immediate motor neuron\nStep 4: Muscle jerks hand away before brain registers pain!"
+                    "mediaUrl": "Step 1: Finger touches hot surface\nStep 2: Sensory nerve fires action potential\nStep 3: Spinal cord interneuron activates motor nerve\nStep 4: Biceps contract; hand snaps back in 0.05 seconds!"
                 },
                 {
-                    "title": "Components of Living Blood",
-                    "content": "Liquid tissue carrying life:\n• Red Blood Cells (RBCs): Packed with iron hemoglobin to transport O2\n• White Blood Cells (WBCs): Immune soldiers engulfing bacteria and viruses\n• Platelets: Cell fragments forming fibrin clots to seal wounds\n• Plasma: 90% water fluid carrying dissolved glucose, hormones, and waste",
+                    "title": "Hands-on Investigation: Pulse & Exercise",
+                    "content": "Observing Body System Coordination:\n• Measure resting radial pulse for 60 seconds (70-85 bpm)\n• Exercise vigorously for 2 minutes (jumping jacks)\n• Measure post-exercise pulse (130-160 bpm)\n• Explanation: Brainstem detects elevated CO2 and commands heart and lungs to accelerate nutrient and gas delivery!",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
-                    "title": "Nervous System Reflex Quiz",
-                    "content": "Why does your hand pull back from a burning hot stove burner before your brain even realizes you were burned?\nA) Your hand has its own brain\nB) The reflex arc routes the emergency motor response directly through the spinal cord for speed\nC) The muscles contract on their own\nD) Blood stops flowing\n\nCorrect Answer: B (Spinal reflex arcs bypass the brain for split-second survival!)",
+                    "title": "Assessment: Body Systems & HOTS",
+                    "content": "Check Your Understanding (Answer Key: 1-A, 2-A, 3-A, 4-A, 5-A):\n1. Arteries carry oxygenated blood away from the heart (A)\n2. Cerebellum coordinates balance, posture, and motor precision (A)\n3. Spinal reflex arc bypasses conscious cerebral processing for speed (A)\n4. Pulse rate increases during exercise to supply oxygen to contracting muscles (A)\n5. Double circulation route: Right heart -> Lungs -> Left heart -> Body (A)",
                     "mediaType": "none",
                     "mediaUrl": ""
                 }
@@ -49,42 +49,42 @@
         {
             "title": "Reproduction in Plants",
             "grade": "6",
-            "quarter": "1",
+            "quarter": "2",
             "lesson_number": "2",
             "objectives": [
-                "Identify floral reproductive organs: stamen (anther, filament) and pistil\/carpel (stigma, style, ovary, ovule).",
-                "Explain pollination, pollen tube germination, double fertilization, and seed\/fruit development.",
-                "Analyze seed dispersal mechanisms: wind, water, animal ingestion, and mechanical expulsion."
+                "Differentiate sexual reproduction (pollination, fertilization, seed formation) from asexual reproduction in plants.",
+                "Explain and sequence artificial asexual propagation methods: cutting, budding, layering (marcotting), and grafting.",
+                "Analyze natural vegetative structures (runners, rhizomes, tubers, leaf plantlets) and evaluate agricultural advantages of clonal propagation."
             ],
-            "content": "Flowers are the reproductive organs of angiosperms (flowering plants):\n- Male organ (Stamen): Anther produces pollen grains containing male sperm nuclei, supported by the filament.\n- Female organ (Carpel\/Pistil): Stigma receives pollen; style connects to the ovary; ovary contains ovules with egg cells.\n\nPollination occurs when pollen transfers from anther to stigma via wind or pollinators (bees, bats, butterflies).\n\nFertilization: A pollen tube grows down the style into the ovule; the sperm fuses with the egg nucleus to form an embryo seed, while the ovary wall swells and matures into a fleshy fruit.\n\nSeed dispersal ensures seeds land far from the parent plant to prevent competition for light and nutrients.",
+            "content": "GRADE 6 SCIENCE — LESSON 2: Reproduction in Plants\n(Enhanced DepEd Curriculum — Sexual and Asexual Plant Propagation Suite)\n\nLEARNING COMPETENCY:\nCompare different modes of reproduction in plants (sexual vs. asexual) and explain how vegetative propagation techniques work.\n\nI. SEXUAL REPRODUCTION IN FLOWERING PLANTS\n• Floral Organs: Stamen (male anther produces pollen grains; filament) and Pistil\/Carpel (female sticky stigma, style, ovary with ovules).\n• Pollination & Fertilization: Pollen transfers to stigma via wind or pollinators (bees, butterflies). A pollen tube grows down the style; male gametes fuse with the egg cell inside the ovule. The ovule develops into a SEED containing an embryo, and the ovary wall expands into a fleshy FRUIT.\n• Benefit: Generates genetic variation, enabling seedlings to adapt to changing environmental conditions.\n\nII. ASEXUAL REPRODUCTION: EXACT GENETIC CLONES\nIn asexual reproduction, a single parent produces offspring that are genetically identical to itself without seeds or fertilization.\n\nFOUR MAJOR ARTIFICIAL PROPAGATION METHODS:\n1. Stem Cutting:\n   - Method: A healthy branch or shoot with vegetative nodes is cut and planted in moist soil or water.\n   - Actual Plants: Sanseviera (Snake plant), Rose, Malunggay, Hibiscus (Gumamela), Sugarcane.\n   - Mechanism: Undifferentiated meristematic cells at the stem nodes develop into adventitious roots.\n2. Budding (T-Budding):\n   - Method: A single vegetative bud (scion) is sliced from a desirable plant and inserted into a T-shaped slit in the bark of a hardy rootstock, then bound with grafting tape.\n   - Actual Plants: Citrus (Calamansi, Orange), Roses, Rubber trees.\n3. Layering \/ Marcotting (Air Layering):\n   - Method: A 1-inch ring of bark is stripped from a mature branch (removing the phloem but leaving the xylem intact so water still reaches the tip). Moist sphagnum moss or coconut coir is wrapped around the wound and sealed in plastic wrap.\n   - Actual Plants: Mango, Guava, Lanzones, Chico, Lemon.\n   - Mechanism: Sugars traveling down from leaves accumulate at the cut bark, triggering rapid root sprouting. Once roots fill the wrap, the branch is sawed off and potted!\n4. Grafting (Cleft\/Whip Grafting):\n   - Method: A scion twig with dormant buds from a high-quality mother tree is joined into a notched rootstock seedling. Crucial requirement: The green vascular cambium layers of both scion and rootstock must touch!\n   - Actual Plants: Carabao Mango, Apple, Avocado, Coffee.\n\nNATURAL VEGETATIVE PROPAGATION:\n• Katakataka (Bryophyllum): Tiny complete plantlets sprout along the leaf margins and drop into soil.\n• Tubers: Potato \"eyes\" sprout into new potato vines.\n• Rhizomes: Horizontal underground stems in Ginger and Luya.\n• Runners\/Stolons: Creeping above-ground stems in Strawberry and Grass.\n\nHOTS INQUIRY CHALLENGE: Why do Filipino Fruit Farmers Prefer Marcotting and Grafting over Planting Seeds?\n1. Speed to Fruit: A grafted Carabao mango tree produces sweet fruit in 2 to 3 years, whereas a seed-grown tree takes 8 to 12 years!\n2. True-to-Type Clones: Seeds result from cross-pollination and may produce sour, fibrous fruit. Grafting guarantees 100% exact genetic clones of sweet, prized fruit varieties!",
             "slides": [
                 {
                     "title": "Reproduction in Plants",
-                    "content": "Grade 6 — Term 1 Life Science\n\nBotanical reproduction: Flower anatomy, pollination pathways, fertilization, and seed dispersal.",
+                    "content": "Grade 6 — Term 2: Life Science\n(Enhanced DepEd Curriculum)\n\nExplore plant reproduction: From floral pollination to cutting, budding, marcotting, and grafting.",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
-                    "title": "Flower Anatomy: Stamen & Pistil",
-                    "content": "The Reproductive Organs:\n• Male Organ (Stamen):\n  - Anther: Produces golden pollen grains carrying male sperm cells\n  - Filament: Slender stalk holding the anther aloft\n• Female Organ (Pistil \/ Carpel):\n  - Stigma: Sticky surface catching airborne or insect-carried pollen\n  - Style: Neck tube through which pollen tubes grow\n  - Ovary: Swollen base containing ovules (prospective seeds)",
+                    "title": "Sexual Reproduction: Flower to Fruit",
+                    "content": "The Pollination & Fertilization Journey:\n• Male Stamen: Anther releases microscopic golden pollen grains\n• Female Pistil: Stigma catches pollen -> Pollen tube grows down style\n• Double Fertilization: Ovule becomes a fertile SEED; ovary ripens into a fleshy FRUIT!",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
-                    "title": "From Pollen Grain to Fruit",
-                    "content": "The Steps of Plant Fertilization:\n1. Pollination: Pollen lands on sticky stigma\n2. Tube Growth: Pollen grain germinates a tube down the style\n3. Fertilization: Sperm fuses with ovule egg cell\n4. Transformation: The fertilized ovule becomes a hard SEED; the surrounding ovary wall expands into the FRUIT!",
+                    "title": "Asexual Methods: Cutting & Budding",
+                    "content": "Cloning Without Seeds:\n• Stem Cutting: Nodal stem cuttings placed in moist soil generate adventitious roots (Sanseviera, Malunggay, Gumamela)\n• Budding (T-Budding): Inserting a single bud from a superior scion into rootstock bark (Calamansi, Citrus, Roses)",
+                    "mediaType": "none",
+                    "mediaUrl": ""
+                },
+                {
+                    "title": "Sequencing: Marcotting & Grafting",
+                    "content": "Mastering Philippine Agricultural Techniques:\n1. Marcotting (Air Layering): Strip 1-inch bark ring -> Wrap in moist coconut coir -> Wait for roots -> Cut and pot!\n2. Grafting: Join scion twig into rootstock notch -> Align vascular cambium layers -> Bind tightly with tape -> Cells fuse into one tree!",
                     "mediaType": "step",
-                    "mediaUrl": "Step 1: Pollen lands on stigma\nStep 2: Tube grows down style\nStep 3: Sperm fertilizes ovule egg\nStep 4: Ovule becomes seed, Ovary becomes fruit"
+                    "mediaUrl": "Step 1: Select healthy mother tree branch\nStep 2: Strip bark ring (expose cambium)\nStep 3: Pack with moist sphagnum moss\nStep 4: Seal with plastic until roots sprout (Marcotting!)"
                 },
                 {
-                    "title": "Seed Dispersal Engineering",
-                    "content": "Escaping the parent tree's shade:\n• Wind: Dandelion parachutes and winged Narra tree seeds\n• Water: Buoyant fibrous coconut husks drifting across oceans\n• Animals: Sweet mango fruits eaten and seeds dropped; prickly burrs clinging to fur\n• Explosive: Touch-me-not seedpods bursting open under tension",
-                    "mediaType": "none",
-                    "mediaUrl": ""
-                },
-                {
-                    "title": "Plant Reproduction Quiz",
-                    "content": "Following successful plant fertilization, what does the flower's ovary develop into?\nA) A green leaf\nB) A fleshy fruit protecting the seeds\nC) A taproot\nD) A new flower petal\n\nCorrect Answer: B (The ovary wall swells and ripens into fruit!)",
+                    "title": "Assessment: Plant Reproduction",
+                    "content": "Check Your Understanding (Answer Key: 1-A, 2-A, 3-A, 4-A, 5-A):\n1. Grafting joins a scion branch to a rootstock aligning cambium layers (A)\n2. Marcotting (air layering) strips a ring of bark to sprout roots on an attached branch (A)\n3. Katakataka produces plantlets along its leaf margins (A)\n4. Farmers prefer grafting because it guarantees exact fruit clones in 2-3 years (A)\n5. The flower's ovary ripens into the fruit after fertilization (A)",
                     "mediaType": "none",
                     "mediaUrl": ""
                 }
@@ -93,42 +93,42 @@
         {
             "title": "Vertebrates and Invertebrates",
             "grade": "6",
-            "quarter": "1",
+            "quarter": "2",
             "lesson_number": "3",
             "objectives": [
-                "Classify animals into Vertebrates (with backbones) and Invertebrates (without backbones).",
-                "Distinguish characteristics of the 5 vertebrate classes: Fish, Amphibians, Reptiles, Birds, and Mammals.",
-                "Classify major invertebrate phyla: Arthropods, Mollusks, Annelids, Cnidarians, and Echinoderms."
+                "Classify animals into Vertebrates (with backbones) and Invertebrates (without backbones) and identify their distinguishing anatomical features.",
+                "Differentiate the 5 vertebrate classes (Fish, Amphibians, Reptiles, Birds, Mammals) and 5 major invertebrate phyla (Arthropods, Mollusks, Annelids, Cnidarians, Echinoderms).",
+                "Perform a hands-on classification activity observing Philippine animal specimen cards and justifying classification with anatomical evidence."
             ],
-            "content": "The Animal Kingdom is divided into two major divisions based on the presence of an internal vertebral column:\n- Vertebrates (Chordates): Possess an endoskeleton and spinal column:\n  1. Fish: Ectothermic, aquatic, gills, scales, fins.\n  2. Amphibians: Ectothermic, smooth moist skin, dual water-land life cycle.\n  3. Reptiles: Ectothermic, dry scaly skin, amniotic shelled eggs, breathe with lungs.\n  4. Birds: Endothermic, feathers, hollow bones, beaks, lay hard-shelled eggs.\n  5. Mammals: Endothermic, hair\/fur, mammary glands for milk, give live birth.\n- Invertebrates: Make up over 95% of animal species!\n  - Arthropods (insects, crustaceans, arachnids) with chitinous exoskeletons and jointed legs.\n  - Mollusks (snails, clams, squids) with soft bodies often protected by calcium shells.\n  - Annelids (earthworms, leeches) with segmented bodies.\n  - Cnidarians (corals, jellyfish) with stinging nematocysts.\n  - Echinoderms (starfish, sea urchins) with spiny skins and radial symmetry.",
+            "content": "GRADE 6 SCIENCE — LESSON 3: Vertebrates and Invertebrates\n(Enhanced DepEd Curriculum — Hands-on Classification & Performance Suite)\n\nLEARNING COMPETENCY:\nClassify animals into vertebrates and invertebrates based on anatomical characteristics, and explain the basis for their classification.\n\nI. VERTEBRATES (CHORDATES): POSSESS AN INTERNAL BACKBONE\nAll vertebrates possess an internal endoskeleton with a spinal column supporting the body:\n1. Fish: Aquatic, ectothermic, breathe with gills, covered in slimy scales, swim with fins (e.g., Bangus \/ Milkfish, Tilapia).\n2. Amphibians: Ectothermic, dual life cycle (aquatic larvae breathe with gills; adults develop lungs and moist skin for gas exchange), lay jelly-like eggs in water (e.g., Philippine Bullfrog, Cane Toad).\n3. Reptiles: Ectothermic, breathe exclusively with lungs, covered in dry keratinized scales, lay leathery-shelled eggs on land (e.g., Pawikan \/ Sea Turtle, Monitor Lizard \/ Bayawak, Cobra).\n4. Birds (Aves): Endothermic (warm-blooded), feathers, lightweight hollow bones, toothless beaks, lay hard-shelled calcium eggs (e.g., Philippine Eagle, Maya Bird).\n5. Mammals: Endothermic, have hair or fur, breathe with lungs, have mammary glands that produce milk to nurse young, give live birth (e.g., Philippine Tarsier, Carabao, Whale, Bat, Humans).\n\nII. INVERTEBRATES: ANIMALS WITHOUT A BACKBONE (>95% OF ALL SPECIES)\n• Arthropods: Largest phylum! Segmented bodies, jointed appendages, tough chitinous exoskeleton (e.g., Rhinoceros Beetle \/ Uwáng, Crabs, Spiders, Mosquitoes).\n• Mollusks: Soft unsegmented bodies, muscular foot, visceral mass, often enclosed in hard calcium carbonate shells (e.g., Giant Clam \/ Taklobo, Snails, Squids).\n• Annelids: Segmented cylindrical worm bodies with hydrostatic skeletons (e.g., Earthworms \/ Bulate, Leeches).\n• Cnidarians: Radial symmetry, gelatinous body, tentacles armed with stinging cnidocyte capsules (e.g., Box Jellyfish, Sea Anemones, Coral polyps).\n• Echinoderms: Spiny skin, five-part radial symmetry, marine water vascular system with tube feet (e.g., Starfish, Sea Urchins, Sea Cucumbers \/ Balatan).\n\nHANDS-ON PERFORMANCE TASK: Philippine Specimen Classification & Justification\nLearners inspect 8 Philippine animal cards and complete the scientific classification log:\n1. Philippine Tarsier → Vertebrate (Mammal): Has internal spinal column, fur, and nurses young with milk.\n2. Milkfish (Bangus) → Vertebrate (Fish): Has internal spine, gills, and paired swimming fins.\n3. Rhinoceros Beetle (Uwáng) → Invertebrate (Arthropod): Lacks internal backbone; protected by jointed chitinous exoskeleton.\n4. Giant Clam (Taklobo) → Invertebrate (Mollusk): Soft body protected by a two-valved calcium carbonate shell, no backbone.\n5. Sea Turtle (Pawikan) → Vertebrate (Reptile): Internal bony skeleton, lungs, dry scaly skin, leathery eggs.\n6. Box Jellyfish → Invertebrate (Cnidarian): Soft gelatinous body with stinging tentacles and no spine.\n7. Maya Bird → Vertebrate (Bird): Internal vertebral skeleton, hollow bones, and feather covering.\n8. Earthworm (Bulate) → Invertebrate (Annelid): Segmented cylindrical ringed body with no vertebrae.\n\nKEY TAKEAWAYS:\n• Vertebrates have backbones (fish, amphibians, reptiles, birds, mammals).\n• Invertebrates have no backbones (arthropods, mollusks, annelids, cnidarians, echinoderms).\n• Classification must be justified using observable anatomical evidence.",
             "slides": [
                 {
                     "title": "Vertebrates & Invertebrates",
-                    "content": "Grade 6 — Term 1 Life Science\n\nClassifying the Animal Kingdom: Backbone possessors versus the vast invertebrate empire.",
+                    "content": "Grade 6 — Term 2: Life Science\n(Enhanced DepEd Curriculum)\n\nClassify the Animal Kingdom: Backbone possessors versus the vast invertebrate majority.",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
                     "title": "The Five Vertebrate Classes",
-                    "content": "Animals with Internal Spinal Columns:\n• Fish: Scales, fins, gills, cold-blooded (Tilapia, bangus)\n• Amphibians: Moist skin, metamorphosis, aquatic eggs (Frogs, toads)\n• Reptiles: Dry scaly skin, lungs, leathery shelled eggs (Lizards, crocodiles, snakes)\n• Birds: Feathers, hollow flight bones, warm-blooded (Philippine eagle, maya)\n• Mammals: Hair\/fur, mammary glands, warm-blooded (Whales, bats, carabao, humans)",
+                    "content": "Internal Bony Skeletons & Spinal Columns:\n• Fish: Gills, scales, fins, cold-blooded (Bangus)\n• Amphibians: Moist skin, water-land metamorphosis (Frogs)\n• Reptiles: Dry scales, lungs, leathery eggs (Pawikan, Monitor lizard)\n• Birds: Feathers, hollow flight bones, warm-blooded (Philippine Eagle)\n• Mammals: Hair\/fur, mammary glands nursing young (Tarsier, Carabao)",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
-                    "title": "Ectotherms vs Endotherms",
-                    "content": "Body Temperature Regulation:\n• Ectothermic (Cold-Blooded): Body temperature depends on external sun\/water (Fish, amphibians, reptiles)\n• Endothermic (Warm-Blooded): Generate internal metabolic body heat, maintaining steady temperature (Birds and mammals)",
+                    "title": "Major Invertebrate Phyla (>95% of Species)",
+                    "content": "Creatures Without Backbones:\n• Arthropods: Jointed legs, chitinous exoskeleton (Uwáng beetle, crabs)\n• Mollusks: Soft unsegmented bodies, calcium shells (Taklobo giant clam)\n• Annelids: Segmented rings, hydrostatic skeleton (Earthworms)\n• Cnidarians: Stinging tentacles, radial symmetry (Jellyfish, corals)\n• Echinoderms: Spiny skin, tube feet (Starfish, sea urchins)",
                     "mediaType": "step",
-                    "mediaUrl": "Has a backbone? -> Vertebrate\nHas hair and nurses young? -> Mammal\nHas feathers and beak? -> Bird\nCold-blooded with dry scales? -> Reptile"
+                    "mediaUrl": "Step 1: Check for internal backbone (Vertebral column)\nStep 2: Backbone present? -> Classify into 5 Vertebrate classes\nStep 3: No backbone? -> Check exoskeleton, shell, or soft rings\nStep 4: Write anatomical evidence to justify classification!"
                 },
                 {
-                    "title": "The Invertebrate Majority (>95% of Species)",
-                    "content": "Creatures without backbones:\n• Arthropods: Jointed legs & chitinous exoskeleton (Crabs, spiders, bees, butterflies)\n• Mollusks: Soft unsegmented bodies, often with shells (Snails, giant clams, squids)\n• Annelids: Segmented cylindrical bodies (Earthworms, leeches)\n• Cnidarians: Stinging tentacles around central mouth (Jellyfish, sea anemones, corals)\n• Echinoderms: Spiny skin and 5-part radial symmetry (Starfish, sea urchins)",
+                    "title": "Hands-on Activity: Specimen Log",
+                    "content": "Classifying Philippine Wildlife:\n• Tarsier -> Vertebrate (Mammal): Fur, nurses young\n• Uwáng Beetle -> Invertebrate (Arthropod): Jointed exoskeleton\n• Bangus -> Vertebrate (Fish): Gills, fins, spine\n• Taklobo -> Invertebrate (Mollusk): Soft body, hinged shell",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
-                    "title": "Vertebrate Classification Quiz",
-                    "content": "Why is a dolphin classified as a mammal rather than a fish, even though it swims in the sea?\nA) It lays eggs in coral reefs\nB) It has hair, breathes atmospheric air with lungs, and nurses young with milk\nC) It has scales and gills\nD) It is cold-blooded\n\nCorrect Answer: B (Dolphins are warm-blooded placental marine mammals!)",
+                    "title": "Assessment: Animal Classification",
+                    "content": "Check Your Understanding (Answer Key: 1-A, 2-A, 3-A, 4-A, 5-A):\n1. Internal vertebral column distinguishes vertebrates from invertebrates (A)\n2. Birds are the only class with feathers and hollow flight bones (A)\n3. Tarsier is a mammal because it nurses young and has fur (A)\n4. Beetles possess a chitinous exoskeleton belonging to Arthropoda (A)\n5. Dichotomous classification separates organisms using paired physical traits (A)",
                     "mediaType": "none",
                     "mediaUrl": ""
                 }
@@ -138,41 +138,41 @@
             "title": "Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)",
             "grade": "6",
             "quarter": "2",
-            "lesson_number": "1",
+            "lesson_number": "4",
             "objectives": [
-                "Construct and analyze complex food webs and determine the consequences of ecological disruptions.",
-                "Differentiate symbiotic ecological relationships: Mutualism, Commensalism, Parasitism, Predation, and Competition.",
-                "Explain the cycling of matter and energy between biotic (living) and abiotic (non-living) components."
+                "Analyze interconnected food webs and evaluate trophic cascades triggered by human disruptions.",
+                "Differentiate symbiotic relationships (Mutualism, Commensalism, Parasitism, Predation, Competition) in Philippine ecosystems.",
+                "Apply ecological concepts to practical real-world situations: mangrove conservation, reef restoration, and community biodiversity projects."
             ],
-            "content": "An ecosystem is a biological community of interacting organisms (biotic factors) and their physical environment (abiotic factors: temperature, sunlight, soil, water, atmospheric gases).\n\nFood Webs: Natural feeding relationships are not single chains but interconnected webs. Removing a keystone predator (like sharks or Philippine eagles) triggers trophic cascades that destabilize the entire ecosystem.\n\nEcological Symbiosis:\n- Mutualism: Both species benefit (+ \/ +), e.g., coral polyps and zooxanthellae algae, bees and flowers.\n- Commensalism: One benefits, the other is unharmed (+ \/ 0), e.g., orchids growing on tree trunks, barnacles on whales.\n- Parasitism: One benefits at the host's expense (+ \/ -), e.g., mosquitoes, intestinal worms, tick on dog.\n- Predation: Predator hunts and consumes prey (+ \/ -).\n- Competition: Organisms compete for limited resources (food, space, mates).",
+            "content": "GRADE 6 SCIENCE — LESSON 4: Ecosystem Relationships\n(Enhanced DepEd Curriculum — Real-World Practical Situations Suite)\n\nLEARNING COMPETENCY:\nDescribe the interactions among living things and their physical environment in diverse Philippine ecosystems and propose responsible actions to conserve biodiversity.\n\nI. BIOTIC AND ABIOTIC DYNAMICS\n• Biotic Factors (Living Components): Plants, animals, fungi, and decomposing bacteria.\n• Abiotic Factors (Physical Environment): Sunlight intensity, ambient temperature, water salinity, soil pH, dissolved oxygen, and mineral nutrients.\n• Constant Balance: Changing an abiotic factor (e.g. warming ocean water) directly affects biotic life (e.g. coral bleaching).\n\nII. FOOD WEBS & TROPHIC STABILITY\n• Natural ecosystems are not isolated food chains, but interwoven FOOD WEBS.\n• Animals have diverse food sources: If one prey species declines, predators consume alternatives.\n• Keystone Species: Predators (e.g., Reef Sharks, Philippine Eagles) keep herbivore populations balanced, preventing them from overconsuming the plant base.\n\nIII. FIVE SYMBIOTIC RELATIONSHIPS IN PHILIPPINE NATURE:\n1. Mutualism (+ \/ +): Both species benefit.\n   - Example: Coral polyps and photosynthetic zooxanthellae algae; Bees pollinating coffee blossoms while harvesting nectar.\n2. Commensalism (+ \/ 0): One benefits, other is unaffected.\n   - Example: Aerial orchids rooted on high bark of Narra trees to reach sunlight without drawing tree sap.\n3. Parasitism (+ \/ -): Parasite extracts nutrients at host's expense.\n   - Example: Mosquitoes transmitting dengue virus, intestinal roundworms in livestock.\n4. Predation (+ \/ -): Predator captures and consumes prey.\n   - Example: Philippine Eagle preying on monkeys and monitor lizards.\n5. Competition (- \/ -): Organisms compete for limited resources (light, water, nesting territory).\n\nIV. THREE PRACTICAL REAL-WORLD SITUATIONS FOR GRADE 6:\n• Situation 1: Mangrove Ecosystem Protection in Laguna\/Batangas Coastlines\n  - Problem: Cutting down bakawan (mangroves) for coastal developments destroys juvenile fish nurseries and leaves coastal barangays defenseless against typhoon storm surges.\n  - Practical Action: Community reforestation of Rhizophora mangrove propagules along tidal mudflats restores fish breeding grounds and stabilizes coastlines.\n• Situation 2: The Coral Reef Trophic Cascade\n  - Problem: Illegal blast fishing and cyanide harvesting decimate predatory grouper and snapper fish.\n  - Trophic Consequence: Crown-of-thorns starfish and sea urchins multiply unchecked, devouring living coral heads and turning vibrant reefs into dead rubble.\n  - Practical Action: Establishing Marine Protected Areas (MPAs) where fishing is strictly prohibited lets reef fish populations recover and restore ecological equilibrium.\n• Situation 3: Designing a School Native Pollinator Garden\n  - Practical Action: Grade 6 pupils establish a dedicated school biodiversity sanctuary planting endemic flowering shrubs to support native honeybees and butterfly pollinators.\n\nKEY TAKEAWAYS:\n• Food webs provide ecological stability through multi-pathway energy networks.\n• Symbiotic relationships govern species interactions (mutualism, commensalism, parasitism, predation, competition).\n• Practical human interventions (mangrove planting, marine reserves, pollinator gardens) restore ecosystem health.",
             "slides": [
                 {
-                    "title": "Ecosystem Relationships & Food Webs",
-                    "content": "Grade 6 — Term 2 Life Science\n\nComplex ecological webs: Food webs, symbiotic partnerships, and biotic-abiotic cycles.",
+                    "title": "Ecosystem Relationships & Practical Solutions",
+                    "content": "Grade 6 — Term 2: Life Science\n(Enhanced DepEd Curriculum)\n\nExplore food webs, symbiotic partnerships, and practical actions to protect Philippine ecosystems.",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
-                    "title": "Biotic vs Abiotic Factors",
-                    "content": "The Two Halves of Every Ecosystem:\n• Biotic Factors (Living): Plants, herbivores, carnivores, fungi, bacteria\n• Abiotic Factors (Non-Living Physical): Sunlight intensity, temperature, rainfall, dissolved oxygen, soil minerals, pH\n• Constant interaction: Sunlight and water dictate what vegetation thrives; vegetation feeds the animal community",
+                    "title": "Biotic & Abiotic Interactions",
+                    "content": "The Living and Physical Worlds Intertwined:\n• Biotic Factors: Producers, herbivores, predators, fungi, soil microbes\n• Abiotic Factors: Sunlight, temperature, rainfall, dissolved oxygen, salinity\n• Healthy ecosystems require balance between physical conditions and living communities!",
                     "mediaType": "none",
                     "mediaUrl": ""
-                },
-                {
-                    "title": "Food Webs: Interconnected Stability",
-                    "content": "Why webs are stronger than single chains:\n• Animals eat diverse prey species, not just one food source\n• Keystone Predators: Keep prey populations from exploding and overconsuming vegetation\n• Trophic Cascade: Eliminating top predators triggers ecological collapse!",
-                    "mediaType": "step",
-                    "mediaUrl": "Producers: Seagrass & Phytoplankton\nPrimary: Zooplankton & Herbivore Fish\nSecondary: Squid, Snapper, Reef Crabs\nTertiary \/ Apex: Reef Sharks & Sea Turtles"
                 },
                 {
                     "title": "The Five Symbiotic Relationships",
-                    "content": "Living together in close association:\n• Mutualism (+ \/ +): Both benefit (Corals & algae; Bees & flowers)\n• Commensalism (+ \/ 0): One benefits, other unaffected (Bird nest in tree; Orchids on bark)\n• Parasitism (+ \/ -): Parasite feeds on host (Ticks on dog; Tapeworms in intestine)\n• Predation (+ \/ -): Predator kills prey\n• Competition (- \/ -): Fighting for limited resources",
+                    "content": "How Organisms Live Together:\n• Mutualism (+ \/ +): Both benefit (Corals & algae; Bees & flowers)\n• Commensalism (+ \/ 0): One benefits, other unharmed (Orchids on Narra bark)\n• Parasitism (+ \/ -): Parasite harms host (Ticks, intestinal worms)\n• Predation (+ \/ -): Hunter catches prey\n• Competition (- \/ -): Fighting for limited food or territory",
+                    "mediaType": "step",
+                    "mediaUrl": "Step 1: Identify participating species A and B\nStep 2: Does Species A benefit (+)?\nStep 3: Does Species B benefit (+), suffer (-), or stay neutral (0)?\nStep 4: Classify: Mutualism, Commensalism, or Parasitism!"
+                },
+                {
+                    "title": "Practical Situation: Mangrove Restoration",
+                    "content": "Real-World Philippine Application:\n• Bakawan mangroves serve as natural storm surge wave barriers and fish nurseries\n• Planting native mangrove propagules along muddy coastlines protects barangays from typhoons and restores fisheries\n• Practical science drives community resilience!",
                     "mediaType": "none",
                     "mediaUrl": ""
                 },
                 {
-                    "title": "Ecosystem Symbiosis Quiz",
-                    "content": "What ecological relationship exists between an aerial orchid growing on the trunk of a giant narra tree?\nA) Parasitism (orchid steals tree sap)\nB) Commensalism (orchid gains sunlight height; tree is neither helped nor harmed)\nC) Predation\nD) Mutualism\n\nCorrect Answer: B (Commensalism: orchid benefits while tree is unharmed!)",
+                    "title": "Assessment: Ecosystems & Practical Action",
+                    "content": "Check Your Understanding (Answer Key: 1-A, 2-A, 3-A, 4-A, 5-A):\n1. A food web represents an interconnected network of food chains (A)\n2. Mutualism is a symbiotic relationship where both organisms benefit (A)\n3. Algae provide food via photosynthesis while coral polyps provide shelter (A)\n4. Orchids attached to trees represent commensalism because the tree is unharmed (A)\n5. Reforesting mangroves restores juvenile fish nurseries and stops storm surges (A)",
                     "mediaType": "none",
                     "mediaUrl": ""
                 }
@@ -202,7 +202,7 @@
             "grade": "6",
             "topic": "Human Body Systems (Circulatory and Nervous Systems)",
             "difficulty": "Medium",
-            "text": "What is the role of blood platelets when you accidentally cut your finger? | A: They adhere to the injured vessel walls and form a fibrin clot to stop blood loss B: They carry oxygen C: They digest food D: They generate white blood cells"
+            "text": "Why does an athlete's pulse rate accelerate from 72 bpm to 150 bpm during a 100-meter sprint? | A: Leg muscles consume oxygen rapidly, prompting the brainstem to increase cardiac output and blood delivery B: Blood turns to water C: The heart stops beating D: Lungs shrink"
         },
         {
             "grade": "6",
@@ -214,31 +214,31 @@
             "grade": "6",
             "topic": "Reproduction in Plants",
             "difficulty": "Easy",
-            "text": "Which part of a flower develops into the fertile seed after fertilization? | A: Ovule B: Petal C: Sepal D: Anther"
+            "text": "Which asexual plant propagation method involves joining a scion branch to a rooted rootstock? | A: Grafting B: Pollination C: Seed germination D: Double fertilization"
         },
         {
             "grade": "6",
             "topic": "Reproduction in Plants",
             "difficulty": "Easy",
-            "text": "What part of a flower ripens into the fleshy edible fruit? | A: Ovary B: Stigma C: Filament D: Style"
+            "text": "In marcotting (air layering), what is wrapped around the debarked tree branch to stimulate root growth? | A: Moist coconut coir or sphagnum moss enclosed in plastic B: Dry sand C: Hot candle wax D: Metal foil only"
         },
         {
             "grade": "6",
             "topic": "Reproduction in Plants",
             "difficulty": "Medium",
-            "text": "How does the sticky surface of a flower's stigma assist in sexual reproduction? | A: It traps pollen grains delivered by visiting insects or wind currents B: It absorbs rainwater C: It repels bees D: It makes honey"
+            "text": "Which Philippine plant naturally reproduces asexually through tiny plantlets growing along its leaf margins? | A: Katakataka (Bryophyllum) B: Coconut tree C: Corn plant D: Narra tree"
         },
         {
             "grade": "6",
             "topic": "Reproduction in Plants",
             "difficulty": "Medium",
-            "text": "Why have coconut palms evolved thick, fibrous, air-filled husks around their seeds? | A: To float buoyant across ocean waves and colonize distant coastlines B: To make seeds sink C: To attract monkeys D: To stay warm in snow"
+            "text": "Why must a farmer carefully align the vascular cambium layers when grafting a sweet mango scion onto a rootstock? | A: The cambium contains dividing cells that fuse xylem and phloem vessels together for sap transport B: To make the stem straight C: To change flower color D: To prevent sunlight damage"
         },
         {
             "grade": "6",
             "topic": "Reproduction in Plants",
             "difficulty": "Hard",
-            "text": "Distinguish self-pollination from cross-pollination. Why is cross-pollination genetically superior? | A: Cross-pollination transfers pollen between different plants of the same species, increasing genetic variation and disease resilience B: Self-pollination produces animals C: Cross-pollination requires no pollen D: Both produce clones"
+            "text": "Why do commercial fruit orchard growers prefer asexual grafting over planting seeds from delicious fruits? | A: Grafted trees produce identical true-to-type fruit and bear harvest in 2-3 years, while seed-grown trees take 7-10 years with unpredictable quality B: Seeds never grow in soil C: Grafting creates new seeds D: Seed trees are always poisonous"
         },
         {
             "grade": "6",
@@ -256,13 +256,13 @@
             "grade": "6",
             "topic": "Vertebrates and Invertebrates",
             "difficulty": "Medium",
-            "text": "Why is a dolphin classified as a mammal rather than a fish? | A: It breathes air with lungs, gives live birth, is warm-blooded, and nurses young with milk B: It has gills C: It has scales D: It lays eggs in sand"
+            "text": "Why is the Philippine Tarsier classified as a mammal rather than an amphibian or reptile? | A: It has fur, breathes with lungs, is warm-blooded, and nurses its young with milk B: It has scales C: It lays eggs in water D: It has feathers"
         },
         {
             "grade": "6",
             "topic": "Vertebrates and Invertebrates",
             "difficulty": "Medium",
-            "text": "What type of skeleton protects insects and crustaceans, and what phylum do they belong to? | A: Chitinous exoskeleton; Phylum Arthropoda B: Endoskeleton; Chordata C: Shell; Mollusca D: Spines; Echinodermata"
+            "text": "What type of skeleton protects beetles and crabs, and what phylum do they belong to? | A: Chitinous exoskeleton; Phylum Arthropoda B: Endoskeleton; Chordata C: Shell; Mollusca D: Spines; Echinodermata"
         },
         {
             "grade": "6",
@@ -298,7 +298,7 @@
             "grade": "6",
             "topic": "Ecosystem Relationships (Food Webs, Interaction Among Living Things, Biotic and Abiotic Factors in an Ecosystem)",
             "difficulty": "Hard",
-            "text": "Predict the ecological impact on a Philippine mangrove ecosystem if industrial overfishing eliminates 90% of predatory groupers and snappers. | A: Predation release causes herbivorous crab populations to explode, which overconsume mangrove seedlings and destroy coastal forest regeneration B: Fish multiply infinitely C: Mangroves grow faster D: No effect"
+            "text": "In a practical Philippine coastal conservation project, how does reforesting mangrove (bakawan) trees protect both marine life and human communities? | A: Mangrove roots provide calm nursery grounds for juvenile fish and break destructive typhoon storm surge waves B: Mangroves make ocean water fresh C: Mangroves stop all rain D: Mangroves replace coral reefs entirely"
         }
     ]
 }
