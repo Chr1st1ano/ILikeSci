@@ -300,6 +300,68 @@ if ($createdLessonId) {
     assert_test("Lesson Builder DELETE removes test lesson cleanly", is_array($deleteRes) && ($deleteRes['status'] ?? '') === 'success');
 }
 
+// --- SUITE 12: PDF VISUAL PRESENTATION PIPELINE & PRODUCTION VERIFICATION ---
+echo "\n" . CLR_YELLOW . CLR_BOLD . "12. PDF Visual Presentation Pipeline & Production Verification" . CLR_RESET . "\n";
+
+// 1. Check Python PDF rendering capability
+$pythonPaths = [
+    'C:\\Users\\08oyo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe',
+    'C:\\Users\\08oyo\\AppData\\Local\\Python\\bin\\python.exe',
+    'python', 'py', 'python3'
+];
+$pyExe = '';
+foreach ($pythonPaths as $pp) {
+    $tOut = @shell_exec(escapeshellarg($pp) . " -c \"import pymupdf; print('OK')\" 2>&1");
+    if ($tOut && trim($tOut) === 'OK') {
+        $pyExe = $pp;
+        break;
+    }
+}
+assert_test("Python PyMuPDF engine is installed and operational", !empty($pyExe));
+assert_test("pdf_to_images.py conversion script exists on disk", file_exists(__DIR__ . '/pdf_to_images.py'));
+
+// 2. Verify database records for PDF presentations
+$pdfUploadsCount = (int)$pdo->query("SELECT COUNT(*) FROM pptx_uploads WHERE file_type = 'pdf' AND has_images = 1")->fetchColumn();
+assert_test("Curriculum PDF presentations imported into database (>= 15)", $pdfUploadsCount >= 15, "Found: $pdfUploadsCount");
+
+// 3. Verify Grade distribution
+$g3Pdfs = (int)$pdo->query("SELECT COUNT(*) FROM pptx_uploads WHERE file_type = 'pdf' AND grade = '3'")->fetchColumn();
+$g4Pdfs = (int)$pdo->query("SELECT COUNT(*) FROM pptx_uploads WHERE file_type = 'pdf' AND grade = '4'")->fetchColumn();
+$g5Pdfs = (int)$pdo->query("SELECT COUNT(*) FROM pptx_uploads WHERE file_type = 'pdf' AND grade = '5'")->fetchColumn();
+$g6Pdfs = (int)$pdo->query("SELECT COUNT(*) FROM pptx_uploads WHERE file_type = 'pdf' AND grade = '6'")->fetchColumn();
+assert_test("Grade 3 PDF presentations present (>= 5)", $g3Pdfs >= 5, "Found: $g3Pdfs");
+assert_test("Grade 4 PDF presentations present (>= 6)", $g4Pdfs >= 6, "Found: $g4Pdfs");
+assert_test("Grade 5 PDF presentations present (>= 3)", $g5Pdfs >= 3, "Found: $g5Pdfs");
+assert_test("Grade 6 PDF presentations present (>= 3)", $g6Pdfs >= 3, "Found: $g6Pdfs");
+
+// 4. Verify Grade 6 PPTX presentation
+$g6Pptx = (int)$pdo->query("SELECT COUNT(*) FROM pptx_uploads WHERE original_name LIKE '%Changes in Matter%' AND has_images = 1")->fetchColumn();
+assert_test("Grade 6 Changes in Matter PPTX presentation converted and verified", $g6Pptx > 0);
+
+// 5. Test API slides endpoint on a PDF presentation
+$samplePdf = $pdo->query("SELECT id, slides_dir, slide_count, original_name FROM pptx_uploads WHERE file_type = 'pdf' LIMIT 1")->fetch(PDO::FETCH_ASSOC);
+if ($samplePdf) {
+    $pdfSlidesRes = run_endpoint('pptx_api.php', 'GET', ['action' => 'slides', 'id' => (string)$samplePdf['id']]);
+    assert_test("GET pptx_api.php?action=slides returns visual slides for PDF deck", is_array($pdfSlidesRes) && ($pdfSlidesRes['status'] ?? '') === 'success' && !empty($pdfSlidesRes['slides']));
+    assert_test("PDF presentation has has_images=true for visual viewer mode", !empty($pdfSlidesRes['has_images']));
+
+    // 6. Verify slide 1 image file exists on disk and is non-empty
+    $firstSlideFile = __DIR__ . '/' . $samplePdf['slides_dir'] . 'slide_1.png';
+    assert_test("First slide PNG image exists on disk for PDF deck", file_exists($firstSlideFile) && filesize($firstSlideFile) > 1000);
+}
+
+// 7. Test PDF raw endpoint
+if ($samplePdf) {
+    $pdfRawRes = run_endpoint('pptx_api.php', 'GET', ['action' => 'pdf_raw', 'id' => (string)$samplePdf['id']]);
+    // The response is binary PDF string starting with %PDF
+    $isPdfHeader = is_string($pdfRawRes) && strpos($pdfRawRes, '%PDF') === 0;
+    assert_test("GET pptx_api.php?action=pdf_raw serves original PDF document", $isPdfHeader);
+}
+
+// 8. Verify curriculum lesson linkage
+$unlinkedPdfs = (int)$pdo->query("SELECT COUNT(*) FROM pptx_uploads WHERE file_type = 'pdf' AND (curriculum_lesson_id IS NULL OR curriculum_lesson_id = 0)")->fetchColumn();
+assert_test("All curriculum PDF presentations are linked to curriculum lessons", $unlinkedPdfs === 0, "Unlinked: $unlinkedPdfs");
+
 // --- SUMMARY ---
 echo "\n" . CLR_CYAN . CLR_BOLD . "=======================================================" . CLR_RESET . "\n";
 echo CLR_BOLD . "TEST RESULTS: " . ($passedTests === $totalTests ? CLR_GREEN : CLR_RED) . "$passedTests / $totalTests PASSED" . CLR_RESET . "\n";

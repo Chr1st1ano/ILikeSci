@@ -138,23 +138,33 @@
           </div>
         </div>
 
-        <!-- Presentations Tab (PPTX) -->
+        <!-- Presentations Tab (PPTX & PDF) -->
         <div id="tab-presentations" class="tab-content hidden">
           <div class="glass-card mt-20">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
               <div>
-                <h3><i class="fa-solid fa-file-powerpoint text-primary"></i> PowerPoint Presentations</h3>
-                <p class="subtitle">Upload .pptx files and present them in the Canva-style viewer</p>
+                <h3><i class="fa-solid fa-file-powerpoint text-primary"></i> Slide Presentations (PPTX & PDF)</h3>
+                <p class="subtitle">Present DepEd interactive slide decks (.pptx and .pdf) in the Canva-style viewer</p>
               </div>
-              <button class="btn btn-success" onclick="app.showPPTXUploadModal()">
-                <i class="fa-solid fa-upload"></i> Import PPTX
-              </button>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-secondary" onclick="app.syncAllCurriculumPDFs()" title="Scan and import all curriculum PDFs and PPTX presentations from the pdfs folder">
+                  <i class="fa-solid fa-rotate"></i> Sync All PDFs
+                </button>
+                <button class="btn btn-success" onclick="app.showPPTXUploadModal()">
+                  <i class="fa-solid fa-upload"></i> Import Presentation
+                </button>
+              </div>
             </div>
             <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px;">
               <div style="position:relative;flex:2;min-width:180px;">
                 <i class="fa-solid fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;"></i>
                 <input type="text" id="pptx-search" class="form-control" placeholder="Search presentations..." style="padding-left:34px;" oninput="app.loadPPTXList()">
               </div>
+              <select id="pptx-format" class="form-control" style="flex:1;min-width:120px;" onchange="app.loadPPTXList()">
+                <option value="all">All Formats</option>
+                <option value="pdf">PDF Presentations</option>
+                <option value="pptx">PowerPoint (.pptx)</option>
+              </select>
               <select id="pptx-sort" class="form-control" style="flex:1;min-width:140px;" onchange="app.loadPPTXList()">
                 <option value="date">Sort by Date</option>
                 <option value="name">Sort by Name</option>

@@ -5039,8 +5039,8 @@ function showPPTXUploadModal() {
   modal.className = 'export-modal';
   modal.innerHTML = `
     <div class="glass-card export-modal-content">
-      <h2 style="margin-bottom:20px;"><i class="fa-solid fa-file-powerpoint text-primary"></i> Import PowerPoint</h2>
-      <p class="text-muted" style="margin-bottom:16px;">Upload a .pptx file to extract slides and present in the viewer</p>
+      <h2 style="margin-bottom:20px;"><i class="fa-solid fa-file-powerpoint text-primary"></i> Import Presentation (PPTX / PDF)</h2>
+      <p class="text-muted" style="margin-bottom:16px;">Upload a .pptx or .pdf presentation to generate interactive slides for the viewer</p>
 
       <div class="form-group" style="margin-bottom:14px;">
         <label>Grade Level</label>
@@ -5070,22 +5070,22 @@ function showPPTXUploadModal() {
       </div>
 
       <div id="pptx-drop-zone" style="border:2px dashed var(--glass-border);border-radius:12px;padding:30px;text-align:center;margin-bottom:20px;cursor:pointer;" onclick="document.getElementById('pptx-file-input').click()">
-        <i class="fa-solid fa-file-powerpoint" style="font-size:40px;color:var(--primary);margin-bottom:10px;display:block;"></i>
-        <p style="color:var(--text-muted);">Click to browse or drag .pptx files here (multiple allowed)</p>
+        <i class="fa-solid fa-file-arrow-up" style="font-size:40px;color:var(--primary);margin-bottom:10px;display:block;"></i>
+        <p style="color:var(--text-muted);">Click to browse or drag .pptx / .pdf presentation files here</p>
         <p id="pptx-file-name" style="color:var(--primary);margin-top:8px;font-weight:600;"></p>
-        <input type="file" id="pptx-file-input" class="hidden" accept=".pptx" multiple onchange="var n=this.files.length; var sz=0; for(var i=0;i<n;i++) sz+=this.files[i].size; document.getElementById('pptx-file-name').textContent = n ? n+' file(s) — '+(sz/1024/1024).toFixed(1)+' MB total' : ''">
+        <input type="file" id="pptx-file-input" class="hidden" accept=".pptx,.pdf" multiple onchange="var n=this.files.length; var sz=0; for(var i=0;i<n;i++) sz+=this.files[i].size; document.getElementById('pptx-file-name').textContent = n ? n+' file(s) — '+(sz/1024/1024).toFixed(1)+' MB total' : ''">
       </div>
 
       <div id="pptx-upload-progress" class="hidden" style="margin-bottom:16px;">
         <div style="background:rgba(255,255,255,0.08);border-radius:8px;overflow:hidden;height:6px;">
           <div id="pptx-progress-bar" style="height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0%;transition:width 0.3s;"></div>
         </div>
-        <p id="pptx-upload-status" style="color:var(--text-muted);font-size:0.85rem;margin-top:6px;text-align:center;">Uploading...</p>
+        <p id="pptx-upload-status" style="color:var(--text-muted);font-size:0.85rem;margin-top:6px;text-align:center;">Uploading & converting slides...</p>
       </div>
 
       <div style="display:flex;gap:12px;justify-content:flex-end;">
         <button class="btn btn-secondary" onclick="document.getElementById('pptx-upload-modal').remove()">Cancel</button>
-        <button class="btn btn-success" id="pptx-upload-btn" onclick="app.uploadPPTX()"><i class="fa-solid fa-upload"></i> Upload & Extract Slides</button>
+        <button class="btn btn-success" id="pptx-upload-btn" onclick="app.uploadPPTX()"><i class="fa-solid fa-upload"></i> Upload & Convert Slides</button>
       </div>
     </div>
   `;
@@ -5096,13 +5096,16 @@ function showPPTXUploadModal() {
 async function uploadPPTX() {
   const fileInput = document.getElementById('pptx-file-input');
   if (!fileInput || !fileInput.files.length) {
-    alert('Please select .pptx file(s) first.');
+    alert('Please select .pptx or .pdf presentation file(s) first.');
     return;
   }
 
-  const files = Array.from(fileInput.files).filter(f => f.name.toLowerCase().endsWith('.pptx'));
+  const files = Array.from(fileInput.files).filter(f => {
+    const fn = f.name.toLowerCase();
+    return fn.endsWith('.pptx') || fn.endsWith('.pdf');
+  });
   if (files.length === 0) {
-    alert('Only .pptx files are supported. Old .ppt format cannot be parsed.');
+    alert('Please select .pptx or .pdf presentation files.');
     return;
   }
 
@@ -5181,6 +5184,15 @@ async function loadPPTXList() {
         );
       }
 
+      // Format filter (pptx, pdf, all)
+      const formatFilter = (document.getElementById('pptx-format') || {}).value || 'all';
+      if (formatFilter !== 'all') {
+        uploads = uploads.filter(u => {
+          const isPdf = u.file_type === 'pdf' || (u.original_name && u.original_name.toLowerCase().endsWith('.pdf'));
+          return formatFilter === 'pdf' ? isPdf : !isPdf;
+        });
+      }
+
       // Sort
       const sortBy = (document.getElementById('pptx-sort') || {}).value || 'date';
       const sortDir = typeof getPPTXSortDir === 'function' ? getPPTXSortDir() : 'desc';
@@ -5197,7 +5209,7 @@ async function loadPPTXList() {
       });
 
       if (uploads.length === 0) {
-        container.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted);">No presentations match "${searchQ}"</div>`;
+        container.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-muted);">No presentations match current filters.</div>`;
         return;
       }
 
@@ -5207,16 +5219,24 @@ async function loadPPTXList() {
         const date = new Date(upload.created_at).toLocaleDateString();
         const slideLabel = upload.slide_count === 1 ? '1 slide' : `${upload.slide_count} slides`;
 
+        const isPdf = upload.file_type === 'pdf' || (upload.original_name && upload.original_name.toLowerCase().endsWith('.pdf'));
+        const typeBadge = isPdf
+          ? '<span style="font-size:0.7rem;background:rgba(239,68,68,0.2);color:#ef4444;border:1px solid rgba(239,68,68,0.3);padding:2px 6px;border-radius:4px;margin-left:4px;font-weight:700;"><i class="fa-solid fa-file-pdf"></i> PDF</span>'
+          : '<span style="font-size:0.7rem;background:rgba(249,115,22,0.2);color:#f97316;border:1px solid rgba(249,115,22,0.3);padding:2px 6px;border-radius:4px;margin-left:4px;font-weight:700;"><i class="fa-solid fa-file-powerpoint"></i> PPTX</span>';
+
+        const iconBg = isPdf ? 'linear-gradient(135deg,#e11d48,#be123c)' : 'linear-gradient(135deg,#d35230,#e8734a)';
+        const iconClass = isPdf ? 'fa-solid fa-file-pdf' : 'fa-solid fa-file-powerpoint';
+
         const modeLabel = upload.has_images == 1 ? '<span style="font-size:0.7rem;background:rgba(6,214,160,0.2);color:#06d6a0;padding:2px 6px;border-radius:4px;margin-left:4px;">Visual</span>' : '<span style="font-size:0.7rem;background:rgba(255,209,102,0.2);color:#ffd166;padding:2px 6px;border-radius:4px;margin-left:4px;">Text</span>';
 
         return `
           <div class="lesson-item-card" style="margin-bottom:10px;">
             <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:0;">
-              <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#d35230,#e8734a);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <i class="fa-solid fa-file-powerpoint" style="color:#fff;font-size:1.2rem;"></i>
+              <div style="width:44px;height:44px;border-radius:10px;background:${iconBg};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="${iconClass}" style="color:#fff;font-size:1.2rem;"></i>
               </div>
               <div style="min-width:0;">
-                <div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${upload.original_name}">${upload.topic || upload.original_name}${modeLabel}</div>
+                <div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${upload.original_name}">${upload.topic || upload.original_name}${typeBadge}${modeLabel}</div>
                 <div style="font-size:0.8rem;color:var(--text-muted);">${gradeLabel} ${quarterLabel} · ${slideLabel} · ${date}</div>
               </div>
             </div>
@@ -5236,12 +5256,12 @@ async function loadPPTXList() {
         <div style="text-align:center;padding:40px 20px;color:var(--text-muted);">
           <i class="fa-solid fa-file-powerpoint" style="font-size:48px;opacity:0.2;margin-bottom:12px;display:block;"></i>
           <p>No presentations uploaded yet</p>
-          <p style="font-size:0.85rem;margin-top:6px;">Click <strong>Import PPTX</strong> to upload a PowerPoint file</p>
+          <p style="font-size:0.85rem;margin-top:6px;">Click <strong>Import Presentation</strong> or <strong>Sync All PDFs</strong> to get started</p>
         </div>
       `;
     }
   } catch (err) {
-    console.error('Failed to load PPTX list:', err);
+    console.error('Failed to load presentations list:', err);
     container.innerHTML = '<div style="text-align:center;padding:20px;color:#ff6b6b;"><i class="fa-solid fa-triangle-exclamation"></i> Could not load presentations. Is XAMPP running?</div>';
   }
 }
@@ -5264,8 +5284,28 @@ async function deletePPTX(id, name) {
       alert('Delete failed: ' + (data.message || 'Unknown error'));
     }
   } catch (err) {
-    console.error('PPTX delete error:', err);
+    console.error('Presentation delete error:', err);
     alert('Delete failed: Network error. Is XAMPP running?');
+  }
+}
+
+async function syncAllCurriculumPDFs() {
+  if (!confirm('Scan and sync all DepEd curriculum PDF presentations from the pdfs folder?\n\nThis will ensure all 20 DepEd science slide decks are imported and ready for classroom presentation.')) return;
+
+  const notif = document.createElement('div');
+  notif.style = 'position:fixed;bottom:24px;right:24px;background:#1e293b;border:1px solid var(--primary);color:#fff;padding:16px 20px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;gap:12px;';
+  notif.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-primary"></i> Syncing curriculum PDF presentations...';
+  document.body.appendChild(notif);
+
+  try {
+    const res = await fetch('import_all_curriculum_pdfs.php');
+    notif.innerHTML = '<i class="fa-solid fa-circle-check text-success"></i> PDF presentations synchronized successfully!';
+    setTimeout(() => notif.remove(), 2500);
+    loadPPTXList();
+    if (typeof refreshAllTopicSelectors === 'function') refreshAllTopicSelectors();
+  } catch (e) {
+    notif.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-danger"></i> Sync error: ' + e.message;
+    setTimeout(() => notif.remove(), 4000);
   }
 }
 
@@ -5805,8 +5845,8 @@ async function handleResourceDrop(files) {
     statusEl.innerHTML = `⏳ Processing: <strong>${file.name}</strong>...`;
 
     // 1. Classification & Upload
-    if (ext === 'pptx') {
-      // PPTX classification -> Upload to pptx_api.php
+    if (ext === 'pptx' || ext === 'pdf') {
+      // Presentation classification -> Upload to pptx_api.php
       const formData = new FormData();
       formData.append('pptx', file);
       formData.append('grade', grade);
@@ -5816,9 +5856,9 @@ async function handleResourceDrop(files) {
         const res = await fetch('pptx_api.php', { method: 'POST', body: formData });
         const data = await res.json();
         if (data.status === 'success') {
-          statusEl.innerHTML = `✅ Successfully converted <strong>${file.name}</strong> to slides!`;
+          statusEl.innerHTML = `✅ Successfully converted <strong>${file.name}</strong> to presentation slides!`;
           if (typeof refreshAllTopicSelectors === 'function') await refreshAllTopicSelectors();
-          alert(`PowerPoint converted successfully!\nWe created a lesson and generated slides.`);
+          alert(`Presentation converted successfully!\nWe created a lesson and generated ${data.slide_count || ''} slides.`);
         } else {
           statusEl.innerHTML = `❌ Conversion failed for <strong>${file.name}</strong>: ${data.message}`;
         }
@@ -6181,17 +6221,18 @@ window.app = {
   loadAdminUsers,
   adminCreateUser,
   adminCreateStudent,
+  // PPTX & PDF Presentation Upload & Playback
+  showPPTXUploadModal,
+  uploadPPTX,
+  loadPPTXList,
+  deletePPTX,
+  syncAllCurriculumPDFs,
   autoGenerateDemoQuestions,
   adminEditUser,
   adminSaveUser,
   adminDeleteUser,
   downloadEClassRecord,
   previewEClassRecord,
-  // PPTX Upload & Playback
-  showPPTXUploadModal,
-  uploadPPTX,
-  loadPPTXList,
-  deletePPTX,
   // AI Integration
   checkAIStatus,
   aiGenerateQuestions,

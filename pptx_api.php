@@ -40,6 +40,7 @@ try {
         curriculum_lesson_id $intCol DEFAULT NULL,
         slides_dir $textCol DEFAULT '',
         has_images $tinyIntCol DEFAULT 0,
+        file_type $shortCol DEFAULT 'pptx',
         uploaded_by $shortCol DEFAULT '',
         created_at $timeCol
     )");
@@ -52,6 +53,10 @@ try {
     if (!db_column_exists($pdo, 'pptx_uploads', 'has_images')) {
         $colType = is_sqlite() ? "INTEGER DEFAULT 0" : "TINYINT DEFAULT 0";
         $pdo->exec("ALTER TABLE pptx_uploads ADD COLUMN has_images $colType");
+    }
+    if (!db_column_exists($pdo, 'pptx_uploads', 'file_type')) {
+        $colType = is_sqlite() ? "TEXT DEFAULT 'pptx'" : "VARCHAR(20) DEFAULT 'pptx'";
+        $pdo->exec("ALTER TABLE pptx_uploads ADD COLUMN file_type $colType");
     }
 } catch (Exception $e) { /* ignore */ }
 
@@ -82,6 +87,30 @@ if ($method === 'GET') {
             header('Content-Type: image/png');
             header('Cache-Control: public, max-age=86400');
             readfile($imgPath);
+        } else {
+            http_response_code(404);
+        }
+        exit;
+    }
+
+    // Serve raw PDF file if requested for viewer
+    if ($action === 'pdf_raw' && isset($_GET['id'])) {
+        $id = (int)$_GET['id'];
+        $stmt = $pdo->prepare("SELECT filename, original_name FROM pptx_uploads WHERE id = ?");
+        $stmt->execute([$id]);
+        $upload = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$upload) {
+            http_response_code(404);
+            exit;
+        }
+
+        $pdfPath = $uploadDir . $upload['filename'];
+        if (file_exists($pdfPath)) {
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: inline; filename="' . basename($upload['original_name']) . '"');
+            header('Cache-Control: public, max-age=86400');
+            readfile($pdfPath);
         } else {
             http_response_code(404);
         }
@@ -217,17 +246,17 @@ if ($method === 'POST') {
     }
 
     // Handle file upload
-    if (!isset($_FILES['pptx']) || $_FILES['pptx']['error'] !== UPLOAD_ERR_OK) {
+    $file = $_FILES['pptx'] ?? ($_FILES['file'] ?? ($_FILES['pdf'] ?? null));
+    if (!$file || $file['error'] !== UPLOAD_ERR_OK) {
         echo json_encode(["status" => "error", "message" => "No file uploaded or upload error"]);
         exit;
     }
 
-    $file = $_FILES['pptx'];
     $originalName = $file['name'];
     $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
 
-    if ($ext !== 'pptx') {
-        echo json_encode(["status" => "error", "message" => "Only .pptx files are supported. Old .ppt format cannot be parsed."]);
+    if ($ext !== 'pptx' && $ext !== 'pdf') {
+        echo json_encode(["status" => "error", "message" => "Only .pptx and .pdf presentation files are supported."]);
         exit;
     }
 
@@ -236,20 +265,21 @@ if ($method === 'POST') {
     $topic = $_POST['topic'] ?? '';
     $uploadedBy = $_POST['username'] ?? '';
 
-    // Auto-detect grade/quarter from filename like PPT_SCIENCE_G4_Q3_W4.pptx
-    if (!$grade && preg_match('/G(\d+)/i', $originalName, $gm)) {
+    // Auto-detect grade/quarter from filename
+    if (!$grade && preg_match('/G(?:rade)?[-_\s]*(\d+)/i', $originalName, $gm)) {
         $grade = $gm[1];
     }
-    if (!$quarter && preg_match('/Q(\d+)/i', $originalName, $qm)) {
+    if (!$quarter && preg_match('/Q(?:uarter)?[-_\s]*(\d+)/i', $originalName, $qm)) {
         $quarter = $qm[1];
     }
     if (!$topic) {
-        $topic = preg_replace('/\.(pptx?|ppt)$/i', '', $originalName);
+        $topic = preg_replace('/\.(pptx?|ppt|pdf)$/i', '', $originalName);
         $topic = str_replace(['_', '-'], ' ', $topic);
     }
 
-    // Save PPTX file
-    $savedName = 'pptx_' . time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $originalName);
+    // Save presentation file
+    $savedPrefix = $ext === 'pdf' ? 'pdf_' : 'pptx_';
+    $savedName = $savedPrefix . time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $originalName);
     $savedPath = $uploadDir . $savedName;
     move_uploaded_file($file['tmp_name'], $savedPath);
 
@@ -261,6 +291,7 @@ if ($method === 'POST') {
     $hasImages = false;
     $slideCount = 0;
     $conversionMessage = '';
+    $extractedSlides = [];
 
     // Find Python executable
     $pythonCmd = '';
@@ -283,47 +314,99 @@ if ($method === 'POST') {
     }
 
     if ($pythonCmd) {
-        $scriptPath = __DIR__ . '/pptx_to_images.py';
-        if (file_exists($scriptPath)) {
-            $cmd = escapeshellarg($pythonCmd) . " " . escapeshellarg($scriptPath) . " " . escapeshellarg($savedPath) . " " . escapeshellarg($slidesDirFull) . " 2>&1";
-            $output = shell_exec($cmd);
+        if ($ext === 'pdf') {
+            $scriptPath = __DIR__ . '/pdf_to_images.py';
+            if (file_exists($scriptPath)) {
+                $cmd = escapeshellarg($pythonCmd) . " " . escapeshellarg($scriptPath) . " " . escapeshellarg($savedPath) . " " . escapeshellarg($slidesDirFull) . " 85 2>&1";
+                $output = shell_exec($cmd);
 
-            // Parse Python output — last line should be JSON
-            $lines = explode("\n", trim($output));
-            $jsonLine = end($lines);
-            $result = json_decode($jsonLine, true);
+                $lines = explode("\n", trim($output));
+                $jsonLine = end($lines);
+                $result = json_decode($jsonLine, true);
 
-            if ($result && $result['status'] === 'success') {
-                $hasImages = true;
-                $slideCount = $result['total_slides'];
-                $conversionMessage = "Converted {$slideCount} slides to images";
+                if ($result && $result['status'] === 'success') {
+                    $hasImages = true;
+                    $slideCount = (int)$result['total_slides'];
+                    $conversionMessage = "Converted {$slideCount} PDF slides to images";
+                    if (!empty($result['slides'])) {
+                        foreach ($result['slides'] as $sl) {
+                            $extractedSlides[] = [
+                                'title' => $sl['title'] ?? 'Slide',
+                                'content' => $sl['content'] ?? '',
+                                'type' => $sl['slide_type'] ?? 'content'
+                            ];
+                        }
+                    }
+                    if (!$grade && !empty($result['detected_grade'])) $grade = $result['detected_grade'];
+                    if (!$quarter && !empty($result['detected_quarter'])) $quarter = $result['detected_quarter'];
+                    if (!$topic && !empty($result['detected_topic'])) $topic = $result['detected_topic'];
+                } else {
+                    $conversionMessage = "PDF image conversion failed: " . ($result['message'] ?? 'Unknown error');
+                }
             } else {
-                $conversionMessage = "Image conversion failed, using text fallback";
+                $conversionMessage = "pdf_to_images.py not found";
             }
         } else {
-            $conversionMessage = "pptx_to_images.py not found, using text fallback";
+            // PPTX conversion
+            $scriptPath = __DIR__ . '/pptx_to_images.py';
+            if (file_exists($scriptPath)) {
+                $cmd = escapeshellarg($pythonCmd) . " " . escapeshellarg($scriptPath) . " " . escapeshellarg($savedPath) . " " . escapeshellarg($slidesDirFull) . " 2>&1";
+                $output = shell_exec($cmd);
+
+                $lines = explode("\n", trim($output));
+                $jsonLine = end($lines);
+                $result = json_decode($jsonLine, true);
+
+                if ($result && $result['status'] === 'success') {
+                    $hasImages = true;
+                    $slideCount = (int)$result['total_slides'];
+                    $conversionMessage = "Converted {$slideCount} slides to images";
+                } else {
+                    $conversionMessage = "Image conversion failed, using text fallback";
+                }
+            } else {
+                $conversionMessage = "pptx_to_images.py not found, using text fallback";
+            }
         }
     } else {
         $conversionMessage = "Python not found, using text fallback";
     }
 
     // ---- Step 2: Also extract text (for search/accessibility) ----
-    $slides = extractPPTXSlides($savedPath);
-    if (!$slideCount) $slideCount = count($slides);
+    if ($ext === 'pptx') {
+        $slides = extractPPTXSlides($savedPath);
+        if (!$slideCount) $slideCount = count($slides);
+    } else {
+        $slides = $extractedSlides;
+    }
 
-    // Store as curriculum lesson (text content for search/fallback)
-    $content = implode("\n\n", array_map(function($s) {
-        return $s['title'] . "\n" . $s['content'];
-    }, $slides));
+    // Check if matching curriculum lesson exists to link with
+    $curriculumLessonId = null;
+    if (!empty($topic) && !empty($grade)) {
+        try {
+            $stmtCL = $pdo->prepare("SELECT id FROM curriculum_lessons WHERE grade = ? AND (topic = ? OR topic LIKE ?)");
+            $stmtCL->execute([$grade, $topic, "%$topic%"]);
+            $clId = $stmtCL->fetchColumn();
+            if ($clId) {
+                $curriculumLessonId = (int)$clId;
+            }
+        } catch (Exception $e) {}
+    }
 
-    $castType = is_sqlite() ? "INTEGER" : "UNSIGNED";
-    $stmtLessonNum = $pdo->prepare("SELECT COALESCE(MAX(CAST(lesson_number AS $castType)),0)+1 FROM curriculum_lessons WHERE grade=? AND quarter=?");
-    $stmtLessonNum->execute([$grade, $quarter]);
-    $lessonNum = $stmtLessonNum->fetchColumn();
+    if (!$curriculumLessonId) {
+        $content = implode("\n\n", array_map(function($s) {
+            return ($s['title'] ?? '') . "\n" . ($s['content'] ?? '');
+        }, $slides));
 
-    $stmtLesson = $pdo->prepare("INSERT INTO curriculum_lessons (grade, quarter, lesson_number, topic, content, objectives) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmtLesson->execute([$grade, $quarter, $lessonNum, $topic, $content, '[]']);
-    $curriculumLessonId = $pdo->lastInsertId();
+        $castType = is_sqlite() ? "INTEGER" : "UNSIGNED";
+        $stmtLessonNum = $pdo->prepare("SELECT COALESCE(MAX(CAST(lesson_number AS $castType)),0)+1 FROM curriculum_lessons WHERE grade=? AND quarter=?");
+        $stmtLessonNum->execute([$grade, $quarter]);
+        $lessonNum = $stmtLessonNum->fetchColumn();
+
+        $stmtLesson = $pdo->prepare("INSERT INTO curriculum_lessons (grade, quarter, lesson_number, topic, content, objectives) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmtLesson->execute([$grade, $quarter, $lessonNum, $topic, $content, '[]']);
+        $curriculumLessonId = $pdo->lastInsertId();
+    }
 
     // Ensure topic exists in topics table
     if (!empty($topic) && !empty($grade)) {
@@ -337,25 +420,32 @@ if ($method === 'POST') {
         } catch(Exception $te) {}
     }
 
-    // Store individual text slides
-    $stmtSlide = $pdo->prepare("INSERT INTO lesson_slides (curriculum_lesson_id, slide_number, title, content, slide_type) VALUES (?, ?, ?, ?, ?)");
-    foreach ($slides as $idx => $slide) {
-        $stmtSlide->execute([
-            $curriculumLessonId,
-            $idx + 1,
-            $slide['title'],
-            $slide['content'],
-            $slide['type'] ?? 'content'
-        ]);
+    // If lesson_slides are empty for this lesson, store individual text slides
+    if ($curriculumLessonId && !empty($slides)) {
+        $stmtCount = $pdo->prepare("SELECT COUNT(*) FROM lesson_slides WHERE curriculum_lesson_id = ?");
+        $stmtCount->execute([$curriculumLessonId]);
+        if ($stmtCount->fetchColumn() == 0) {
+            $stmtSlide = $pdo->prepare("INSERT INTO lesson_slides (curriculum_lesson_id, slide_number, title, content, slide_type) VALUES (?, ?, ?, ?, ?)");
+            foreach ($slides as $idx => $slide) {
+                $stmtSlide->execute([
+                    $curriculumLessonId,
+                    $idx + 1,
+                    $slide['title'] ?? "Slide " . ($idx + 1),
+                    $slide['content'] ?? '',
+                    $slide['type'] ?? 'content'
+                ]);
+            }
+        }
     }
 
     // Record in pptx_uploads
-    $stmtUpload = $pdo->prepare("INSERT INTO pptx_uploads (filename, original_name, grade, quarter, topic, slide_count, curriculum_lesson_id, slides_dir, has_images, uploaded_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmtUpload = $pdo->prepare("INSERT INTO pptx_uploads (filename, original_name, grade, quarter, topic, slide_count, curriculum_lesson_id, slides_dir, has_images, file_type, uploaded_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmtUpload->execute([
         $savedName, $originalName, $grade, $quarter, $topic,
         $slideCount, $curriculumLessonId,
         $hasImages ? $slidesDirRelative : '',
         $hasImages ? 1 : 0,
+        $ext,
         $uploadedBy
     ]);
     $uploadId = $pdo->lastInsertId();
