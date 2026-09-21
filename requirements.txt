@@ -1,0 +1,26 @@
+# ==============================================================================
+# ILikeSci - Python Dependencies
+# ==============================================================================
+# Install with: pip install -r requirements.txt
+
+# Slide Rendering & PDF Pipeline (Classroom Presentations)
+PyMuPDF>=1.24.0
+pypdfium2>=4.30.0
+PyPDF2>=3.0.0
+
+# PowerPoint & Image Processing (Lesson Decks & Previews)
+python-pptx>=1.0.0
+Pillow>=10.0.0
+
+# Curriculum Document Ingestion (.docx lesson exemplars)
+python-docx>=1.1.0
+lxml>=5.0.0
+
+# Database Connectivity (MySQL / MariaDB / XAMPP)
+mysql-connector-python>=9.0.0
+PyMySQL>=1.1.0
+
+# Data Management & Excel Export
+pandas>=2.0.0
+openpyxl>=3.1.0
+xlsxwriter>=3.2.0
