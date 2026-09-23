@@ -296,18 +296,23 @@ if ($method === 'POST') {
     // Find Python executable
     $pythonCmd = '';
     $pythonPaths = [
+        __DIR__ . '/venv/bin/python3',
+        __DIR__ . '/venv/bin/python',
         'C:\\Users\\08oyo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe',
         'C:\\Users\\08oyo\\AppData\\Local\\Python\\bin\\python.exe',
+        'python3',
         'python',
         'py',
-        'python3',
         'C:\\Games\\Python3.14\\python.exe',
         'C:\\Python3\\python.exe',
         'C:\\Python\\python.exe'
     ];
     foreach ($pythonPaths as $pp) {
-        $testOut = shell_exec(escapeshellarg($pp) . " --version 2>&1");
-        if ($testOut && stripos($testOut, 'python') !== false) {
+        if ((strpos($pp, '/') !== false || strpos($pp, '\\') !== false) && !file_exists($pp)) {
+            continue;
+        }
+        $testOut = @shell_exec(escapeshellarg($pp) . " --version 2>&1");
+        if ($testOut && preg_match('/^python\s+\d/i', trim($testOut))) {
             $pythonCmd = $pp;
             break;
         }

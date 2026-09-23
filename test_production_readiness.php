@@ -305,12 +305,17 @@ echo "\n" . CLR_YELLOW . CLR_BOLD . "12. PDF Visual Presentation Pipeline & Prod
 
 // 1. Check Python PDF rendering capability
 $pythonPaths = [
+    __DIR__ . '/venv/bin/python3',
+    __DIR__ . '/venv/bin/python',
     'C:\\Users\\08oyo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe',
     'C:\\Users\\08oyo\\AppData\\Local\\Python\\bin\\python.exe',
-    'python', 'py', 'python3'
+    'python3', 'python', 'py'
 ];
 $pyExe = '';
 foreach ($pythonPaths as $pp) {
+    if ((strpos($pp, '/') !== false || strpos($pp, '\\') !== false) && !file_exists($pp)) {
+        continue;
+    }
     $tOut = @shell_exec(escapeshellarg($pp) . " -c \"import pymupdf; print('OK')\" 2>&1");
     if ($tOut && trim($tOut) === 'OK') {
         $pyExe = $pp;
