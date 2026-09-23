@@ -139,10 +139,10 @@
           </div>
           <div class="glass-card mt-20">
             <h3><i class="fa-solid fa-user-graduate text-primary"></i> Create Student Record</h3>
-            <p class="text-muted" style="font-size:13px; margin-bottom:12px;">Add a student record with grade level, section, and quarter score options.</p>
-            <div class="add-user-row mt-10">
-              <input type="text" id="admin-student-name" placeholder="Student Full Name (e.g. abc def ghi)" class="form-control" style="flex:2;">
-              <select id="admin-student-grade" class="form-control" style="max-width:120px;">
+            <p class="text-muted" style="font-size:13px; margin-bottom:12px;">Add a student record with grade level, section, and term score options.</p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <input type="text" id="admin-student-name" class="form-control" placeholder="Full Name (e.g. John Doe)" style="flex:1; min-width:180px;">
+              <select id="admin-student-grade" class="form-control" style="max-width:110px;">
                 <option value="3">Grade 3</option>
                 <option value="4">Grade 4</option>
                 <option value="5">Grade 5</option>
@@ -155,11 +155,11 @@
                 <option value="C">Sec C</option>
               </select>
               <select id="admin-student-quarter" class="form-control" style="max-width:130px;">
-                <option value="1">1st Qtr Only</option>
-                <option value="2">2nd Qtr Only</option>
-                <option value="3">3rd Qtr Only</option>
-                <option value="4">4th Qtr Only</option>
-                <option value="all">All Quarters</option>
+                <option value="1">Term 1 Only</option>
+                <option value="2">Term 2 Only</option>
+                <option value="3">Term 3 Only</option>
+                <option value="4">Term 4 Only</option>
+                <option value="all">All Terms</option>
               </select>
               <button class="btn btn-success" onclick="app.adminCreateStudent()"><i class="fa-solid fa-plus"></i> Create Student</button>
             </div>
@@ -229,7 +229,7 @@
             <h3><i class="fa-solid fa-file-csv text-primary"></i> DepEd E-Class Record Export</h3>
             <p class="text-muted" style="font-size:14px; margin-bottom:16px;">
               Export student grades following DepEd Order 8, s. 2015 format.<br>
-              Weights: Written Work 40% | Performance Task 40% | Quarterly Assessment 20%
+              Weights: Written Work 40% | Performance Task 40% | Term Assessment (QA) 20%
             </p>
             <div class="eclass-controls">
               <div class="form-group">
@@ -253,12 +253,12 @@
                 </select>
               </div>
               <div class="form-group">
-                <label>Quarter</label>
+                <label>Term</label>
                 <select id="eclass-quarter" class="form-control">
-                  <option value="1">Quarter 1</option>
-                  <option value="2">Quarter 2</option>
-                  <option value="3">Quarter 3</option>
-                  <option value="4">Quarter 4</option>
+                  <option value="1">Term 1</option>
+                  <option value="2">Term 2</option>
+                  <option value="3">Term 3</option>
+                  <option value="4">Term 4</option>
                 </select>
               </div>
               <button class="btn btn-success" onclick="app.downloadEClassRecord()">

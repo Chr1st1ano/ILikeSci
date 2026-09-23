@@ -65,7 +65,7 @@
               <button class="btn btn-diff" data-diff="Hard" onclick="app.setDifficulty('Hard')">Hard (5pts)</button>
             </div>
           </div>
-          <div class="glass-card mt-20"><h3>Select Student</h3><div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;"><select id="assess-student" class="form-control" style="flex:1;"></select><button class="btn btn-secondary" onclick="app.suggestStudent()"><i class="fa-solid fa-lightbulb text-warning"></i> Suggest</button><button class="btn btn-primary" onclick="app.openStudentSpinner()"><i class="fa-solid fa-dharmachakra"></i> Spin Wheel</button></div></div>
+          <div class="glass-card mt-20"><h3>Select Student</h3><div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;"><select id="assess-student" class="form-control" style="flex:1;" onchange="if(this.value) state.assessment.studentId = Number(this.value);"></select><button class="btn btn-secondary" onclick="app.suggestStudent()"><i class="fa-solid fa-lightbulb text-warning"></i> Suggest</button><button class="btn btn-primary" onclick="app.openStudentSpinner()"><i class="fa-solid fa-dharmachakra"></i> Spin Wheel</button></div></div>
           <div style="display:flex; gap:12px; margin-top:20px;">
             <button class="btn btn-primary flex-1" onclick="app.startQuizFlash()"><i class="fa-solid fa-play"></i> Start Flash Quiz</button>
             <button class="btn btn-secondary flex-1" onclick="app.openTVDisplay()"><i class="fa-solid fa-display"></i> TV Mode</button>

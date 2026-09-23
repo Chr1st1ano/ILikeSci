@@ -1109,7 +1109,7 @@ async function bulkAddStudents(namesText, grade, section) {
 function resetQuarterRecitations(grade) {
   const gStr = String(grade);
   const targetLabel = gStr === 'all' ? 'ALL Grades' : `Grade ${gStr}`;
-  if (!confirm(`Are you sure you want to reset recitation scores for ${targetLabel}? This is typically done at the start of a new quarter. (Student profiles will NOT be deleted)`)) {
+  if (!confirm(`Are you sure you want to reset recitation scores for ${targetLabel}? This is typically done at the start of a new term. (Student profiles will NOT be deleted)`)) {
     return;
   }
 
@@ -1130,7 +1130,7 @@ function resetQuarterRecitations(grade) {
   if (typeof renderScoreboard === 'function') renderScoreboard();
   if (typeof renderRecords === 'function') renderRecords();
   playChime('correct');
-  alert(`✅ Recitation scores reset successfully for ${targetLabel}! Ready for new quarter.`);
+  alert(`✅ Recitation scores reset successfully for ${targetLabel}! Ready for new term.`);
 }
 
 // --- Materials Management (DB-driven topics) ---
@@ -1578,6 +1578,11 @@ function isBoilerplate(line) {
     'Science 5 Quarter',
     'Science 6 Quarter',
     'Science 7 Quarter',
+    'Science 4 Term',
+    'Science 3 Term',
+    'Science 5 Term',
+    'Science 6 Term',
+    'Science 7 Term',
     'Philippine Normal University',
     'Research Institute',
     'SiMERR',
@@ -1762,7 +1767,7 @@ async function updateAssessmentTopics() {
 
       const opt = document.createElement('option');
       opt.value = lesson.id;
-      const qNum = lesson.quarter ? `Q${lesson.quarter}` : '';
+      const qNum = lesson.quarter ? `Term ${lesson.quarter}` : '';
       const lNum = lesson.lesson_number ? ` L${lesson.lesson_number}` : '';
       opt.textContent = `${qNum}${lNum ? lNum + ': ' : ': '}${lesson.topic}`;
       opt.dataset.topic = lesson.topic;
@@ -1793,19 +1798,26 @@ function renderAssessmentStudents() {
   if(!select) return;
   select.innerHTML = '';
   
-  const gradeStudents = state.students.filter(s => s.grade === state.assessment.grade);
+  const currentGrade = String(state.assessment.grade || document.getElementById('assess-grade')?.value || '4');
+  const gradeStudents = (state.students || []).filter(s => String(s.grade) === currentGrade);
   
   if(gradeStudents.length === 0) {
     select.innerHTML = '<option value="">No students in this grade</option>';
+    state.assessment.studentId = null;
     return;
   }
   
   gradeStudents.forEach(s => {
     const opt = document.createElement('option');
-    opt.value = s.id;
+    opt.value = String(s.id);
     opt.textContent = s.name;
     select.appendChild(opt);
   });
+
+  if (gradeStudents.length > 0) {
+    select.value = String(gradeStudents[0].id);
+    state.assessment.studentId = Number(gradeStudents[0].id);
+  }
 }
 
 // suggestStudent defined later in the file (single definition)
@@ -3026,25 +3038,35 @@ function suggestStudent() {
   const dropdown = document.getElementById('assess-student');
   if(!dropdown) return;
   
-  // Find students with lowest recitations
-  const candidates = [...state.students].sort((a, b) => a.recitations - b.recitations);
-    
-  if(candidates.length > 0) {
-    const suggestion = candidates[0];
-    dropdown.value = suggestion.id;
-    
-    // UI Insight for Participation Tracking
-    const insightText = document.getElementById('participation-text');
-    if (insightText) {
-      if (suggestion.recitations === 0) {
-        insightText.innerHTML = `<span style="color:#ef4444; font-weight:bold;">FAIRNESS CONTROL:</span> ${suggestion.name} has <strong>NOT</strong> participated yet.`;
-      } else {
-        insightText.innerHTML = `Suggested: ${suggestion.name} (${suggestion.recitations} participations so far)`;
-      }
-    }
-    
-    alert(`💡 System suggests ${suggestion.name} for fairness.`);
+  const currentGrade = String(state.assessment.grade || document.getElementById('assess-grade')?.value || '4');
+  const gradeStudents = (state.students || []).filter(s => String(s.grade) === currentGrade);
+  const pool = gradeStudents.length > 0 ? gradeStudents : (state.students || []);
+
+  if(pool.length === 0) {
+    alert('No students found for this grade.');
+    return;
   }
+
+  // Find students with lowest recitations in this grade
+  const candidates = [...pool].sort((a, b) => (Number(a.recitations) || 0) - (Number(b.recitations) || 0));
+  const suggestion = candidates[0];
+  
+  dropdown.value = String(suggestion.id);
+  state.assessment.studentId = Number(suggestion.id);
+  dropdown.dispatchEvent(new Event('change'));
+
+  // UI Insight for Participation Tracking
+  const insightText = document.getElementById('participation-text');
+  if (insightText) {
+    const recs = Number(suggestion.recitations) || 0;
+    if (recs === 0) {
+      insightText.innerHTML = `<span style="color:#ef4444; font-weight:bold;">FAIRNESS CONTROL:</span> ${suggestion.name} has <strong>NOT</strong> participated yet.`;
+    } else {
+      insightText.innerHTML = `Suggested: ${suggestion.name} (${recs} participations so far)`;
+    }
+  }
+  
+  alert(`💡 System suggests ${suggestion.name} for fairness.`);
 }
 
 function recordRubricResult(points) {
@@ -3106,7 +3128,7 @@ async function updateLessonTopics() {
     lessons.forEach(lesson => {
       const opt = document.createElement('option');
       opt.value = lesson.id;
-      opt.textContent = `Q${lesson.quarter} L${lesson.lesson_number}: ${lesson.topic}`;
+      opt.textContent = `Term ${lesson.quarter} L${lesson.lesson_number}: ${lesson.topic}`;
       opt.dataset.curriculumId = lesson.id;
       topicSelect.appendChild(opt);
     });
@@ -3138,7 +3160,9 @@ async function loadLessonContent() {
     if(slides.length > 0) {
       state.lesson.slides = slides.map(slide => ({
         title: slide.title,
-        content: slide.content
+        content: slide.content,
+        mediaType: slide.media_type || 'none',
+        mediaUrl: slide.media_url || ''
       }));
       state.lesson.curriculumId = curriculumId;
       state.lesson.hasQuestions = true;
@@ -3163,8 +3187,8 @@ async function generateSlidesFromCurriculum(curriculumId) {
   const lesson = lessons.find(l => l.id == curriculumId);
   if(lesson) {
     state.lesson.slides = [
-      { title: 'Learning Objectives', content: Array.isArray(lesson.objectives) ? lesson.objectives.join('\n\n') : '' },
-      { title: lesson.topic, content: lesson.content.substring(0, 1000) }
+      { title: 'Learning Objectives', content: Array.isArray(lesson.objectives) ? lesson.objectives.join('\n\n') : (lesson.objectives || '') },
+      { title: lesson.topic, content: (lesson.content || '').substring(0, 1000) }
     ];
     state.lesson.curriculumId = curriculumId;
     state.lesson.hasQuestions = lesson.questions && lesson.questions.length > 0;
@@ -3172,19 +3196,34 @@ async function generateSlidesFromCurriculum(curriculumId) {
 }
 
 async function displayLessonOnTV() {
-  const topic = document.getElementById('lesson-topic').value;
+  const topicSelect = document.getElementById('lesson-topic');
+  const topic = topicSelect ? topicSelect.value : null;
   if(!topic) return alert('Please select a topic first.');
+
+  // Auto-open TV display if closed so lesson is projected
+  if (!tvWindow || tvWindow.closed) {
+    openTVDisplay();
+  }
 
   await loadLessonContent();
 
   const lessonDisplay = document.getElementById('lesson-display');
   const lessonTitle = document.getElementById('lesson-display-title');
-  if(!lessonDisplay || !lessonTitle) return;
+  if(!lessonDisplay) return;
 
-  lessonTitle.textContent = topic;
+  const displayLabel = topicSelect.options[topicSelect.selectedIndex]?.textContent || topic;
+  if (lessonTitle) lessonTitle.textContent = displayLabel;
+
   renderCurrentSlide();
 
   lessonDisplay.classList.remove('hidden');
+
+  // Double sync after window initialization delay
+  setTimeout(() => {
+    if (tvWindow && !tvWindow.closed) {
+      renderCurrentSlide();
+    }
+  }, 600);
 }
 
 function renderCurrentSlide() {
@@ -3552,7 +3591,7 @@ async function renderCustomLessonsList() {
 
       div.innerHTML = `
         <div style="flex:1;">
-          <strong>${lesson.topic}</strong> <span class="badge badge-primary" style="background:var(--primary); padding:2px 8px; border-radius:12px; font-size:11px;">Q${lesson.quarter} L${lesson.lesson_number}</span><br>
+          <strong>${lesson.topic}</strong> <span class="badge badge-primary" style="background:var(--primary); padding:2px 8px; border-radius:12px; font-size:11px;">Term ${lesson.quarter} L${lesson.lesson_number}</span><br>
           <small class="text-muted">Grade ${lesson.grade} | Objectives: ${lesson.objectives ? lesson.objectives.length : 0}</small>
         </div>
         <div style="display:flex; gap:8px;">
@@ -3670,7 +3709,7 @@ function showPPTXUploadModal() {
     <div class="glass-card export-modal-content">
       <h2 style="margin-bottom:20px;"><i class="fa-solid fa-file-powerpoint text-primary"></i> Import PowerPoint</h2>
       <p class="text-muted" style="margin-bottom:16px;">Upload a .pptx file to convert into a Canva-style presentation.<br>
-      Naming format: <code>PPT_SCIENCE_G4_Q3_W4.pptx</code> auto-detects grade & quarter.</p>
+      Naming format: <code>PPT_SCIENCE_G4_Q3_W4.pptx</code> auto-detects grade & term.</p>
       
       <div class="form-group" style="margin-bottom:14px;">
         <label>Override Grade (optional)</label>
@@ -3684,13 +3723,13 @@ function showPPTXUploadModal() {
       </div>
 
       <div class="form-group" style="margin-bottom:14px;">
-        <label>Override Quarter (optional)</label>
+        <label>Override Term (optional)</label>
         <select id="pptx-quarter" class="form-control">
           <option value="">Auto-detect from filename</option>
-          <option value="1">Quarter 1</option>
-          <option value="2">Quarter 2</option>
-          <option value="3">Quarter 3</option>
-          <option value="4">Quarter 4</option>
+          <option value="1">Term 1</option>
+          <option value="2">Term 2</option>
+          <option value="3">Term 3</option>
+          <option value="4">Term 4</option>
         </select>
       </div>
       
@@ -4541,9 +4580,16 @@ function closeTVDisplay() {
 }
 
 function sendToTV(type, data) {
-  if (tvWindow && !tvWindow.closed) {
-    tvWindow.postMessage({ type, ...data }, '*');
+  if (!tvWindow || tvWindow.closed) {
+    openTVDisplay();
+    setTimeout(() => {
+      if (tvWindow && !tvWindow.closed) {
+        tvWindow.postMessage({ type, ...data }, '*');
+      }
+    }, 600);
+    return;
   }
+  tvWindow.postMessage({ type, ...data }, '*');
 }
 
 function showQuestionOnTV(question) {
@@ -4719,7 +4765,7 @@ async function renderDashboardLessons() {
     nodeCount++;
     const isCompleted = idx === 0;
     const statusClass = isCompleted ? 'completed' : 'current';
-    const contentPreview = lesson.content ? lesson.content.substring(0, 60).replace(/\n/g, ' ') + '...' : `Quarter ${lesson.quarter}, Lesson ${lesson.lesson_number}`;
+    const contentPreview = lesson.content ? lesson.content.substring(0, 60).replace(/\n/g, ' ') + '...' : `Term ${lesson.quarter}, Lesson ${lesson.lesson_number}`;
 
     pathContainer.innerHTML += `
       <div class="lesson-node ${statusClass}" style="margin-bottom:12px;">
@@ -5054,13 +5100,13 @@ function showPPTXUploadModal() {
       </div>
 
       <div class="form-group" style="margin-bottom:14px;">
-        <label>Quarter</label>
+        <label>Term</label>
         <select id="pptx-quarter" class="form-control">
           <option value="">Auto-detect from filename</option>
-          <option value="1">Quarter 1</option>
-          <option value="2">Quarter 2</option>
-          <option value="3">Quarter 3</option>
-          <option value="4">Quarter 4</option>
+          <option value="1">Term 1</option>
+          <option value="2">Term 2</option>
+          <option value="3">Term 3</option>
+          <option value="4">Term 4</option>
         </select>
       </div>
 
@@ -5215,7 +5261,7 @@ async function loadPPTXList() {
 
       container.innerHTML = uploads.map(upload => {
         const gradeLabel = upload.grade ? `Grade ${upload.grade}` : 'No grade';
-        const quarterLabel = upload.quarter ? `Q${upload.quarter}` : '';
+        const quarterLabel = upload.quarter ? `Term ${upload.quarter}` : '';
         const date = new Date(upload.created_at).toLocaleDateString();
         const slideLabel = upload.slide_count === 1 ? '1 slide' : `${upload.slide_count} slides`;
 

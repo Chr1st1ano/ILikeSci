@@ -148,10 +148,10 @@
               <option value="D">Section D</option>
             </select>
             <div style="display:flex;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--glass-border);">
-              <button class="eclass-q-tab active" data-q="1" onclick="switchEClassQuarter(1)">Q1</button>
-              <button class="eclass-q-tab" data-q="2" onclick="switchEClassQuarter(2)">Q2</button>
-              <button class="eclass-q-tab" data-q="3" onclick="switchEClassQuarter(3)">Q3</button>
-              <button class="eclass-q-tab" data-q="4" onclick="switchEClassQuarter(4)">Q4</button>
+              <button class="eclass-q-tab active" data-q="1" onclick="switchEClassQuarter(1)">Term 1</button>
+              <button class="eclass-q-tab" data-q="2" onclick="switchEClassQuarter(2)">Term 2</button>
+              <button class="eclass-q-tab" data-q="3" onclick="switchEClassQuarter(3)">Term 3</button>
+              <button class="eclass-q-tab" data-q="4" onclick="switchEClassQuarter(4)">Term 4</button>
             </div>
           </div>
           <div id="eclass-table-container" style="overflow-x:auto;max-height:600px;overflow-y:auto;">
@@ -220,7 +220,7 @@
     function renderEClassTable() {
       const container = document.getElementById('eclass-table-container');
       if (!eclassData.length) {
-        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:30px;">No records for this quarter. Import XLSX or add students.</p>';
+        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:30px;">No records for this term. Import XLSX or add students.</p>';
         return;
       }
 
@@ -372,7 +372,7 @@
         }
       }
 
-      statusEl.textContent = `✅ Imported ${totalSaved} records across Q1-Q4`;
+      statusEl.textContent = `✅ Imported ${totalSaved} records across Terms 1-4`;
       setTimeout(() => {
         document.getElementById('xlsx-import-modal')?.remove();
         loadEClassRecords();
@@ -420,8 +420,8 @@
       });
 
       const ws = XLSX.utils.aoa_to_sheet(rows);
-      XLSX.utils.book_append_sheet(wb, ws, `G${grade}S${section}_Q${eclassQuarter}`);
-      XLSX.writeFile(wb, `EClass_G${grade}_S${section}_Q${eclassQuarter}.xlsx`);
+      XLSX.utils.book_append_sheet(wb, ws, `G${grade}S${section}_Term${eclassQuarter}`);
+      XLSX.writeFile(wb, `EClass_G${grade}_S${section}_Term${eclassQuarter}.xlsx`);
     }
 
     function exportRecordsCSV() {

@@ -723,7 +723,7 @@
 
     function generateSlidesFromLesson(lesson) {
       const result = [];
-      result.push({ title: lesson.topic, content: `Grade ${lesson.grade} — Quarter ${lesson.quarter}\nLesson ${lesson.lesson_number}`, type: 'title' });
+      result.push({ title: lesson.topic, content: `Grade ${lesson.grade} — Term ${lesson.quarter}\nLesson ${lesson.lesson_number}`, type: 'title' });
       if (lesson.objectives && lesson.objectives.length > 0)
         result.push({ title: 'Learning Objectives', content: lesson.objectives, type: 'objectives' });
       if (lesson.content) {

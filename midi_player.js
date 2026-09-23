@@ -426,7 +426,7 @@
     }
 
     resume() {
-      if (this.isPaused) {
+      if (this.isPaused || !this.isPlaying) {
         this.play();
       }
     }

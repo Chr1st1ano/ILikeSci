@@ -7,9 +7,37 @@
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
+  --text: #f8fafc;
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+.pics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 320px;
+  margin: 16px auto;
+}
+
+.pics-item {
+  aspect-ratio: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+}
+
+.pics-item:hover {
+  transform: scale(1.05);
+  border-color: var(--primary);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

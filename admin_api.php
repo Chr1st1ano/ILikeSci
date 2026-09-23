@@ -106,7 +106,7 @@ if ($method === 'GET') {
 
         // Build E-Class Record CSV
         header('Content-Type: text/csv; charset=utf-8');
-        header("Content-Disposition: attachment; filename=ILikeSci_EClassRecord_Grade{$grade}_Q{$quarter}.csv");
+        header("Content-Disposition: attachment; filename=ILikeSci_EClassRecord_Grade{$grade}_Term{$quarter}.csv");
         
         $output = fopen('php://output', 'w');
         
@@ -118,7 +118,7 @@ if ($method === 'GET') {
         fputcsv($output, []);
         
         // Column headers matching GRADE-4-6_SCIENCE.xlsx structure
-        $headers = ['No.', 'LEARNER\'S NAMES', 'WW Score', 'WW PS', 'WW WS (40%)', 'PT Score', 'PT PS', 'PT WS (40%)', 'QA Score', 'QA PS', 'QA WS (20%)', 'Initial Grade', 'Quarterly Grade', 'DepEd Level'];
+        $headers = ['No.', 'LEARNER\'S NAMES', 'WW Score', 'WW PS', 'WW WS (40%)', 'PT Score', 'PT PS', 'PT WS (40%)', 'QA Score', 'QA PS', 'QA WS (20%)', 'Initial Grade', 'Term Grade', 'DepEd Level'];
         fputcsv($output, $headers);
         
         // HIGHEST POSSIBLE SCORE row

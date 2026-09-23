@@ -125,6 +125,12 @@
         </div>
       </div>
 
+      <div style="display:flex; justify-content:flex-end; margin-top:-6px; margin-bottom:14px;">
+        <a href="javascript:void(0)" onclick="openForgotModal()" style="font-size:13px; color:#60a5fa; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+          <i class="fa-solid fa-unlock-keyhole"></i> Forgot Password?
+        </a>
+      </div>
+
       <button class="login-btn" onclick="handleLogin()">Login</button>
       <p class="login-error" id="login-error">Invalid credentials</p>
 
@@ -137,7 +143,107 @@
     </div>
   </div>
 
+  <!-- Forgot Password Modal -->
+  <div id="forgot-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:9999; backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#1e293b; border:1px solid rgba(255,255,255,0.15); border-radius:20px; max-width:440px; width:100%; padding:32px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.5); position:relative;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2 style="margin:0; font-size:22px; color:#f8fafc; font-weight:700;"><i class="fa-solid fa-shield-halved text-primary"></i> Reset Password</h2>
+        <button type="button" onclick="closeForgotModal()" style="background:none; border:none; color:#94a3b8; font-size:20px; cursor:pointer;">&times;</button>
+      </div>
+
+      <p style="font-size:14px; color:#94a3b8; margin-bottom:18px; line-height:1.5;">
+        Verify your identity using your registered Full Name or the Administrator recovery key (<code>admin123</code>).
+      </p>
+
+      <div class="login-field">
+        <label for="reset-user">Username</label>
+        <input type="text" id="reset-user" placeholder="e.g. tine, dondell, coney">
+      </div>
+
+      <div class="login-field">
+        <label for="reset-verify">Registered Full Name or Admin Key</label>
+        <input type="text" id="reset-verify" placeholder="e.g. Teacher Christine or admin123">
+      </div>
+
+      <div class="login-field">
+        <label for="reset-pass">New Password</label>
+        <input type="password" id="reset-pass" placeholder="Enter new password">
+      </div>
+
+      <div id="reset-msg" style="display:none; font-size:14px; margin-bottom:14px; text-align:center; padding:10px; border-radius:8px;"></div>
+
+      <div style="display:flex; gap:10px; margin-top:20px;">
+        <button type="button" class="btn btn-secondary" onclick="closeForgotModal()" style="flex:1; padding:12px; border-radius:10px; background:rgba(255,255,255,0.1); color:#fff; border:none; cursor:pointer;">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="handleResetPassword()" style="flex:2; padding:12px; border-radius:10px; background:linear-gradient(135deg, #3b82f6, #2563eb); color:#fff; border:none; font-weight:700; cursor:pointer;">Update Password</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    function openForgotModal() {
+      document.getElementById('forgot-modal').style.display = 'flex';
+      document.getElementById('reset-msg').style.display = 'none';
+      const currentUser = document.getElementById('login-user').value.trim();
+      if (currentUser) document.getElementById('reset-user').value = currentUser;
+    }
+
+    function closeForgotModal() {
+      document.getElementById('forgot-modal').style.display = 'none';
+    }
+
+    async function handleResetPassword() {
+      const username = document.getElementById('reset-user').value.trim();
+      const verification = document.getElementById('reset-verify').value.trim();
+      const newPassword = document.getElementById('reset-pass').value;
+      const msgEl = document.getElementById('reset-msg');
+
+      if (!username || !verification || !newPassword) {
+        msgEl.style.display = 'block';
+        msgEl.style.background = 'rgba(239,68,68,0.2)';
+        msgEl.style.color = '#f87171';
+        msgEl.textContent = 'Please fill out all fields.';
+        return;
+      }
+
+      try {
+        const res = await fetch('auth.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'reset_password',
+            username: username,
+            verification: verification,
+            new_password: newPassword
+          })
+        });
+        const data = await res.json();
+        if (data.status === 'success') {
+          msgEl.style.display = 'block';
+          msgEl.style.background = 'rgba(16,185,129,0.2)';
+          msgEl.style.color = '#34d399';
+          msgEl.textContent = data.message || 'Password successfully reset!';
+          setTimeout(() => {
+            closeForgotModal();
+            document.getElementById('login-user').value = username;
+            document.getElementById('login-pass').value = newPassword;
+            const errEl = document.getElementById('login-error');
+            errEl.style.display = 'block';
+            errEl.style.color = '#34d399';
+            errEl.textContent = 'Password reset! You can now log in.';
+          }, 1400);
+        } else {
+          msgEl.style.display = 'block';
+          msgEl.style.background = 'rgba(239,68,68,0.2)';
+          msgEl.style.color = '#f87171';
+          msgEl.textContent = data.message || 'Verification failed.';
+        }
+      } catch(e) {
+        msgEl.style.display = 'block';
+        msgEl.style.background = 'rgba(239,68,68,0.2)';
+        msgEl.style.color = '#f87171';
+        msgEl.textContent = 'Failed to connect to authentication server.';
+      }
+    }
     function togglePassword() {
       const input = document.getElementById('login-pass');
       const icon = document.getElementById('password-icon');

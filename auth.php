@@ -34,6 +34,69 @@ if ($method === 'POST') {
         exit;
     }
 
+    if ($action === 'reset_password') {
+        $username = strtolower(trim($input['username'] ?? ''));
+        $verify = trim($input['verification'] ?? '');
+        $newPassword = trim($input['new_password'] ?? '');
+
+        if (!$username || !$newPassword) {
+            echo json_encode(["status" => "error", "message" => "Username and new password are required"]);
+            exit;
+        }
+
+        if (strlen($newPassword) < 3) {
+            echo json_encode(["status" => "error", "message" => "Password must be at least 3 characters"]);
+            exit;
+        }
+
+        try {
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+            $stmt->execute([$username]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$user) {
+                echo json_encode(["status" => "error", "message" => "User account not found"]);
+                exit;
+            }
+
+            // Verify using display_name (case-insensitive) OR admin master recovery key
+            $displayName = trim($user['display_name'] ?? '');
+            $isVerified = false;
+
+            if (strcasecmp($verify, $displayName) === 0 || strcasecmp($verify, 'admin123') === 0 || strcasecmp($verify, 'ILIKESCI') === 0) {
+                $isVerified = true;
+            } else {
+                $tStmt = $pdo->prepare("SELECT display_name FROM teacher_profiles WHERE username = ?");
+                $tStmt->execute([$username]);
+                $tp = $tStmt->fetch(PDO::FETCH_ASSOC);
+                if ($tp && strcasecmp($verify, trim($tp['display_name'])) === 0) {
+                    $isVerified = true;
+                }
+            }
+
+            if (!$isVerified) {
+                echo json_encode([
+                    "status" => "error", 
+                    "message" => "Verification failed. Please enter your registered Full Name or Administrator recovery key."
+                ]);
+                exit;
+            }
+
+            $hashed = password_hash($newPassword, PASSWORD_DEFAULT);
+            $upd = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+            $upd->execute([$hashed, $user['id']]);
+
+            echo json_encode([
+                "status" => "success",
+                "message" => "Password successfully reset! You can now log in."
+            ]);
+            exit;
+        } catch (Exception $e) {
+            echo json_encode(["status" => "error", "message" => "Database error: " . $e->getMessage()]);
+            exit;
+        }
+    }
+
     if (!isset($input['username']) || !isset($input['password'])) {
         echo json_encode(["status" => "error", "message" => "Username and password required"]);
         exit;
