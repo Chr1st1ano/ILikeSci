@@ -4,6 +4,23 @@
 > Capstone Project — Laguna State Polytechnic University, San Pablo City Campus  
 > By: Abril, Millera, Olidan | May 2026
 
+## Session 16 — September 23, 2026 (Zero-Friction Localhost One-Click Execution & Batch Hardening)
+
+### ⚡ Batch Automation & Localhost Execution Hardening
+
+**Major upgrades:** Upgraded all system batch launchers to ensure 100% automated, zero-friction running on localhost. Eliminated manual prompts requiring users to open XAMPP Control Panel manually. Scripts now auto-detect XAMPP installation paths dynamically, auto-start MySQL and Apache services in the background, run database verification directly in console, and open default web browsers automatically.
+
+| # | File | Change | Status |
+|---|------|--------|--------|
+| 1 | **`start_localhost.bat`** | **NEW** — 1-click dedicated localhost launcher. Dynamically locates XAMPP, auto-starts MySQL (Port 3306) and Apache (Port 80), initializes database tables via PHP CLI, launches `http://localhost/ILikeSci/index.html` in browser, and provides interactive server controls (Stop / Reopen / Exit). | ✅ |
+| 2 | **`run.bat`** | **AUTOMATED** — Removed blocking manual pause ("Open XAMPP Control Panel and START Apache & MySQL"). Added dynamic XAMPP path detection (`%~dp0..\..`, `c:\Games\xampp`, `c:\xampp`), auto-starts MySQL and Apache if not running, executes `init_db.php` in CLI without spurious browser tabs, and falls back to PHP built-in server if Apache is unavailable. | ✅ |
+| 3 | **`start_ilikesci.bat`** | **ENHANCED** — Added dynamic XAMPP root detection and auto-start for MySQL in background so users receive full MySQL database capability while preserving ultra-low RAM mode (~18MB). | ✅ |
+| 4 | **`standalone_control_panel.bat`** | **ENHANCED** — Added real-time service status indicators (Apache Port 80, MySQL Port 3306, PHP Server Port 8000). Added Option [1] to start full stack with 1 click, and updated Option [8] to clean up all server processes (`httpd.exe`, `mysqld.exe`, `php.exe`). | ✅ |
+| 5 | **`start_both_instances.bat` & `start_ilayksay.bat`** | **HARDENED** — Added XAMPP path detection and background MySQL verification for reliable multi-instance testing. | ✅ |
+| 6 | **`README.md`** | Updated Quick Start guide with `start_localhost.bat` as the recommended 1-click launch path. | ✅ |
+
+---
+
 ## Session 15 — September 23, 2026 (Teacher Usability Audit, Discovered Bug Fixes & DepEd Term Standardization)
 
 ### 🐛 Discovered Bug Fixes (`bugs/discovered.pdf`) + 🗓️ DepEd Term 1–4 Global Standardization

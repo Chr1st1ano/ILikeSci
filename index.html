@@ -93,17 +93,58 @@
       <div class="lesson-path">
         <div class="path-header">
           <h1>Science Curriculum</h1>
-          <div class="curriculum-selectors" style="display: flex; gap: 10px; margin-top: 10px; justify-content: center; flex-wrap: wrap;">
-            <select id="dash-grade-select" class="form-control" style="width: auto; min-width: 120px; font-size: 16px; padding: 8px;" onchange="app.updateDashboardTopics()">
-              <option value="3">Grade 3</option>
-              <option value="4">Grade 4</option>
-              <option value="5">Grade 5</option>
-              <option value="6">Grade 6</option>
-            </select>
-            <select id="dash-topic-select" class="form-control" style="width: auto; min-width: 200px; font-size: 16px; padding: 8px;" onchange="app.renderDashboardLessons()">
-              <!-- Topics populated dynamically -->
-            </select>
+          <p class="text-muted" style="margin-top: 4px; font-size: 14px;">Open interactive lessons, review flash quizzes, and present official PDF & PowerPoint slide decks directly in class.</p>
+          
+          <div class="curriculum-selectors" style="display: flex; gap: 10px; margin-top: 14px; justify-content: center; flex-wrap: wrap; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label for="dash-grade-select" style="font-size: 13px; font-weight: 600; color: var(--text-muted);"><i class="fa-solid fa-graduation-cap"></i> Grade:</label>
+              <select id="dash-grade-select" class="form-control" style="width: auto; min-width: 120px; font-size: 15px; padding: 7px 12px; font-weight: 600;" onchange="app.updateDashboardTopics()">
+                <option value="3">Grade 3</option>
+                <option value="4" selected>Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+              </select>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label for="dash-term-select" style="font-size: 13px; font-weight: 600; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> Term:</label>
+              <select id="dash-term-select" class="form-control" style="width: auto; min-width: 110px; font-size: 15px; padding: 7px 12px;" onchange="app.renderDashboardLessons()">
+                <option value="all">All Terms</option>
+                <option value="1">Term 1</option>
+                <option value="2">Term 2</option>
+                <option value="3">Term 3</option>
+                <option value="4">Term 4</option>
+              </select>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label for="dash-topic-select" style="font-size: 13px; font-weight: 600; color: var(--text-muted);"><i class="fa-solid fa-book-bookmark"></i> Topic:</label>
+              <select id="dash-topic-select" class="form-control" style="width: auto; min-width: 220px; max-width: 340px; font-size: 15px; padding: 7px 12px;" onchange="app.renderDashboardLessons()">
+                <!-- Topics populated dynamically -->
+              </select>
+            </div>
           </div>
+
+          <!-- View Mode Filter Pills -->
+          <div class="deck-filter-pills" id="dash-view-filters">
+            <button class="deck-filter-pill active" data-view="all" onclick="app.filterDashboardView('all')">
+              <i class="fa-solid fa-border-all"></i> All Materials
+            </button>
+            <button class="deck-filter-pill" data-view="slides" onclick="app.filterDashboardView('slides')">
+              <i class="fa-solid fa-file-powerpoint"></i> PDF & PPTX Slides <span id="dash-slide-badge" style="background:rgba(255,255,255,0.2);padding:1px 6px;border-radius:10px;font-size:11px;margin-left:4px;">0</span>
+            </button>
+            <button class="deck-filter-pill" data-view="lessons" onclick="app.filterDashboardView('lessons')">
+              <i class="fa-solid fa-book-open"></i> Lesson Guides
+            </button>
+            <button class="deck-filter-pill" data-view="quizzes" onclick="app.filterDashboardView('quizzes')">
+              <i class="fa-solid fa-bolt"></i> Flash Quizzes
+            </button>
+          </div>
+        </div>
+
+        <!-- Dedicated Visual Slide Decks Showcase -->
+        <div id="dash-slides-showcase" class="deck-showcase-section">
+          <!-- Slide deck cards dynamically injected here -->
         </div>
 
         <div class="path-container" id="lesson-path-container">
@@ -188,6 +229,45 @@
         </div>
       </div>
     </main>
+  </div>
+
+  <!-- In-Page Slide Deck Preview Modal -->
+  <div id="slide-preview-modal" class="options-overlay hidden" style="z-index:9999;">
+    <div class="glass-card slide-preview-card" style="max-width:960px;width:95vw;max-height:92vh;display:flex;flex-direction:column;padding:20px;position:relative;">
+      <div class="slide-preview-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--glass-border);padding-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:10px;overflow:hidden;">
+          <span id="preview-badge" class="deck-format-badge badge-pdf" style="position:static;"><i class="fa-solid fa-file-pdf"></i> PDF Slides</span>
+          <h3 id="preview-deck-title" style="font-size:17px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Presentation Title</h3>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+          <span id="preview-counter" style="color:var(--text-muted);font-weight:700;font-size:14px;">Slide 1 / 1</span>
+          <button class="btn-icon" onclick="app.closeSlidePreview()" title="Close Preview (Esc)"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+
+      <div class="slide-preview-body" style="flex:1;min-height:340px;max-height:58vh;display:flex;align-items:center;justify-content:center;position:relative;background:#050914;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+        <button class="slide-nav-btn prev" onclick="app.previewPrevSlide()" title="Previous Slide (←)"><i class="fa-solid fa-chevron-left"></i></button>
+        <img id="preview-slide-img" src="" alt="Slide preview" style="max-width:100%;max-height:58vh;object-fit:contain;transition:opacity 0.15s ease;">
+        <button class="slide-nav-btn next" onclick="app.previewNextSlide()" title="Next Slide (→)"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+
+      <!-- Filmstrip Thumbnails -->
+      <div id="preview-filmstrip" class="preview-filmstrip mt-10" style="display:flex;gap:8px;overflow-x:auto;padding:8px 0;max-height:80px;">
+        <!-- Dynamically generated slide thumbnails -->
+      </div>
+
+      <!-- Action Footer -->
+      <div class="slide-preview-footer mt-10" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid var(--glass-border);padding-top:12px;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <a id="preview-open-pdf-btn" href="#" target="_blank" class="btn btn-secondary btn-sm"><i class="fa-solid fa-file-pdf"></i> Open PDF Document</a>
+          <button id="preview-cast-tv-btn" class="btn btn-secondary btn-sm" onclick="app.previewCastCurrentToTV()"><i class="fa-solid fa-display"></i> Cast to TV</button>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-secondary btn-sm" onclick="app.closeSlidePreview()"><i class="fa-solid fa-xmark"></i> Close</button>
+          <a id="preview-full-present-btn" href="#" class="btn btn-primary btn-sm" style="font-weight:700;"><i class="fa-solid fa-chalkboard-user"></i> Present Full Screen</a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="app.js"></script>

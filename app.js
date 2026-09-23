@@ -4636,6 +4636,12 @@ function setupGlobalEscapeHandler() {
         }
       });
 
+      // Close slide preview modal if open
+      const slidePreviewModal = document.getElementById('slide-preview-modal');
+      if (slidePreviewModal && !slidePreviewModal.classList.contains('hidden')) {
+        closeSlidePreview();
+      }
+
       // Close game display if open
       const gameDisplay = document.getElementById('game-display');
       if (gameDisplay && !gameDisplay.classList.contains('hidden')) {
@@ -4661,10 +4667,195 @@ function setupGlobalEscapeHandler() {
       }
     }
   });
+
+  // Global keyboard navigation for in-page slide deck preview
+  document.addEventListener('keydown', (e) => {
+    const modal = document.getElementById('slide-preview-modal');
+    if (modal && !modal.classList.contains('hidden')) {
+      if (['input', 'select', 'textarea'].includes(document.activeElement?.tagName?.toLowerCase())) return;
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        previewNextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        previewPrevSlide();
+      }
+    }
+  });
 }
 
 // Initialize escape key handler
 setupGlobalEscapeHandler();
+
+// Safe HTML escaper
+function escapeHtml(str) {
+  if (typeof str !== 'string') return String(str || '');
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+
+// --- Slide Preview State & Controls (for Index Slide Viewer) ---
+let currentPreviewDeck = {
+  id: null,
+  title: '',
+  totalSlides: 0,
+  currentSlide: 1,
+  slides: [],
+  fileType: 'pdf'
+};
+
+let dashboardActiveView = 'all';
+
+function filterDashboardView(viewType) {
+  dashboardActiveView = viewType || 'all';
+  const pills = document.querySelectorAll('#dash-view-filters .deck-filter-pill');
+  pills.forEach(p => {
+    if (p.getAttribute('data-view') === dashboardActiveView) p.classList.add('active');
+    else p.classList.remove('active');
+  });
+  renderDashboardLessons();
+}
+
+async function openSlidePreview(pptxId, initialSlide = 1) {
+  const modal = document.getElementById('slide-preview-modal');
+  if (!modal) return;
+
+  modal.classList.remove('hidden');
+  const titleEl = document.getElementById('preview-deck-title');
+  const counterEl = document.getElementById('preview-counter');
+  const imgEl = document.getElementById('preview-slide-img');
+  const filmstripEl = document.getElementById('preview-filmstrip');
+
+  if (titleEl) titleEl.textContent = 'Loading presentation slides...';
+  if (counterEl) counterEl.textContent = 'Loading...';
+  if (imgEl) imgEl.src = '';
+  if (filmstripEl) filmstripEl.innerHTML = '<div style="color:var(--text-muted);font-size:12px;padding:8px;"><i class="fa-solid fa-spinner fa-spin"></i> Loading slide images...</div>';
+
+  try {
+    const res = await fetch(`pptx_api.php?action=slides&id=${pptxId}`);
+    const data = await res.json();
+    if (data.status !== 'success' || !data.slides || data.slides.length === 0) {
+      if (titleEl) titleEl.textContent = 'No slides found for this presentation';
+      return;
+    }
+
+    const upload = data.upload || {};
+    currentPreviewDeck = {
+      id: pptxId,
+      title: upload.topic || upload.original_name || `Presentation #${pptxId}`,
+      totalSlides: data.slides.length,
+      currentSlide: Math.max(1, Math.min(initialSlide, data.slides.length)),
+      slides: data.slides,
+      fileType: upload.file_type || (upload.original_name && upload.original_name.toLowerCase().endsWith('.pdf') ? 'pdf' : 'pptx')
+    };
+
+    if (titleEl) titleEl.textContent = currentPreviewDeck.title;
+    const pdfBtn = document.getElementById('preview-open-pdf-btn');
+    if (pdfBtn) {
+      pdfBtn.href = `pptx_api.php?action=pdf_raw&id=${pptxId}`;
+      pdfBtn.style.display = currentPreviewDeck.fileType === 'pdf' ? 'inline-flex' : 'none';
+    }
+    const presBtn = document.getElementById('preview-full-present-btn');
+    if (presBtn) presBtn.href = `presenter.html?pptx=${pptxId}`;
+
+    const badge = document.getElementById('preview-badge');
+    if (badge) {
+      const isPdf = currentPreviewDeck.fileType === 'pdf';
+      badge.className = `deck-format-badge ${isPdf ? 'badge-pdf' : 'badge-pptx'}`;
+      badge.style.position = 'static';
+      badge.innerHTML = `<i class="${isPdf ? 'fa-solid fa-file-pdf' : 'fa-solid fa-file-powerpoint'}"></i> ${currentPreviewDeck.fileType.toUpperCase()} Slides`;
+    }
+
+    // Render filmstrip thumbnails
+    if (filmstripEl) {
+      filmstripEl.innerHTML = currentPreviewDeck.slides.map((s, idx) => {
+        const slideNum = idx + 1;
+        return `
+          <img class="filmstrip-thumb ${slideNum === currentPreviewDeck.currentSlide ? 'active' : ''}" 
+               id="thumb-${slideNum}" 
+               src="${s.image_url}" 
+               alt="Slide ${slideNum}" 
+               title="Slide ${slideNum}" 
+               onclick="app.previewGoToSlide(${slideNum})">
+        `;
+      }).join('');
+    }
+
+    renderCurrentPreviewSlide();
+  } catch(e) {
+    console.error('Slide preview error:', e);
+    if (titleEl) titleEl.textContent = 'Error loading presentation slides';
+  }
+}
+
+function renderCurrentPreviewSlide() {
+  if (!currentPreviewDeck.slides || currentPreviewDeck.slides.length === 0) return;
+  const cur = currentPreviewDeck.currentSlide;
+  const total = currentPreviewDeck.totalSlides;
+  const slideObj = currentPreviewDeck.slides[cur - 1];
+
+  const counterEl = document.getElementById('preview-counter');
+  if (counterEl) counterEl.textContent = `Slide ${cur} / ${total}`;
+
+  const img = document.getElementById('preview-slide-img');
+  if (img && slideObj) {
+    img.style.opacity = '0.5';
+    img.onload = () => { img.style.opacity = '1'; };
+    img.src = slideObj.image_url;
+  }
+
+  // Update filmstrip active state
+  document.querySelectorAll('.filmstrip-thumb').forEach(th => th.classList.remove('active'));
+  const activeThumb = document.getElementById(`thumb-${cur}`);
+  if (activeThumb) {
+    activeThumb.classList.add('active');
+    activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+}
+
+function closeSlidePreview() {
+  const modal = document.getElementById('slide-preview-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function previewNextSlide() {
+  if (currentPreviewDeck.currentSlide < currentPreviewDeck.totalSlides) {
+    currentPreviewDeck.currentSlide++;
+    renderCurrentPreviewSlide();
+  }
+}
+
+function previewPrevSlide() {
+  if (currentPreviewDeck.currentSlide > 1) {
+    currentPreviewDeck.currentSlide--;
+    renderCurrentPreviewSlide();
+  }
+}
+
+function previewGoToSlide(num) {
+  if (num >= 1 && num <= currentPreviewDeck.totalSlides) {
+    currentPreviewDeck.currentSlide = num;
+    renderCurrentPreviewSlide();
+  }
+}
+
+function previewCastCurrentToTV() {
+  if (!currentPreviewDeck.id) return;
+  castSlideToTV(currentPreviewDeck.id, currentPreviewDeck.title);
+}
+
+function castSlideToTV(pptxId, title) {
+  const embedCode = `<iframe src="presenter.html?pptx=${pptxId}" style="width:100%;height:100vh;border:none;"></iframe>`;
+  if (typeof sendToTV === 'function') {
+    sendToTV(title || 'Presentation', embedCode);
+  } else if (typeof showGameOnTV === 'function') {
+    showGameOnTV(title || 'Presentation', embedCode);
+  } else if (typeof openTVDisplay === 'function') {
+    openTVDisplay();
+    setTimeout(() => {
+      if (typeof sendToTV === 'function') sendToTV(title || 'Presentation', embedCode);
+    }, 500);
+  }
+}
 
 // --- Dashboard Path Rendering (DB-driven) ---
 async function updateDashboardTopics() {
@@ -4687,6 +4878,12 @@ async function updateDashboardTopics() {
 
   const uniqueTopics = await fetchAllTopicsForGrade(grade);
 
+  // Add "All Topics & Slide Decks" as top default option
+  const allOpt = document.createElement('option');
+  allOpt.value = 'all';
+  allOpt.textContent = `🌟 All Slide Decks & Topics (Grade ${grade})`;
+  topicSelect.appendChild(allOpt);
+
   if (uniqueTopics.length > 0) {
     uniqueTopics.forEach(topic => {
       const opt = document.createElement('option');
@@ -4695,17 +4892,16 @@ async function updateDashboardTopics() {
       topicSelect.appendChild(opt);
     });
 
-    // Selection priority: URL topic > previously selected topic > first topic
-    if (urlTopic && uniqueTopics.includes(urlTopic)) {
+    // Selection priority: URL topic > previously selected topic > 'all'
+    if (urlTopic && (urlTopic === 'all' || uniqueTopics.includes(urlTopic))) {
       topicSelect.value = urlTopic;
-    } else if (prevSelected && uniqueTopics.includes(prevSelected)) {
+    } else if (prevSelected && (prevSelected === 'all' || uniqueTopics.includes(prevSelected))) {
       topicSelect.value = prevSelected;
+    } else {
+      topicSelect.value = 'all';
     }
   } else {
-    const opt = document.createElement('option');
-    opt.value = '';
-    opt.textContent = '-- No topics available --';
-    topicSelect.appendChild(opt);
+    topicSelect.value = 'all';
   }
 
   await renderDashboardLessons();
@@ -4714,103 +4910,271 @@ async function updateDashboardTopics() {
 async function renderDashboardLessons() {
   const gradeSelect = document.getElementById('dash-grade-select');
   const topicSelect = document.getElementById('dash-topic-select');
+  const termSelect = document.getElementById('dash-term-select');
   const pathContainer = document.getElementById('lesson-path-container');
-  if (!gradeSelect || !topicSelect || !pathContainer) return;
+  const showcaseContainer = document.getElementById('dash-slides-showcase');
+  if (!gradeSelect || !pathContainer) return;
 
   const grade = String(gradeSelect.value || '4');
-  const topic = (topicSelect.value || '').trim();
+  const topic = topicSelect ? (topicSelect.value || 'all').trim() : 'all';
+  const selectedTerm = termSelect ? String(termSelect.value || 'all') : 'all';
 
   pathContainer.innerHTML = '';
+  if (showcaseContainer) showcaseContainer.innerHTML = '';
 
-  if (!topic) {
-    pathContainer.innerHTML = '<div class="lesson-node"><p>Please select a topic above.</p></div>';
-    return;
-  }
-
+  const isAllTopics = (topic === 'all' || topic === '');
   const normTopic = topic.toLowerCase();
 
   // 1. Fetch curriculum lessons from DB
   let topicLessons = [];
   try {
     const allLessons = await fetchCurriculumLessons(grade);
-    topicLessons = allLessons.filter(l => (l.topic || '').trim().toLowerCase() === normTopic);
+    topicLessons = (allLessons || []).filter(l => {
+      if (String(l.grade) !== grade) return false;
+      if (selectedTerm !== 'all' && String(l.quarter) !== selectedTerm) return false;
+      if (!isAllTopics && (l.topic || '').trim().toLowerCase() !== normTopic) return false;
+      return true;
+    });
   } catch(e) {}
 
-  // 2. Fetch PPTX uploads from DB
+  // 2. Fetch PPTX / PDF uploads from DB
   let matchingPPTXs = [];
   try {
     const res = await fetch('pptx_api.php?action=list');
     const data = await res.json();
-    if (data.status === 'success' && data.uploads) {
-      matchingPPTXs = data.uploads.filter(u => 
-        (u.topic || '').trim().toLowerCase() === normTopic ||
-        (u.original_name || '').trim().toLowerCase().includes(normTopic)
-      );
+    if (data.status === 'success' && Array.isArray(data.uploads)) {
+      matchingPPTXs = data.uploads.filter(u => {
+        if (String(u.grade) !== grade) return false;
+        if (selectedTerm !== 'all' && String(u.quarter) !== selectedTerm) return false;
+        if (!isAllTopics) {
+          const tMatch = (u.topic || '').trim().toLowerCase() === normTopic ||
+                         (u.original_name || '').trim().toLowerCase().includes(normTopic);
+          if (!tMatch) return false;
+        }
+        return true;
+      });
     }
   } catch(e) {}
+
+  // Update slide count badge
+  const slideBadge = document.getElementById('dash-slide-badge');
+  if (slideBadge) slideBadge.textContent = matchingPPTXs.length;
 
   // 3. Fetch Questions from DB
   let matchingQuestions = [];
   try {
     await fetchQuestionsFromDB();
-    matchingQuestions = dbQuestions.filter(q => 
-      String(q.grade) === grade && (q.topic || '').trim().toLowerCase() === normTopic
-    );
+    matchingQuestions = (dbQuestions || []).filter(q => {
+      if (String(q.grade) !== grade) return false;
+      if (!isAllTopics && (q.topic || '').trim().toLowerCase() !== normTopic) return false;
+      return true;
+    });
   } catch(e) {}
 
-  let nodeCount = 0;
+  // A. Render Dedicated Slide Decks Showcase (if view is 'all' or 'slides')
+  if (showcaseContainer && (dashboardActiveView === 'all' || dashboardActiveView === 'slides')) {
+    if (matchingPPTXs.length > 0) {
+      let cardsHtml = matchingPPTXs.map(p => {
+        const isPdf = (p.file_type === 'pdf' || (p.original_name && p.original_name.toLowerCase().endsWith('.pdf')));
+        const formatLabel = isPdf ? 'PDF' : 'PPTX';
+        const badgeClass = isPdf ? 'badge-pdf' : 'badge-pptx';
+        const formatIcon = isPdf ? 'fa-file-pdf' : 'fa-file-powerpoint';
+        const thumbUrl = `pptx_api.php?action=slide_image&id=${p.id}&slide=1`;
+        const titleText = p.topic || p.original_name.replace(/\.(pptx?|pdf)$/i, '');
+        const escapedTitle = (titleText || '').replace(/'/g, "\\'");
 
-  // Render curriculum lessons
-  topicLessons.forEach((lesson, idx) => {
-    nodeCount++;
-    const isCompleted = idx === 0;
-    const statusClass = isCompleted ? 'completed' : 'current';
-    const contentPreview = lesson.content ? lesson.content.substring(0, 60).replace(/\n/g, ' ') + '...' : `Term ${lesson.quarter}, Lesson ${lesson.lesson_number}`;
-
-    pathContainer.innerHTML += `
-      <div class="lesson-node ${statusClass}" style="margin-bottom:12px;">
-        <div class="lesson-icon">
-          <i class="fa-solid fa-book-open"></i>
-        </div>
-        <div class="lesson-info" style="flex:1;">
-          <h3>Lesson ${lesson.lesson_number || nodeCount}: ${lesson.topic}</h3>
-          <p>${contentPreview}</p>
-        </div>
-        <button class="btn-lesson btn-start" onclick="window.location.href='presenter.html?id=${lesson.id}'">
-          <i class="fa-solid fa-play"></i> Present
-        </button>
-      </div>
-    `;
-  });
-
-  // Render PPTX uploads matching this topic
-  matchingPPTXs.forEach((pptx) => {
-    const alreadyRendered = topicLessons.some(l => l.id == pptx.curriculum_lesson_id);
-    if (!alreadyRendered) {
-      nodeCount++;
-      const targetUrl = pptx.curriculum_lesson_id 
-        ? `presenter.html?id=${pptx.curriculum_lesson_id}`
-        : `presenter.html?pptx=${pptx.id}`;
-
-      pathContainer.innerHTML += `
-        <div class="lesson-node current" style="margin-bottom:12px;">
-          <div class="lesson-icon" style="background:linear-gradient(135deg,#c4532e,#e8734a);">
-            <i class="fa-solid fa-file-powerpoint" style="color:#fff;"></i>
+        return `
+          <div class="deck-card">
+            <div class="deck-thumb-wrap" onclick="window.location.href='presenter.html?pptx=${p.id}'" title="Click to Present Slide Deck">
+              <img class="deck-thumb-img" src="${thumbUrl}" alt="Slide preview" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;background:#1e293b;color:var(--text-muted);font-size:32px;">
+                <i class="fa-solid ${formatIcon}"></i>
+              </div>
+              <span class="deck-format-badge ${badgeClass}">
+                <i class="fa-solid ${formatIcon}"></i> ${formatLabel}
+              </span>
+              <span class="deck-overlay-badge">
+                <i class="fa-solid fa-layer-group"></i> ${p.slide_count || 1} Slides
+              </span>
+            </div>
+            <div class="deck-content">
+              <h3 class="deck-title" title="${escapeHtml(titleText)}">${escapeHtml(titleText)}</h3>
+              <div class="deck-meta">
+                <span class="deck-meta-tag"><i class="fa-solid fa-graduation-cap text-primary"></i> Grade ${p.grade}</span>
+                <span class="deck-meta-tag"><i class="fa-regular fa-calendar text-warning"></i> Term ${p.quarter || '1'}</span>
+                <span class="deck-meta-tag text-muted"><i class="fa-regular fa-file"></i> ${escapeHtml(p.original_name)}</span>
+              </div>
+              <div class="deck-actions">
+                <button class="btn btn-primary btn-sm flex-1" onclick="window.location.href='presenter.html?pptx=${p.id}'" title="Present Slides in Full-Screen Presenter Mode">
+                  <i class="fa-solid fa-chalkboard-user"></i> Present
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="app.openSlidePreview(${p.id})" title="Preview Slides on this Page">
+                  <i class="fa-solid fa-eye"></i> Preview
+                </button>
+                <a href="pptx_api.php?action=pdf_raw&id=${p.id}" target="_blank" class="btn btn-secondary btn-sm" title="Open Original PDF Document">
+                  <i class="fa-solid fa-file-pdf"></i> PDF
+                </a>
+                <button class="btn btn-secondary btn-sm" onclick="app.castSlideToTV(${p.id}, '${escapedTitle}')" title="Broadcast to Classroom TV Display">
+                  <i class="fa-solid fa-display"></i> TV
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="lesson-info" style="flex:1;">
-            <h3>PowerPoint: ${pptx.topic || pptx.original_name}</h3>
-            <p>${pptx.original_name} (${pptx.slide_count || 0} slides)</p>
+        `;
+      }).join('');
+
+      showcaseContainer.innerHTML = `
+        <div class="glass-card mb-20" style="padding:18px 20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#ef4444,#dc2626);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+              <div>
+                <h2 style="font-size:17px;font-weight:700;margin:0;color:var(--text-main);display:flex;align-items:center;gap:8px;">
+                  Official Presentation Slides & PDF Decks
+                  <span style="font-size:12px;background:rgba(59,130,246,0.2);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);padding:2px 8px;border-radius:12px;">Grade ${grade}</span>
+                </h2>
+                <p style="font-size:12px;color:var(--text-muted);margin:2px 0 0 0;">Direct access to converted high-res slide images from the slides directory. Click "Present" to deliver or "Preview" to browse.</p>
+              </div>
+            </div>
+            <span style="font-size:13px;font-weight:600;color:var(--text-muted);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:8px;">
+              <i class="fa-solid fa-layer-group text-primary"></i> ${matchingPPTXs.length} Decks Available
+            </span>
           </div>
-          <button class="btn-lesson btn-start" onclick="window.location.href='${targetUrl}'" style="background:linear-gradient(135deg,#c4532e,#e8734a);">
-            <i class="fa-solid fa-file-powerpoint"></i> View Slides
-          </button>
+          <div class="deck-grid">
+            ${cardsHtml}
+          </div>
+        </div>
+      `;
+    } else if (dashboardActiveView === 'slides') {
+      showcaseContainer.innerHTML = `
+        <div class="glass-card text-center" style="padding:32px;">
+          <i class="fa-solid fa-file-circle-xmark text-muted" style="font-size:36px;margin-bottom:10px;"></i>
+          <h3>No slide presentations found for this filter</h3>
+          <p class="text-muted" style="font-size:13px;">No PDF or PPTX slides found for Grade ${grade} with current filter settings.</p>
         </div>
       `;
     }
-  });
+  }
+
+  // If view is 'slides', do not render learning ladder
+  if (dashboardActiveView === 'slides') {
+    return;
+  }
+
+  // B. Render Learning Path Ladder
+  let nodeCount = 0;
+
+  // Render curriculum lessons
+  if (dashboardActiveView === 'all' || dashboardActiveView === 'lessons') {
+    topicLessons.forEach((lesson, idx) => {
+      nodeCount++;
+      const isCompleted = idx === 0;
+      const statusClass = isCompleted ? 'completed' : 'current';
+      const contentPreview = lesson.content ? lesson.content.substring(0, 70).replace(/\n/g, ' ') + '...' : `Term ${lesson.quarter}, Lesson ${lesson.lesson_number}`;
+
+      // Check if this lesson has a matched PDF / PPTX slide deck
+      const matchedPptx = matchingPPTXs.find(p => 
+        p.curriculum_lesson_id == lesson.id ||
+        (p.topic && p.topic.trim().toLowerCase() === (lesson.topic || '').trim().toLowerCase())
+      );
+
+      let visualDeckHtml = '';
+      if (matchedPptx) {
+        visualDeckHtml = `
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px;">
+            <button class="btn-lesson btn-start" onclick="window.location.href='presenter.html?pptx=${matchedPptx.id}'" style="background:linear-gradient(135deg,var(--primary),var(--secondary));" title="Present Visual Slides (from PDF deck)">
+              <i class="fa-solid fa-play"></i> Present Slides (${matchedPptx.slide_count} Slides)
+            </button>
+            <button class="btn-lesson btn-review" onclick="app.openSlidePreview(${matchedPptx.id})" title="Preview slides on this page">
+              <i class="fa-solid fa-eye"></i> Preview
+            </button>
+            <a href="pptx_api.php?action=pdf_raw&id=${matchedPptx.id}" target="_blank" class="btn-lesson btn-review" style="background:rgba(239,68,68,0.2);color:#ef4444;border-color:rgba(239,68,68,0.4);" title="Open Original PDF Document">
+              <i class="fa-solid fa-file-pdf"></i> PDF
+            </a>
+          </div>
+        `;
+      } else {
+        visualDeckHtml = `
+          <div style="margin-top:8px;">
+            <button class="btn-lesson btn-start" onclick="window.location.href='presenter.html?id=${lesson.id}'">
+              <i class="fa-solid fa-play"></i> Present Lesson
+            </button>
+          </div>
+        `;
+      }
+
+      pathContainer.innerHTML += `
+        <div class="lesson-node ${statusClass}" style="margin-bottom:12px;">
+          <div class="lesson-icon">
+            <i class="fa-solid fa-book-open"></i>
+          </div>
+          <div class="lesson-info" style="flex:1;">
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px;">
+              <span style="font-size:11px;font-weight:700;color:var(--text-muted);background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;">
+                Term ${lesson.quarter} • L${lesson.lesson_number}
+              </span>
+              ${matchedPptx ? `<span style="font-size:11px;font-weight:700;color:#60a5fa;background:rgba(59,130,246,0.18);border:1px solid rgba(59,130,246,0.3);padding:2px 6px;border-radius:4px;"><i class="fa-solid fa-file-pdf"></i> Visual PDF Slides</span>` : ''}
+            </div>
+            <h3>${lesson.topic}</h3>
+            <p>${contentPreview}</p>
+            ${visualDeckHtml}
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  // Render standalone PPTX uploads (if not already matched to a lesson)
+  if (dashboardActiveView === 'all' || dashboardActiveView === 'slides') {
+    matchingPPTXs.forEach((pptx) => {
+      const alreadyRendered = topicLessons.some(l => 
+        l.id == pptx.curriculum_lesson_id ||
+        (l.topic && pptx.topic && l.topic.trim().toLowerCase() === pptx.topic.trim().toLowerCase())
+      );
+      if (!alreadyRendered) {
+        nodeCount++;
+        const isPdf = (pptx.file_type === 'pdf' || (pptx.original_name && pptx.original_name.toLowerCase().endsWith('.pdf')));
+        const formatIcon = isPdf ? 'fa-file-pdf' : 'fa-file-powerpoint';
+        const formatBg = isPdf ? 'linear-gradient(135deg,#ef4444,#b91c1c)' : 'linear-gradient(135deg,#c4532e,#e8734a)';
+
+        pathContainer.innerHTML += `
+          <div class="lesson-node current" style="margin-bottom:12px;">
+            <div class="lesson-icon" style="background:${formatBg};">
+              <i class="fa-solid ${formatIcon}" style="color:#fff;"></i>
+            </div>
+            <div class="lesson-info" style="flex:1;">
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px;">
+                <span style="font-size:11px;font-weight:700;color:var(--text-muted);background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;">
+                  Term ${pptx.quarter || '1'} • ${isPdf ? 'PDF Deck' : 'PowerPoint'}
+                </span>
+                <span style="font-size:11px;font-weight:700;color:#10b981;background:rgba(16,185,129,0.18);border:1px solid rgba(16,185,129,0.3);padding:2px 6px;border-radius:4px;">
+                  ${pptx.slide_count || 1} Slides
+                </span>
+              </div>
+              <h3>${escapeHtml(pptx.topic || pptx.original_name)}</h3>
+              <p>${escapeHtml(pptx.original_name)}</p>
+              <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px;">
+                <button class="btn-lesson btn-start" onclick="window.location.href='presenter.html?pptx=${pptx.id}'" style="background:${formatBg};">
+                  <i class="fa-solid fa-play"></i> Present Slides
+                </button>
+                <button class="btn-lesson btn-review" onclick="app.openSlidePreview(${pptx.id})" title="Preview in page">
+                  <i class="fa-solid fa-eye"></i> Preview
+                </button>
+                <a href="pptx_api.php?action=pdf_raw&id=${pptx.id}" target="_blank" class="btn-lesson btn-review" style="background:rgba(239,68,68,0.2);color:#ef4444;border-color:rgba(239,68,68,0.4);" title="Open PDF">
+                  <i class="fa-solid fa-file-pdf"></i> PDF
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    });
+  }
 
   // Render Practice Quiz node if questions exist for this topic
-  if (matchingQuestions.length > 0) {
+  if ((dashboardActiveView === 'all' || dashboardActiveView === 'quizzes') && matchingQuestions.length > 0) {
     nodeCount++;
     pathContainer.innerHTML += `
       <div class="lesson-node completed" style="margin-bottom:12px;">
@@ -4818,22 +5182,22 @@ async function renderDashboardLessons() {
           <i class="fa-solid fa-dumbbell" style="color:#fff;"></i>
         </div>
         <div class="lesson-info" style="flex:1;">
-          <h3>Practice Quiz: ${topic}</h3>
-          <p>${matchingQuestions.length} questions available for recitation & flash quiz</p>
+          <h3>Practice Quiz: ${isAllTopics ? `Grade ${grade} Question Bank` : topic}</h3>
+          <p>${matchingQuestions.length} validated DepEd assessment questions available for recitation & flash quiz</p>
         </div>
-        <button class="btn-lesson btn-review" onclick="window.location.href='assessment.html?grade=${grade}&topic=${encodeURIComponent(topic)}'" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);">
-          <i class="fa-solid fa-play"></i> Practice
+        <button class="btn-lesson btn-review" onclick="window.location.href='assessment.html?grade=${grade}${isAllTopics ? '' : '&topic=' + encodeURIComponent(topic)}'" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);">
+          <i class="fa-solid fa-play"></i> Flash Quiz
         </button>
       </div>
     `;
   }
 
-  if (nodeCount === 0) {
+  if (nodeCount === 0 && matchingPPTXs.length === 0) {
     pathContainer.innerHTML = `
-      <div class="lesson-node" style="padding:20px;text-align:center;">
+      <div class="lesson-node" style="padding:24px;text-align:center;">
         <i class="fa-solid fa-circle-info" style="font-size:2rem;color:var(--text-muted);margin-bottom:10px;"></i>
-        <h3>No interactive materials found for "${topic}"</h3>
-        <p style="color:var(--text-muted);margin-top:6px;">Upload a PowerPoint presentation, import curriculum text, or add questions in the Materials tab!</p>
+        <h3>No materials found for current selection</h3>
+        <p style="color:var(--text-muted);margin-top:6px;">Try selecting "All Topics" or switching the Term filter above.</p>
       </div>
     `;
   }
@@ -6273,6 +6637,15 @@ window.app = {
   loadPPTXList,
   deletePPTX,
   syncAllCurriculumPDFs,
+  openSlidePreview,
+  renderCurrentPreviewSlide,
+  closeSlidePreview,
+  previewNextSlide,
+  previewPrevSlide,
+  previewGoToSlide,
+  previewCastCurrentToTV,
+  castSlideToTV,
+  filterDashboardView,
   autoGenerateDemoQuestions,
   adminEditUser,
   adminSaveUser,

@@ -65,7 +65,7 @@ $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 // ============================================
 // GET — List presentations / Get slides / Serve image
 // ============================================
-if ($method === 'GET') {
+if ($method === 'GET' || $method === 'HEAD') {
     $action = $_GET['action'] ?? 'list';
 
     // Serve a single slide image file
@@ -86,7 +86,9 @@ if ($method === 'GET') {
         if (file_exists($imgPath)) {
             header('Content-Type: image/png');
             header('Cache-Control: public, max-age=86400');
-            readfile($imgPath);
+            if ($method !== 'HEAD') {
+                readfile($imgPath);
+            }
         } else {
             http_response_code(404);
         }
@@ -110,7 +112,9 @@ if ($method === 'GET') {
             header('Content-Type: application/pdf');
             header('Content-Disposition: inline; filename="' . basename($upload['original_name']) . '"');
             header('Cache-Control: public, max-age=86400');
-            readfile($pdfPath);
+            if ($method !== 'HEAD') {
+                readfile($pdfPath);
+            }
         } else {
             http_response_code(404);
         }

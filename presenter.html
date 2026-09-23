@@ -689,10 +689,46 @@
         return;
       }
       try {
+        // Auto-detect if this curriculum lesson has an official PDF or PPTX slide deck
+        try {
+          const pptxCheckRes = await fetch('pptx_api.php?action=list');
+          const pptxCheckData = await pptxCheckRes.json();
+          if (pptxCheckData.status === 'success' && Array.isArray(pptxCheckData.uploads)) {
+            const matchedPptx = pptxCheckData.uploads.find(u => u.curriculum_lesson_id == lessonId);
+            if (matchedPptx) {
+              pptxId = matchedPptx.id;
+              await loadPPTXPresentation();
+              return;
+            }
+          }
+        } catch(detectErr) {
+          console.warn('Auto-detect visual slide deck error:', detectErr);
+        }
+
         const lessonsRes = await fetch(`lessons_api.php?grade=`);
         const lessonsData = await lessonsRes.json();
         if (lessonsData.status === 'success') {
           lessonMeta = lessonsData.lessons.find(l => l.id == lessonId) || {};
+
+          // Secondary check: match by topic if curriculum_lesson_id wasn't directly linked
+          if (lessonMeta.topic) {
+            try {
+              const pptxCheckRes = await fetch('pptx_api.php?action=list');
+              const pptxCheckData = await pptxCheckRes.json();
+              if (pptxCheckData.status === 'success' && Array.isArray(pptxCheckData.uploads)) {
+                const normTopic = lessonMeta.topic.trim().toLowerCase();
+                const matchedByTopic = pptxCheckData.uploads.find(u => 
+                  String(u.grade) === String(lessonMeta.grade) && 
+                  u.topic && u.topic.trim().toLowerCase() === normTopic
+                );
+                if (matchedByTopic) {
+                  pptxId = matchedByTopic.id;
+                  await loadPPTXPresentation();
+                  return;
+                }
+              }
+            } catch(e) {}
+          }
         }
 
         const slidesRes = await fetch(`lessons_api.php?slides=${lessonId}`);

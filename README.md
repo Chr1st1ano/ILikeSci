@@ -20,25 +20,35 @@
 
 ## ⚡ Quick Start
 
-### Option A: Zero-Install Portable Launcher (Recommended)
+### Option A: One-Click Localhost Launcher (Recommended)
+Double-click:
+```bat
+start_localhost.bat
+```
+Automatically checks and starts XAMPP MySQL (Port 3306) & Apache (Port 80), verifies the database schema, and opens the application in your default browser at:
+👉 **http://localhost/ILikeSci/index.html**
+
+### Option B: Ultra-Low RAM Portable Mode (~18MB RAM)
 Double-click:
 ```bat
 start_ilikesci.bat
 ```
-This automatically finds the local PHP binary, initializes the database, and launches the application at:
+Zero-install lightweight launcher using PHP's built-in server (low memory mode for older laptops) running at:
 👉 **http://127.0.0.1:8000**
 
-### Option B: Standalone Server Control Panel
+### Option C: Interactive Control Panel & Manager
 Double-click:
 ```bat
 standalone_control_panel.bat
 ```
-Provides an interactive menu to start/stop the server, run diagnostics, and initialize database seeders.
+Provides real-time service status (Apache, MySQL, PHP server) with 1-click options to start/stop full stacks, run diagnostics, or re-seed databases.
 
-### Option C: Traditional XAMPP (Apache + MySQL)
-1. Copy the folder to `xampp/htdocs/ILikeSci`.
-2. Start **Apache** and **MySQL** in the XAMPP Control Panel.
-3. Open `http://localhost/ILikeSci/index.html`.
+### Option D: First-Time Setup & Automation
+Double-click:
+```bat
+run.bat
+```
+Automatically installs Python dependencies, auto-starts MySQL & Apache, initializes tables, and launches the portal without manual XAMPP intervention.
 
 ---
 

@@ -51,7 +51,7 @@ echo [OK] Working Python found: %PYTHON_BIN%
 
 :: 2. Install Dependencies
 echo.
-echo [2/4] Installing Python dependencies (Science Tools & PPTX Engine)...
+echo [2/4] Installing Python dependencies (Science Tools and PPTX Engine)...
 "%PYTHON_BIN%" -m pip install mysql-connector-python python-docx python-pptx --quiet
 if %errorlevel% neq 0 (
     echo [WARNING] Could not install dependencies automatically.
@@ -60,21 +60,84 @@ if %errorlevel% neq 0 (
     echo Dependencies installed successfully!
 )
 
-:: 3. XAMPP Check
+:: 3. XAMPP and Database Auto-Start
 echo.
-echo [3/4] Database Check
-echo IMPORTANT: Please open XAMPP Control Panel and START:
-echo    - Apache
-echo    - MySQL
-echo.
-echo Once they are GREEN, press any key to continue.
-pause
+echo [3/4] Checking and Starting Local Services...
+
+:: Locate XAMPP Directory dynamically
+set "XAMPP_DIR="
+for %%I in ("%~dp0..\..") do set "XAMPP_DIR=%%~fI"
+if not exist "%XAMPP_DIR%\apache\bin\httpd.exe" (
+    if exist "c:\Games\xampp\apache\bin\httpd.exe" set "XAMPP_DIR=c:\Games\xampp"
+    if exist "c:\xampp\apache\bin\httpd.exe" set "XAMPP_DIR=c:\xampp"
+)
+
+:: Locate PHP binary
+set "PHP_BIN=php"
+where php >nul 2>nul
+if %errorlevel% neq 0 (
+    if exist "%XAMPP_DIR%\php\php.exe" (
+        set "PHP_BIN=%XAMPP_DIR%\php\php.exe"
+    ) else if exist "c:\Games\xampp\php\php.exe" (
+        set "PHP_BIN=c:\Games\xampp\php\php.exe"
+    ) else if exist "c:\xampp\php\php.exe" (
+        set "PHP_BIN=c:\xampp\php\php.exe"
+    )
+)
+
+:: Check & Start MySQL
+tasklist /fi "imagename eq mysqld.exe" 2>nul | findstr /i "mysqld.exe" >nul
+if %errorlevel% equ 0 (
+    echo [OK] MySQL is active [Port 3306]
+) else (
+    if exist "%XAMPP_DIR%\mysql\bin\mysqld.exe" (
+        echo [INFO] Auto-starting MySQL Database...
+        start "" /b "%XAMPP_DIR%\mysql\bin\mysqld.exe" --defaults-file="%XAMPP_DIR%\mysql\bin\my.ini" --standalone
+        timeout /t 2 /nobreak >nul
+        echo [OK] MySQL started successfully.
+    ) else (
+        echo [WARN] MySQL binary not found in XAMPP. SQLite fallback will be used.
+    )
+)
+
+:: Check & Start Apache
+set "APACHE_ACTIVE=0"
+tasklist /fi "imagename eq httpd.exe" 2>nul | findstr /i "httpd.exe" >nul
+if %errorlevel% equ 0 (
+    echo [OK] Apache is active [Port 80]
+    set "APACHE_ACTIVE=1"
+) else (
+    if exist "%XAMPP_DIR%\apache\bin\httpd.exe" (
+        echo [INFO] Auto-starting Apache Web Server...
+        start "" /b "%XAMPP_DIR%\apache\bin\httpd.exe"
+        timeout /t 2 /nobreak >nul
+        tasklist /fi "imagename eq httpd.exe" 2>nul | findstr /i "httpd.exe" >nul
+        if %errorlevel% equ 0 (
+            echo [OK] Apache started successfully.
+            set "APACHE_ACTIVE=1"
+        )
+    )
+)
 
 :: 4. Initialize Database
 echo.
-echo [4/4] Initializing Database...
-start http://localhost/ILikeSci/init_db.php
-timeout /t 5 >nul
+echo [4/4] Initializing Database Schema...
+if exist "%PHP_BIN%" (
+    "%PHP_BIN%" init_db.php
+) else (
+    php init_db.php
+)
+
+set "PORTAL_URL=http://localhost/ILikeSci/index.html"
+if "%APACHE_ACTIVE%"=="0" (
+    echo [INFO] Starting Lightweight PHP Server on Port 8000...
+    tasklist /fi "imagename eq php.exe" 2>nul | findstr /i "php.exe" >nul
+    if %errorlevel% neq 0 (
+        start "" /b "%PHP_BIN%" -S 127.0.0.1:8000
+        timeout /t 1 /nobreak >nul
+    )
+    set "PORTAL_URL=http://127.0.0.1:8000/index.html"
+)
 
 echo.
 echo ===================================================
@@ -91,10 +154,10 @@ if /i "%choice%"=="Y" (
 )
 
 echo.
-echo Launching the ILikeSci Teacher Portal...
-start http://localhost/ILikeSci/index.html
+echo Launching the ILikeSci Teacher Portal (%PORTAL_URL%)...
+start "" "%PORTAL_URL%"
 
 echo.
 echo Done! Happy teaching!
-timeout /t 3 >nul
+ping 127.0.0.1 -n 3 >nul
 exit
