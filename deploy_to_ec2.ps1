@@ -43,7 +43,7 @@ Write-Host "[OK] Database backup safe." -ForegroundColor Green
 
 # 4. Upload updated application files via SCP
 Write-Host "[INFO] Ensuring remote directories exist..." -ForegroundColor Yellow
-& ssh -i "$KeyPath" -o StrictHostKeyChecking=no "$User@$HostIp" "mkdir -p $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists"
+& ssh -i "$KeyPath" -o StrictHostKeyChecking=no "$User@$HostIp" "mkdir -p $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists $RemoteDir/pdfs"
 
 Write-Host "[INFO] Uploading updated application files via SCP..." -ForegroundColor Yellow
 
@@ -92,6 +92,10 @@ $filesToUpload = @(
     "seed_demo_data.php",
     "seed_life_science.php",
     "seed_matter_materials.php",
+    "import_all_curriculum_pdfs.php",
+    "import_life_matter_and_materials.php",
+    "pdf_to_images.py",
+    "pptx_to_images.py",
     "start_localhost.bat",
     "run.bat",
     "start_ilikesci.bat",
@@ -121,7 +125,7 @@ Write-Host "[OK] $uploadedCount application & data files uploaded." -ForegroundC
 
 # 5. Fix Remote Permissions, SELinux, and reload services
 Write-Host "[INFO] Applying production Linux permissions and SELinux contexts..." -ForegroundColor Yellow
-$postDeployCmd = "mkdir -p $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists && sudo chown -R ec2-user:apache $RemoteDir && sudo chmod 664 $RemoteDir/ilikesci_db.sqlite* 2>/dev/null || true; sudo chmod -R 775 $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists && sudo chcon -R -t httpd_sys_rw_content_t $RemoteDir 2>/dev/null || true; sudo systemctl restart php-fpm && sudo systemctl reload nginx && cd $RemoteDir && php init_db.php"
+$postDeployCmd = "mkdir -p $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists $RemoteDir/pdfs && sudo chown -R ec2-user:apache $RemoteDir && sudo chmod 664 $RemoteDir/ilikesci_db.sqlite* 2>/dev/null || true; sudo chmod -R 775 $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists $RemoteDir/pdfs && sudo chcon -R -t httpd_sys_rw_content_t $RemoteDir 2>/dev/null || true; sudo systemctl restart php-fpm && sudo systemctl reload nginx && cd $RemoteDir && php init_db.php"
 & ssh -i "$KeyPath" -o StrictHostKeyChecking=no "$User@$HostIp" "$postDeployCmd"
 
 # 6. Post-deployment live verification
