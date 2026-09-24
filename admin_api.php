@@ -70,7 +70,7 @@ if ($method === 'GET') {
     } elseif ($action === 'export_eclass') {
         // Export DepEd E-Class Record as CSV
         $grade = $_GET['grade'] ?? 'all';
-        $section = $_GET['section'] ?? 'A';
+        $section = $_GET['section'] ?? 'all';
         $quarter = $_GET['quarter'] ?? '1';
 
         $query = "SELECT s.*, 
@@ -80,10 +80,18 @@ if ($method === 'GET') {
                     (SELECT COUNT(*) FROM recitation_records r WHERE r.student_id = s.id) as total_attempts
                   FROM students s";
         $params = [];
+        $where = [];
         
-        if ($grade !== 'all') {
-            $query .= " WHERE s.grade = ?";
+        if ($grade !== 'all' && !empty($grade)) {
+            $where[] = "s.grade = ?";
             $params[] = $grade;
+        }
+        if ($section !== 'all' && !empty($section)) {
+            $where[] = "s.section = ?";
+            $params[] = $section;
+        }
+        if (!empty($where)) {
+            $query .= " WHERE " . implode(" AND ", $where);
         }
         $query .= " ORDER BY s.name ASC";
 
@@ -105,8 +113,10 @@ if ($method === 'GET') {
         ];
 
         // Build E-Class Record CSV
+        $gradeSlug = ($grade === 'all') ? 'AllGrades' : "Grade{$grade}";
+        $secSlug = ($section === 'all' || empty($section)) ? 'AllSections' : "Sec" . preg_replace('/[^a-zA-Z0-9_-]/', '', $section);
         header('Content-Type: text/csv; charset=utf-8');
-        header("Content-Disposition: attachment; filename=ILikeSci_EClassRecord_Grade{$grade}_Term{$quarter}.csv");
+        header("Content-Disposition: attachment; filename=ILikeSci_EClassRecord_{$gradeSlug}_{$secSlug}_Term{$quarter}.csv");
         
         $output = fopen('php://output', 'w');
         
@@ -114,7 +124,9 @@ if ($method === 'GET') {
         fputcsv($output, ['SCHOOL CLASS RECORD IN SCIENCE']);
         fputcsv($output, ['(Pursuant to DepEd Order 8 series of 2015)']);
         fputcsv($output, []);
-        fputcsv($output, ['GRADE & SECTION:', "Grade $grade - Section $section", '', '', 'TEACHER:', '', 'SUBJECT:', 'SCIENCE']);
+        $secTitle = ($section === 'all' || empty($section)) ? 'All Sections' : "Section $section";
+        $gradeTitle = ($grade === 'all') ? 'All Grades' : "Grade $grade";
+        fputcsv($output, ['GRADE & SECTION:', "$gradeTitle - $secTitle", '', '', 'TEACHER:', '', 'SUBJECT:', 'SCIENCE']);
         fputcsv($output, []);
         
         // Column headers matching GRADE-4-6_SCIENCE.xlsx structure

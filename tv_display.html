@@ -494,9 +494,19 @@
           ctx.save();
           ctx.rotate(startAngle + arcSize / 2);
           ctx.textAlign = 'right';
+          ctx.textBaseline = 'middle';
           ctx.fillStyle = '#fff';
-          ctx.font = 'bold 14px Outfit, sans-serif';
-          ctx.fillText(students[i], 180, 5);
+          ctx.font = size > 25 ? 'bold 11px Outfit, sans-serif' : (size > 14 ? 'bold 13px Outfit, sans-serif' : 'bold 15px Outfit, sans-serif');
+          
+          let displayName = students[i] || '';
+          if (displayName.includes(',')) {
+            const parts = displayName.split(',').map(p => p.trim());
+            const last = parts[0] || '';
+            const first = parts[1] || '';
+            const firstWord = first.split(' ')[0] || first;
+            displayName = size > 16 ? `${firstWord} ${last.charAt(0)}.` : `${first} ${last.charAt(0)}.`;
+          }
+          ctx.fillText(displayName, 185, 0, 135);
           ctx.restore();
         }
         

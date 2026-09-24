@@ -1516,6 +1516,7 @@ h3 { font-size: 18px; margin-bottom: 8px; }
 [data-theme="light"] {
   --bg-dark: #f8fafc;
   --bg-card: rgba(255, 255, 255, 0.95);
+  --text: #1e293b;
   --text-main: #1e293b;
   --text-muted: #64748b;
   --glass-border: rgba(0, 0, 0, 0.1);

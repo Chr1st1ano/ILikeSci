@@ -284,6 +284,12 @@ document.addEventListener('DOMContentLoaded', () => {
       loadAdminStats();
       loadAdminUsers();
       loadSystemSettings();
+      if (document.getElementById('eclass-grade') && document.getElementById('eclass-section')) {
+        updateSectionDropdown('eclass-grade', 'eclass-section', true);
+      }
+      if (document.getElementById('admin-student-grade') && document.getElementById('admin-student-section')) {
+        updateSectionDropdown('admin-student-grade', 'admin-student-section', false);
+      }
     } else if (document.getElementById('admin-user-list')) {
       renderAdminUsers();
       loadSystemSettings();
@@ -608,7 +614,7 @@ async function syncStudentsFromDB() {
         merged.push({
           id: id,
           name: dbS.name || (localS && localS.name) || 'Unknown',
-          grade: dbS.grade || (localS && localS.grade) || '4',
+          grade: String(dbS.grade || (localS && localS.grade) || '4'),
           section: dbS.section || (localS && localS.section) || 'A',
           recitations: parseInt(dbS.recitations) || (localS && localS.recitations) || 0,
           totalScore: parseInt(dbS.totalScore) || (localS && localS.totalScore) || 0,
@@ -616,9 +622,12 @@ async function syncStudentsFromDB() {
         });
       });
 
-      // Keep any localStorage-only students (offline additions not yet pushed)
+      // Keep any localStorage-only students (genuine offline additions not yet pushed)
+      // Never re-add deleted dummy students or outdated Grade 4/6 students not in DB
       state.students.forEach(s => {
-        if (!seenIds.has(s.id)) merged.push(s);
+        if (!seenIds.has(s.id) && s.id > 1000000000000 && s.grade !== '4' && s.grade !== '6') {
+          merged.push(s);
+        }
       });
 
       state.students = merged;
@@ -965,12 +974,71 @@ function exportData() {
   downloadAnchorNode.remove();
 }
 
+// --- Section Options & Filter Helpers ---
+function getAvailableSections(grade) {
+  const gStr = String(grade);
+  const sections = new Set();
+  (state.students || []).forEach(s => {
+    if (gStr === 'all' || String(s.grade) === gStr) {
+      if (s.section) sections.add(s.section);
+    }
+  });
+  if (sections.size === 0) {
+    if (gStr === '4') return ['Maagap', 'Magalang', 'Masigasig', 'Masikap', 'Matatag', 'Matiyaga'];
+    if (gStr === '6') return ['Aristotle', 'Einstein', 'Faraday', 'Galilei', 'Newton', 'Pasteur', 'Tesla'];
+    return ['A', 'B'];
+  }
+  return Array.from(sections).sort();
+}
+
+function updateSectionDropdown(gradeSelectIdOrVal, sectionSelectId, includeAllOption = true) {
+  const sectionSelect = document.getElementById(sectionSelectId);
+  if (!sectionSelect) return;
+
+  let gradeVal = 'all';
+  if (typeof gradeSelectIdOrVal === 'string') {
+    const gradeEl = document.getElementById(gradeSelectIdOrVal);
+    gradeVal = gradeEl ? gradeEl.value : gradeSelectIdOrVal;
+  }
+
+  const currentVal = sectionSelect.value;
+  const sections = getAvailableSections(gradeVal);
+
+  const currentOptions = Array.from(sectionSelect.options).map(o => o.value);
+  const targetOptions = includeAllOption ? ['all', ...sections] : sections;
+  const matches = currentOptions.length === targetOptions.length && currentOptions.every((v, i) => v === targetOptions[i]);
+
+  if (!matches) {
+    sectionSelect.innerHTML = '';
+    if (includeAllOption) {
+      const allOpt = document.createElement('option');
+      allOpt.value = 'all';
+      allOpt.textContent = 'All Sections';
+      sectionSelect.appendChild(allOpt);
+    }
+
+    sections.forEach(sec => {
+      const opt = document.createElement('option');
+      opt.value = sec;
+      opt.textContent = sec.length === 1 ? `Section ${sec}` : sec;
+      sectionSelect.appendChild(opt);
+    });
+
+    if (currentVal && (currentVal === 'all' || sections.includes(currentVal))) {
+      sectionSelect.value = currentVal;
+    } else {
+      sectionSelect.value = includeAllOption ? 'all' : (sections[0] || 'A');
+    }
+  }
+}
+
 // --- Students Management ---
 function renderStudents() {
   const container = document.getElementById('students-container');
   const gradeFilter = document.getElementById('grade-filter');
   if(!container || !gradeFilter) return;
   const filter = gradeFilter.value;
+  updateSectionDropdown('grade-filter', 'section-filter', true);
   const sectionFilter = document.getElementById('section-filter');
   const secFilter = sectionFilter ? sectionFilter.value : 'all';
   const sortEl = document.getElementById('student-sort');
@@ -1033,7 +1101,11 @@ function renderStudents() {
 
 function toggleAddStudent() {
   const form = document.getElementById('add-student-form');
+  if (!form) return;
   form.classList.toggle('hidden');
+  if (!form.classList.contains('hidden')) {
+    updateSectionDropdown('student-grade', 'student-section', false);
+  }
 }
 
 function addStudent() {
@@ -1729,9 +1801,18 @@ function clearImportPreview() {
 }
 
 // --- Assessment & Flash Screen ---
+function updateAssessmentGrade() {
+  updateSectionDropdown('assess-grade', 'assess-section', true);
+  updateAssessmentTopics();
+  renderAssessmentStudents();
+}
+
 async function updateAssessmentTopics() {
-  const grade = document.getElementById('assess-grade').value;
+  const gradeSelect = document.getElementById('assess-grade');
+  const grade = gradeSelect ? gradeSelect.value : (state.assessment.grade || '4');
   state.assessment.grade = grade;
+
+  updateSectionDropdown('assess-grade', 'assess-section', true);
 
   const topicSelect = document.getElementById('assess-topic');
   if(!topicSelect) return;
@@ -1793,30 +1874,64 @@ async function updateAssessmentTopics() {
   renderAssessmentStudents();
 }
 
+function getAssessmentStudentPool() {
+  const gradeEl = document.getElementById('assess-grade');
+  const currentGrade = String(gradeEl ? gradeEl.value : (state.assessment.grade || '4'));
+  state.assessment.grade = currentGrade;
+
+  const sectionEl = document.getElementById('assess-section');
+  const currentSection = sectionEl ? sectionEl.value : 'all';
+
+  let pool = (state.students || []).filter(s => String(s.grade) === currentGrade);
+  if (currentSection && currentSection !== 'all') {
+    pool = pool.filter(s => (s.section || '').trim().toLowerCase() === currentSection.trim().toLowerCase());
+  }
+  return pool;
+}
+
 function renderAssessmentStudents() {
   const select = document.getElementById('assess-student');
   if(!select) return;
   select.innerHTML = '';
   
   const currentGrade = String(state.assessment.grade || document.getElementById('assess-grade')?.value || '4');
-  const gradeStudents = (state.students || []).filter(s => String(s.grade) === currentGrade);
+  const sectionEl = document.getElementById('assess-section');
+  const currentSection = sectionEl ? sectionEl.value : 'all';
   
+  const gradeStudents = getAssessmentStudentPool();
+  
+  const countBadge = document.getElementById('assess-student-count-badge');
+  if (countBadge) {
+    const secLabel = currentSection === 'all' ? 'All Sections' : `Sec. ${currentSection}`;
+    countBadge.textContent = `${gradeStudents.length} Learners (${secLabel})`;
+  }
+
   if(gradeStudents.length === 0) {
-    select.innerHTML = '<option value="">No students in this grade</option>';
+    select.innerHTML = '<option value="">No students in this selection</option>';
     state.assessment.studentId = null;
     return;
   }
   
+  // Sort alphabetically by name
+  gradeStudents.sort((a, b) => a.name.localeCompare(b.name));
+
   gradeStudents.forEach(s => {
     const opt = document.createElement('option');
     opt.value = String(s.id);
-    opt.textContent = s.name;
+    const secTxt = s.section ? ` [${s.section}]` : '';
+    opt.textContent = `${s.name}${secTxt} — ${s.recitations || 0} recs (${s.totalScore || 0} pts)`;
     select.appendChild(opt);
   });
 
   if (gradeStudents.length > 0) {
-    select.value = String(gradeStudents[0].id);
-    state.assessment.studentId = Number(gradeStudents[0].id);
+    const prevId = state.assessment.studentId;
+    const stillPresent = gradeStudents.some(s => Number(s.id) === Number(prevId));
+    if (stillPresent) {
+      select.value = String(prevId);
+    } else {
+      select.value = String(gradeStudents[0].id);
+      state.assessment.studentId = Number(gradeStudents[0].id);
+    }
   }
 }
 
@@ -2162,6 +2277,7 @@ function renderRecords() {
   const totalStudentsEl = document.getElementById('records-total-students');
   const totalRecitationsEl = document.getElementById('records-total-recitations');
   const targetGrade = gradeFilter ? gradeFilter.value : 'all';
+  updateSectionDropdown('records-grade-filter', 'records-section-filter', true);
   const sortBy = sortFilter ? sortFilter.value : 'grade';
   const searchEl = document.getElementById('records-search');
   const searchQ = searchEl ? searchEl.value.toLowerCase().trim() : '';
@@ -2834,6 +2950,7 @@ function renderScoreboard() {
   const tbody = document.getElementById('scoreboard-body');
   if (!tbody) return;
   const gradeFilter = document.getElementById('scoreboard-grade');
+  updateSectionDropdown('scoreboard-grade', 'scoreboard-section', true);
   const sectionFilter = document.getElementById('scoreboard-section');
   const sortBy = document.getElementById('scoreboard-sort');
   const searchEl = document.getElementById('scoreboard-search');
@@ -3038,16 +3155,23 @@ function suggestStudent() {
   const dropdown = document.getElementById('assess-student');
   if(!dropdown) return;
   
-  const currentGrade = String(state.assessment.grade || document.getElementById('assess-grade')?.value || '4');
-  const gradeStudents = (state.students || []).filter(s => String(s.grade) === currentGrade);
-  const pool = gradeStudents.length > 0 ? gradeStudents : (state.students || []);
+  const gradeEl = document.getElementById('assess-grade');
+  const currentGrade = String(gradeEl ? gradeEl.value : (state.assessment.grade || '4'));
+  state.assessment.grade = currentGrade;
+  const sectionEl = document.getElementById('assess-section');
+  const currentSection = sectionEl ? sectionEl.value : 'all';
+
+  const pool = typeof getAssessmentStudentPool === 'function' 
+    ? getAssessmentStudentPool() 
+    : (state.students || []).filter(s => String(s.grade) === currentGrade);
 
   if(pool.length === 0) {
-    alert('No students found for this grade.');
+    const secNotice = currentSection !== 'all' ? ` Section ${currentSection}` : '';
+    alert(`No students found for Grade ${currentGrade}${secNotice}.`);
     return;
   }
 
-  // Find students with lowest recitations in this grade
+  // Find students with lowest recitations in this grade & section
   const candidates = [...pool].sort((a, b) => (Number(a.recitations) || 0) - (Number(b.recitations) || 0));
   const suggestion = candidates[0];
   
@@ -3059,14 +3183,16 @@ function suggestStudent() {
   const insightText = document.getElementById('participation-text');
   if (insightText) {
     const recs = Number(suggestion.recitations) || 0;
+    const secTag = suggestion.section ? ` [${suggestion.section}]` : '';
     if (recs === 0) {
-      insightText.innerHTML = `<span style="color:#ef4444; font-weight:bold;">FAIRNESS CONTROL:</span> ${suggestion.name} has <strong>NOT</strong> participated yet.`;
+      insightText.innerHTML = `<span style="color:#ef4444; font-weight:bold;">FAIRNESS CONTROL:</span> ${suggestion.name}${secTag} has <strong>NOT</strong> participated yet.`;
     } else {
-      insightText.innerHTML = `Suggested: ${suggestion.name} (${recs} participations so far)`;
+      insightText.innerHTML = `Suggested: ${suggestion.name}${secTag} (${recs} participations so far)`;
     }
   }
   
-  alert(`💡 System suggests ${suggestion.name} for fairness.`);
+  const secInfo = suggestion.section ? ` (${suggestion.section})` : '';
+  alert(`💡 System suggests ${suggestion.name}${secInfo} for fairness.`);
 }
 
 function recordRubricResult(points) {
@@ -4071,28 +4197,58 @@ async function adminDeleteUser(id, username) {
 
 function downloadEClassRecord() {
   const grade = document.getElementById('eclass-grade') ? document.getElementById('eclass-grade').value : 'all';
-  const section = document.getElementById('eclass-section') ? document.getElementById('eclass-section').value : 'A';
+  const section = document.getElementById('eclass-section') ? document.getElementById('eclass-section').value : 'all';
   const quarter = document.getElementById('eclass-quarter') ? document.getElementById('eclass-quarter').value : '1';
-  window.open(`admin_api.php?action=export_eclass&grade=${grade}&section=${section}&quarter=${quarter}`, '_blank');
+  window.open(`admin_api.php?action=export_eclass&grade=${encodeURIComponent(grade)}&section=${encodeURIComponent(section)}&quarter=${encodeURIComponent(quarter)}`, '_blank');
+}
+
+function onAdminEClassGradeChange() {
+  updateSectionDropdown('eclass-grade', 'eclass-section', true);
+  previewEClassRecord();
 }
 
 async function previewEClassRecord() {
-  const grade = document.getElementById('eclass-grade') ? document.getElementById('eclass-grade').value : 'all';
+  const gradeEl = document.getElementById('eclass-grade');
+  const sectionEl = document.getElementById('eclass-section');
   const previewDiv = document.getElementById('eclass-preview');
   const head = document.getElementById('eclass-preview-head');
   const body = document.getElementById('eclass-preview-body');
+  const countBadge = document.getElementById('eclass-preview-count-badge');
   if (!previewDiv || !head || !body) return;
 
+  const grade = gradeEl ? gradeEl.value : 'all';
+  const section = sectionEl ? sectionEl.value : 'all';
+
   // Build preview from local state using DepEd weights
-  let students = grade === 'all' ? [...state.students] : state.students.filter(s => s.grade === grade);
+  let students = grade === 'all' ? [...state.students] : state.students.filter(s => String(s.grade) === String(grade));
+  if (section && section !== 'all') {
+    students = students.filter(s => (s.section || '').trim().toLowerCase() === section.trim().toLowerCase());
+  }
+
+  if (countBadge) {
+    countBadge.textContent = `${students.length} Learner${students.length === 1 ? '' : 's'}`;
+  }
 
   if (students.length === 0) {
     previewDiv.style.display = 'block';
-    body.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);">No students found</td></tr>';
+    head.innerHTML = '';
+    body.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted);padding:30px;"><i class="fa-solid fa-circle-info"></i> No learners found for the selected grade and section.</td></tr>';
     return;
   }
 
-  head.innerHTML = '<tr><th>#</th><th>Name</th><th>Grade</th><th>WW (40%)</th><th>PT (40%)</th><th>QA (20%)</th><th>Initial</th><th>Transmuted</th><th>Level</th></tr>';
+  head.innerHTML = `<tr>
+    <th style="width:45px; text-align:center;">#</th>
+    <th>Learner Name</th>
+    <th style="text-align:center;">Grade</th>
+    <th style="text-align:center;">Section</th>
+    <th style="text-align:center;">WW (40%)</th>
+    <th style="text-align:center;">PT (40%)</th>
+    <th style="text-align:center;">QA (20%)</th>
+    <th style="text-align:center;">Initial</th>
+    <th style="text-align:center;">Transmuted</th>
+    <th style="text-align:center;">DepEd Level</th>
+  </tr>`;
+
   body.innerHTML = students.map((s, i) => {
     const totalAttempts = s.recitations || 0;
     const totalPoints = s.totalScore || 0;
@@ -4105,11 +4261,18 @@ async function previewEClassRecord() {
     const initial = (parseFloat(wwWS) + parseFloat(ptWS) + parseFloat(qaWS)).toFixed(1);
     const trans = transmute(parseFloat(initial));
     const lvl = getDepEdLevel(trans);
+    const secTag = s.section ? `<span class="badge" style="background:rgba(59,130,246,0.12); color:var(--primary); font-size:11px; padding:2px 8px; border-radius:6px; font-weight:600;">${s.section}</span>` : '<span style="color:var(--text-muted);">-</span>';
     return `<tr>
-      <td>${i+1}</td><td>${s.name}</td><td>${s.grade}</td>
-      <td>${wwWS}</td><td>${ptWS}</td><td>${qaWS}</td>
-      <td>${initial}</td><td>${trans}</td>
-      <td><span class="${lvl.cssClass}" style="padding:2px 8px;border-radius:10px;font-size:12px;font-weight:700;">${lvl.abbr}</span></td>
+      <td style="text-align:center; color:var(--text-muted); font-size:12px;">${i+1}</td>
+      <td style="font-weight:600; color:var(--text-main);">${s.name}</td>
+      <td style="text-align:center; color:var(--text-muted);">Grade ${s.grade}</td>
+      <td style="text-align:center;">${secTag}</td>
+      <td style="text-align:center;">${wwWS}</td>
+      <td style="text-align:center;">${ptWS}</td>
+      <td style="text-align:center;">${qaWS}</td>
+      <td style="text-align:center; font-weight:600;">${initial}</td>
+      <td style="text-align:center; font-weight:700; color:var(--primary); font-size:14px;">${trans}</td>
+      <td style="text-align:center;"><span class="${lvl.cssClass}" style="padding:3px 10px;border-radius:10px;font-size:11px;font-weight:700;">${lvl.abbr}</span></td>
     </tr>`;
   }).join('');
   previewDiv.style.display = 'block';
@@ -6329,14 +6492,134 @@ async function handleResourceDrop(files) {
 // --- Interactive Student Picker Spin Wheel ---
 let wheelRotation = 0;
 
+const wheelSpinnerState = {
+  grade: '4',
+  section: 'all',
+  filterMode: 'all', // 'all', 'batch_10', 'batch_15', 'uncalled', 'low_rec'
+  batchSeed: 1,
+  excludedIds: new Set(),
+  candidates: [],
+  isSpinning: false,
+  winner: null
+};
+
+function formatWheelStudentName(name, sliceCount = 30) {
+  if (!name) return 'Student';
+  name = name.trim();
+  
+  if (name.includes(',')) {
+    const parts = name.split(',').map(p => p.trim()).filter(Boolean);
+    const lastName = parts[0] || '';
+    const firstName = parts[1] || '';
+    const firstWord = firstName.split(' ')[0] || firstName;
+    const lastInitial = lastName ? lastName.charAt(0) + '.' : '';
+    
+    if (sliceCount <= 10) {
+      const display = `${firstName} ${lastName.charAt(0)}.`;
+      return display.length > 20 ? display.substring(0, 19) + '…' : display;
+    } else if (sliceCount <= 16) {
+      const display = `${firstWord} ${lastInitial}`;
+      return display.length > 15 ? display.substring(0, 14) + '…' : display;
+    } else {
+      const display = `${firstWord} ${lastInitial}`;
+      return display.length > 13 ? display.substring(0, 12) + '…' : display;
+    }
+  }
+  
+  const words = name.split(' ').filter(Boolean);
+  if (words.length > 1) {
+    if (sliceCount <= 10) return name.length > 20 ? name.substring(0, 19) + '…' : name;
+    return `${words[0]} ${words[words.length - 1].charAt(0)}.`;
+  }
+  return name.length > 12 ? name.substring(0, 11) + '…' : name;
+}
+
+function getWheelFontSize(sliceCount) {
+  if (sliceCount <= 8) return 'bold 15px Outfit, sans-serif';
+  if (sliceCount <= 12) return 'bold 13.5px Outfit, sans-serif';
+  if (sliceCount <= 18) return 'bold 12px Outfit, sans-serif';
+  if (sliceCount <= 26) return 'bold 10.5px Outfit, sans-serif';
+  if (sliceCount <= 36) return 'bold 9.5px Outfit, sans-serif';
+  return 'bold 8.5px Outfit, sans-serif';
+}
+
+function shuffleArrayWithSeed(arr, seed = 1) {
+  const copy = [...arr];
+  let m = copy.length, t, i;
+  let s = Math.abs(seed * 9301 + 49297) % 233280;
+  while (m) {
+    s = (s * 9301 + 49297) % 233280;
+    i = Math.floor((s / 233280) * m--);
+    t = copy[m];
+    copy[m] = copy[i];
+    copy[i] = t;
+  }
+  return copy;
+}
+
+function computeWheelCandidates() {
+  const grade = wheelSpinnerState.grade;
+  const section = wheelSpinnerState.section;
+  const filterMode = wheelSpinnerState.filterMode;
+
+  let pool = (state.students || []).filter(s => String(s.grade) === String(grade));
+  if (section && section !== 'all') {
+    pool = pool.filter(s => (s.section || '').trim().toLowerCase() === section.trim().toLowerCase());
+  }
+
+  // Filter out any manually excluded learners
+  pool = pool.filter(s => !wheelSpinnerState.excludedIds.has(Number(s.id)));
+
+  if (filterMode === 'uncalled') {
+    const uncalled = pool.filter(s => (Number(s.recitations) || 0) === 0);
+    pool = uncalled.length > 0 ? uncalled : pool;
+  } else if (filterMode === 'low_rec') {
+    const low = pool.filter(s => (Number(s.recitations) || 0) < 3);
+    pool = low.length > 0 ? low : pool;
+  } else if (filterMode === 'batch_10') {
+    if (pool.length > 10) {
+      pool = shuffleArrayWithSeed(pool, wheelSpinnerState.batchSeed).slice(0, 10);
+    }
+  } else if (filterMode === 'batch_15') {
+    if (pool.length > 15) {
+      pool = shuffleArrayWithSeed(pool, wheelSpinnerState.batchSeed).slice(0, 15);
+    }
+  }
+
+  wheelSpinnerState.candidates = pool;
+  return pool;
+}
+
 function openStudentSpinner() {
-  const gradeStudents = state.students.filter(s => s.grade === state.assessment.grade);
-  if (gradeStudents.length === 0) {
-    alert("Please add students to this grade level first!");
+  const gradeEl = document.getElementById('assess-grade');
+  const sectionEl = document.getElementById('assess-section');
+
+  const currentGrade = String(gradeEl ? gradeEl.value : (state.assessment.grade || '4'));
+  state.assessment.grade = currentGrade;
+
+  let currentSection = sectionEl ? sectionEl.value : 'all';
+
+  const availableSections = getAvailableSections(currentGrade);
+
+  wheelSpinnerState.grade = currentGrade;
+  wheelSpinnerState.section = currentSection;
+  wheelSpinnerState.filterMode = 'all';
+  wheelSpinnerState.batchSeed = Math.floor(Math.random() * 10000) + 1;
+  wheelSpinnerState.excludedIds.clear();
+  wheelSpinnerState.wheelRotation = 0;
+  wheelSpinnerState.isSpinning = false;
+  wheelSpinnerState.winner = null;
+
+  const candidates = computeWheelCandidates();
+
+  if (candidates.length === 0) {
+    alert(`No students found for Grade ${currentGrade} ${currentSection !== 'all' ? 'Section ' + currentSection : ''}. Please add students or select a different section.`);
     return;
   }
 
-  // Create modal overlay
+  const existing = document.getElementById('spinner-modal');
+  if (existing) existing.remove();
+
   const modal = document.createElement('div');
   modal.id = 'spinner-modal';
   modal.style.position = 'fixed';
@@ -6344,55 +6627,134 @@ function openStudentSpinner() {
   modal.style.left = '0';
   modal.style.width = '100vw';
   modal.style.height = '100vh';
-  modal.style.background = 'rgba(15,23,42,0.85)';
-  modal.style.backdropFilter = 'blur(10px)';
+  modal.style.background = 'rgba(15, 23, 42, 0.88)';
+  modal.style.backdropFilter = 'blur(12px)';
   modal.style.display = 'flex';
   modal.style.flexDirection = 'column';
   modal.style.alignItems = 'center';
   modal.style.justifyContent = 'center';
   modal.style.zIndex = '99999';
   modal.style.color = '#fff';
+  modal.style.padding = '16px';
+
+  const sectionOptionsHTML = `
+    <option value="all" ${currentSection === 'all' ? 'selected' : ''}>All Sections</option>
+    ${availableSections.map(sec => {
+      const count = (state.students || []).filter(s => String(s.grade) === currentGrade && (s.section || '').trim().toLowerCase() === sec.trim().toLowerCase()).length;
+      const isSel = currentSection.trim().toLowerCase() === sec.trim().toLowerCase() ? 'selected' : '';
+      return `<option value="${sec}" ${isSel}>Section ${sec} (${count})</option>`;
+    }).join('')}
+  `;
 
   modal.innerHTML = `
-    <div class="glass-card" style="width:90%; max-width:500px; padding:30px; text-align:center; position:relative; box-shadow:var(--shadow-lg); border:1px solid rgba(255,255,255,0.15); background: rgba(30, 41, 59, 0.75);">
-      <button onclick="document.getElementById('spinner-modal').remove()" style="position:absolute; top:15px; right:15px; background:none; border:none; color:#fff; font-size:24px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
-      <h3 style="margin-bottom:10px;"><i class="fa-solid fa-dharmachakra text-primary"></i> Student Selector Wheel</h3>
-      <p class="subtitle" style="margin-bottom:20px; font-size:13px; color: rgba(255,255,255,0.7);">Spin to randomly select a student from Grade ${state.assessment.grade}</p>
+    <div class="glass-card" style="width:100%; max-width:540px; max-height:94vh; overflow-y:auto; padding:22px 20px; text-align:center; position:relative; box-shadow:0 25px 60px rgba(0,0,0,0.65); border:1px solid rgba(255,255,255,0.18); background:rgba(15, 23, 42, 0.96); border-radius:20px;">
+      <button onclick="document.getElementById('spinner-modal').remove()" style="position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.1); border:none; color:#fff; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h3 style="margin:0 0 4px 0; font-size:20px; font-weight:800; display:flex; align-items:center; justify-content:center; gap:8px;">
+        <i class="fa-solid fa-dharmachakra text-primary pulse"></i> Recitation Wheel Spinner
+      </h3>
+      <p style="margin:0 0 12px 0; font-size:12px; color:#94a3b8;">Grade ${currentGrade} Science — DepEd Classroom Randomizer</p>
       
-      <div style="position:relative; width:300px; height:300px; margin:0 auto 20px auto;">
-        <!-- Pin indicator -->
-        <div style="position:absolute; top:-10px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:15px solid transparent; border-right:15px solid transparent; border-top:25px solid #ef4444; z-index:10;"></div>
-        <canvas id="wheel-canvas" width="300" height="300" style="border-radius:50%; box-shadow:0 10px 30px rgba(0,0,0,0.5);"></canvas>
+      <!-- Interactive Section & Cramming Prevention Filter Bar -->
+      <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:14px; padding:12px 14px; margin-bottom:14px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; align-items:center;">
+          <div style="flex:1; min-width:140px; text-align:left;">
+            <label style="font-size:11px; font-weight:700; color:#94a3b8; display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px;">
+              <i class="fa-solid fa-users text-primary"></i> Section
+            </label>
+            <select id="wheel-section-filter" class="form-control" style="width:100%; background:#1e293b; color:#fff; border:1px solid rgba(255,255,255,0.25); font-size:13px; font-weight:600; padding:6px 10px; border-radius:8px;" onchange="app.onWheelSectionChange(this.value)">
+              ${sectionOptionsHTML}
+            </select>
+          </div>
+
+          <div style="flex:1.4; min-width:170px; text-align:left;">
+            <label style="font-size:11px; font-weight:700; color:#94a3b8; display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px;">
+              <i class="fa-solid fa-filter text-primary"></i> Wheel Scope (Uncram)
+            </label>
+            <select id="wheel-candidate-filter" class="form-control" style="width:100%; background:#1e293b; color:#fff; border:1px solid rgba(255,255,255,0.25); font-size:13px; font-weight:600; padding:6px 10px; border-radius:8px;" onchange="app.onWheelFilterModeChange(this.value)">
+              <option value="all">Full Section (All Learners)</option>
+              <option value="batch_10">✨ Spacious 10 Candidates (No Cramming!)</option>
+              <option value="batch_15">✨ Spacious 15 Candidates</option>
+              <option value="uncalled">🎯 Fairness: 0 Recitations Only</option>
+              <option value="low_rec">📈 Needs Practice (&lt; 3 Recitations)</option>
+            </select>
+          </div>
+
+          <button id="wheel-shuffle-btn" class="btn btn-secondary btn-sm" onclick="app.shuffleWheelBatch()" title="Shuffle random batch candidates" style="display:none; height:34px; margin-top:18px; padding:0 12px; font-size:12px; font-weight:600;">
+            <i class="fa-solid fa-shuffle"></i> Reshuffle
+          </button>
+        </div>
+
+        <div id="wheel-candidate-badge" style="font-size:12px; font-weight:700; color:#38bdf8; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:6px;">
+          <i class="fa-solid fa-user-check"></i> Showing ${candidates.length} Candidate${candidates.length === 1 ? '' : 's'} (${currentSection === 'all' ? 'All Sections' : 'Section ' + currentSection})
+        </div>
       </div>
 
-      <button id="spin-btn" class="btn btn-success btn-lg" style="padding:12px 36px; font-size:18px; font-weight:bold; border-radius:30px; letter-spacing:1px;" onclick="app.spinTheStudentWheel()">SPIN THE WHEEL</button>
-      <h2 id="winner-display" style="margin-top:20px; min-height:40px; color:#ffd166; font-weight:800; font-size:24px;"></h2>
+      <!-- Wheel Canvas Area -->
+      <div style="position:relative; width:380px; max-width:88vw; height:380px; max-height:88vw; margin:0 auto 16px auto;">
+        <!-- Pointer Needle -->
+        <div style="position:absolute; top:-14px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:14px solid transparent; border-right:14px solid transparent; border-top:28px solid #ef4444; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.7)); z-index:20;"></div>
+        <canvas id="wheel-canvas" width="420" height="420" style="width:100%; height:100%; border-radius:50%; box-shadow:0 14px 40px rgba(0,0,0,0.65); display:block;"></canvas>
+      </div>
+
+      <div style="display:flex; justify-content:center; gap:10px; align-items:center;">
+        <button id="spin-btn" class="btn btn-success btn-lg" style="padding:12px 42px; font-size:18px; font-weight:800; border-radius:30px; letter-spacing:1px; box-shadow:0 8px 24px rgba(16,185,129,0.45); cursor:pointer;" onclick="app.spinTheStudentWheel()">
+          <i class="fa-solid fa-play"></i> SPIN THE WHEEL
+        </button>
+      </div>
+
+      <!-- Winner Display Banner -->
+      <div id="winner-display" style="margin-top:12px; min-height:44px;"></div>
     </div>
   `;
 
   document.body.appendChild(modal);
 
-  // Paint the wheel canvas
   wheelRotation = 0;
-  drawWheel(gradeStudents);
+  drawWheel(candidates);
 }
 
-function drawWheel(students) {
+function drawWheel(candidates) {
   const canvas = document.getElementById('wheel-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const size = students.length;
+  const size = (candidates || []).length;
+
+  ctx.clearRect(0, 0, 420, 420);
+
+  if (size === 0) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(210, 210, 205, 0, 2 * Math.PI);
+    ctx.fillStyle = '#1e293b';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = 'bold 14px Outfit, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('No learners match this filter', 210, 210);
+    ctx.restore();
+    return;
+  }
+
   const arcSize = (2 * Math.PI) / size;
 
-  ctx.clearRect(0, 0, 300, 300);
   ctx.save();
-  ctx.translate(150, 150);
+  ctx.translate(210, 210);
   ctx.rotate(wheelRotation);
 
   const colors = [
     '#3b82f6', '#10b981', '#f59e0b', '#ef4444', 
-    '#8b5cf6', '#ec4899', '#06b6d4', '#14b8a6'
+    '#8b5cf6', '#06b6d4', '#ec4899', '#14b8a6',
+    '#f97316', '#6366f1', '#84cc16', '#a855f7'
   ];
+
+  const fontSize = getWheelFontSize(size);
 
   for (let i = 0; i < size; i++) {
     const startAngle = i * arcSize;
@@ -6400,19 +6762,24 @@ function drawWheel(students) {
 
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.arc(0, 0, 150, startAngle, endAngle);
+    ctx.arc(0, 0, 206, startAngle, endAngle);
     ctx.fillStyle = colors[i % colors.length];
     ctx.fill();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+    ctx.lineWidth = size > 25 ? 1.5 : 2.5;
+    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
     ctx.stroke();
 
     ctx.save();
     ctx.rotate(startAngle + arcSize / 2);
     ctx.textAlign = 'right';
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 11px Outfit, sans-serif';
-    ctx.fillText(students[i].name, 135, 4);
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#ffffff';
+    ctx.font = fontSize;
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = 4;
+
+    const displayName = formatWheelStudentName(candidates[i].name, size);
+    ctx.fillText(displayName, 192, 0, 142);
     ctx.restore();
   }
 
@@ -6420,85 +6787,224 @@ function drawWheel(students) {
 
   // Draw inner hub/pin
   ctx.beginPath();
-  ctx.arc(150, 150, 18, 0, 2 * Math.PI);
-  ctx.fillStyle = '#1e293b';
+  ctx.arc(210, 210, 32, 0, 2 * Math.PI);
+  const hubGrad = ctx.createRadialGradient(210, 210, 5, 210, 210, 32);
+  hubGrad.addColorStop(0, '#334155');
+  hubGrad.addColorStop(1, '#0f172a');
+  ctx.fillStyle = hubGrad;
   ctx.fill();
   ctx.lineWidth = 3;
-  ctx.strokeStyle = '#fff';
+  ctx.strokeStyle = '#38bdf8';
   ctx.stroke();
+
+  // Hub label
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 11px Outfit, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🎯 SPIN', 210, 210);
+}
+
+function onWheelSectionChange(sectionVal) {
+  wheelSpinnerState.section = sectionVal;
+  
+  const assessSec = document.getElementById('assess-section');
+  if (assessSec) {
+    assessSec.value = sectionVal;
+    renderAssessmentStudents();
+  }
+
+  const candidates = computeWheelCandidates();
+  updateWheelBadgeAndControls(candidates);
+  wheelRotation = 0;
+  drawWheel(candidates);
+}
+
+function onWheelFilterModeChange(modeVal) {
+  wheelSpinnerState.filterMode = modeVal;
+  
+  const shuffleBtn = document.getElementById('wheel-shuffle-btn');
+  if (shuffleBtn) {
+    shuffleBtn.style.display = (modeVal === 'batch_10' || modeVal === 'batch_15') ? 'inline-block' : 'none';
+  }
+
+  const candidates = computeWheelCandidates();
+  updateWheelBadgeAndControls(candidates);
+  wheelRotation = 0;
+  drawWheel(candidates);
+}
+
+function shuffleWheelBatch() {
+  wheelSpinnerState.batchSeed = Math.floor(Math.random() * 10000) + 1;
+  const candidates = computeWheelCandidates();
+  updateWheelBadgeAndControls(candidates);
+  wheelRotation = 0;
+  drawWheel(candidates);
+  if (typeof playChime === 'function') playChime('coin');
+}
+
+function updateWheelBadgeAndControls(candidates) {
+  const badge = document.getElementById('wheel-candidate-badge');
+  const spinBtn = document.getElementById('spin-btn');
+  const winnerDisplay = document.getElementById('winner-display');
+  if (winnerDisplay) winnerDisplay.innerHTML = '';
+
+  const secText = wheelSpinnerState.section === 'all' ? 'All Sections' : `Section ${wheelSpinnerState.section}`;
+  let modeText = '';
+  if (wheelSpinnerState.filterMode === 'batch_10') modeText = ' — 10 Spacious Candidates';
+  if (wheelSpinnerState.filterMode === 'batch_15') modeText = ' — 15 Spacious Candidates';
+  if (wheelSpinnerState.filterMode === 'uncalled') modeText = ' — 0 Recitations Only';
+  if (wheelSpinnerState.filterMode === 'low_rec') modeText = ' — <3 Recitations Only';
+
+  if (badge) {
+    badge.innerHTML = `<i class="fa-solid fa-user-check"></i> Showing ${candidates.length} Candidate${candidates.length === 1 ? '' : 's'} (${secText}${modeText})`;
+  }
+
+  if (spinBtn) {
+    spinBtn.disabled = candidates.length === 0;
+  }
 }
 
 function spinTheStudentWheel() {
-  const spinBtn = document.getElementById('spin-btn');
-  if (spinBtn) spinBtn.disabled = true;
+  if (wheelSpinnerState.isSpinning) return;
 
-  const gradeStudents = state.students.filter(s => s.grade === state.assessment.grade);
-  const size = gradeStudents.length;
-  
-  if (size === 0) return;
+  const candidates = wheelSpinnerState.candidates;
+  const size = (candidates || []).length;
+  if (size === 0) {
+    alert('No candidates available to spin!');
+    return;
+  }
+
+  const spinBtn = document.getElementById('spin-btn');
+  if (spinBtn) {
+    spinBtn.disabled = true;
+    spinBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> SPINNING...';
+  }
+
+  wheelSpinnerState.isSpinning = true;
 
   const winnerIndex = Math.floor(Math.random() * size);
-  const winner = gradeStudents[winnerIndex];
-  
+  const winner = candidates[winnerIndex];
+  wheelSpinnerState.winner = winner;
+
   const arcSize = (2 * Math.PI) / size;
   const targetSegmentAngle = (winnerIndex + 0.5) * arcSize;
   const finalAngleOffset = (1.5 * Math.PI) - targetSegmentAngle;
-  
+
   const baseSpins = (6 + Math.floor(Math.random() * 3)) * 2 * Math.PI;
   const totalRotationGoal = baseSpins + finalAngleOffset;
 
   if (tvWindow && !tvWindow.closed) {
-    sendToTV('spinStudentWheel', { students: gradeStudents.map(s => s.name), winnerName: winner.name, duration: 4000 });
+    sendToTV('spinStudentWheel', { 
+      students: candidates.map(s => s.name), 
+      winnerName: winner.name, 
+      duration: 4000 
+    });
   }
 
   const duration = 4000;
   const start = performance.now();
+  let lastSoundTickIndex = -1;
 
   function animateSpin(timestamp) {
     const elapsed = timestamp - start;
     const progress = Math.min(elapsed / duration, 1);
-    
+
     const easedProgress = 1 - Math.pow(1 - progress, 3);
     wheelRotation = easedProgress * totalRotationGoal;
-    
-    drawWheel(gradeStudents);
+
+    const currentRot = wheelRotation % (2 * Math.PI);
+    const tickIndex = Math.floor(currentRot / arcSize);
+    if (tickIndex !== lastSoundTickIndex && progress < 0.95) {
+      lastSoundTickIndex = tickIndex;
+      if (typeof playChime === 'function') playChime('tick');
+    }
+
+    drawWheel(candidates);
 
     if (progress < 1) {
       requestAnimationFrame(animateSpin);
     } else {
-      const winnerDisplay = document.getElementById('winner-display');
-      if (winnerDisplay) {
-        winnerDisplay.textContent = `🎯 ${winner.name}!`;
-        winnerDisplay.classList.add('pulse');
-      }
-      playChime('fanfare');
-      
+      wheelSpinnerState.isSpinning = false;
+      if (typeof playChime === 'function') playChime('fanfare');
+
       const select = document.getElementById('assess-student');
       if (select) {
-        select.value = winner.id;
-        
-        // Populate current student states
-        state.assessment.studentId = winner.id;
-        
-        // Show correct student participation detail
+        select.value = String(winner.id);
+        state.assessment.studentId = Number(winner.id);
         const insightText = document.getElementById('participation-text');
         if (insightText) {
-          if (winner.recitations === 0) {
-            insightText.innerHTML = `<span style="color:#ef4444; font-weight:bold;">FAIRNESS CONTROL:</span> ${winner.name} has <strong>NOT</strong> participated yet.`;
-          } else {
-            insightText.innerHTML = `Selected: ${winner.name} (${winner.recitations} participations so far)`;
-          }
+          const recs = Number(winner.recitations) || 0;
+          const secTag = winner.section ? ` [${winner.section}]` : '';
+          insightText.innerHTML = `Selected: <strong>${winner.name}${secTag}</strong> (${recs} participations so far)`;
         }
       }
 
       if (spinBtn) {
         spinBtn.disabled = false;
-        spinBtn.textContent = 'SPIN AGAIN';
+        spinBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> SPIN AGAIN';
+      }
+
+      const winnerDisplay = document.getElementById('winner-display');
+      if (winnerDisplay) {
+        const secDisplay = winner.section ? `Section ${winner.section}` : '';
+        const recs = Number(winner.recitations) || 0;
+        winnerDisplay.innerHTML = `
+          <div style="background:rgba(59,130,246,0.18); border:1px solid rgba(59,130,246,0.4); border-radius:14px; padding:12px 14px; margin-top:8px; animation:pulse 0.6s ease;">
+            <div style="font-size:11px; font-weight:800; color:#38bdf8; text-transform:uppercase; letter-spacing:0.8px;">
+              🎯 Selected Learner
+            </div>
+            <div style="font-size:20px; font-weight:800; color:#ffd166; margin:4px 0;">
+              ${winner.name}
+            </div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.85); margin-bottom:10px;">
+              Grade ${winner.grade} — ${secDisplay} | Recitations: <strong>${recs}</strong> (${winner.totalScore || 0} pts)
+            </div>
+            <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+              <button class="btn btn-primary btn-sm" onclick="app.selectWinnerForAssessment(${winner.id})">
+                <i class="fa-solid fa-play"></i> Start Flash Quiz
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="app.spinTheStudentWheel()">
+                <i class="fa-solid fa-rotate-right"></i> Spin Again
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="app.excludeWinnerAndSpinAgain(${winner.id})" title="Exclude this student from subsequent spins this session">
+                <i class="fa-solid fa-user-minus"></i> Exclude for Next Spin
+              </button>
+            </div>
+          </div>
+        `;
       }
     }
   }
 
   requestAnimationFrame(animateSpin);
+}
+
+function selectWinnerForAssessment(studentId) {
+  state.assessment.studentId = Number(studentId);
+  const select = document.getElementById('assess-student');
+  if (select) select.value = String(studentId);
+
+  const modal = document.getElementById('spinner-modal');
+  if (modal) modal.remove();
+
+  if (typeof startQuizFlash === 'function') {
+    startQuizFlash();
+  }
+}
+
+function excludeWinnerAndSpinAgain(studentId) {
+  wheelSpinnerState.excludedIds.add(Number(studentId));
+  const candidates = computeWheelCandidates();
+  updateWheelBadgeAndControls(candidates);
+  wheelRotation = 0;
+  drawWheel(candidates);
+
+  if (candidates.length > 0) {
+    spinTheStudentWheel();
+  } else {
+    alert('All candidates in this group have participated!');
+  }
 }
 
 window.app = {
@@ -6675,6 +7181,11 @@ window.app = {
   generateDynamicGroupings,
   openStudentSpinner,
   spinTheStudentWheel,
+  onWheelSectionChange,
+  onWheelFilterModeChange,
+  shuffleWheelBatch,
+  selectWinnerForAssessment,
+  excludeWinnerAndSpinAgain,
   quickModifyPoints,
   playChime,
   speakText,
@@ -6682,5 +7193,11 @@ window.app = {
   stopCurriculumMidi,
   bulkAddStudents,
   resetQuarterRecitations,
-  seedScienceQuestions
+  seedScienceQuestions,
+  updateSectionDropdown,
+  getAvailableSections,
+  updateAssessmentGrade,
+  renderAssessmentStudents,
+  getAssessmentStudentPool,
+  onAdminEClassGradeChange
 };

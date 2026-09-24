@@ -93,7 +93,7 @@
           <div style="display:flex; gap:12px; margin-top:12px;">
             <div class="form-group" style="flex:1;">
               <label>Grade Level</label>
-              <select id="student-grade" class="form-control">
+              <select id="student-grade" class="form-control" onchange="app.updateSectionDropdown('student-grade', 'student-section', false)">
                 <option value="3">Grade 3</option>
                 <option value="4" selected>Grade 4</option>
                 <option value="5">Grade 5</option>
@@ -103,10 +103,7 @@
             <div class="form-group" style="flex:1;">
               <label>Section</label>
               <select id="student-section" class="form-control">
-                <option value="A">Section A</option>
-                <option value="B">Section B</option>
-                <option value="C">Section C</option>
-                <option value="D">Section D</option>
+                <option value="Maagap">Maagap</option>
               </select>
             </div>
           </div>
@@ -127,7 +124,7 @@
           <div style="display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; align-items:center;">
             <div>
               <label style="font-size:13px; font-weight:600;">Grade:</label>
-              <select id="bulk-grade" class="form-control" style="width:auto; display:inline-block; margin-left:6px;">
+              <select id="bulk-grade" class="form-control" style="width:auto; display:inline-block; margin-left:6px;" onchange="app.updateSectionDropdown('bulk-grade', 'bulk-section', false)">
                 <option value="3">Grade 3</option>
                 <option value="4" selected>Grade 4</option>
                 <option value="5">Grade 5</option>
@@ -137,10 +134,7 @@
             <div>
               <label style="font-size:13px; font-weight:600;">Section:</label>
               <select id="bulk-section" class="form-control" style="width:auto; display:inline-block; margin-left:6px;">
-                <option value="A">Section A</option>
-                <option value="B">Section B</option>
-                <option value="C">Section C</option>
-                <option value="D">Section D</option>
+                <option value="Maagap">Maagap</option>
               </select>
             </div>
             <button class="btn btn-success" onclick="executeBulkImport()"><i class="fa-solid fa-cloud-arrow-up"></i> Import All Students</button>
@@ -213,6 +207,9 @@
     function toggleBulkImportModal() {
       const m = document.getElementById('bulk-import-modal');
       m.classList.toggle('hidden');
+      if (!m.classList.contains('hidden') && typeof app !== 'undefined' && app.updateSectionDropdown) {
+        app.updateSectionDropdown('bulk-grade', 'bulk-section', false);
+      }
     }
 
     async function executeBulkImport() {

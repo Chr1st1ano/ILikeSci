@@ -4,6 +4,29 @@
 > Capstone Project — Laguna State Polytechnic University, San Pablo City Campus  
 > By: Abril, Millera, Olidan | May 2026
 
+## Session 17 — September 24, 2026 (Official Bay Central ES Student Masterlist Migration — Grade 4 & Grade 6)
+
+### 🏫 Ingestion of Official Masterlists from Bay Central Elementary School (BCES)
+
+**Major upgrades:** Completely removed all placeholder/dummy student records from Grade 4 (IDs 107..112) and Grade 6 (IDs 119..124), along with their associated recitation records and dummy grade rows. Ingested **478 official student records** from Bay Central Elementary School using the official masterlist spreadsheets in `masterlists/`:
+- **Grade 4 (`Grade-4-Masterlist-BCES-2026-2027.xlsx`):** Ingested **233 official learners** (IDs 4001–4233) across 6 sections: *Maagap* (35 learners: 11 M, 24 F), *Magalang* (37 learners: 23 M, 14 F), *Masigasig* (40 learners: 14 M, 26 F), *Masikap* (42 learners: 18 M, 24 F), *Matatag* (39 learners: 22 M, 17 F), and *Matiyaga* (40 learners: 21 M, 19 F).
+- **Grade 6 (`GRADE-6-MASTERLIST.xlsx`):** Ingested **245 official learners** (IDs 6001–6245) across 7 sections: *Aristotle* (34 learners: 15 M, 19 F), *Einstein* (37 learners: 20 M, 17 F), *Faraday* (34 learners: 19 M, 15 F), *Galilei* (36 learners: 19 M, 17 F), *Newton* (35 learners: 14 M, 21 F), *Pasteur* (33 learners: 17 M, 16 F), and *Tesla* (36 learners: 17 M, 19 F).
+- **DepEd E-Class Record Pre-population:** Initialized all 478 official learners into the `student_grades` table with exact gender classifications (`M`/`F`) and section identifiers for Term 1, ensuring zero setup required when teachers grade classes.
+- **Dynamic Section Filtering & UI Hardening:** Upgraded `app.js` with `updateSectionDropdown()` to dynamically update section filters on `students.html` and `records.html` based on the selected grade. Updated `syncStudentsFromDB()` to strictly enforce official DB records and prevent legacy dummy students in browser `localStorage` from resurfacing.
+
+| # | File | Change | Status |
+|---|------|--------|--------|
+| 1 | **`ilikesci_db.sqlite`** | **DATABASE MIGRATION** — Pruned legacy Grade 4 and 6 dummy students (107..112, 119..124), dangling recitation logs, and dummy student grades. Inserted 233 Grade 4 learners and 245 Grade 6 learners from Bay Central Elementary School with clean IDs (4001..4233, 6001..6245) and initialized `student_grades` rows. | ✅ |
+| 2 | **`app.js`** | **DYNAMIC SECTION FILTERS & SYNC HARDENING** — Added `getAvailableSections()` and `updateSectionDropdown()`. Connected `renderStudents()`, `renderRecords()`, `renderScoreboard()`, and `toggleAddStudent()`. Hardened `syncStudentsFromDB()` to prevent deleted dummy records in browser `localStorage` from being merged back into state. | ✅ |
+| 3 | **`students.html`** | **UI ENHANCEMENT** — Updated `#student-grade` and `#bulk-grade` to dynamically populate `#student-section` and `#bulk-section` with the official sections of the selected grade level upon modal toggle or change. | ✅ |
+| 4 | **`records.html`** | **E-CLASS UI DYNAMIC SECTIONS** — Updated `#eclass-q-grade` onchange to `onEClassGradeChange()` and integrated `loadEClassRecords()` with dynamic section options so teachers can view E-Class Records for any official section (e.g., Maagap, Pasteur). | ✅ |
+| 5 | **`db.php` & `seed_data.php`** | **SCHEMA & SEED SYNCHRONIZATION** — Updated default seed fallback logic in `db.php` and `$studentsBase` in `seed_data.php` to use the official masterlist JSON (`scratch/extracted_students.json`) instead of old dummy names. | ✅ |
+| 6 | **`assessment.html` & `app.js`** | **ASSESSMENT GRADE & SECTION FILTERING** — Added `#assess-section` filter dropdown and dynamic learner count badge. Updated `updateAssessmentGrade()`, `renderAssessmentStudents()`, and `getAssessmentStudentPool()`. Connected `suggestStudent()` and `openStudentSpinner()` to respect both Grade and Section selections for frictionless classroom recitations. | ✅ |
+| 7 | **`admin.html` & `admin_api.php`** | **ADMIN E-CLASS SECTION FILTERING & THEME CONTRAST FIX** — Added dynamic section dropdowns to E-Class Record Export and Student Creation in admin panel. Implemented real-time learner counter badge (`#eclass-preview-count-badge`), sticky table headers, section badges (`#secTag`), and replaced dark muddy container styling with card-themed styling for crisp high-contrast readability in light and dark modes. Updated `export_eclass` CSV download to filter strictly by section. | ✅ |
+| 8 | **`app.js` & `tv_display.html`** | **RECITATION WHEEL SPINNER SECTION FILTER & CRAMMING PREVENTION** — Overhauled the classroom recitation wheel. Added interactive Section Filter and Wheel Scope (Uncram) filter directly inside the modal with spacious candidate modes (10 or 15 candidates with Reshuffle button, 0 recitations fairness, etc.). Replaced long crammed names with smart formatted first names and last initials, dynamic font scaling, 420px canvas, and audio tick feedback. Synchronized TV display mode with clean uncrammed names. | ✅ |
+
+---
+
 ## Session 16 — September 23, 2026 (Zero-Friction Localhost One-Click Execution & Batch Hardening)
 
 ### ⚡ Batch Automation & Localhost Execution Hardening

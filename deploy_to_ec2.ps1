@@ -42,6 +42,9 @@ $backupCmd = "if [ -f $RemoteDir/ilikesci_db.sqlite ]; then cp $RemoteDir/ilikes
 Write-Host "[OK] Database backup safe." -ForegroundColor Green
 
 # 4. Upload updated application files via SCP
+Write-Host "[INFO] Ensuring remote directories exist..." -ForegroundColor Yellow
+& ssh -i "$KeyPath" -o StrictHostKeyChecking=no "$User@$HostIp" "mkdir -p $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists"
+
 Write-Host "[INFO] Uploading updated application files via SCP..." -ForegroundColor Yellow
 
 $filesToUpload = @(
@@ -96,7 +99,11 @@ $filesToUpload = @(
     "start_both_instances.bat",
     "start_ilayksay.bat",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "ilikesci_db.sqlite",
+    "scratch/extracted_students.json",
+    "masterlists/Grade-4-Masterlist-BCES-2026-2027.xlsx",
+    "masterlists/GRADE-6-MASTERLIST.xlsx"
 )
 
 $localDir = $PSScriptRoot
@@ -110,17 +117,34 @@ foreach ($f in $filesToUpload) {
         $uploadedCount++
     }
 }
-Write-Host "[OK] $uploadedCount application files uploaded." -ForegroundColor Green
+Write-Host "[OK] $uploadedCount application & data files uploaded." -ForegroundColor Green
 
 # 5. Fix Remote Permissions, SELinux, and reload services
 Write-Host "[INFO] Applying production Linux permissions and SELinux contexts..." -ForegroundColor Yellow
-$postDeployCmd = "mkdir -p $RemoteDir/uploads $RemoteDir/pptx_slides && sudo chown -R ec2-user:apache $RemoteDir && sudo chmod 664 $RemoteDir/ilikesci_db.sqlite* 2>/dev/null || true; sudo chmod -R 775 $RemoteDir/uploads $RemoteDir/pptx_slides && sudo chcon -R -t httpd_sys_rw_content_t $RemoteDir 2>/dev/null || true; sudo systemctl restart php-fpm && sudo systemctl reload nginx && cd $RemoteDir && php init_db.php"
+$postDeployCmd = "mkdir -p $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists && sudo chown -R ec2-user:apache $RemoteDir && sudo chmod 664 $RemoteDir/ilikesci_db.sqlite* 2>/dev/null || true; sudo chmod -R 775 $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists && sudo chcon -R -t httpd_sys_rw_content_t $RemoteDir 2>/dev/null || true; sudo systemctl restart php-fpm && sudo systemctl reload nginx && cd $RemoteDir && php init_db.php"
 & ssh -i "$KeyPath" -o StrictHostKeyChecking=no "$User@$HostIp" "$postDeployCmd"
+
+# 6. Post-deployment live verification
+Write-Host "[INFO] Verifying live deployment on EC2..." -ForegroundColor Yellow
+try {
+    $studentCheck = Invoke-RestMethod -Uri "http://$HostIp/student_api.php?action=get_students" -TimeoutSec 10
+    if ($studentCheck.status -eq "success") {
+        $totalStudents = $studentCheck.students.Count
+        Write-Host "[OK] Live Database Verified: $totalStudents students found via API!" -ForegroundColor Green
+    } else {
+        Write-Warning "API returned non-success: $($studentCheck | ConvertTo-Json -Compress)"
+    }
+} catch {
+    Write-Warning "Failed to query live student API: $_"
+}
 
 Write-Host ""
 Write-Host "============================================================" -ForegroundColor Green
-Write-Host "  DEPLOYMENT COMPLETE!" -ForegroundColor Green
-Write-Host "  Live URL: http://$HostIp/index.html" -ForegroundColor Green
-Write-Host "  Games:    http://$HostIp/games.html" -ForegroundColor Green
+Write-Host "  DEPLOYMENT COMPLETE & VERIFIED!" -ForegroundColor Green
+Write-Host "  Live URL:       http://$HostIp/index.html" -ForegroundColor Green
+Write-Host "  Assessment:     http://$HostIp/assessment.html" -ForegroundColor Green
+Write-Host "  Admin Console:  http://$HostIp/admin.html" -ForegroundColor Green
+Write-Host "  TV Display:     http://$HostIp/tv_display.html" -ForegroundColor Green
+Write-Host "  Games:          http://$HostIp/games.html" -ForegroundColor Green
 Write-Host "============================================================" -ForegroundColor Green
 Write-Host ""

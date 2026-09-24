@@ -53,9 +53,26 @@
 
         <!-- Assessment & Oral Recitation Tool -->
         <div id="tab-flashquiz" class="tab-content active">
-          <div class="filter-bar glass-card mt-20">
-            <select id="assess-grade" class="form-control" onchange="app.updateAssessmentTopics()"><option value="3">Grade 3</option><option value="4" selected>Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option></select>
-            <select id="assess-topic" class="form-control"></select>
+          <div class="filter-bar glass-card mt-20" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+            <div style="flex:1; min-width:140px;">
+              <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;"><i class="fa-solid fa-graduation-cap text-primary"></i> Grade Level</label>
+              <select id="assess-grade" class="form-control" onchange="app.updateAssessmentGrade()">
+                <option value="3">Grade 3</option>
+                <option value="4" selected>Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+              </select>
+            </div>
+            <div style="flex:1; min-width:160px;">
+              <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;"><i class="fa-solid fa-users-line text-primary"></i> Section</label>
+              <select id="assess-section" class="form-control" onchange="app.renderAssessmentStudents()">
+                <option value="all">All Sections</option>
+              </select>
+            </div>
+            <div style="flex:2; min-width:220px;">
+              <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;"><i class="fa-solid fa-book-open text-primary"></i> Topic / Lesson</label>
+              <select id="assess-topic" class="form-control"></select>
+            </div>
           </div>
           <div class="glass-card mt-20">
             <h3>Difficulty</h3>
@@ -65,7 +82,17 @@
               <button class="btn btn-diff" data-diff="Hard" onclick="app.setDifficulty('Hard')">Hard (5pts)</button>
             </div>
           </div>
-          <div class="glass-card mt-20"><h3>Select Student</h3><div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;"><select id="assess-student" class="form-control" style="flex:1;" onchange="if(this.value) state.assessment.studentId = Number(this.value);"></select><button class="btn btn-secondary" onclick="app.suggestStudent()"><i class="fa-solid fa-lightbulb text-warning"></i> Suggest</button><button class="btn btn-primary" onclick="app.openStudentSpinner()"><i class="fa-solid fa-dharmachakra"></i> Spin Wheel</button></div></div>
+          <div class="glass-card mt-20">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+              <h3 style="margin:0;"><i class="fa-solid fa-user-check text-primary"></i> Select Student for Recitation</h3>
+              <span id="assess-student-count-badge" class="badge" style="background:rgba(59,130,246,0.15); color:var(--primary); font-weight:700;">0 Learners</span>
+            </div>
+            <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+              <select id="assess-student" class="form-control" style="flex:2; min-width:240px;" onchange="if(this.value) state.assessment.studentId = Number(this.value);"></select>
+              <button class="btn btn-secondary" onclick="app.suggestStudent()" title="Suggest student with fewest recitations for fairness"><i class="fa-solid fa-lightbulb text-warning"></i> Suggest</button>
+              <button class="btn btn-primary" onclick="app.openStudentSpinner()" title="Randomize selection via Wheel Spinner"><i class="fa-solid fa-dharmachakra"></i> Spin Wheel</button>
+            </div>
+          </div>
           <div style="display:flex; gap:12px; margin-top:20px;">
             <button class="btn btn-primary flex-1" onclick="app.startQuizFlash()"><i class="fa-solid fa-play"></i> Start Flash Quiz</button>
             <button class="btn btn-secondary flex-1" onclick="app.openTVDisplay()"><i class="fa-solid fa-display"></i> TV Mode</button>

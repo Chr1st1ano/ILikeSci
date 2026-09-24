@@ -136,16 +136,13 @@
             </div>
           </div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
-            <select id="eclass-q-grade" class="form-control" style="width:auto;" onchange="loadEClassRecords()">
+            <select id="eclass-q-grade" class="form-control" style="width:auto;" onchange="onEClassGradeChange()">
               <option value="4">Grade 4</option>
               <option value="5">Grade 5</option>
               <option value="6">Grade 6</option>
             </select>
             <select id="eclass-q-section" class="form-control" style="width:auto;" onchange="loadEClassRecords()">
-              <option value="A">Section A</option>
-              <option value="B">Section B</option>
-              <option value="C">Section C</option>
-              <option value="D">Section D</option>
+              <option value="all">All Sections</option>
             </select>
             <div style="display:flex;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--glass-border);">
               <button class="eclass-q-tab active" data-q="1" onclick="switchEClassQuarter(1)">Term 1</button>
@@ -201,7 +198,17 @@
       loadEClassRecords();
     }
 
+    function onEClassGradeChange() {
+      if (typeof app !== 'undefined' && app.updateSectionDropdown) {
+        app.updateSectionDropdown('eclass-q-grade', 'eclass-q-section', false);
+      }
+      loadEClassRecords();
+    }
+
     async function loadEClassRecords() {
+      if (typeof app !== 'undefined' && app.updateSectionDropdown) {
+        app.updateSectionDropdown('eclass-q-grade', 'eclass-q-section', false);
+      }
       const grade = document.getElementById('eclass-q-grade').value;
       const section = document.getElementById('eclass-q-section').value;
       const container = document.getElementById('eclass-table-container');

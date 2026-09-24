@@ -56,28 +56,29 @@ $studentsBase = [
     [104, 'Olivia Taylor', '3', 'B'],
     [105, 'Liam Johnson', '3', 'B'],
     [106, 'Mia Anderson', '3', 'B'],
-    // Grade 4
-    [107, 'Maria Garcia', '4', 'A'],
-    [108, 'Noah Thomas', '4', 'A'],
-    [109, 'Emma Jackson', '4', 'A'],
-    [110, 'Lucas White', '4', 'B'],
-    [111, 'Ava Harris', '4', 'B'],
-    [112, 'Elijah Martin', '4', 'B'],
     // Grade 5
     [113, 'James Smith', '5', 'A'],
     [114, 'Isabella Clark', '5', 'A'],
     [115, 'Benjamin Lewis', '5', 'A'],
     [116, 'Charlotte Robinson', '5', 'B'],
     [117, 'William Walker', '5', 'B'],
-    [118, 'Amelia Young', '5', 'B'],
-    // Grade 6
-    [119, 'Linda Johnson', '6', 'A'],
-    [120, 'Oliver King', '6', 'A'],
-    [121, 'Evelyn Wright', '6', 'A'],
-    [122, 'Henry Scott', '6', 'B'],
-    [123, 'Harper Green', '6', 'B'],
-    [124, 'Alexander Baker', '6', 'B']
+    [118, 'Amelia Young', '5', 'B']
 ];
+
+$officialStudentsJson = __DIR__ . '/scratch/extracted_students.json';
+if (file_exists($officialStudentsJson)) {
+    $officialData = json_decode(file_get_contents($officialStudentsJson), true);
+    if (!empty($officialData['grade4'])) {
+        foreach ($officialData['grade4'] as $idx => $s) {
+            $studentsBase[] = [4001 + $idx, $s['name'], '4', $s['section']];
+        }
+    }
+    if (!empty($officialData['grade6'])) {
+        foreach ($officialData['grade6'] as $idx => $s) {
+            $studentsBase[] = [6001 + $idx, $s['name'], '6', $s['section']];
+        }
+    }
+}
 
 $topicsByGrade = [
     '3' => [

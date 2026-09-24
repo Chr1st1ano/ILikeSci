@@ -380,34 +380,33 @@ try {
 try {
     $studentCount = (int)$pdo->query("SELECT COUNT(*) FROM students")->fetchColumn();
     if ($studentCount === 0) {
-        $defaultStudents = [
-            // Grade 3
-            [301, 'Alex Brown', '3', 'A', 4, 12],
-            [302, 'Sophia Martinez', '3', 'A', 5, 15],
-            [303, 'Ethan Williams', '3', 'A', 3, 9],
-            [304, 'Olivia Taylor', '3', 'B', 4, 10],
-            [305, 'Liam Johnson', '3', 'B', 6, 18],
-            // Grade 4
-            [401, 'Maria Garcia', '4', 'A', 8, 24],
-            [402, 'Noah Thomas', '4', 'A', 7, 21],
-            [403, 'Emma Jackson', '4', 'A', 9, 27],
-            [404, 'Lucas White', '4', 'B', 5, 15],
-            [405, 'Ava Harris', '4', 'B', 6, 18],
-            // Grade 5
-            [501, 'James Smith', '5', 'A', 6, 18],
-            [502, 'Isabella Clark', '5', 'A', 7, 21],
-            [503, 'Benjamin Lewis', '5', 'A', 5, 14],
-            [504, 'Charlotte Robinson', '5', 'B', 8, 22],
-            // Grade 6
-            [601, 'Daniel Walker', '6', 'A', 9, 27],
-            [602, 'Mia Hall', '6', 'A', 8, 24],
-            [603, 'Henry Allen', '6', 'B', 6, 17],
-            [604, 'Amelia Young', '6', 'B', 7, 20]
-        ];
-
-        $stmtStudent = $pdo->prepare("INSERT INTO students (id, name, grade, section, recitations, total_score) VALUES (?, ?, ?, ?, ?, ?)");
-        foreach ($defaultStudents as $s) {
-            $stmtStudent->execute($s);
+        $jsonFile = __DIR__ . '/scratch/extracted_students.json';
+        if (file_exists($jsonFile)) {
+            $data = json_decode(file_get_contents($jsonFile), true);
+            $stmtStudent = $pdo->prepare("INSERT INTO students (id, name, grade, section, recitations, total_score) VALUES (?, ?, ?, ?, ?, ?)");
+            // Grade 3 defaults
+            $stmtStudent->execute([101, 'Alex Brown', '3', 'A', 4, 12]);
+            $stmtStudent->execute([102, 'Sophia Martinez', '3', 'A', 5, 15]);
+            $stmtStudent->execute([103, 'Ethan Williams', '3', 'A', 3, 9]);
+            $stmtStudent->execute([104, 'Olivia Taylor', '3', 'B', 4, 10]);
+            $stmtStudent->execute([105, 'Liam Johnson', '3', 'B', 6, 18]);
+            // Grade 5 defaults
+            $stmtStudent->execute([113, 'James Smith', '5', 'A', 6, 18]);
+            $stmtStudent->execute([114, 'Isabella Clark', '5', 'A', 7, 21]);
+            $stmtStudent->execute([115, 'Benjamin Lewis', '5', 'A', 5, 14]);
+            $stmtStudent->execute([116, 'Charlotte Robinson', '5', 'B', 8, 22]);
+            // Grade 4 official students
+            if (!empty($data['grade4'])) {
+                foreach ($data['grade4'] as $idx => $s) {
+                    $stmtStudent->execute([4001 + $idx, $s['name'], '4', $s['section'], 0, 0]);
+                }
+            }
+            // Grade 6 official students
+            if (!empty($data['grade6'])) {
+                foreach ($data['grade6'] as $idx => $s) {
+                    $stmtStudent->execute([6001 + $idx, $s['name'], '6', $s['section'], 0, 0]);
+                }
+            }
         }
     }
 } catch (Exception $e) {}
