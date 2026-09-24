@@ -2520,31 +2520,66 @@ body.light-mode .hamburger-item.active { background: rgba(59,130,246,0.12); colo
   100% { opacity: 0.6; }
 }
 
-/* Print optimization */
+/* Print optimization across all views */
 @media print {
   .top-nav,
   .main-nav,
   .btn-icon,
   .options-overlay,
-  .login-overlay {
+  .login-overlay,
+  .filter-bar,
+  .sort-controls,
+  .actions-bar,
+  .sidebar-toggle,
+  .btn,
+  button,
+  input,
+  select,
+  .hide-print {
     display: none !important;
   }
 
   body {
-    background: white;
-    color: black;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 10pt;
+  }
+
+  .content-area,
+  .app-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
   }
 
   .glass-card {
-    background: white;
-    border: 1px solid #ccc;
-    box-shadow: none;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    page-break-inside: avoid;
   }
 
-  .btn {
-    background: #f0f0f0;
-    color: black;
-    border: 1px solid #ccc;
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    color: #0f172a !important;
+  }
+
+  th {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    border: 1px solid #94a3b8 !important;
+  }
+
+  td {
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+
+  tr {
+    page-break-inside: avoid !important;
   }
 }
 

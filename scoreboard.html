@@ -32,6 +32,199 @@
     .participation-fill { height:100%; border-radius:3px; transition:width 0.3s; }
     .status-active { color:#06d6a0; }
     .status-passive { color:#ef4444; }
+
+    /* Light Mode High-Contrast Rules for Scoreboard */
+    [data-theme="light"] .insight-card {
+      background: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, 0.12) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    }
+    [data-theme="light"] .insight-card .label {
+      color: #475569 !important;
+      font-weight: 600;
+    }
+    [data-theme="light"] .insight-card .num.text-primary { color: #1d4ed8 !important; }
+    [data-theme="light"] .insight-card .num.text-warning { color: #b45309 !important; }
+    [data-theme="light"] .insight-card .num.status-active { color: #047857 !important; }
+    [data-theme="light"] .insight-card .num.status-passive { color: #b91c1c !important; }
+    [data-theme="light"] .sheet-table th {
+      background: #f1f5f9 !important;
+      color: #0f172a !important;
+      font-weight: 800 !important;
+      border-bottom: 2px solid #cbd5e1 !important;
+    }
+    [data-theme="light"] .sheet-table td {
+      border-bottom: 1px solid #e2e8f0 !important;
+      color: #1e293b !important;
+    }
+    [data-theme="light"] .sheet-table tr:hover {
+      background: rgba(59, 130, 246, 0.08) !important;
+    }
+    [data-theme="light"] .sheet-table tr.rank-1 {
+      background: #fefce8 !important;
+    }
+    [data-theme="light"] .sheet-table tr.rank-1 td:first-child {
+      color: #b45309 !important;
+      font-weight: 900 !important;
+    }
+    [data-theme="light"] .sheet-table tr.highlight-zero {
+      background: #fef2f2 !important;
+    }
+    [data-theme="light"] .sort-btn {
+      background: #ffffff !important;
+      border-color: rgba(0, 0, 0, 0.15) !important;
+      color: #334155 !important;
+    }
+    [data-theme="light"] .sort-btn:hover {
+      background: #eff6ff !important;
+      color: #2563eb !important;
+      border-color: #93c5fd !important;
+    }
+    [data-theme="light"] .sort-btn.active {
+      background: #dbeafe !important;
+      color: #1d4ed8 !important;
+      border-color: #3b82f6 !important;
+    }
+    [data-theme="light"] .participation-bar {
+      background: #e2e8f0 !important;
+    }
+    [data-theme="light"] .participation-fill {
+      background: #2563eb !important;
+    }
+
+    /* Print Optimization Rules */
+    @media print {
+      .top-nav,
+      .main-nav,
+      .sort-controls,
+      #next-student-suggestion,
+      #fairness-alert,
+      .btn,
+      .btn-icon,
+      .btn-secondary,
+      .btn-primary,
+      .filter-bar,
+      .sort-btn,
+      .sidebar-toggle,
+      .hide-print {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        font-family: 'Outfit', Arial, sans-serif !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .app-wrapper, .content-area {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+      .print-header {
+        display: block !important;
+        margin-bottom: 16px !important;
+        text-align: center !important;
+      }
+      .print-header h2 {
+        margin: 0 !important;
+        font-size: 16pt !important;
+        font-weight: 800 !important;
+        color: #0f172a !important;
+        letter-spacing: 0.5px !important;
+      }
+      .print-header p.sub {
+        margin: 3px 0 !important;
+        font-size: 10pt !important;
+        color: #475569 !important;
+      }
+      .print-header h3 {
+        margin: 6px 0 3px !important;
+        font-size: 12pt !important;
+        font-weight: 700 !important;
+        color: #1e293b !important;
+      }
+      .print-header p.meta {
+        margin: 0 !important;
+        font-size: 8.5pt !important;
+        color: #64748b !important;
+      }
+      #view-scoreboard > h1,
+      #view-scoreboard > .subtitle {
+        display: none !important;
+      }
+      .glass-card {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        padding: 8px !important;
+        margin-top: 8px !important;
+      }
+      .insight-cards {
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr) !important;
+        gap: 8px !important;
+        margin-bottom: 12px !important;
+      }
+      .insight-card {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 6px !important;
+        padding: 8px 4px !important;
+        text-align: center !important;
+      }
+      .insight-card .num {
+        font-size: 15pt !important;
+        font-weight: 800 !important;
+        color: #0f172a !important;
+      }
+      .insight-card .label {
+        font-size: 7.5pt !important;
+        color: #475569 !important;
+        font-weight: 600 !important;
+      }
+      .sheet-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-size: 9pt !important;
+        color: #0f172a !important;
+      }
+      .sheet-table th {
+        background: #f1f5f9 !important;
+        color: #0f172a !important;
+        font-weight: 800 !important;
+        border: 1px solid #94a3b8 !important;
+        padding: 5px 6px !important;
+        text-transform: uppercase !important;
+        font-size: 8pt !important;
+      }
+      .sheet-table td {
+        border: 1px solid #cbd5e1 !important;
+        padding: 5px 6px !important;
+        color: #0f172a !important;
+      }
+      .sheet-table tr {
+        page-break-inside: avoid !important;
+      }
+      .sheet-table tr.rank-1 td {
+        background: #fefce8 !important;
+        font-weight: 700 !important;
+      }
+      .sheet-table tr.rank-1 td:first-child {
+        color: #b45309 !important;
+        font-weight: 900 !important;
+      }
+      .participation-bar {
+        border: 1px solid #cbd5e1 !important;
+        background: #f1f5f9 !important;
+        height: 6px !important;
+      }
+      .participation-fill {
+        background: #334155 !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -70,6 +263,14 @@
 
     <main class="content-area">
       <section id="view-scoreboard" class="view-section active">
+        <!-- Printable Official Report Header (Shown exclusively during window.print) -->
+        <div class="print-header" style="display:none;">
+          <h2>BAY CENTRAL ELEMENTARY SCHOOL</h2>
+          <p class="sub">Department of Education • Region IV-A CALABARZON • Division of Laguna</p>
+          <h3>Official Science Recitation & Participation Scoreboard</h3>
+          <p class="meta" id="print-meta-info"></p>
+        </div>
+
         <h1><i class="fa-solid fa-trophy text-warning"></i> Digital Scoreboard</h1>
         <p class="subtitle">Participation tracking · Fairness control · Performance insight</p>
 
@@ -86,10 +287,6 @@
             </select>
             <select id="scoreboard-section" class="form-control" onchange="app.renderScoreboard()">
               <option value="all">All Sections</option>
-              <option value="A">Section A</option>
-              <option value="B">Section B</option>
-              <option value="C">Section C</option>
-              <option value="D">Section D</option>
             </select>
             <select id="scoreboard-sort" class="form-control" onchange="app.renderScoreboard()">
               <option value="points">Sort by Points</option>
@@ -102,7 +299,7 @@
               <i class="fa-solid fa-arrow-down-wide-short" id="sort-dir-icon"></i>
               <span id="sort-dir-label">Desc</span>
             </button>
-            <button class="btn btn-secondary" onclick="window.print()" title="Print / Export Report"><i class="fa-solid fa-print"></i> <span class="hide-mobile">Print</span></button>
+            <button class="btn btn-secondary" onclick="prepareAndPrintScoreboard()" title="Print / Export Report"><i class="fa-solid fa-print"></i> <span class="hide-mobile">Print</span></button>
             <button class="btn btn-secondary" onclick="app.openTVDisplay()"><i class="fa-solid fa-display"></i> <span class="hide-mobile">TV</span></button>
             <button class="btn btn-primary" onclick="app.toggleFullscreen()"><i class="fa-solid fa-expand"></i></button>
             <button class="btn btn-secondary" onclick="app.refreshScoreboard()"><i class="fa-solid fa-rotate"></i></button>
@@ -184,6 +381,21 @@
     function sortByColumn(col) {
       document.getElementById('scoreboard-sort').value = col === 'rank' ? 'points' : col;
       app.renderScoreboard();
+    }
+
+    function prepareAndPrintScoreboard() {
+      const gEl = document.getElementById('scoreboard-grade');
+      const sEl = document.getElementById('scoreboard-section');
+      const g = gEl ? gEl.value : 'all';
+      const s = sEl ? sEl.value : 'all';
+      const meta = document.getElementById('print-meta-info');
+      const gradeText = g === 'all' ? 'All Grades (3-6)' : 'Grade ' + g;
+      const sectionText = s === 'all' ? 'All Sections' : 'Section ' + s;
+      const now = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+      if (meta) {
+        meta.textContent = `Grade & Section Scope: ${gradeText} • ${sectionText} | Report Timestamp: ${now}`;
+      }
+      window.print();
     }
 
     // Expose sortAscending to app.js

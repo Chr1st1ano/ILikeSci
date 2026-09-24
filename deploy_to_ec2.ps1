@@ -75,6 +75,7 @@ $filesToUpload = @(
     "manifest.json",
     "db.php",
     "auth.php",
+    "register.php",
     "admin_api.php",
     "lessons_api.php",
     "pptx_api.php",

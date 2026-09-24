@@ -97,6 +97,44 @@
     .signup-msg { text-align: center; font-size: 14px; margin-top: 12px; display: none; }
     .signup-msg.error { color: #ef4444; }
     .signup-msg.success { color: #10b981; }
+    .password-wrapper { position: relative; width: 100%; }
+    .password-wrapper input { padding-right: 42px; }
+    .password-wrapper .toggle-eye {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 15px; padding: 6px;
+      transition: color 0.2s; display: flex; align-items: center; justify-content: center;
+    }
+    .password-wrapper .toggle-eye:hover { color: #a78bfa; }
+    .password-requirements {
+      grid-column: 1 / -1;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-top: 4px;
+    }
+    .pw-req-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+    }
+    .pw-req-title { font-size: 12px; font-weight: 700; color: #cbd5e1; display: flex; align-items: center; gap: 6px; }
+    .pw-req-badge {
+      font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 20px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .pw-req-badge.good { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3); }
+    .pw-req-badge.strong { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
+    .pw-req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px; }
+    @media (max-width: 500px) { .pw-req-grid { grid-template-columns: 1fr; } }
+    .req-item { color: #94a3b8; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .req-item i { font-size: 12px; }
+    .req-item.met { color: #34d399; }
+    .req-item.met i { color: #34d399; }
+    .req-item.unmet i { color: #ef4444; }
+    .pw-match-status {
+      margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 12px; display: flex; align-items: center; gap: 6px;
+    }
   </style>
 </head>
 <body>
@@ -142,11 +180,47 @@
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Create a strong password" required minlength="3">
+            <div class="password-wrapper">
+              <input type="password" id="password" placeholder="Create a strong password" required oninput="validatePasswordStrength()">
+              <button type="button" class="toggle-eye" onclick="togglePasswordVisibility('password', 'password-eye')" title="Show/Hide Password" aria-label="Toggle password visibility">
+                <i class="fa-solid fa-eye" id="password-eye"></i>
+              </button>
+            </div>
           </div>
           <div class="form-group">
             <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" placeholder="Re-enter password" required>
+            <div class="password-wrapper">
+              <input type="password" id="confirm-password" placeholder="Re-enter password" required oninput="validatePasswordMatch()">
+              <button type="button" class="toggle-eye" onclick="togglePasswordVisibility('confirm-password', 'confirm-eye')" title="Show/Hide Password" aria-label="Toggle password visibility">
+                <i class="fa-solid fa-eye" id="confirm-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Password Security Requirements Widget -->
+          <div class="password-requirements" id="password-requirements">
+            <div class="pw-req-header">
+              <span class="pw-req-title"><i class="fa-solid fa-shield-halved" style="color:#8b5cf6;"></i> Password Security Measure</span>
+              <span class="pw-req-badge" id="pw-strength-badge">Too Weak</span>
+            </div>
+            <div class="pw-req-grid">
+              <div class="req-item unmet" id="req-len">
+                <i class="fa-solid fa-circle-xmark"></i> <span>At least 8 characters</span>
+              </div>
+              <div class="req-item unmet" id="req-case">
+                <i class="fa-solid fa-circle-xmark"></i> <span>Upper & lowercase letters</span>
+              </div>
+              <div class="req-item unmet" id="req-num">
+                <i class="fa-solid fa-circle-xmark"></i> <span>At least 1 number (0-9)</span>
+              </div>
+              <div class="req-item unmet" id="req-spec">
+                <i class="fa-solid fa-circle-xmark"></i> <span>Special character (!@#$%^&*...)</span>
+              </div>
+            </div>
+            <div class="pw-match-status" id="pw-match-row" style="display:none;">
+              <span id="pw-match-icon"><i class="fa-solid fa-circle-xmark text-danger"></i></span>
+              <span id="pw-match-label" style="color:#94a3b8;">Passwords do not match</span>
+            </div>
           </div>
         </div>
 
@@ -154,7 +228,7 @@
         <div class="form-grid">
           <div class="form-group full-width">
             <label for="handled-sections">Handled Grades / Sections</label>
-            <input type="text" id="handled-sections" placeholder="e.g. Grade 4 Section A, Grade 5 Section B" required>
+            <input type="text" id="handled-sections" placeholder="e.g. Grade 4 Section Masigasig, Grade 6 Section Pasteur" required>
           </div>
           <div class="form-group full-width">
             <label for="bio">Profile Bio (Optional)</label>
@@ -166,7 +240,7 @@
 
         <div class="signup-actions">
           <button type="button" class="btn-cancel" onclick="window.location.href='login.html'">Cancel</button>
-          <button type="submit" class="btn-register">Complete Registration</button>
+          <button type="submit" class="btn-register" id="btn-submit-register">Complete Registration</button>
         </div>
       </form>
 
@@ -177,6 +251,106 @@
   </div>
 
   <script>
+    function togglePasswordVisibility(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (!input || !icon) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fa-solid fa-eye';
+      }
+    }
+
+    function checkPasswordCriteria(pw) {
+      const hasLength = pw.length >= 8;
+      const hasUpper = /[A-Z]/.test(pw);
+      const hasLower = /[a-z]/.test(pw);
+      const hasNumber = /[0-9]/.test(pw);
+      const hasSpecial = /[!@#$%^&*(),.?":{}|<>_\-+=\[\]\/\\~`]/.test(pw);
+      return {
+        hasLength,
+        hasUpper,
+        hasLower,
+        hasCase: hasUpper && hasLower,
+        hasNumber,
+        hasSpecial,
+        isStrong: hasLength && hasUpper && hasLower && hasNumber && hasSpecial
+      };
+    }
+
+    function setRequirementUI(elId, isMet) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const icon = el.querySelector('i');
+      if (isMet) {
+        el.className = 'req-item met';
+        icon.className = 'fa-solid fa-circle-check';
+      } else {
+        el.className = 'req-item unmet';
+        icon.className = 'fa-solid fa-circle-xmark';
+      }
+    }
+
+    function validatePasswordStrength() {
+      const pw = document.getElementById('password').value;
+      const crit = checkPasswordCriteria(pw);
+
+      setRequirementUI('req-len', crit.hasLength);
+      setRequirementUI('req-case', crit.hasCase);
+      setRequirementUI('req-num', crit.hasNumber);
+      setRequirementUI('req-spec', crit.hasSpecial);
+
+      const badge = document.getElementById('pw-strength-badge');
+      let score = 0;
+      if (crit.hasLength) score++;
+      if (crit.hasCase) score++;
+      if (crit.hasNumber) score++;
+      if (crit.hasSpecial) score++;
+
+      if (score === 4) {
+        badge.className = 'pw-req-badge strong';
+        badge.textContent = 'Strong & Secure';
+      } else if (score >= 2) {
+        badge.className = 'pw-req-badge good';
+        badge.textContent = 'Moderate';
+      } else {
+        badge.className = 'pw-req-badge';
+        badge.textContent = 'Too Weak';
+      }
+
+      validatePasswordMatch();
+      return crit.isStrong;
+    }
+
+    function validatePasswordMatch() {
+      const pw = document.getElementById('password').value;
+      const confirmPw = document.getElementById('confirm-password').value;
+      const matchRow = document.getElementById('pw-match-row');
+      const matchIcon = document.getElementById('pw-match-icon');
+      const matchLabel = document.getElementById('pw-match-label');
+
+      if (!confirmPw) {
+        matchRow.style.display = 'none';
+        return false;
+      }
+
+      matchRow.style.display = 'flex';
+      if (pw === confirmPw) {
+        matchIcon.innerHTML = '<i class="fa-solid fa-circle-check text-success" style="color:#34d399;"></i>';
+        matchLabel.textContent = 'Passwords match';
+        matchLabel.style.color = '#34d399';
+        return true;
+      } else {
+        matchIcon.innerHTML = '<i class="fa-solid fa-circle-xmark text-danger" style="color:#ef4444;"></i>';
+        matchLabel.textContent = 'Passwords do not match';
+        matchLabel.style.color = '#ef4444';
+        return false;
+      }
+    }
+
     async function registerTeacher() {
       const fname = document.getElementById('fname').value.trim();
       const lname = document.getElementById('lname').value.trim();
@@ -190,9 +364,18 @@
       const msg = document.getElementById('signup-msg');
 
       // Validation
+      const crit = checkPasswordCriteria(password);
+      if (!crit.isStrong) {
+        msg.className = 'signup-msg error'; msg.style.display = 'block';
+        msg.textContent = 'Password is too weak. Please meet all 4 security measures (8+ characters, uppercase, lowercase, number, and special character).';
+        validatePasswordStrength();
+        return;
+      }
+
       if (password !== confirmPw) {
         msg.className = 'signup-msg error'; msg.style.display = 'block';
-        msg.textContent = 'Passwords do not match.';
+        msg.textContent = 'Passwords do not match. Please re-enter confirm password.';
+        validatePasswordMatch();
         return;
       }
       if (username.length < 3) {

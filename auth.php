@@ -44,8 +44,18 @@ if ($method === 'POST') {
             exit;
         }
 
-        if (strlen($newPassword) < 3) {
-            echo json_encode(["status" => "error", "message" => "Password must be at least 3 characters"]);
+        // Security: Enforce strong password complexity (8+ chars, uppercase, lowercase, number, special char)
+        $hasMinLength = strlen($newPassword) >= 8;
+        $hasUpper     = preg_match('/[A-Z]/', $newPassword);
+        $hasLower     = preg_match('/[a-z]/', $newPassword);
+        $hasNumber    = preg_match('/[0-9]/', $newPassword);
+        $hasSpecial   = preg_match('/[!@#$%^&*(),.?":{}|<>_\-+=\[\]\/\\~`]/', $newPassword);
+
+        if (!$hasMinLength || !$hasUpper || !$hasLower || !$hasNumber || !$hasSpecial) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "New password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character."
+            ]);
             exit;
         }
 

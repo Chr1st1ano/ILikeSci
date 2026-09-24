@@ -28,6 +28,21 @@ if (strlen($username) < 3) {
     exit;
 }
 
+// Security: Enforce strong password complexity (8+ chars, uppercase, lowercase, number, special char)
+$hasMinLength = strlen($password) >= 8;
+$hasUpper     = preg_match('/[A-Z]/', $password);
+$hasLower     = preg_match('/[a-z]/', $password);
+$hasNumber    = preg_match('/[0-9]/', $password);
+$hasSpecial   = preg_match('/[!@#$%^&*(),.?":{}|<>_\-+=\[\]\/\\~`]/', $password);
+
+if (!$hasMinLength || !$hasUpper || !$hasLower || !$hasNumber || !$hasSpecial) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Password must be at least 8 characters and include uppercase, lowercase, number, and special character.'
+    ]);
+    exit;
+}
+
 try {
     // Check if username exists
     $check = $pdo->prepare("SELECT id FROM users WHERE username = ?");
