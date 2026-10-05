@@ -14,13 +14,15 @@
  *   POST action=rephrase_question    — Rephrase existing question
  */
 
-require 'db.php';
-require 'ai_config.php';
+require_once 'db.php';
+require_once 'ai_config.php';
 
-header("Content-Type: application/json; charset=utf-8");
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+if (!headers_sent()) {
+    header("Content-Type: application/json; charset=utf-8");
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type");
+}
 
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
@@ -157,7 +159,8 @@ function callGeminiAPI($prompt, $systemPrompt = '') {
         CURLOPT_POST => true,
         CURLOPT_POSTFIELDS => $payload,
         CURLOPT_HTTPHEADER => [
-            'Content-Type: application/json'
+            'Content-Type: application/json',
+            'x-goog-api-key: ' . AI_API_KEY_GEMINI
         ],
         CURLOPT_TIMEOUT => AI_TIMEOUT,
         CURLOPT_CONNECTTIMEOUT => 5
@@ -178,7 +181,15 @@ function callGeminiAPI($prompt, $systemPrompt = '') {
     }
     
     $data = json_decode($response, true);
-    return $data['candidates'][0]['content']['parts'][0]['text'] ?? '';
+    $textParts = [];
+    if (!empty($data['candidates'][0]['content']['parts'])) {
+        foreach ($data['candidates'][0]['content']['parts'] as $part) {
+            if (isset($part['text'])) {
+                $textParts[] = $part['text'];
+            }
+        }
+    }
+    return !empty($textParts) ? implode("\n", $textParts) : ($data['candidates'][0]['content']['parts'][0]['text'] ?? '');
 }
 
 function callAI($prompt, $systemPrompt = '') {

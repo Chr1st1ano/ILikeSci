@@ -36,3 +36,8 @@ Desktop.ini
 .vscode/
 *.swp
 *.swo
+
+# Local secrets and uncommitted API keys
+*.local.php
+.env
+

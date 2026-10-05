@@ -90,6 +90,7 @@ $filesToUpload = @(
     "xlsx_records_api.php",
     "ai_api.php",
     "ai_config.php",
+    "ai_key.local.php",
     "sync.php",
     "sync_xampp.php",
     "init_db.php",
@@ -112,6 +113,7 @@ $filesToUpload = @(
     ".htaccess",
     "ilikesci_db.sqlite",
     "scratch/extracted_students.json",
+    "scratch/test_safeguards.php",
     "masterlists/Grade-4-Masterlist-BCES-2026-2027.xlsx",
     "masterlists/GRADE-6-MASTERLIST.xlsx"
 )
@@ -131,7 +133,7 @@ Write-Host "[OK] $uploadedCount application & data files uploaded." -ForegroundC
 
 # 5. Fix Remote Permissions, SELinux, and reload services
 Write-Host "[INFO] Applying production Linux permissions and SELinux contexts..." -ForegroundColor Yellow
-$postDeployCmd = "mkdir -p $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists $RemoteDir/pdfs && sudo chown -R ec2-user:apache $RemoteDir && sudo chmod 775 $RemoteDir && sudo chmod 664 $RemoteDir/ilikesci_db.sqlite* 2>/dev/null || true; sudo chmod -R 775 $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists $RemoteDir/pdfs 2>/dev/null || true; sudo chcon -R -t httpd_sys_rw_content_t $RemoteDir 2>/dev/null || true; sudo systemctl restart php-fpm && sudo systemctl reload nginx && cd $RemoteDir && php init_db.php && php test_production_readiness.php"
+$postDeployCmd = "mkdir -p $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists $RemoteDir/pdfs && sudo chown -R ec2-user:apache $RemoteDir && sudo chmod 775 $RemoteDir && sudo chmod 664 $RemoteDir/ilikesci_db.sqlite* 2>/dev/null || true; sudo chmod -R 775 $RemoteDir/uploads $RemoteDir/pptx_slides $RemoteDir/scratch $RemoteDir/masterlists $RemoteDir/pdfs 2>/dev/null || true; sudo chcon -R -t httpd_sys_rw_content_t $RemoteDir 2>/dev/null || true; sudo systemctl restart php-fpm && sudo systemctl reload nginx && cd $RemoteDir && php init_db.php && php test_production_readiness.php && php scratch/test_safeguards.php"
 & ssh -i "$KeyPath" -o StrictHostKeyChecking=no "$User@$HostIp" "$postDeployCmd"
 
 # 6. Post-deployment live verification
@@ -192,6 +194,18 @@ foreach ($ep in $endpoints) {
     } catch {
         Write-Warning "Failed to access http://${HostIp}/${ep}: $_"
     }
+}
+
+# D. AI Status & Provider Verification Check
+try {
+    $aiCheck = Invoke-RestMethod -Uri "http://$HostIp/ai_api.php?action=status" -TimeoutSec 10 -UseBasicParsing
+    if ($aiCheck.status -eq "success" -and $aiCheck.ai_enabled -eq $true) {
+        Write-Host "[OK] AI Engine Online: Provider=$($aiCheck.provider), Model=$($aiCheck.model), Key Configured=Yes" -ForegroundColor Green
+    } else {
+        Write-Warning "AI Engine returned: $($aiCheck | ConvertTo-Json -Compress)"
+    }
+} catch {
+    Write-Warning "Failed to query AI status endpoint: $_"
 }
 
 Write-Host ""
