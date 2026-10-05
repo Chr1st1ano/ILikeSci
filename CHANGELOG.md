@@ -4,6 +4,59 @@
 > Capstone Project — Laguna State Polytechnic University, San Pablo City Campus  
 > By: Abril, Millera, Olidan | May 2026
 
+## Session 18 — October 4, 2026 (Comprehensive Foolproofing, Teacher Access Isolation & DepEd Safeguards)
+
+### 🛡️ Teacher Access Isolation, Cross-Grade Protection & Full Application Hardening
+
+**Major upgrades:** Resolved all access leakage, data protection vulnerabilities, and workflow edge cases across student records, question bank, lessons, presentations, E-Class records, and interactive classroom games. Implemented strict teacher load isolation (preventing unauthorized viewing, editing, or deletion of other grade levels and sections), while preserving full administrative oversight.
+
+- **Teacher Teaching Load & Profile Protection (`profile_api.php`, `profile.html`, `app.js`):**
+  - Restricted non-admin teachers from modifying `assigned_grade` and `assigned_section` in `profile_api.php`.
+  - Permanently safeguarded Ma'am Coney's account to **Grade 4** (`assigned_grade = '4'`).
+  - Added "(Managed by School Administrator)" badges next to Grade and Section dropdowns in `profile.html`, with inputs disabled for teachers in `applyProfileUI()`.
+- **Administrative API Hardening (`admin_api.php`):**
+  - Enforced strict 403 Forbidden for non-admin accounts requesting user lists or invoking `create_user`, `update_user`, or `delete_user`.
+  - Protected primary teacher `'coney'` from deletion and unauthorized renaming.
+  - Added safeguards preventing accidental deletion of the last remaining school administrator account.
+  - Added `X-Current-User` to CORS allowed headers across all APIs.
+- **Student Referential Integrity & Cascading Deletion (`student_api.php`):**
+  - Updated DELETE handler to fetch student identifiers before deletion and automatically cascade removal to `student_grades` and `recitation_records`, eliminating orphaned database records.
+  - Added multi-source request parameter fallbacks (`json_decode(php://input)`, `$_POST`, `$_GET`, `$_REQUEST`).
+  - Blocked teacher deletion or modification of students outside assigned grade/section. Purged and rejected Grade 7.
+- **Question Bank & Lesson Delivery Isolation (`questions_api.php`, `lessons_api.php`, `pptx_api.php`):**
+  - Attached user context check (`get_current_user_context()`).
+  - Automatically isolated question listings, lesson listings, and slide presentation listings to the logged-in teacher's assigned grade.
+  - Added permission validation blocking non-admin teachers from adding, editing, or deleting questions, curriculum lessons, or presentation files belonging to other grades.
+  - In `app.js`, auto-locked `#mat-grade`, `#lesson-grade`, `#pptx-grade`, and `#ai-gen-grade` for teachers, with server error alerts on deletion failure.
+- **Dynamic DepEd Section Filtering & E-Class Records (`students.html`, `records.html`, `xlsx_records_api.php`):**
+  - Replaced hardcoded placeholder sections (A, B, C, D) with dynamic synchronization to official school sections (Einstein, Newton, Galileo, Pasteur for Grade 4; Diamond, Ruby, Emerald, Sapphire for Grade 6).
+  - Connected `#grade-filter` on `students.html` and `#records-grade-filter` on `records.html` to `updateSectionDropdown`.
+  - Blocked invalid section `'all'` during single-student grade saving in `xlsx_records_api.php`.
+  - Rewrote CSV export (`exportRecordsCSV()`) to compute real DepEd Initial Grades, Transmuted Grades (DepEd Order No. 8), and Proficiency Levels instead of placeholder values.
+- **Interactive Tools & Classroom Games Hardening (`games.html`, `assessment.html`, `app.js`):**
+  - Auto-locked `#assess-grade` and `#assess-section` on assessment page load via `updateAssessmentGrade()`.
+  - Strictly excluded Grade 7 from question pool resolution and fallback selections.
+  - Filtered 4 Pics 1 Word student recipient dropdown and Science Groupings Generator to the teacher's assigned grade and section.
+- **Test Suite Verification:**
+  - Ran `test_production_readiness.php`: **53 / 53 PASSED** (100%).
+  - Ran `scratch/test_safeguards.php`: **15 / 15 PASSED** (100%).
+
+| # | File | Change | Status |
+|---|------|--------|--------|
+| 1 | **`admin_api.php`** | **SECURITY HARDENING** — 403 Forbidden for non-admin on users and user management, Coney protected from deletion/renaming, last admin deletion blocked, CORS headers updated. | ✅ |
+| 2 | **`profile_api.php` & `profile.html`** | **TEACHER LOAD PROTECTION** — Non-admin teachers blocked from changing assigned grade/section, Ma'am Coney locked to Grade 4, managed indicator added in UI. | ✅ |
+| 3 | **`student_api.php`** | **CASCADE DELETION & PERMISSIONS** — Deletion cascades to `student_grades` and `recitation_records`, cross-grade student edits/deletions blocked for teachers. | ✅ |
+| 4 | **`questions_api.php`** | **GRADE ISOLATION & ACCESS CONTROL** — Filtered question list by teacher grade, blocked cross-grade question adding/editing/deleting, Grade 7 rejected. | ✅ |
+| 5 | **`lessons_api.php`** | **CURRICULUM LESSON AUTHORIZATION** — Isolated lesson listings to teacher load, blocked cross-grade lesson creation, slide editing, and deletion. | ✅ |
+| 6 | **`pptx_api.php`** | **PRESENTATION ISOLATION & DELETE CHECK** — Teacher presentation listings filtered by assigned grade, delete action verifies grade authorization, upload enforces grade. | ✅ |
+| 7 | **`students.html` & `app.js`** | **DYNAMIC SECTION DROPDOWNS** — Linked `#grade-filter` to `updateSectionDropdown`, replaced hardcoded A/B/C/D with real school sections, auto-locked teacher load. | ✅ |
+| 8 | **`records.html` & `xlsx_records_api.php`** | **E-CLASS FOOLPROOFING & DEPED TRANSMUTATION** — Dynamic section filters, blocked section `'all'` on save, CSV export calculates real initial and transmuted grades. | ✅ |
+| 9 | **`materials.html` & `lessons.html`** | **TEACHER GRADE AUTO-LOCK** — Dropdowns auto-lock to assigned grade for teachers, preventing accidental cross-grade creation or modification. | ✅ |
+| 10 | **`games.html` & `assessment.html`** | **CLASSROOM TOOLS HARDENING** — Filtered student selection and groupings generator by teacher load, purified fallback questions of Grade 7. | ✅ |
+| 11 | **`test_production_readiness.php` & `test_safeguards.php`** | **TEST VERIFICATION** — 53 production tests and 15 custom safeguard tests pass with 100% success. | ✅ |
+
+---
+
 ## Session 17 — September 24, 2026 (Official Bay Central ES Student Masterlist Migration — Grade 4 & Grade 6)
 
 ### 🏫 Ingestion of Official Masterlists from Bay Central Elementary School (BCES)

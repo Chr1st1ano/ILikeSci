@@ -4,11 +4,11 @@ require 'db.php';
 header("Content-Type: application/json");
 
 try {
-    // 1. Create Student 'abc def ghi' in Grade 7 Section A (1st Quarter score ONLY)
-    $studentId = 7001;
+    // 1. Create Student 'abc def ghi' in Grade 4 Section Maagap (1st Quarter score ONLY)
+    $studentId = 4999;
     $studentName = "abc def ghi";
-    $gradeLevel = "7";
-    $section = "A";
+    $gradeLevel = "4";
+    $section = "Maagap";
     $quarter = 1;
 
     // Upsert into students table
@@ -120,14 +120,7 @@ try {
         ['6', 'Mixtures and Solutions', 'Easy', 'A mixture that appears uniform throughout is called a ____ solution.', 'identification'],
         ['6', 'Vertebrates and Invertebrates', 'Medium', 'Which animal group belongs to vertebrates? A) Insects B) Reptiles C) Jellyfish D) Earthworms', 'multiple-choice'],
         ['6', 'Patterns of Motion', 'Hard', 'Calculate the speed of a car that travels 120 kilometers in 2 hours. A) 60 km/h B) 240 km/h C) 50 km/h D) 100 km/h', 'multiple-choice'],
-        ['6', 'Volcanoes and Earthquakes', 'Medium', 'True or False: Tectonic plate movements trigger seismic activity and volcanic eruptions.', 'true-false'],
-
-        // Grade 7 (Junior High Science)
-        ['7', 'Cell Structure & Function', 'Easy', 'What is the basic structural and functional unit of all living organisms? A) Cell B) Tissue C) Organ D) Molecule', 'multiple-choice'],
-        ['7', 'Cell Structure & Function', 'Medium', 'The organelle known as the powerhouse of the cell is the ____.', 'identification'],
-        ['7', 'Ecosystems & Biodiversity', 'Hard', 'Explain how energy flows through an ecological pyramid from primary producers to top consumers.', 'multiple-choice'],
-        ['7', 'Force & Motion (Physics)', 'Medium', 'State Newton First Law of Motion (Law of Inertia) and give one real-world application.', 'multiple-choice'],
-        ['7', 'Earth Systems & Climate', 'Easy', 'True or False: Greenhouse gases trap heat in Earth atmosphere, regulating global temperature.', 'true-false']
+        ['6', 'Volcanoes and Earthquakes', 'Medium', 'True or False: Tectonic plate movements trigger seismic activity and volcanic eruptions.', 'true-false']
     ];
 
     $stmtQCheck = $pdo->prepare("SELECT COUNT(*) FROM questions WHERE grade = ? AND topic = ? AND question_text = ?");
@@ -141,14 +134,6 @@ try {
             $insertedQ++;
         }
     }
-
-    // Auto-sync topics table for Grade 7 and new topics
-    $ignoreKw = is_sqlite() ? "INSERT OR IGNORE INTO" : "INSERT IGNORE INTO";
-    $pdo->exec("$ignoreKw topics (grade, topic_name) VALUES 
-        ('7', 'Cell Structure & Function'),
-        ('7', 'Ecosystems & Biodiversity'),
-        ('7', 'Force & Motion (Physics)'),
-        ('7', 'Earth Systems & Climate')");
 
     echo json_encode([
         "status" => "success",

@@ -15,8 +15,12 @@ $firstName = trim($input['first_name'] ?? '');
 $lastName = trim($input['last_name'] ?? '');
 $dob = $input['dob'] ?? null;
 $gender = $input['gender'] ?? '';
-$sections = $input['sections'] ?? '';
 $bio = $input['bio'] ?? '';
+
+$assignedGrade = trim($input['assigned_grade'] ?? $input['grade'] ?? '4');
+$assignedSection = trim($input['assigned_section'] ?? $input['section'] ?? $input['sections'] ?? 'all');
+if ($assignedGrade === '7') $assignedGrade = '4'; // disallow Grade 7
+if (empty($assignedSection)) $assignedSection = 'all';
 
 if (!$username || !$password || !$firstName || !$lastName) {
     echo json_encode(['status' => 'error', 'message' => 'Required fields: username, password, first name, last name']);
@@ -52,16 +56,16 @@ try {
         exit;
     }
 
-    // Insert user
+    // Insert user with assigned grade and section
     $hashedPw = password_hash($password, PASSWORD_DEFAULT);
     $displayName = $firstName . ' ' . $lastName;
     
-    $stmt = $pdo->prepare("INSERT INTO users (username, password, display_name, role) VALUES (?, ?, ?, 'teacher')");
-    $stmt->execute([$username, $hashedPw, $displayName]);
+    $stmt = $pdo->prepare("INSERT INTO users (username, password, display_name, role, assigned_grade, assigned_section) VALUES (?, ?, ?, 'teacher', ?, ?)");
+    $stmt->execute([$username, $hashedPw, $displayName, $assignedGrade, $assignedSection]);
 
     // Also create profile entry
-    $pdo->prepare("INSERT INTO teacher_profiles (username, display_name, bio) VALUES (?, ?, ?)")
-        ->execute([$username, $displayName, $bio]);
+    $pdo->prepare("INSERT INTO teacher_profiles (username, display_name, bio, assigned_grade, assigned_section) VALUES (?, ?, ?, ?, ?)")
+        ->execute([$username, $displayName, $bio, $assignedGrade, $assignedSection]);
 
     echo json_encode(['status' => 'success', 'message' => 'Registration successful']);
 } catch (PDOException $e) {

@@ -56,7 +56,7 @@
             <i class="fa-solid fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;"></i>
             <input type="text" id="records-search" class="form-control" placeholder="Search students..." style="padding-left:34px;" oninput="app.renderRecords()">
           </div>
-          <select id="records-grade-filter" class="form-control" style="flex:1;" onchange="app.renderRecords()">
+          <select id="records-grade-filter" class="form-control" style="flex:1;" onchange="onRecordsGradeFilterChange()">
             <option value="all">All Grades</option>
             <option value="3">Grade 3</option>
             <option value="4">Grade 4</option>
@@ -65,10 +65,6 @@
           </select>
           <select id="records-section-filter" class="form-control" style="flex:1;" onchange="app.renderRecords()">
             <option value="all">All Sections</option>
-            <option value="A">Section A</option>
-            <option value="B">Section B</option>
-            <option value="C">Section C</option>
-            <option value="D">Section D</option>
           </select>
           <select id="records-sort-filter" class="form-control" style="flex:1;" onchange="app.renderRecords()">
             <option value="grade">Sort by Transmuted Grade</option>
@@ -182,6 +178,13 @@
     let eclassQuarter = 1;
     let eclassData = [];
 
+    function onRecordsGradeFilterChange() {
+      if (typeof app !== 'undefined' && app.updateSectionDropdown) {
+        app.updateSectionDropdown('records-grade-filter', 'records-section-filter', true);
+      }
+      app.renderRecords();
+    }
+
     function toggleRecordsSortDir() {
       recordsSortDesc = !recordsSortDesc;
       document.getElementById('records-sort-dir-icon').className = recordsSortDesc
@@ -280,6 +283,10 @@
     }
 
     function showXLSXImportModal() {
+      const isTeacher = (typeof state !== 'undefined' && state && state.currentRole !== 'admin');
+      const teacherGrade = (typeof state !== 'undefined' && state && state.currentUserAssignedGrade) ? String(state.currentUserAssignedGrade).trim() : '4';
+      const defaultGrade = (isTeacher && teacherGrade !== 'all') ? teacherGrade : '4';
+
       const modal = document.createElement('div');
       modal.id = 'xlsx-import-modal';
       modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:99999;';
@@ -289,14 +296,16 @@
           <p class="subtitle" style="margin:8px 0 16px;">Upload the DepEd GRADE-4-6 SCIENCE XLSX file</p>
           <div class="form-group" style="margin-bottom:14px;">
             <label>Grade Level</label>
-            <select id="xlsx-grade" class="form-control">
-              <option value="4">Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option>
+            <select id="xlsx-grade" class="form-control" onchange="onXLSXGradeChange()">
+              <option value="4"${defaultGrade === '4' ? ' selected' : ''}>Grade 4</option>
+              <option value="5"${defaultGrade === '5' ? ' selected' : ''}>Grade 5</option>
+              <option value="6"${defaultGrade === '6' ? ' selected' : ''}>Grade 6</option>
             </select>
           </div>
           <div class="form-group" style="margin-bottom:14px;">
             <label>Section</label>
             <select id="xlsx-section" class="form-control">
-              <option value="A">Section A</option><option value="B">Section B</option><option value="C">Section C</option><option value="D">Section D</option>
+              <option value="all">All Sections</option>
             </select>
           </div>
           <div style="border:2px dashed var(--glass-border);border-radius:12px;padding:24px;text-align:center;cursor:pointer;margin-bottom:16px;" onclick="document.getElementById('xlsx-file-input').click()">
@@ -312,7 +321,21 @@
           </div>
         </div>`;
       document.body.appendChild(modal);
+
+      if (isTeacher && teacherGrade !== 'all') {
+        const xGrade = document.getElementById('xlsx-grade');
+        if (xGrade) { xGrade.value = teacherGrade; xGrade.disabled = true; }
+      }
+      if (typeof app !== 'undefined' && app.updateSectionDropdown) {
+        app.updateSectionDropdown('xlsx-grade', 'xlsx-section', false);
+      }
       modal.addEventListener('click', e => { if(e.target === modal) modal.remove(); });
+    }
+
+    function onXLSXGradeChange() {
+      if (typeof app !== 'undefined' && app.updateSectionDropdown) {
+        app.updateSectionDropdown('xlsx-grade', 'xlsx-section', false);
+      }
     }
 
     async function processXLSXImport() {
@@ -387,11 +410,21 @@
     }
 
     function addEClassStudent() {
-      const name = prompt('Enter student name:');
+      let grade = document.getElementById('eclass-q-grade').value;
+      let section = document.getElementById('eclass-q-section').value;
+
+      if (!section || section === 'all') {
+        section = prompt('Enter section name for this student (e.g. Masigasig, Magalang, Rizal, Bonifacio):');
+        if (!section || !section.trim()) {
+          alert('A specific section is required to add an E-Class learner.');
+          return;
+        }
+        section = section.trim();
+      }
+
+      const name = prompt(`Enter student name for Grade ${grade} - ${section}:`);
       if (!name || !name.trim()) return;
-      const gender = prompt('Gender (M/F):', 'M') || 'M';
-      const grade = document.getElementById('eclass-q-grade').value;
-      const section = document.getElementById('eclass-q-section').value;
+      const gender = (prompt('Gender (M/F):', 'M') || 'M').toUpperCase().trim();
 
       fetch('xlsx_records_api.php', {
         method: 'POST', headers: {'Content-Type':'application/json'},
@@ -402,7 +435,13 @@
           qa_score: 0, ww_highest: [10,10,10,10,10,10,10,10,10,10],
           pt_highest: [10,10,10,10,10,10,10,10,10,10], qa_highest: 50
         })
-      }).then(r => r.json()).then(() => loadEClassRecords());
+      }).then(r => r.json()).then(res => {
+        if (res.status === 'success') {
+          loadEClassRecords();
+        } else {
+          alert('Could not save: ' + (res.message || 'error'));
+        }
+      });
     }
 
     function exportEClassXLSX() {
@@ -433,14 +472,55 @@
 
     function exportRecordsCSV() {
       const grade = document.getElementById('records-grade-filter').value;
-      let csv = 'Name,Grade,Recitations,Points,Initial Grade,Transmuted Grade,Level\n';
-      state.students.filter(s => grade==='all' || s.grade===grade).forEach(s => {
-        csv += `"${s.name}","${s.grade}",${s.recitations||0},${s.totalScore||0},0,0,"N/A"\n`;
+      const secFilter = document.getElementById('records-section-filter') ? document.getElementById('records-section-filter').value : 'all';
+      const isTeacher = (typeof state !== 'undefined' && state && state.currentRole !== 'admin');
+      const assignedGrade = (typeof state !== 'undefined' && state) ? state.currentUserAssignedGrade : '';
+      const assignedSection = (typeof state !== 'undefined' && state) ? state.currentUserAssignedSection : '';
+
+      let list = (state && Array.isArray(state.students) ? [...state.students] : []).filter(s => String(s.grade) !== '7');
+      if (grade !== 'all') list = list.filter(s => String(s.grade) === String(grade));
+      if (isTeacher && assignedGrade && assignedGrade !== 'all') list = list.filter(s => String(s.grade) === String(assignedGrade));
+      if (isTeacher && assignedSection && assignedSection !== 'all') {
+        list = list.filter(s => (s.section || 'A').toLowerCase() === assignedSection.toLowerCase());
+      } else if (secFilter !== 'all') {
+        list = list.filter(s => (s.section || 'A') === secFilter);
+      }
+
+      let csv = 'Learner Name,Grade,Section,Recitations,Points,Initial Grade,Transmuted Grade,DepEd Level\n';
+      const maxPts = (state && state.pointsMap && state.pointsMap['Hard']) || 5;
+
+      list.forEach(s => {
+        const recs = s.recitations || 0;
+        const pts = s.totalScore != null ? s.totalScore : (s.total_score != null ? s.total_score : (s.score || 0));
+        let initialGrade = 0;
+        if (recs > 0) {
+          const avgScorePercent = (pts / (recs * maxPts)) * 100;
+          const wwScore = Math.min(100, avgScorePercent);
+          const ptScore = Math.min(100, (recs / 10) * 100);
+          const qaScore = Math.min(100, avgScorePercent);
+          initialGrade = Math.round(((wwScore * 0.40) + (ptScore * 0.40) + (qaScore * 0.20)) * 100) / 100;
+        }
+
+        let transmuted = 60;
+        if (typeof transmute === 'function') {
+          transmuted = transmute(initialGrade);
+        } else if (typeof app !== 'undefined' && typeof app.transmute === 'function') {
+          transmuted = app.transmute(initialGrade);
+        }
+
+        let level = 'Did Not Meet Expectations (DNME)';
+        if (transmuted >= 90) level = 'Outstanding (O)';
+        else if (transmuted >= 85) level = 'Very Satisfactory (VS)';
+        else if (transmuted >= 80) level = 'Satisfactory (S)';
+        else if (transmuted >= 75) level = 'Fairly Satisfactory (FS)';
+
+        csv += `"${s.name.replace(/"/g, '""')}","${s.grade}","${s.section || 'A'}",${recs},${pts},${initialGrade},${transmuted},"${level}"\n`;
       });
-      const blob = new Blob([csv], { type: 'text/csv' });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `ilikesci_records_${grade}_${new Date().toISOString().split('T')[0]}.csv`;
+      a.download = `ILikeSci_DepEd_Records_Grade${grade}_${new Date().toISOString().split('T')[0]}.csv`;
       a.click();
     }
 

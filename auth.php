@@ -125,7 +125,9 @@ if ($method === 'POST') {
                 "id" => (int)$user['id'],
                 "username" => $user['username'],
                 "display_name" => $user['display_name'] ?? $user['username'],
-                "role" => $user['role']
+                "role" => $user['role'],
+                "assigned_grade" => $user['assigned_grade'] ?? '4',
+                "assigned_section" => $user['assigned_section'] ?? 'all'
             ];
             $_SESSION['user'] = $userData;
 
@@ -155,7 +157,7 @@ if ($method === 'POST') {
 
     // Get all users (for offline caching — no passwords exposed)
     try {
-        $stmt = $pdo->query("SELECT id, username, display_name, role FROM users");
+        $stmt = $pdo->query("SELECT id, username, display_name, role, assigned_grade, assigned_section FROM users");
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode(["status" => "success", "users" => $users]);
     } catch (Exception $e) {

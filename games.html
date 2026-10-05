@@ -133,6 +133,22 @@
 
             <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
               <div style="display:flex; align-items:center; gap:8px;">
+                <label style="font-size:13px; font-weight:600;"><i class="fa-solid fa-graduation-cap text-primary"></i> Grade:</label>
+                <select id="grp-grade" class="form-control" style="width:auto;" onchange="onGrpGradeChange()">
+                  <option value="all">All Grades</option>
+                  <option value="3">Grade 3</option>
+                  <option value="4" selected>Grade 4</option>
+                  <option value="5">Grade 5</option>
+                  <option value="6">Grade 6</option>
+                </select>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <label style="font-size:13px; font-weight:600;"><i class="fa-solid fa-users-line text-primary"></i> Section:</label>
+                <select id="grp-section" class="form-control" style="width:auto;" onchange="generateScienceTeams()">
+                  <option value="all">All Sections</option>
+                </select>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
                 <label style="font-size:13px; font-weight:600;">Number of Teams:</label>
                 <select id="grp-count" class="form-control" style="width:auto;">
                   <option value="2">2 Teams</option>
@@ -208,11 +224,25 @@
             const sel = document.getElementById('pics-student-select');
             if (!sel) return;
             sel.innerHTML = '<option value="">-- Select Student --</option>';
+
+            const assignedGrade = (typeof state !== 'undefined' && state) ? state.currentUserAssignedGrade : '';
+            const assignedSection = (typeof state !== 'undefined' && state) ? state.currentUserAssignedSection : '';
+            const isTeacher = (typeof state !== 'undefined' && state && state.currentRole !== 'admin');
+
             if (state && Array.isArray(state.students)) {
-              state.students.forEach(s => {
+              let eligible = state.students.filter(s => String(s.grade) !== '7');
+              if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+                eligible = eligible.filter(s => String(s.grade) === String(assignedGrade));
+              }
+              if (isTeacher && assignedSection && assignedSection !== 'all') {
+                eligible = eligible.filter(s => (s.section || 'A').toLowerCase() === assignedSection.toLowerCase());
+              }
+
+              eligible.forEach(s => {
                 const opt = document.createElement('option');
                 opt.value = s.id;
-                opt.textContent = `${s.name} (${s.score || 0} pts)`;
+                const pts = s.totalScore != null ? s.totalScore : (s.total_score != null ? s.total_score : (s.score || 0));
+                opt.textContent = `${s.name} (Gr ${s.grade}${s.section ? ' - ' + s.section : ''} • ${pts} pts)`;
                 sel.appendChild(opt);
               });
             }
@@ -450,7 +480,33 @@
           let grpTimerRunning = false;
 
           function launchGroupingsGenerator() {
+            const isTeacher = (typeof state !== 'undefined' && state && state.currentRole !== 'admin');
+            const assignedGrade = (typeof state !== 'undefined' && state) ? state.currentUserAssignedGrade : '';
+            const grpGradeEl = document.getElementById('grp-grade');
+            const grpSecEl = document.getElementById('grp-section');
+
+            if (grpGradeEl) {
+              if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+                grpGradeEl.value = assignedGrade;
+                grpGradeEl.disabled = true;
+              }
+            }
+            if (typeof app !== 'undefined' && app.updateSectionDropdown) {
+              app.updateSectionDropdown('grp-grade', 'grp-section', true);
+            }
+            if (grpSecEl && isTeacher && state.currentUserAssignedSection && state.currentUserAssignedSection !== 'all') {
+              grpSecEl.value = state.currentUserAssignedSection;
+              grpSecEl.disabled = true;
+            }
+
             document.getElementById('groupings-modal').classList.remove('hidden');
+            generateScienceTeams();
+          }
+
+          function onGrpGradeChange() {
+            if (typeof app !== 'undefined' && app.updateSectionDropdown) {
+              app.updateSectionDropdown('grp-grade', 'grp-section', true);
+            }
             generateScienceTeams();
           }
 
@@ -459,13 +515,30 @@
             const grid = document.getElementById('teams-grid');
             grid.innerHTML = '';
 
+            const grpGrade = document.getElementById('grp-grade') ? document.getElementById('grp-grade').value : 'all';
+            const grpSection = document.getElementById('grp-section') ? document.getElementById('grp-section').value : 'all';
+            const isTeacher = (typeof state !== 'undefined' && state && state.currentRole !== 'admin');
+            const assignedGrade = (typeof state !== 'undefined' && state) ? state.currentUserAssignedGrade : '';
+            const assignedSection = (typeof state !== 'undefined' && state) ? state.currentUserAssignedSection : '';
+
             let studentsList = state && Array.isArray(state.students) ? [...state.students] : [];
+            studentsList = studentsList.filter(s => String(s.grade) !== '7');
+
+            if (grpGrade !== 'all') {
+              studentsList = studentsList.filter(s => String(s.grade) === String(grpGrade));
+            }
+            if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+              studentsList = studentsList.filter(s => String(s.grade) === String(assignedGrade));
+            }
+            if (isTeacher && assignedSection && assignedSection !== 'all') {
+              studentsList = studentsList.filter(s => (s.section || 'A').toLowerCase() === assignedSection.toLowerCase());
+            } else if (grpSection !== 'all') {
+              studentsList = studentsList.filter(s => (s.section || 'A') === grpSection);
+            }
+
             if (studentsList.length === 0) {
-              studentsList = [
-                { name: 'Student 1' }, { name: 'Student 2' }, { name: 'Student 3' },
-                { name: 'Student 4' }, { name: 'Student 5' }, { name: 'Student 6' },
-                { name: 'Student 7' }, { name: 'Student 8' }
-              ];
+              grid.innerHTML = '<div style="text-align:center; padding:30px; color:var(--text-muted); width:100%; grid-column: 1 / -1;"><i class="fa-solid fa-user-slash" style="font-size:32px; margin-bottom:8px; display:block;"></i>No students found for this grade and section.</div>';
+              return;
             }
 
             // Shuffle students
@@ -486,7 +559,7 @@
               card.style.borderTop = `4px solid ${team.meta.color}`;
               card.style.padding = '16px';
               card.innerHTML = `
-                <h4 style="color:${team.meta.color}; margin-bottom:10px; font-weight:800;">${team.meta.name}</h4>
+                <h4 style="color:${team.meta.color}; margin-bottom:10px; font-weight:800;">${team.meta.name} (${team.members.length})</h4>
                 <ul style="list-style:none; padding:0; margin:0; font-size:13px; line-height:1.8;">
                   ${team.members.map((m, i) => `<li><strong>${i + 1}.</strong> ${m}</li>`).join('')}
                 </ul>

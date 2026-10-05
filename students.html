@@ -54,19 +54,15 @@
             <i class="fa-solid fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;"></i>
             <input type="text" id="student-search" class="form-control" placeholder="Search students..." style="padding-left:34px;" oninput="app.renderStudents()">
           </div>
-          <select id="grade-filter" class="form-control" style="flex:1; min-width:120px;" onchange="app.renderStudents()">
+          <select id="grade-filter" class="form-control" style="flex:1; min-width:120px;" onchange="if(typeof app!=='undefined'&&app.updateSectionDropdown){app.updateSectionDropdown('grade-filter', 'section-filter', true);} app.renderStudents()">
             <option value="all">All Grades</option>
             <option value="3">Grade 3</option>
-            <option value="4">Grade 4</option>
+            <option value="4" selected>Grade 4</option>
             <option value="5">Grade 5</option>
             <option value="6">Grade 6</option>
           </select>
           <select id="section-filter" class="form-control" style="flex:1; min-width:120px;" onchange="app.renderStudents()">
             <option value="all">All Sections</option>
-            <option value="A">Section A</option>
-            <option value="B">Section B</option>
-            <option value="C">Section C</option>
-            <option value="D">Section D</option>
           </select>
           <select id="student-sort" class="form-control" style="flex:1; min-width:120px;" onchange="app.renderStudents()">
             <option value="name">Sort by Name</option>

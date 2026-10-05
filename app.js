@@ -1,8 +1,33 @@
+// Global fetch interceptor to attach authenticated user context header (X-Current-User)
+(function() {
+  const originalFetch = window.fetch;
+  window.fetch = function(url, options = {}) {
+    try {
+      const opts = { ...options };
+      if (!opts.headers) {
+        opts.headers = {};
+      }
+      if (typeof state !== 'undefined' && state && state.currentUser) {
+        if (opts.headers instanceof Headers) {
+          if (!opts.headers.has('X-Current-User')) opts.headers.set('X-Current-User', state.currentUser);
+        } else if (typeof opts.headers === 'object') {
+          if (!opts.headers['X-Current-User']) opts.headers['X-Current-User'] = state.currentUser;
+        }
+      }
+      return originalFetch.call(this, url, opts);
+    } catch (e) {
+      return originalFetch.call(this, url, options);
+    }
+  };
+})();
+
 // Default App State — all content (topics, lessons, questions) loaded from database
 const defaultState = {
   isLoggedIn: false,
   currentUser: null,
   currentRole: 'teacher',
+  currentUserAssignedGrade: '4',
+  currentUserAssignedSection: 'all',
   currentView: 'dashboard',
   soundEnabled: true,
   musicEnabled: true,
@@ -72,6 +97,13 @@ function loadState() {
       state = { ...state, ...parsed };
     } catch(e) { console.error('Error loading state'); }
   }
+
+  // Purge any legacy Grade 7 students and enforce defaults
+  if (state.students && Array.isArray(state.students)) {
+    state.students = state.students.filter(s => String(s.grade) !== '7');
+  }
+  if (!state.currentUserAssignedGrade) state.currentUserAssignedGrade = '4';
+  if (!state.currentUserAssignedSection) state.currentUserAssignedSection = 'all';
 
   // Load admin users
   const savedAdmins = localStorage.getItem('ilikesci_admin_users');
@@ -189,6 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const me = data.users.find(u => u.username === state.currentUser);
           if (me) {
             state.currentRole = me.role || 'teacher';
+            if (me.assigned_grade) state.currentUserAssignedGrade = me.assigned_grade;
+            if (me.assigned_section) state.currentUserAssignedSection = me.assigned_section;
             saveState();
             // Re-render hamburger menu now that role is known
             const oldPanel = document.getElementById('hamburger-panel');
@@ -201,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(() => { /* offline — keep existing role */ });
 
-    // Load per-user profile (avatar, bio, border)
+    // Load per-user profile (avatar, bio, border, teaching assignment)
     fetch('profile_api.php?username=' + encodeURIComponent(state.currentUser))
       .then(r => r.json())
       .then(data => {
@@ -211,6 +245,9 @@ document.addEventListener('DOMContentLoaded', () => {
           if (p.bio) state.profile.bio = p.bio;
           if (p.avatar_data) state.profile.picture = p.avatar_data;
           if (p.border_style) state.profile.border = p.border_style;
+          if (p.assigned_grade) state.currentUserAssignedGrade = p.assigned_grade;
+          if (p.assigned_section) state.currentUserAssignedSection = p.assigned_section;
+          saveState();
           applyProfileUI();
         }
       })
@@ -271,7 +308,10 @@ document.addEventListener('DOMContentLoaded', () => {
       updateDashboardTopics();
     }
     if (document.getElementById('students-container') && document.getElementById('grade-filter')) renderStudents();
-    if (document.getElementById('assess-grade') && document.getElementById('assess-topic')) updateAssessmentTopics();
+    if (document.getElementById('assess-grade')) {
+      if (typeof updateAssessmentGrade === 'function') updateAssessmentGrade();
+      else updateAssessmentTopics();
+    }
     if (document.getElementById('mat-grade') && document.getElementById('mat-topic')) {
       updateMaterialTopics();
       renderQuestionBank();
@@ -599,40 +639,36 @@ async function syncStudentsFromDB() {
     const response = await fetch('student_api.php', { method: 'GET' });
     const data = await response.json();
     if (data.status === 'success' && Array.isArray(data.students)) {
-      const dbStudents = data.students;
-      const stateById = {};
-      state.students.forEach(s => { stateById[s.id] = s; });
+      const dbStudents = data.students.filter(s => String(s.grade) !== '7');
+      const isTeacher = state.currentRole !== 'admin';
+      const assignedGrade = state.currentUserAssignedGrade;
+      const assignedSection = state.currentUserAssignedSection;
 
-      // Merge: DB students take priority for core fields
-      const merged = [];
-      const seenIds = new Set();
-
-      dbStudents.forEach(dbS => {
-        const id = parseInt(dbS.id) || dbS.id;
-        seenIds.add(id);
-        const localS = stateById[id];
-        merged.push({
-          id: id,
-          name: dbS.name || (localS && localS.name) || 'Unknown',
-          grade: String(dbS.grade || (localS && localS.grade) || '4'),
-          section: dbS.section || (localS && localS.section) || 'A',
-          recitations: parseInt(dbS.recitations) || (localS && localS.recitations) || 0,
-          totalScore: parseInt(dbS.totalScore) || (localS && localS.totalScore) || 0,
-          photo: dbS.photo || (localS && localS.photo) || null
-        });
-      });
-
-      // Keep any localStorage-only students (genuine offline additions not yet pushed)
-      // Never re-add deleted dummy students or outdated Grade 4/6 students not in DB
-      state.students.forEach(s => {
-        if (!seenIds.has(s.id) && s.id > 1000000000000 && s.grade !== '4' && s.grade !== '6') {
-          merged.push(s);
-        }
-      });
-
-      state.students = merged;
+      if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+        // Strict teacher isolation: state.students contains only this teacher's assigned students
+        state.students = dbStudents.map(dbS => ({
+          id: parseInt(dbS.id) || dbS.id,
+          name: dbS.name || 'Unknown',
+          grade: String(dbS.grade || assignedGrade),
+          section: dbS.section || '',
+          recitations: parseInt(dbS.recitations) || 0,
+          totalScore: parseInt(dbS.totalScore) || 0,
+          photo: dbS.photo || null
+        }));
+      } else {
+        // Admin or unrestricted: direct map from database (source of truth)
+        state.students = dbStudents.map(dbS => ({
+          id: parseInt(dbS.id) || dbS.id,
+          name: dbS.name || 'Unknown',
+          grade: String(dbS.grade || '4'),
+          section: dbS.section || '',
+          recitations: parseInt(dbS.recitations) || 0,
+          totalScore: parseInt(dbS.totalScore) || 0,
+          photo: dbS.photo || null
+        }));
+      }
       saveState();
-      console.log(`✅ Synced ${dbStudents.length} students from DB, ${merged.length} total in state`);
+      console.log(`✅ Synced ${state.students.length} students from DB`);
     }
   } catch (e) {
     console.warn('⚠️ Could not sync students from DB (offline?):', e.message);
@@ -816,7 +852,7 @@ function openEditQuestionModal(id) {
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px;">
         <div style="flex:1; min-width:120px;">
           <label style="font-size:13px; font-weight:600; display:block; margin-bottom:4px;">Grade Level</label>
-          <select id="eq-grade" class="form-control">
+          <select id="eq-grade" class="form-control" ${state.currentRole !== 'admin' ? 'disabled' : ''}>
             <option value="3" ${String(q.grade) === '3' ? 'selected' : ''}>Grade 3</option>
             <option value="4" ${String(q.grade) === '4' ? 'selected' : ''}>Grade 4</option>
             <option value="5" ${String(q.grade) === '5' ? 'selected' : ''}>Grade 5</option>
@@ -884,7 +920,12 @@ async function saveEditedQuestion() {
   if (!idEl || !textEl) return;
 
   const id = Number(idEl.value);
-  const grade = gradeEl ? gradeEl.value : '4';
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  let grade = gradeEl ? gradeEl.value : '4';
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    grade = assignedGrade;
+  }
   const topic = topicEl ? topicEl.value.trim() : '';
   const difficulty = diffEl ? diffEl.value : 'Medium';
   const type = typeEl ? typeEl.value : 'multiple-choice';
@@ -926,12 +967,21 @@ function editQuestion(id) {
 
 async function deleteQuestion(id) {
   if (confirm("Are you sure you want to delete this question from the database?")) {
-    await fetch('questions_api.php', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: id })
-    });
-    renderQuestionBank();
+    try {
+      const res = await fetch('questions_api.php', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: id })
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+        renderQuestionBank();
+      } else {
+        alert("❌ Error: " + (data.message || 'Failed to delete question.'));
+      }
+    } catch(e) {
+      alert("Network error: " + e.message);
+    }
   }
 }
 
@@ -986,7 +1036,7 @@ function getAvailableSections(grade) {
   if (sections.size === 0) {
     if (gStr === '4') return ['Maagap', 'Magalang', 'Masigasig', 'Masikap', 'Matatag', 'Matiyaga'];
     if (gStr === '6') return ['Aristotle', 'Einstein', 'Faraday', 'Galilei', 'Newton', 'Pasteur', 'Tesla'];
-    return ['A', 'B'];
+    return [];
   }
   return Array.from(sections).sort();
 }
@@ -1037,15 +1087,55 @@ function renderStudents() {
   const container = document.getElementById('students-container');
   const gradeFilter = document.getElementById('grade-filter');
   if(!container || !gradeFilter) return;
-  const filter = gradeFilter.value;
+
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  const assignedSection = state.currentUserAssignedSection;
+
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    gradeFilter.value = assignedGrade;
+    gradeFilter.disabled = true;
+    gradeFilter.title = `Access restricted to assigned Grade ${assignedGrade}`;
+  }
+
   updateSectionDropdown('grade-filter', 'section-filter', true);
   const sectionFilter = document.getElementById('section-filter');
+
+  if (isTeacher && assignedSection && assignedSection !== 'all' && sectionFilter) {
+    sectionFilter.value = assignedSection;
+    sectionFilter.disabled = true;
+    sectionFilter.title = `Access restricted to assigned Section ${assignedSection}`;
+  }
+
+  const filter = gradeFilter.value;
   const secFilter = sectionFilter ? sectionFilter.value : 'all';
   const sortEl = document.getElementById('student-sort');
   const sortField = sortEl ? sortEl.value : 'name';
   const ascending = typeof window.getStudentSortDir === 'function' ? window.getStudentSortDir() : true;
   const searchEl = document.getElementById('student-search');
   const searchQ = searchEl ? searchEl.value.toLowerCase().trim() : '';
+
+  // Render or remove Teacher Load Restricted Badge
+  let banner = document.getElementById('teacher-load-banner');
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'teacher-load-banner';
+      banner.className = 'glass-card mb-15';
+      banner.style.cssText = 'padding:10px 16px; background:rgba(59,130,246,0.12); border:1px solid rgba(59,130,246,0.3); border-radius:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;';
+      container.parentNode.insertBefore(banner, container);
+    }
+    banner.innerHTML = `
+      <div style="font-size:13px; font-weight:600; color:var(--text-main);">
+        <i class="fa-solid fa-lock text-primary"></i> Teaching Assignment: 
+        <span class="badge" style="background:var(--primary); color:#fff; font-size:12px; margin-left:4px;">Grade ${assignedGrade}</span>
+        ${assignedSection && assignedSection !== 'all' ? `<span class="badge" style="background:#06d6a0; color:#000; font-size:12px; margin-left:4px;">Section ${assignedSection}</span>` : '<span class="badge" style="background:rgba(255,255,255,0.15); font-size:12px; margin-left:4px;">All Sections</span>'}
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);"><i class="fa-solid fa-shield-halved"></i> Access strictly restricted to your assigned load</div>
+    `;
+  } else if (banner) {
+    banner.remove();
+  }
   
   container.innerHTML = '';
   
@@ -1053,9 +1143,18 @@ function renderStudents() {
     ? [...state.students]
     : state.students.filter(s => s.grade === filter);
 
-  if (secFilter !== 'all') {
+  // If teacher, enforce assigned load filtering regardless of UI tampering
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    filtered = filtered.filter(s => String(s.grade) === String(assignedGrade));
+  }
+  if (isTeacher && assignedSection && assignedSection !== 'all') {
+    filtered = filtered.filter(s => (s.section || 'A').toLowerCase() === assignedSection.toLowerCase());
+  } else if (secFilter !== 'all') {
     filtered = filtered.filter(s => (s.section || 'A') === secFilter);
   }
+
+  // Remove any Grade 7 students
+  filtered = filtered.filter(s => String(s.grade) !== '7');
 
   if (searchQ) {
     filtered = filtered.filter(s => s.name.toLowerCase().includes(searchQ));
@@ -1105,50 +1204,100 @@ function toggleAddStudent() {
   form.classList.toggle('hidden');
   if (!form.classList.contains('hidden')) {
     updateSectionDropdown('student-grade', 'student-section', false);
+    const isTeacher = state.currentRole !== 'admin';
+    const assignedGrade = state.currentUserAssignedGrade;
+    const assignedSection = state.currentUserAssignedSection;
+    if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+      const sg = document.getElementById('student-grade');
+      if (sg) { sg.value = assignedGrade; sg.disabled = true; }
+    }
+    if (isTeacher && assignedSection && assignedSection !== 'all') {
+      const ss = document.getElementById('student-section');
+      if (ss) { ss.value = assignedSection; ss.disabled = true; }
+    }
   }
 }
 
 function addStudent() {
   const name = document.getElementById('student-name').value.trim();
-  const grade = document.getElementById('student-grade').value;
+  const gradeInput = document.getElementById('student-grade');
   const sectionEl = document.getElementById('student-section');
-  const section = sectionEl ? sectionEl.value : 'A';
+  let grade = gradeInput ? gradeInput.value : '4';
+  let section = sectionEl ? sectionEl.value : 'A';
+
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  const assignedSection = state.currentUserAssignedSection;
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    grade = assignedGrade;
+  }
+  if (isTeacher && assignedSection && assignedSection !== 'all') {
+    section = assignedSection;
+  }
+
+  if (grade === '7') grade = '4'; // disallow Grade 7
 
   if (!name) return alert("Please enter the student's full name.");
   if (name.length < 2) return alert("Student name is too short.");
 
   const newId = Date.now();
   const newStudent = { id: newId, name, grade, section, recitations: 0, totalScore: 0, photo: null };
-  state.students.push(newStudent);
-
-  saveState();
 
   // Persist to database immediately
   fetch('student_api.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newStudent)
-  }).catch(e => console.warn('Student DB save failed (offline?):', e));
-
-  document.getElementById('student-name').value = '';
-  renderStudents();
-  toggleAddStudent();
-  alert(`${name} added to Grade ${grade} Section ${section}!`);
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.status === 'success') {
+      state.students.push(newStudent);
+      saveState();
+      document.getElementById('student-name').value = '';
+      renderStudents();
+      toggleAddStudent();
+      alert(`✅ ${name} added to Grade ${grade} Section ${section}!`);
+    } else {
+      alert('❌ Failed to add student: ' + (data.message || 'Access denied'));
+    }
+  })
+  .catch(e => {
+    console.warn('Student DB save failed (offline?):', e);
+    state.students.push(newStudent);
+    saveState();
+    document.getElementById('student-name').value = '';
+    renderStudents();
+    toggleAddStudent();
+  });
 }
 
 function removeStudent(id) {
-  if(confirm('Remove this student?')) {
-    state.students = state.students.filter(s => s.id !== id);
-    saveState();
-
-    // Delete from database immediately
+  const target = state.students.find(s => s.id === id);
+  const name = target ? target.name : 'this student';
+  if(confirm(`Remove student "${name}"?`)) {
+    // Delete from database immediately with server validation
     fetch('student_api.php', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: id })
-    }).catch(e => console.warn('Student DB delete failed (offline?):', e));
-
-    renderStudents();
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.status === 'success') {
+        state.students = state.students.filter(s => s.id !== id);
+        saveState();
+        renderStudents();
+      } else {
+        alert('❌ Access Denied: ' + (data.message || 'You cannot delete this student.'));
+      }
+    })
+    .catch(e => {
+      console.warn('Student DB delete failed (offline?):', e);
+      state.students = state.students.filter(s => s.id !== id);
+      saveState();
+      renderStudents();
+    });
   }
 }
 
@@ -1156,6 +1305,17 @@ async function bulkAddStudents(namesText, grade, section) {
   if (!namesText || !namesText.trim()) return alert('Please enter student names, one per line.');
   const lines = namesText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
   if (lines.length === 0) return alert('No valid names found.');
+
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  const assignedSection = state.currentUserAssignedSection;
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    grade = assignedGrade;
+  }
+  if (isTeacher && assignedSection && assignedSection !== 'all') {
+    section = assignedSection;
+  }
+  if (String(grade) === '7') grade = '4';
 
   let addedCount = 0;
   for (const name of lines) {
@@ -1179,7 +1339,12 @@ async function bulkAddStudents(namesText, grade, section) {
 }
 
 function resetQuarterRecitations(grade) {
-  const gStr = String(grade);
+  let gStr = String(grade);
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    gStr = String(assignedGrade);
+  }
   const targetLabel = gStr === 'all' ? 'ALL Grades' : `Grade ${gStr}`;
   if (!confirm(`Are you sure you want to reset recitation scores for ${targetLabel}? This is typically done at the start of a new term. (Student profiles will NOT be deleted)`)) {
     return;
@@ -1279,6 +1444,15 @@ async function updateMaterialTopics() {
   const topicSelect = document.getElementById('mat-topic');
   const gradeSelect = document.getElementById('mat-grade');
   if(!topicSelect || !gradeSelect) return;
+
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    gradeSelect.value = assignedGrade;
+    gradeSelect.disabled = true;
+    gradeSelect.title = `Materials restricted to assigned Grade ${assignedGrade}`;
+  }
+
   const grade = gradeSelect.value;
   topicSelect.innerHTML = '';
 
@@ -1300,7 +1474,12 @@ async function updateMaterialTopics() {
 }
 
 async function promptNewTopic() {
-  const grade = document.getElementById('mat-grade').value;
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  let grade = document.getElementById('mat-grade') ? document.getElementById('mat-grade').value : '4';
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    grade = assignedGrade;
+  }
   const topic = prompt(`Enter new Science topic for Grade ${grade}:`);
 
   if (!topic) return;
@@ -1326,7 +1505,12 @@ async function promptNewTopic() {
 }
 
 async function addMaterialQuestion() {
-  const grade = document.getElementById('mat-grade').value;
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  let grade = document.getElementById('mat-grade') ? document.getElementById('mat-grade').value : '4';
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    grade = assignedGrade;
+  }
   const topic = document.getElementById('mat-topic').value;
   const text = document.getElementById('mat-q-text').value.trim();
   const difficulty = document.getElementById('mat-diff').value;
@@ -1337,15 +1521,19 @@ async function addMaterialQuestion() {
   if (!text) return alert("Please enter the question text.");
 
   try {
-    await fetch('questions_api.php', {
+    const res = await fetch('questions_api.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ grade, topic, difficulty, text, type })
     });
-    document.getElementById('mat-q-text').value = '';
-    alert("Question added to database bank!");
-    // If Admin view is active, update the list
-    if (document.getElementById('admin-question-list') || document.getElementById('q-bank-list')) renderQuestionBank();
+    const data = await res.json();
+    if (data.status === 'success') {
+      document.getElementById('mat-q-text').value = '';
+      alert("Question added to database bank!");
+      if (document.getElementById('admin-question-list') || document.getElementById('q-bank-list')) renderQuestionBank();
+    } else {
+      alert("❌ Error: " + (data.message || 'Failed to add question.'));
+    }
   } catch(e) { console.error("Error adding question:", e); }
 }
 
@@ -1802,7 +1990,21 @@ function clearImportPreview() {
 
 // --- Assessment & Flash Screen ---
 function updateAssessmentGrade() {
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  const assignedSection = state.currentUserAssignedSection;
+  const gradeSelect = document.getElementById('assess-grade');
+  const secSelect = document.getElementById('assess-section');
+
+  if (isTeacher && assignedGrade && assignedGrade !== 'all' && gradeSelect) {
+    gradeSelect.value = assignedGrade;
+    gradeSelect.disabled = true;
+  }
   updateSectionDropdown('assess-grade', 'assess-section', true);
+  if (isTeacher && assignedSection && assignedSection !== 'all' && secSelect) {
+    secSelect.value = assignedSection;
+    secSelect.disabled = true;
+  }
   updateAssessmentTopics();
   renderAssessmentStudents();
 }
@@ -2087,12 +2289,12 @@ async function startQuizFlash() {
       topicMatches = dbQuestions.filter(q => String(q.grade) === String(grade));
     }
 
-    // If still empty, fallback to all questions across all grades
+    // If still empty, fallback to questions excluding Grade 7
     if (topicMatches.length === 0) {
-      topicMatches = [...dbQuestions];
+      topicMatches = dbQuestions.filter(q => String(q.grade) !== '7');
     }
 
-    questionPool = topicMatches;
+    questionPool = topicMatches.filter(q => String(q.grade) !== '7');
   }
 
   if (questionPool.length === 0) {
@@ -2272,16 +2474,42 @@ function renderRecords() {
   const tbody = document.getElementById('records-body');
   if(!tbody) return;
 
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  const assignedSection = state.currentUserAssignedSection;
+
   const gradeFilter = document.getElementById('records-grade-filter');
+  if (isTeacher && assignedGrade && assignedGrade !== 'all' && gradeFilter) {
+    gradeFilter.value = assignedGrade;
+    gradeFilter.disabled = true;
+  }
+
+  updateSectionDropdown('records-grade-filter', 'records-section-filter', true);
+  const sectionFilterEl = document.getElementById('records-section-filter');
+  if (isTeacher && assignedSection && assignedSection !== 'all' && sectionFilterEl) {
+    sectionFilterEl.value = assignedSection;
+    sectionFilterEl.disabled = true;
+  }
+
+  // Also lock E-Class controls if present on page
+  const eqGrade = document.getElementById('eclass-q-grade');
+  const eqSec = document.getElementById('eclass-q-section');
+  if (isTeacher && assignedGrade && assignedGrade !== 'all' && eqGrade) {
+    eqGrade.value = assignedGrade;
+    eqGrade.disabled = true;
+  }
+  if (isTeacher && assignedSection && assignedSection !== 'all' && eqSec) {
+    eqSec.value = assignedSection;
+    eqSec.disabled = true;
+  }
+
   const sortFilter = document.getElementById('records-sort-filter');
   const totalStudentsEl = document.getElementById('records-total-students');
   const totalRecitationsEl = document.getElementById('records-total-recitations');
   const targetGrade = gradeFilter ? gradeFilter.value : 'all';
-  updateSectionDropdown('records-grade-filter', 'records-section-filter', true);
   const sortBy = sortFilter ? sortFilter.value : 'grade';
   const searchEl = document.getElementById('records-search');
   const searchQ = searchEl ? searchEl.value.toLowerCase().trim() : '';
-  const sectionFilterEl = document.getElementById('records-section-filter');
   const secFilter = sectionFilterEl ? sectionFilterEl.value : 'all';
 
   tbody.innerHTML = '';
@@ -2290,9 +2518,16 @@ function renderRecords() {
     ? [...state.students]
     : state.students.filter(s => s.grade === targetGrade);
 
-  if (secFilter !== 'all') {
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    filtered = filtered.filter(s => String(s.grade) === String(assignedGrade));
+  }
+  if (isTeacher && assignedSection && assignedSection !== 'all') {
+    filtered = filtered.filter(s => (s.section || 'A').toLowerCase() === assignedSection.toLowerCase());
+  } else if (secFilter !== 'all') {
     filtered = filtered.filter(s => (s.section || 'A') === secFilter);
   }
+
+  filtered = filtered.filter(s => String(s.grade) !== '7');
 
   if (searchQ) {
     filtered = filtered.filter(s => s.name.toLowerCase().includes(searchQ));
@@ -2624,6 +2859,19 @@ function updateProfile() {
 
 function saveProfile() {
   updateProfile();
+
+  const isAdmin = (state.currentRole === 'admin');
+  const profGradeEl = document.getElementById('prof-grade');
+  const profSecEl = document.getElementById('prof-section');
+  if (isAdmin) {
+    if (profGradeEl) state.currentUserAssignedGrade = profGradeEl.value;
+    if (profSecEl) state.currentUserAssignedSection = profSecEl.value.trim() || 'all';
+  }
+  // Safeguard: Ma'am Coney is permanently assigned to Grade 4
+  if (state.currentUser === 'coney') {
+    state.currentUserAssignedGrade = '4';
+  }
+
   saveState();
   applyProfileUI();
 
@@ -2633,7 +2881,9 @@ function saveProfile() {
     display_name: state.profile.name,
     bio: state.profile.bio,
     avatar_data: state.profile.picture || null,
-    border_style: state.profile.border || 'none'
+    border_style: state.profile.border || 'none',
+    assigned_grade: state.currentUserAssignedGrade || '4',
+    assigned_section: state.currentUserAssignedSection || 'all'
   };
 
   fetch('profile_api.php', {
@@ -2644,7 +2894,7 @@ function saveProfile() {
   .then(r => r.json())
   .then(data => {
     if (data.status === 'success') {
-      alert("Profile saved to database successfully!");
+      alert("Profile and teaching load saved successfully!");
     } else {
       alert("Profile saved locally. Database: " + (data.message || 'unavailable'));
     }
@@ -2657,9 +2907,32 @@ function saveProfile() {
 function applyProfileUI() {
   const profileName = document.getElementById('prof-name');
   const profileBio = document.getElementById('prof-bio');
+  const profGradeEl = document.getElementById('prof-grade');
+  const profSecEl = document.getElementById('prof-section');
+  const isTeacher = (state.currentRole !== 'admin');
 
   if(profileName) profileName.value = state.profile.name;
   if(profileBio) profileBio.value = state.profile.bio;
+  if(profGradeEl) {
+    if (state.currentUserAssignedGrade) profGradeEl.value = state.currentUserAssignedGrade;
+    if (isTeacher) {
+      profGradeEl.disabled = true;
+      profGradeEl.title = 'Teaching load is designated by Administrator';
+    }
+  }
+  if(profSecEl) {
+    if (state.currentUserAssignedSection) profSecEl.value = state.currentUserAssignedSection;
+    if (isTeacher) {
+      profSecEl.disabled = true;
+      profSecEl.title = 'Teaching load is designated by Administrator';
+    }
+  }
+
+  // Update dynamic welcome headings if present (dashboard.html, index-tablet.html)
+  const welcomeHeading = document.getElementById('welcome-heading');
+  if (welcomeHeading) {
+    welcomeHeading.textContent = `Welcome, ${state.profile.name || "Ma'am Coney"}!`;
+  }
 
   document.querySelectorAll('.border-option').forEach(el => el.classList.remove('active'));
   const activeOpt = document.querySelector(`.border-option[data-border="${state.profile.border}"]`);
@@ -2706,14 +2979,28 @@ function launchGame(gameType) {
   const gameContent = document.getElementById('game-content-area');
   const studentSelect = document.getElementById('game-student-select');
 
-  // Populate student select
-  studentSelect.innerHTML = '';
-  state.students.forEach(s => {
-    const opt = document.createElement('option');
-    opt.value = s.id;
-    opt.textContent = `${s.name} (Gr ${s.grade})`;
-    studentSelect.appendChild(opt);
-  });
+  // Populate student select filtered by teacher load
+  if (studentSelect) {
+    studentSelect.innerHTML = '';
+    const assignedGrade = state.currentUserAssignedGrade;
+    const assignedSection = state.currentUserAssignedSection;
+    const isTeacher = (state.currentRole !== 'admin');
+    
+    let eligibleStudents = (state.students || []).filter(s => String(s.grade) !== '7');
+    if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+      eligibleStudents = eligibleStudents.filter(s => String(s.grade) === String(assignedGrade));
+    }
+    if (isTeacher && assignedSection && assignedSection !== 'all') {
+      eligibleStudents = eligibleStudents.filter(s => (s.section || 'A').toLowerCase() === assignedSection.toLowerCase());
+    }
+
+    eligibleStudents.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s.id;
+      opt.textContent = `${s.name} (Gr ${s.grade}${s.section ? ' - ' + s.section : ''})`;
+      studentSelect.appendChild(opt);
+    });
+  }
 
   let content = '';
   let title = '';
@@ -2949,9 +3236,24 @@ function awardGamePoints(points) {
 function renderScoreboard() {
   const tbody = document.getElementById('scoreboard-body');
   if (!tbody) return;
+
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  const assignedSection = state.currentUserAssignedSection;
+
   const gradeFilter = document.getElementById('scoreboard-grade');
+  if (isTeacher && assignedGrade && assignedGrade !== 'all' && gradeFilter) {
+    gradeFilter.value = assignedGrade;
+    gradeFilter.disabled = true;
+  }
+
   updateSectionDropdown('scoreboard-grade', 'scoreboard-section', true);
   const sectionFilter = document.getElementById('scoreboard-section');
+  if (isTeacher && assignedSection && assignedSection !== 'all' && sectionFilter) {
+    sectionFilter.value = assignedSection;
+    sectionFilter.disabled = true;
+  }
+
   const sortBy = document.getElementById('scoreboard-sort');
   const searchEl = document.getElementById('scoreboard-search');
   const searchQ = searchEl ? searchEl.value.toLowerCase().trim() : '';
@@ -2967,9 +3269,16 @@ function renderScoreboard() {
     ? [...state.students]
     : state.students.filter(s => s.grade === gf);
 
-  if (sf !== 'all') {
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    filtered = filtered.filter(s => String(s.grade) === String(assignedGrade));
+  }
+  if (isTeacher && assignedSection && assignedSection !== 'all') {
+    filtered = filtered.filter(s => (s.section || 'A').toLowerCase() === assignedSection.toLowerCase());
+  } else if (sf !== 'all') {
     filtered = filtered.filter(s => (s.section || 'A') === sf);
   }
+
+  filtered = filtered.filter(s => String(s.grade) !== '7');
 
   if (searchQ) {
     filtered = filtered.filter(s => s.name.toLowerCase().includes(searchQ));
@@ -3241,7 +3550,15 @@ function recordRubricResult(points) {
 
 // --- Lesson Delivery ---
 async function updateLessonTopics() {
-  const grade = document.getElementById('lesson-grade').value;
+  const gradeInput = document.getElementById('lesson-grade');
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  if (isTeacher && assignedGrade && assignedGrade !== 'all' && gradeInput) {
+    gradeInput.value = assignedGrade;
+    gradeInput.disabled = true;
+    gradeInput.title = `Lessons restricted to assigned Grade ${assignedGrade}`;
+  }
+  const grade = gradeInput ? gradeInput.value : '4';
   state.lesson.grade = grade;
 
   const topicSelect = document.getElementById('lesson-topic');
@@ -3994,6 +4311,7 @@ async function loadAdminUsers() {
     const data = await res.json();
     if (data.status !== 'success') throw new Error(data.message);
 
+    window._adminUsersList = data.users || [];
     tbody.innerHTML = data.users.map(u => {
       const uInitials = (u.display_name || u.username).substring(0, 2).toUpperCase();
       const uAvatar = u.avatar_data
@@ -4006,9 +4324,11 @@ async function loadAdminUsers() {
           <td>${u.display_name || '—'}</td>
           <td>${u.email || '—'}</td>
           <td><span class="badge-role badge-${u.role}">${u.role}</span></td>
+          <td><span class="badge" style="background:rgba(59,130,246,0.15);color:var(--primary);font-weight:600;">${u.assigned_grade === 'all' ? 'All Grades' : 'Grade ' + u.assigned_grade}</span></td>
+          <td><span class="badge" style="background:rgba(255,255,255,0.08);">${u.assigned_section || 'all'}</span></td>
           <td>${u.created_at ? new Date(u.created_at).toLocaleDateString() : '—'}</td>
           <td>
-            <button class="btn-xs btn-edit" onclick="app.adminEditUser(${u.id}, '${u.username}', '${(u.display_name||'').replace(/'/g,"\\'")}', '${(u.email||'').replace(/'/g,"\\'")}', '${u.role}')"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn-xs btn-edit" onclick="app.adminEditUserById(${u.id})"><i class="fa-solid fa-pen"></i></button>
             <button class="btn-xs btn-del" onclick="app.adminDeleteUser(${u.id}, '${u.username}')"><i class="fa-solid fa-trash"></i></button>
           </td>
         </tr>
@@ -4034,6 +4354,10 @@ async function adminCreateUser() {
   const email = document.getElementById('admin-new-email') ? document.getElementById('admin-new-email').value.trim() : '';
   const password = document.getElementById('admin-new-password').value.trim();
   const role = document.getElementById('admin-new-role') ? document.getElementById('admin-new-role').value : 'teacher';
+  const assignedGradeEl = document.getElementById('admin-new-grade');
+  const assignedSectionEl = document.getElementById('admin-new-section');
+  const assignedGrade = assignedGradeEl ? assignedGradeEl.value : (role === 'admin' ? 'all' : '4');
+  const assignedSection = assignedSectionEl ? assignedSectionEl.value.trim() : 'all';
 
   if (!username || !password) return alert('Username and password are required.');
 
@@ -4041,7 +4365,16 @@ async function adminCreateUser() {
     const res = await fetch('admin_api.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'create_user', username, password, display_name: displayName || username, email, role })
+      body: JSON.stringify({
+        action: 'create_user',
+        username,
+        password,
+        display_name: displayName || username,
+        email,
+        role,
+        assigned_grade: assignedGrade,
+        assigned_section: assignedSection
+      })
     });
     const data = await res.json();
     if (data.status === 'success') {
@@ -4066,7 +4399,7 @@ async function adminCreateStudent() {
   const quarterInput = document.getElementById('admin-student-quarter');
 
   const name = nameInput ? nameInput.value.trim() : '';
-  const grade = gradeInput ? gradeInput.value : '7';
+  const grade = gradeInput ? gradeInput.value : '4';
   const section = sectionInput ? sectionInput.value : 'A';
 
   if (!name) return alert('Please enter student full name (e.g. abc def ghi).');
@@ -4115,7 +4448,15 @@ async function autoGenerateDemoQuestions() {
   }
 }
 
-function adminEditUser(id, username, displayName, email, role) {
+function adminEditUserById(id) {
+  const u = (window._adminUsersList || []).find(x => x.id == id);
+  if (u) {
+    adminEditUser(u.id, u.username, u.display_name || '', u.email || '', u.role, u.assigned_grade || '4', u.assigned_section || 'all');
+  }
+}
+window.adminEditUserById = adminEditUserById;
+
+function adminEditUser(id, username, displayName, email, role, assignedGrade = '4', assignedSection = 'all') {
   // Remove existing modal
   const existing = document.getElementById('admin-edit-modal');
   if (existing) existing.remove();
@@ -4135,6 +4476,22 @@ function adminEditUser(id, username, displayName, email, role) {
           <option value="admin" ${role==='admin'?'selected':''}>Admin</option>
         </select>
       </div>
+      <div style="display:flex;gap:10px;">
+        <div class="form-group" style="flex:1;">
+          <label>Assigned Grade</label>
+          <select id="edit-grade" class="form-control">
+            <option value="all" ${assignedGrade==='all'?'selected':''}>All Grades</option>
+            <option value="3" ${assignedGrade==='3'?'selected':''}>Grade 3</option>
+            <option value="4" ${assignedGrade==='4'?'selected':''}>Grade 4</option>
+            <option value="5" ${assignedGrade==='5'?'selected':''}>Grade 5</option>
+            <option value="6" ${assignedGrade==='6'?'selected':''}>Grade 6</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label>Assigned Section</label>
+          <input type="text" id="edit-section" class="form-control" value="${assignedSection}">
+        </div>
+      </div>
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px;">
         <button class="btn btn-secondary" onclick="document.getElementById('admin-edit-modal').remove()">Cancel</button>
         <button class="btn btn-primary" onclick="app.adminSaveUser(${id})"><i class="fa-solid fa-save"></i> Save</button>
@@ -4151,7 +4508,9 @@ async function adminSaveUser(id) {
     id: id,
     display_name: document.getElementById('edit-displayname').value.trim(),
     email: document.getElementById('edit-email').value.trim(),
-    role: document.getElementById('edit-role').value
+    role: document.getElementById('edit-role').value,
+    assigned_grade: document.getElementById('edit-grade') ? document.getElementById('edit-grade').value : '4',
+    assigned_section: document.getElementById('edit-section') ? document.getElementById('edit-section').value.trim() : 'all'
   };
   const pw = document.getElementById('edit-password').value.trim();
   if (pw) payload.password = pw;
@@ -5617,7 +5976,7 @@ function showPPTXUploadModal() {
 
       <div class="form-group" style="margin-bottom:14px;">
         <label>Grade Level</label>
-        <select id="pptx-grade" class="form-control">
+        <select id="pptx-grade" class="form-control" ${state.currentRole !== 'admin' && state.currentUserAssignedGrade && state.currentUserAssignedGrade !== 'all' ? 'disabled' : ''}>
           <option value="">Auto-detect from filename</option>
           <option value="3">Grade 3</option>
           <option value="4">Grade 4</option>
@@ -5682,7 +6041,12 @@ async function uploadPPTX() {
     return;
   }
 
-  const grade = document.getElementById('pptx-grade').value;
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  let grade = document.getElementById('pptx-grade').value;
+  if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+    grade = assignedGrade;
+  }
   const quarter = document.getElementById('pptx-quarter').value;
   const topic = document.getElementById('pptx-topic').value;
   const username = state.currentUser || '';
@@ -5745,6 +6109,13 @@ async function loadPPTXList() {
 
     if (data.status === 'success' && data.uploads && data.uploads.length > 0) {
       let uploads = data.uploads;
+
+      // Teacher isolation: filter out presentations from other grades
+      const isTeacher = state.currentRole !== 'admin';
+      const assignedGrade = state.currentUserAssignedGrade;
+      if (isTeacher && assignedGrade && assignedGrade !== 'all') {
+        uploads = uploads.filter(u => String(u.grade) === String(assignedGrade));
+      }
 
       // Search filter
       const searchEl = document.getElementById('pptx-search');
@@ -6019,7 +6390,11 @@ function showAIGenerateModal() {
   const existing = document.getElementById('ai-generate-modal');
   if (existing) existing.remove();
 
-  const gradeVal = document.getElementById('mat-grade') ? document.getElementById('mat-grade').value : '4';
+  const isTeacher = state.currentRole !== 'admin';
+  const assignedGrade = state.currentUserAssignedGrade;
+  const gradeVal = (isTeacher && assignedGrade && assignedGrade !== 'all')
+    ? assignedGrade
+    : (document.getElementById('mat-grade') ? document.getElementById('mat-grade').value : '4');
   const topicVal = document.getElementById('mat-topic') ? document.getElementById('mat-topic').value : '';
 
   const modal = document.createElement('div');
@@ -6034,7 +6409,7 @@ function showAIGenerateModal() {
       <div style="display:flex;flex-direction:column;gap:14px;">
         <div>
           <label style="color:var(--text-muted);font-size:13px;margin-bottom:4px;display:block;">Grade Level</label>
-          <select id="ai-gen-grade" class="form-control" style="width:100%;">
+          <select id="ai-gen-grade" class="form-control" style="width:100%;" ${isTeacher && assignedGrade && assignedGrade !== 'all' ? 'disabled' : ''}>
             <option value="3" ${gradeVal==='3'?'selected':''}>Grade 3</option>
             <option value="4" ${gradeVal==='4'?'selected':''}>Grade 4</option>
             <option value="5" ${gradeVal==='5'?'selected':''}>Grade 5</option>
@@ -7154,6 +7529,7 @@ window.app = {
   filterDashboardView,
   autoGenerateDemoQuestions,
   adminEditUser,
+  adminEditUserById,
   adminSaveUser,
   adminDeleteUser,
   downloadEClassRecord,

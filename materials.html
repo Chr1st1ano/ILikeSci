@@ -55,7 +55,7 @@
             <i class="fa-solid fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;"></i>
             <input type="text" id="mat-search" class="form-control" placeholder="Search questions..." style="padding-left:34px;" oninput="app.renderQuestionBank()">
           </div>
-          <select id="mat-grade" class="form-control" onchange="app.updateMaterialTopics()"><option value="3">Grade 3</option><option value="4">Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option></select>
+          <select id="mat-grade" class="form-control" onchange="app.updateMaterialTopics()"><option value="3">Grade 3</option><option value="4" selected>Grade 4</option><option value="5">Grade 5</option><option value="6">Grade 6</option></select>
           <select id="mat-topic" class="form-control" onchange="app.renderQuestionBank()"></select>
           <button class="btn btn-secondary" onclick="app.seedScienceQuestions()" title="Auto-populate standard DepEd science questions" style="color:#10b981; border-color:rgba(16,185,129,0.3);"><i class="fa-solid fa-wand-magic-sparkles"></i> <span class="hide-mobile">Seed Questions</span></button>
           <button class="btn btn-secondary" onclick="exportQuestionsJSON()" title="Export Question Bank as JSON"><i class="fa-solid fa-file-export"></i> <span class="hide-mobile">Export</span></button>

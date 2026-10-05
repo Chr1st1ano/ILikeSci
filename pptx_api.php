@@ -14,6 +14,16 @@
 
 require 'db.php';
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, X-Current-User");
+
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
+}
+
+$currentUser = get_current_user_context($pdo);
+
 // Ensure directories exist
 $uploadDir = __DIR__ . '/uploads/pptx/';
 $slidesBaseDir = __DIR__ . '/uploads/pptx/slides/';
@@ -124,7 +134,34 @@ if ($method === 'GET' || $method === 'HEAD') {
     header("Content-Type: application/json");
 
     if ($action === 'list') {
-        $stmt = $pdo->query("SELECT * FROM pptx_uploads ORDER BY created_at DESC");
+        $where = ["grade != '7'"];
+        $params = [];
+
+        $filterGrade = $_GET['grade'] ?? '';
+
+        // Enforce teacher access restriction
+        if ($currentUser && ($currentUser['role'] ?? '') === 'teacher') {
+            $assignedGrade = trim((string)($currentUser['assigned_grade'] ?? ''));
+            if ($assignedGrade !== '' && $assignedGrade !== 'all') {
+                if (!$filterGrade || $filterGrade === 'all' || !check_teacher_grade_access($pdo, $filterGrade, 'all', $currentUser)) {
+                    $filterGrade = $assignedGrade;
+                }
+            }
+        }
+
+        if ($filterGrade && $filterGrade !== 'all') {
+            $where[] = "grade = ?";
+            $params[] = (string)$filterGrade;
+        }
+
+        $sql = "SELECT * FROM pptx_uploads";
+        if (!empty($where)) {
+            $sql .= " WHERE " . implode(" AND ", $where);
+        }
+        $sql .= " ORDER BY created_at DESC";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
         $uploads = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode(["status" => "success", "uploads" => $uploads]);
     } elseif ($action === 'slides' && isset($_GET['id'])) {
@@ -217,6 +254,15 @@ if ($method === 'POST') {
                 exit;
             }
 
+            // Access Control check for teachers
+            if ($currentUser && ($currentUser['role'] ?? '') === 'teacher') {
+                if (!check_teacher_grade_access($pdo, $upload['grade'], 'all', $currentUser)) {
+                    http_response_code(403);
+                    echo json_encode(["status" => "error", "message" => "Access denied: You are not authorized to delete presentations from other grades."]);
+                    exit;
+                }
+            }
+
             // Delete slide images directory
             if ($upload['slides_dir']) {
                 $slidesPath = __DIR__ . '/' . $upload['slides_dir'];
@@ -279,6 +325,20 @@ if ($method === 'POST') {
     if (!$topic) {
         $topic = preg_replace('/\.(pptx?|ppt|pdf)$/i', '', $originalName);
         $topic = str_replace(['_', '-'], ' ', $topic);
+    }
+
+    // Disallow Grade 7
+    if ($grade === '7') {
+        echo json_encode(["status" => "error", "message" => "Grade 7 presentations are not supported in elementary science."]);
+        exit;
+    }
+
+    // Enforce teacher assignment if applicable
+    if ($currentUser && ($currentUser['role'] ?? '') === 'teacher') {
+        $assignedGrade = trim((string)($currentUser['assigned_grade'] ?? ''));
+        if ($assignedGrade !== '' && $assignedGrade !== 'all') {
+            $grade = $assignedGrade;
+        }
     }
 
     // Save presentation file

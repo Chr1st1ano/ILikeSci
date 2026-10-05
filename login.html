@@ -336,7 +336,7 @@
         });
         const data = await res.json();
         if (data.status === 'success') {
-          loginSuccess(user, data.user.display_name || user, data.user.role);
+          loginSuccess(user, data.user.display_name || user, data.user.role, data.user.assigned_grade, data.user.assigned_section);
           return;
         } else {
           errEl.style.display = 'block';
@@ -348,7 +348,7 @@
       }
     }
 
-    async function loginSuccess(username, displayName, role) {
+    async function loginSuccess(username, displayName, role, assignedGrade, assignedSection) {
       // Set login state — MUST use same key as app.js ('ilikesci_hybrid_state')
       let state = {};
       const saved = localStorage.getItem('ilikesci_hybrid_state');
@@ -358,10 +358,12 @@
       state.isLoggedIn = true;
       state.currentUser = username;
       state.currentRole = role || 'teacher';
+      state.currentUserAssignedGrade = assignedGrade || '4';
+      state.currentUserAssignedSection = assignedSection || 'all';
       if (!state.profile) state.profile = {};
       state.profile.name = displayName || username.charAt(0).toUpperCase() + username.slice(1);
 
-      // Load per-user profile from database (avatar, bio, border)
+      // Load per-user profile from database (avatar, bio, border, teaching assignment)
       try {
         const profRes = await fetch('profile_api.php?username=' + encodeURIComponent(username));
         const profData = await profRes.json();
@@ -371,8 +373,13 @@
           if (p.bio) state.profile.bio = p.bio;
           if (p.avatar_data) state.profile.picture = p.avatar_data;
           if (p.border_style) state.profile.border = p.border_style;
+          if (p.assigned_grade) state.currentUserAssignedGrade = p.assigned_grade;
+          if (p.assigned_section) state.currentUserAssignedSection = p.assigned_section;
         }
       } catch(e) { /* offline — use localStorage fallback */ }
+
+      // Clear student state on login to ensure clean isolated fetch per role/grade load
+      state.students = [];
 
       localStorage.setItem('ilikesci_hybrid_state', JSON.stringify(state));
       window.location.href = 'index.html';

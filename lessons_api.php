@@ -3,13 +3,14 @@ require 'db.php';
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: Content-Type, X-Current-User");
 
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+$currentUser = get_current_user_context($pdo);
 
 if ($method === 'GET') {
     // Get slides for a specific lesson (must check this BEFORE generic GET)
@@ -44,10 +45,19 @@ if ($method === 'GET') {
         $quarter = $_GET['quarter'] ?? null;
 
         try {
-            $sql = "SELECT * FROM curriculum_lessons WHERE 1=1";
+            $sql = "SELECT * FROM curriculum_lessons WHERE grade != '7'";
             $params = [];
 
-            if ($grade) {
+            if ($currentUser && ($currentUser['role'] ?? '') === 'teacher') {
+                $assignedGrade = trim((string)($currentUser['assigned_grade'] ?? ''));
+                if ($assignedGrade !== '' && $assignedGrade !== 'all') {
+                    if (!$grade || $grade === 'all' || !check_teacher_grade_access($pdo, $grade, 'all', $currentUser)) {
+                        $grade = $assignedGrade;
+                    }
+                }
+            }
+
+            if ($grade && $grade !== 'all') {
                 $sql .= " AND grade = ?";
                 $params[] = $grade;
             }
@@ -88,13 +98,23 @@ if ($method === 'GET') {
     try {
         if (isset($input['action']) && $input['action'] === 'create_lesson') {
             // Create a new curriculum lesson and its slides
-            $grade = $input['grade'] ?? '4';
+            $grade = (string)($input['grade'] ?? '4');
             $quarter = $input['quarter'] ?? '1';
             $lessonNumber = $input['lesson_number'] ?? '1';
             $topic = $input['topic'] ?? '';
             $objectives = $input['objectives'] ?? [];
             $slides = $input['slides'] ?? [];
             
+            if ($grade === '7') {
+                throw new Exception("Grade 7 lessons are not supported in elementary science.");
+            }
+
+            if (!check_teacher_grade_access($pdo, $grade, 'all', $currentUser)) {
+                http_response_code(403);
+                echo json_encode(["status" => "error", "message" => "Access denied: You are only authorized to create lessons for your assigned grade."]);
+                exit;
+            }
+
             if (empty($topic)) {
                 throw new Exception("Topic is required.");
             }
@@ -154,6 +174,15 @@ if ($method === 'GET') {
         } else if (isset($input['slides'])) {
             // Create/update lesson slides for an existing curriculum lesson
             $lessonId = $input['curriculum_lesson_id'];
+
+            $chkLesson = $pdo->prepare("SELECT grade FROM curriculum_lessons WHERE id = ?");
+            $chkLesson->execute([$lessonId]);
+            $lesRow = $chkLesson->fetch(PDO::FETCH_ASSOC);
+            if ($lesRow && !check_teacher_grade_access($pdo, $lesRow['grade'], 'all', $currentUser)) {
+                http_response_code(403);
+                echo json_encode(["status" => "error", "message" => "Access denied: Cannot modify slides for another grade level."]);
+                exit;
+            }
             
             $pdo->beginTransaction();
             
@@ -197,12 +226,31 @@ if ($method === 'GET') {
     }
     
     try {
-        $grade = $input['grade'] ?? '4';
+        $grade = (string)($input['grade'] ?? '4');
         $quarter = $input['quarter'] ?? '1';
         $lessonNumber = $input['lesson_number'] ?? '1';
         $topic = $input['topic'] ?? '';
         $objectives = $input['objectives'] ?? [];
         $slides = $input['slides'] ?? [];
+
+        if ($grade === '7') {
+            throw new Exception("Grade 7 lessons are not supported in elementary science.");
+        }
+
+        $chkLesson = $pdo->prepare("SELECT grade FROM curriculum_lessons WHERE id = ?");
+        $chkLesson->execute([$lessonId]);
+        $lesRow = $chkLesson->fetch(PDO::FETCH_ASSOC);
+        if ($lesRow && !check_teacher_grade_access($pdo, $lesRow['grade'], 'all', $currentUser)) {
+            http_response_code(403);
+            echo json_encode(["status" => "error", "message" => "Access denied: Cannot edit lessons from another grade level."]);
+            exit;
+        }
+
+        if (!check_teacher_grade_access($pdo, $grade, 'all', $currentUser)) {
+            http_response_code(403);
+            echo json_encode(["status" => "error", "message" => "Access denied: Cannot assign lesson to an unassigned grade level."]);
+            exit;
+        }
         
         if (empty($topic)) {
             throw new Exception("Topic is required.");
@@ -261,6 +309,15 @@ if ($method === 'GET') {
     
     if (!$lessonId) {
         echo json_encode(["status" => "error", "message" => "Missing lesson ID"]);
+        exit;
+    }
+
+    $chkLesson = $pdo->prepare("SELECT grade FROM curriculum_lessons WHERE id = ?");
+    $chkLesson->execute([$lessonId]);
+    $lesRow = $chkLesson->fetch(PDO::FETCH_ASSOC);
+    if ($lesRow && !check_teacher_grade_access($pdo, $lesRow['grade'], 'all', $currentUser)) {
+        http_response_code(403);
+        echo json_encode(["status" => "error", "message" => "Access denied: Cannot delete lessons from another grade level."]);
         exit;
     }
     

@@ -224,11 +224,24 @@
           </div>
         </div>
 
-        <h4 class="section-title">Professional Profile</h4>
+        <h4 class="section-title">Teaching Assignment & Professional Profile</h4>
         <div class="form-grid">
+          <div class="form-group">
+            <label for="assigned-grade">Assigned Grade Level</label>
+            <select id="assigned-grade" class="form-control" required style="width:100%; padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:var(--text, #fff);">
+              <option value="3">Grade 3 Science</option>
+              <option value="4" selected>Grade 4 Science</option>
+              <option value="5">Grade 5 Science</option>
+              <option value="6">Grade 6 Science</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="assigned-section">Assigned Section</label>
+            <input type="text" id="assigned-section" placeholder="e.g. Masigasig, Pasteur, or all" value="all" required>
+          </div>
           <div class="form-group full-width">
-            <label for="handled-sections">Handled Grades / Sections</label>
-            <input type="text" id="handled-sections" placeholder="e.g. Grade 4 Section Masigasig, Grade 6 Section Pasteur" required>
+            <label for="handled-sections">Handled Grades / Sections Notes</label>
+            <input type="text" id="handled-sections" placeholder="e.g. Grade 4 Section Masigasig, Grade 4 Section Maagap">
           </div>
           <div class="form-group full-width">
             <label for="bio">Profile Bio (Optional)</label>
@@ -359,7 +372,9 @@
       const confirmPw = document.getElementById('confirm-password').value;
       const dob = document.getElementById('dob').value;
       const gender = document.getElementById('gender').value;
-      const sections = document.getElementById('handled-sections').value.trim();
+      const assignedGrade = document.getElementById('assigned-grade') ? document.getElementById('assigned-grade').value : '4';
+      const assignedSection = document.getElementById('assigned-section') ? document.getElementById('assigned-section').value.trim() : 'all';
+      const sections = (document.getElementById('handled-sections') ? document.getElementById('handled-sections').value.trim() : '') || `Grade ${assignedGrade} Section ${assignedSection}`;
       const bio = document.getElementById('bio').value.trim();
       const msg = document.getElementById('signup-msg');
 
@@ -392,7 +407,9 @@
           body: JSON.stringify({
             username, password,
             first_name: fname, last_name: lname,
-            dob, gender, sections, bio
+            dob, gender, sections, bio,
+            assigned_grade: assignedGrade,
+            assigned_section: assignedSection
           })
         });
         const data = await res.json();

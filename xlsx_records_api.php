@@ -13,7 +13,12 @@
  */
 
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, X-Current-User');
 require_once 'db.php';
+
+$currentUser = get_current_user_context($pdo);
 
 // DepEd Transmutation Table (DepEd Order No. 8, s. 2015)
 function getTransmutationTable() {
@@ -161,7 +166,20 @@ if ($method === 'GET') {
     $section = $_GET['section'] ?? 'all';
     $quarter = $_GET['quarter'] ?? 1;
 
-    $sql = "SELECT * FROM student_grades WHERE quarter = ?";
+    // Enforce teacher access restriction
+    if ($currentUser && ($currentUser['role'] ?? '') === 'teacher') {
+        $assignedGrade = trim((string)($currentUser['assigned_grade'] ?? ''));
+        $assignedSection = trim((string)($currentUser['assigned_section'] ?? ''));
+
+        if ($assignedGrade !== '' && $assignedGrade !== 'all') {
+            $grade = $assignedGrade;
+        }
+        if ($assignedSection !== '' && $assignedSection !== 'all') {
+            $section = $assignedSection;
+        }
+    }
+
+    $sql = "SELECT * FROM student_grades WHERE quarter = ? AND grade_level != '7'";
     $params = [intval($quarter)];
 
     if ($grade !== 'all') {
@@ -204,6 +222,14 @@ if ($method === 'POST') {
         $action = $input['action'] ?? '';
     }
 
+    if ($action === 'import_xlsx') {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Direct server-side XLSX binary upload requires client-side SheetJS decoding. Please import via the web interface.'
+        ]);
+        exit;
+    }
+
     if ($action === 'calculate') {
         $data = $input['data'] ?? $input;
         $record = [
@@ -227,10 +253,29 @@ if ($method === 'POST') {
     if ($action === 'save_single') {
         // Save a single student grade record
         $name = trim($input['student_name'] ?? '');
-        $gradeLevel = $input['grade_level'] ?? '4';
-        $section = $input['section'] ?? 'A';
+        $gradeLevel = (string)($input['grade_level'] ?? '4');
+        $section = trim((string)($input['section'] ?? 'A'));
         $quarter = intval($input['quarter'] ?? 1);
         $gender = $input['gender'] ?? 'M';
+
+        if ($section === 'all' || empty($section)) {
+            echo json_encode(['status' => 'error', 'message' => 'Specific section name required']);
+            exit;
+        }
+
+        if ($gradeLevel === '7') {
+            http_response_code(400);
+            echo json_encode(['status' => 'error', 'message' => 'Grade 7 is not supported.']);
+            exit;
+        }
+
+        // Teacher access check
+        if (!check_teacher_grade_access($pdo, $gradeLevel, $section, $currentUser)) {
+            http_response_code(403);
+            echo json_encode(['status' => 'error', 'message' => 'Access denied: You cannot modify records outside your assigned grade/section.']);
+            exit;
+        }
+
         $wwScores = json_encode($input['ww_scores'] ?? []);
         $ptScores = json_encode($input['pt_scores'] ?? []);
         $qaScore = floatval($input['qa_score'] ?? 0);
@@ -300,10 +345,23 @@ if ($method === 'POST') {
             $name = trim($rec['student_name'] ?? '');
             if (empty($name)) continue;
 
-            $gradeLevel = $rec['grade_level'] ?? '4';
-            $section = $rec['section'] ?? 'A';
+            $gradeLevel = (string)($rec['grade_level'] ?? '4');
+            $section = trim((string)($rec['section'] ?? 'A'));
             $quarter = intval($rec['quarter'] ?? 1);
             $gender = $rec['gender'] ?? 'M';
+
+            if ($section === 'all' || empty($section)) {
+                $errors[] = "$name: Section cannot be 'all'";
+                continue;
+            }
+
+            if ($gradeLevel === '7') continue;
+
+            if (!check_teacher_grade_access($pdo, $gradeLevel, $section, $currentUser)) {
+                $errors[] = "$name: Access denied for Grade $gradeLevel Section $section";
+                continue;
+            }
+
             $wwScores = json_encode($rec['ww_scores'] ?? []);
             $ptScores = json_encode($rec['pt_scores'] ?? []);
             $qaScore = floatval($rec['qa_score'] ?? 0);
@@ -362,8 +420,21 @@ if ($method === 'POST') {
     if ($action === 'delete') {
         $id = intval($input['id'] ?? 0);
         if ($id > 0) {
-            $pdo->prepare("DELETE FROM student_grades WHERE id = ?")->execute([$id]);
-            echo json_encode(['status' => 'success', 'message' => 'Record deleted']);
+            $checkStmt = $pdo->prepare("SELECT grade_level, section FROM student_grades WHERE id = ?");
+            $checkStmt->execute([$id]);
+            $row = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($row) {
+                if (!check_teacher_grade_access($pdo, $row['grade_level'], $row['section'], $currentUser)) {
+                    http_response_code(403);
+                    echo json_encode(['status' => 'error', 'message' => 'Access denied: You cannot delete student records outside your assigned grade/section.']);
+                    exit;
+                }
+                $pdo->prepare("DELETE FROM student_grades WHERE id = ?")->execute([$id]);
+                echo json_encode(['status' => 'success', 'message' => 'Record deleted']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Record not found']);
+            }
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Invalid ID']);
         }
@@ -374,6 +445,12 @@ if ($method === 'POST') {
         $gradeLevel = $input['grade_level'] ?? '';
         $section = $input['section'] ?? '';
         $quarter = intval($input['quarter'] ?? 0);
+
+        if (!check_teacher_grade_access($pdo, $gradeLevel, $section, $currentUser)) {
+            http_response_code(403);
+            echo json_encode(['status' => 'error', 'message' => 'Access denied: You cannot delete records outside your assigned grade/section.']);
+            exit;
+        }
         
         $stmt = $pdo->prepare("DELETE FROM student_grades WHERE grade_level = ? AND section = ? AND quarter = ?");
         $stmt->execute([$gradeLevel, $section, $quarter]);

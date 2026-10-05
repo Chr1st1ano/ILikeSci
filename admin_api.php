@@ -14,7 +14,7 @@ require 'db.php';
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: Content-Type, X-Current-User");
 
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit(0);
 
@@ -27,13 +27,19 @@ try {
 } catch (Exception $e) { /* ignore */ }
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+$currentUser = get_current_user_context($pdo);
 
 if ($method === 'GET') {
     $action = $_GET['action'] ?? 'users';
 
     if ($action === 'users') {
-        // List all users with avatar data (no passwords)
-        $stmt = $pdo->query("SELECT u.id, u.username, u.display_name, u.email, u.role, u.created_at, tp.avatar_data 
+        if ($currentUser && ($currentUser['role'] ?? '') !== 'admin') {
+            http_response_code(403);
+            echo json_encode(["status" => "error", "message" => "Access denied. Administrator privileges required."]);
+            exit;
+        }
+        // List all users with avatar data and assigned loads (no passwords)
+        $stmt = $pdo->query("SELECT u.id, u.username, u.display_name, u.email, u.role, u.assigned_grade, u.assigned_section, u.created_at, tp.avatar_data 
                              FROM users u 
                              LEFT JOIN teacher_profiles tp ON u.username = tp.username 
                              ORDER BY u.id ASC");
@@ -73,6 +79,14 @@ if ($method === 'GET') {
         $section = $_GET['section'] ?? 'all';
         $quarter = $_GET['quarter'] ?? '1';
 
+        $currentUser = get_current_user_context($pdo);
+        if ($currentUser && ($currentUser['role'] ?? '') === 'teacher') {
+            $assignedGrade = trim((string)($currentUser['assigned_grade'] ?? ''));
+            $assignedSection = trim((string)($currentUser['assigned_section'] ?? ''));
+            if ($assignedGrade !== '' && $assignedGrade !== 'all') $grade = $assignedGrade;
+            if ($assignedSection !== '' && $assignedSection !== 'all') $section = $assignedSection;
+        }
+
         $query = "SELECT s.*, 
                     (SELECT COUNT(*) FROM recitation_records r WHERE r.student_id = s.id) as total_recitations,
                     (SELECT SUM(r.points) FROM recitation_records r WHERE r.student_id = s.id) as total_points,
@@ -80,7 +94,7 @@ if ($method === 'GET') {
                     (SELECT COUNT(*) FROM recitation_records r WHERE r.student_id = s.id) as total_attempts
                   FROM students s";
         $params = [];
-        $where = [];
+        $where = ["s.grade != '7'"];
         
         if ($grade !== 'all' && !empty($grade)) {
             $where[] = "s.grade = ?";
@@ -194,6 +208,13 @@ if ($method === 'GET') {
     $input = json_decode(file_get_contents('php://input'), true);
     if (!$input) $input = $_POST;
     
+    // RBAC: All POST administrative actions require administrator role
+    if ($currentUser && ($currentUser['role'] ?? '') !== 'admin') {
+        http_response_code(403);
+        echo json_encode(["status" => "error", "message" => "Access denied. Administrator privileges required."]);
+        exit;
+    }
+    
     $action = $input['action'] ?? '';
 
     if ($action === 'create_user') {
@@ -202,6 +223,9 @@ if ($method === 'GET') {
         $displayName = trim($input['display_name'] ?? $username);
         $email = trim($input['email'] ?? '');
         $role = $input['role'] ?? 'teacher';
+        $assignedGrade = trim($input['assigned_grade'] ?? ($role === 'admin' ? 'all' : '4'));
+        $assignedSection = trim($input['assigned_section'] ?? 'all');
+        if ($assignedGrade === '7' || $username === 'coney') $assignedGrade = '4';
 
         if (!$username || !$password) {
             echo json_encode(["status" => "error", "message" => "Username and password required"]);
@@ -217,13 +241,13 @@ if ($method === 'GET') {
         }
 
         $hashed = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $pdo->prepare("INSERT INTO users (username, password, display_name, email, role) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$username, $hashed, $displayName, $email, $role]);
+        $stmt = $pdo->prepare("INSERT INTO users (username, password, display_name, email, role, assigned_grade, assigned_section) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$username, $hashed, $displayName, $email, $role, $assignedGrade, $assignedSection]);
         
         // Auto-create teacher profile
         $ignoreKeyword = is_sqlite() ? "INSERT OR IGNORE INTO" : "INSERT IGNORE INTO";
-        $pdo->prepare("$ignoreKeyword teacher_profiles (username, display_name) VALUES (?, ?)")
-            ->execute([$username, $displayName]);
+        $pdo->prepare("$ignoreKeyword teacher_profiles (username, display_name, assigned_grade, assigned_section) VALUES (?, ?, ?, ?)")
+            ->execute([$username, $displayName, $assignedGrade, $assignedSection]);
 
         echo json_encode(["status" => "success", "message" => "User '$username' created", "id" => $pdo->lastInsertId()]);
 
@@ -233,6 +257,15 @@ if ($method === 'GET') {
             echo json_encode(["status" => "error", "message" => "User ID required"]);
             exit;
         }
+
+        $targetUserStmt = $pdo->prepare("SELECT username, role, assigned_grade FROM users WHERE id = ?");
+        $targetUserStmt->execute([$id]);
+        $targetUser = $targetUserStmt->fetch(PDO::FETCH_ASSOC);
+        if (!$targetUser) {
+            echo json_encode(["status" => "error", "message" => "User not found"]);
+            exit;
+        }
+        $isTargetConey = (strtolower($targetUser['username']) === 'coney');
 
         $updates = [];
         $params = [];
@@ -249,12 +282,27 @@ if ($method === 'GET') {
             $updates[] = "role = ?";
             $params[] = $input['role'];
         }
+        if (isset($input['assigned_grade'])) {
+            $val = trim($input['assigned_grade']);
+            if ($val === '7' || $isTargetConey) $val = '4';
+            $updates[] = "assigned_grade = ?";
+            $params[] = $val;
+        }
+        if (isset($input['assigned_section'])) {
+            $updates[] = "assigned_section = ?";
+            $params[] = trim($input['assigned_section']);
+        }
         if (isset($input['password']) && $input['password'] !== '') {
             $updates[] = "password = ?";
             $params[] = password_hash(trim($input['password']), PASSWORD_DEFAULT);
         }
         if (isset($input['username']) && $input['username'] !== '') {
             $newUsername = strtolower(trim($input['username']));
+            // Protect coney username from renaming
+            if ($isTargetConey && $newUsername !== 'coney') {
+                echo json_encode(["status" => "error", "message" => "Cannot rename primary teacher account 'coney'"]);
+                exit;
+            }
             // Check uniqueness
             $check = $pdo->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
             $check->execute([$newUsername, $id]);
@@ -276,6 +324,31 @@ if ($method === 'GET') {
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
 
+        // Sync to teacher_profiles
+        $uName = $targetUser['username'];
+        if ($uName) {
+            $pUpdates = [];
+            $pParams = [];
+            if (isset($input['display_name']) && $input['display_name'] !== '') {
+                $pUpdates[] = "display_name = ?";
+                $pParams[] = trim($input['display_name']);
+            }
+            if (isset($input['assigned_grade'])) {
+                $pVal = trim($input['assigned_grade']);
+                if ($pVal === '7' || $isTargetConey) $pVal = '4';
+                $pUpdates[] = "assigned_grade = ?";
+                $pParams[] = $pVal;
+            }
+            if (isset($input['assigned_section'])) {
+                $pUpdates[] = "assigned_section = ?";
+                $pParams[] = trim($input['assigned_section']);
+            }
+            if (!empty($pUpdates)) {
+                $pParams[] = $uName;
+                $pdo->prepare("UPDATE teacher_profiles SET " . implode(", ", $pUpdates) . " WHERE username = ?")->execute($pParams);
+            }
+        }
+
         echo json_encode(["status" => "success", "message" => "User updated"]);
 
     } elseif ($action === 'delete_user') {
@@ -285,19 +358,34 @@ if ($method === 'GET') {
             exit;
         }
 
-        // Prevent deleting the last admin
-        $adminCount = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'admin'")->fetchColumn();
-        $isAdmin = $pdo->prepare("SELECT role FROM users WHERE id = ?");
-        $isAdmin->execute([$id]);
-        $userRole = $isAdmin->fetchColumn();
-        
-        if ($userRole === 'admin' && $adminCount <= 1) {
-            echo json_encode(["status" => "error", "message" => "Cannot delete the last admin account"]);
+        $userStmt = $pdo->prepare("SELECT username, role FROM users WHERE id = ?");
+        $userStmt->execute([$id]);
+        $targetUser = $userStmt->fetch(PDO::FETCH_ASSOC);
+        if (!$targetUser) {
+            echo json_encode(["status" => "error", "message" => "User not found"]);
             exit;
+        }
+
+        // Prevent deleting Coney
+        if (strtolower($targetUser['username']) === 'coney') {
+            echo json_encode(["status" => "error", "message" => "Cannot delete primary teacher account 'coney'"]);
+            exit;
+        }
+
+        // Prevent deleting the last admin
+        if ($targetUser['role'] === 'admin') {
+            $adminCount = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'admin'")->fetchColumn();
+            if ($adminCount <= 1) {
+                echo json_encode(["status" => "error", "message" => "Cannot delete the last admin account"]);
+                exit;
+            }
         }
 
         $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
         $stmt->execute([$id]);
+
+        // Clean up teacher_profiles as well
+        $pdo->prepare("DELETE FROM teacher_profiles WHERE username = ?")->execute([$targetUser['username']]);
 
         echo json_encode(["status" => "success", "message" => "User deleted"]);
 

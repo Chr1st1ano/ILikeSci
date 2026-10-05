@@ -48,22 +48,7 @@ $questionsData = [
     ['6', 'Volcanoes and Seasons', 'Medium', 'What causes volcanoes to erupt?']
 ];
 
-$studentsBase = [
-    // Grade 3
-    [101, 'Alex Brown', '3', 'A'],
-    [102, 'Sophia Martinez', '3', 'A'],
-    [103, 'Ethan Williams', '3', 'A'],
-    [104, 'Olivia Taylor', '3', 'B'],
-    [105, 'Liam Johnson', '3', 'B'],
-    [106, 'Mia Anderson', '3', 'B'],
-    // Grade 5
-    [113, 'James Smith', '5', 'A'],
-    [114, 'Isabella Clark', '5', 'A'],
-    [115, 'Benjamin Lewis', '5', 'A'],
-    [116, 'Charlotte Robinson', '5', 'B'],
-    [117, 'William Walker', '5', 'B'],
-    [118, 'Amelia Young', '5', 'B']
-];
+$studentsBase = [];
 
 $officialStudentsJson = __DIR__ . '/scratch/extracted_students.json';
 if (file_exists($officialStudentsJson)) {
