@@ -232,10 +232,16 @@ def convert_markdown_file(md_path, pdf_filename, doc_title, doc_sub):
 </head>
 <body>
 <div class="document-header">
-    <div class="univ">Laguna State Polytechnic University</div>
-    <div class="college">San Pablo City Campus &bull; College of Computer Studies &bull; BS Information Technology</div>
+    <div class="univ">Republic of the Philippines &bull; Laguna State Polytechnic University</div>
+    <div class="college">San Pablo City Campus &bull; College of Computer Studies &bull; BS in Information Technology (Web & Mobile Application Development)</div>
     <div class="title">{doc_title}</div>
     <div class="sub">{doc_sub}</div>
+    <div class="meta-box" style="margin-top:10px; margin-bottom:0;">
+        <strong>A Capstone Project</strong> &bull; 
+        <strong>Proponents:</strong> Abril, John Dondell A. | Millera, Kristine Andrea H. | Olidan, Christian Angelo E.<br>
+        <strong>Capstone Adviser:</strong> Ma’am Criselda Encanto &bull; 
+        <strong>Deployment Site:</strong> Bay Central Elementary School (BCES), Bay, Laguna (Grades 3–6)
+    </div>
 </div>
 {html_body}
 </body>
@@ -281,16 +287,16 @@ if __name__ == "__main__":
     convert_markdown_file(
         "APPENDIX_F_USER_MANUAL.md",
         "APPENDIX_F_USER_MANUAL.pdf",
-        "APPENDIX F: SYSTEM USER MANUAL",
-        "ILikeSci: Interactive Science & Classroom Learning Engine"
+        "APPENDIX F: USER’S MANUAL",
+        "iLikeSci: A Science Teaching Material System for Grades 3 to 6 Science Teachers at Bay Central Elementary School"
     )
 
     # 2. Appendix G
     convert_markdown_file(
         "APPENDIX_G_DEPLOYMENT_AND_SOURCE_CODE.md",
         "APPENDIX_G_DEPLOYMENT_AND_SOURCE_CODE.pdf",
-        "APPENDIX G: ESSENTIAL SOURCE CODE & DEPLOYMENT AUTOMATION",
-        "ILikeSci: Interactive Science & Classroom Learning Engine"
+        "APPENDIX G: SOURCE CODE & DEPLOYMENT AUTOMATION",
+        "iLikeSci: A Science Teaching Material System for Grades 3 to 6 Science Teachers at Bay Central Elementary School"
     )
 
     print("\nAll documents processed successfully!")

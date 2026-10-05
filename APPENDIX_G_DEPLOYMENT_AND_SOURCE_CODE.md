@@ -1,13 +1,24 @@
 # APPENDIX G: ESSENTIAL SOURCE CODE & DEPLOYMENT AUTOMATION
-## ILikeSci: Interactive Science & Classroom Learning Engine
+## iLikeSci: A Science Teaching Material System for Grades 3 to 6 Science Teachers at Bay Central Elementary School
 
-> **Academic Capstone Project**  
-> **Institution:** Laguna State Polytechnic University (LSPU), San Pablo City Campus  
-> **College:** College of Computer Studies — Bachelor of Science in Information Technology  
-> **Authors:** Abril, Christian Lloyd | Millera, Justine | Olidan, Marc Joshua  
-> **Target School:** Bay Central Elementary School (BCES), Bay, Laguna  
-> **Target Curriculum:** DepEd K-12 Science Curriculum (Grades 3–6)  
-> **Version:** 2.4.0 Production Release | Academic Year 2026–2027  
+> **A Capstone Project**  
+> Presented to the Faculty of the  
+> **College of Computer Studies**  
+> **Laguna State Polytechnic University**  
+> San Pablo City Campus, San Pablo City, Laguna  
+>  
+> In Partial Fulfillment of the Requirements for the Degree  
+> **Bachelor of Science in Information Technology**  
+> Specialized in Web and Mobile Application Development  
+>  
+> **Researchers / Proponents:**  
+> Abril, John Dondell A.  
+> Millera, Kristine Andrea H.  
+> Olidan, Christian Angelo E.  
+>  
+> **Capstone Project Adviser:** Ma’am Criselda Encanto  
+> **Partner School / Deployment Site:** Bay Central Elementary School (BCES), Bay, Laguna  
+> **Academic Year:** 2026–2027  
 
 ---
 
